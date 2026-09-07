@@ -835,3 +835,5 @@ table.price .hl:hover{background:var(--cream-2)}
 .fac-body h3 a{color:var(--navy)}.fac-body h3 a:hover{color:var(--blue)}
 a.fac-photo{display:grid;text-decoration:none}
 .featured-fac a.fac-photo{display:block}
+.event-grid-2{grid-template-columns:repeat(2,1fr)}
+@media (max-width:640px){.event-grid-2{grid-template-columns:1fr}}
