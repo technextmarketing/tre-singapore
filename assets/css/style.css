@@ -801,10 +801,10 @@ table.price .hl:hover{background:var(--cream-2)}
 .fp-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .fp-photo .initials{font-family:var(--font-display);font-weight:800;font-size:5rem;color:rgba(255,255,255,.85)}
 .fp-photo .fac-sample{top:14px;left:14px}
-.fp-socials{display:flex;gap:.55rem;flex-wrap:wrap;margin-top:1.1rem}
-.fp-socials a{display:inline-flex;align-items:center;gap:.45rem;padding:.5rem .85rem;border-radius:999px;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:.86rem;font-weight:600;background:rgba(255,255,255,.06);transition:background var(--d2),border-color var(--d2)}
+.fp-socials{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.9rem}
+.fp-socials a{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .65rem;border-radius:999px;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:.74rem;font-weight:600;line-height:1.3;background:rgba(255,255,255,.06);transition:background var(--d2),border-color var(--d2)}
 .fp-socials a:hover{background:rgba(255,255,255,.16);border-color:var(--gold);color:#fff}
-.fp-socials svg{width:16px;height:16px;flex:0 0 16px}
+.fp-socials svg{width:13px;height:13px;flex:0 0 13px}
 .fp-facts{position:relative;z-index:2;margin-top:-34px}
 .fp-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:var(--s7);align-items:start}
 .fp-main h2{font-size:1.5rem;margin-top:var(--s7)}.fp-main h2:first-child{margin-top:0}
