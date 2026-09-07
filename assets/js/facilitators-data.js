@@ -1,36 +1,83 @@
 /* =========================================================
-   FACILITATORS DATA — the pool used by the home page "Featured facilitators"
-   section. Three facilitators are featured each day (Singapore time); the batch
-   changes every day and, once everyone has been featured, the order is
-   reshuffled and the rotation starts again.
+   FACILITATORS DATA — one object per facilitator. Used by:
+     • the home page "Featured facilitators" section (3 per day, rotating), and
+     • facilitator.html?id=<id> — the full profile page.
+   Keep this list in step with the cards on facilitators.html.
 
    Each entry supports:
-     id        : unique slug
+     id           : unique slug (facilitator.html?id=<id>)
      name, role, tag (badge text), tagClass ("badge-navy" | "badge-gold" | "badge-cream")
-     initials  : shown when there is no photo     photo: optional image path
-     photoClass: "" | "bronze" | "deep" (avatar colour)
-     bio       : one short paragraph
-     meta      : [{ icon: "pin" | "globe" | "award" | "group" | "calendar", text }]
-     actions   : [{ label, url }]  (first one is the primary button)
-     sample    : true marks a placeholder profile (shows the "Sample profile" ribbon)
-   Keep this list in step with facilitators.html.
+     initials     : shown when there is no photo      photo: optional image path (square works best)
+     photoClass   : "" | "bronze" | "deep" (avatar colour when there is no photo)
+     bio          : short paragraph for cards          summary: one-line lead for the profile hero
+     contact      : { email, whatsapp, book }          -> Email · WhatsApp · Book now buttons
+     website      : { url, label }
+     socials      : [{ type: "linkedin" | "instagram" | "youtube" | "facebook" | "website", url, label }]
+     facts        : { location, languages, formats, certified }   -> facts strip on the profile
+     about        : [paragraphs]      highlights: [credentials]     offers: [{ title, text }]
+     gallery      : [{ src, caption }]                 events: [event slugs] (plus any event naming them)
+     meta         : [{ icon: "pin" | "globe" | "award" | "group" | "calendar", text }]  (card bullets)
+     sample       : true marks a placeholder profile (shows the "Sample profile" ribbon)
    ========================================================= */
+var WA = 'https://wa.me/818065151778';
+var FAC_IMG = 'assets/img/facilitators/';
+var EVT_IMG = 'assets/img/events/';
+
 window.TRE_FACILITATORS = [
   {
     id: 'isabelle-claus-teixeira',
     name: 'Isabelle Claus Teixeira',
     role: 'Global TRE™ Certifying Trainer · Certified TRE™ Provider · ICF PCC Executive Coach · Mindfulness Teacher',
     tag: 'Certifying Trainer', tagClass: 'badge-navy',
-    initials: 'ICT', photoClass: '',
-    bio: 'Founder of TRE™ in Singapore and a Global TRE™ Certifying Trainer running the full three-module certification here. Isabelle teaches individuals, groups and organisations, and supervises trainees through Modules 1–3. After 30 years in senior HR roles across nine countries, she brings both corporate fluency and deep somatic experience to every session.',
+    initials: 'ICT', photoClass: '', photo: FAC_IMG + 'isabelle-her-story.jpg',
+    bio: 'Founder of TRE™ in Singapore and a Global TRE™ Certifying Trainer running the full three-module certification here. Isabelle teaches individuals, groups and organisations, and supervises trainees through Modules 1–3.',
+    summary: 'Founder of TRE™ in Singapore and HummingBeing. Isabelle runs the Global TRE™ Provider Certification in Singapore, teaches individuals, groups and organisations, and supervises trainees through Modules 1–3 — in person and online.',
+    contact: { email: 'mailto:isabelle@bhdasia.com?subject=TRE%20session%20enquiry', whatsapp: WA + '?text=Hi%20Isabelle%2C%20I%27d%20like%20to%20ask%20about%20TRE%E2%84%A2%20in%20Singapore', book: 'https://calendly.com/bhdasia/tre-certification-intake-call' },
+    website: { url: 'https://hummingbeing.com', label: 'hummingbeing.com' },
+    socials: [
+      { type: 'linkedin', url: 'https://www.linkedin.com/in/isabelleclausteixeira/', label: 'LinkedIn' },
+      { type: 'instagram', url: 'https://www.instagram.com/isabelleclausteixeira_bhd/', label: 'Instagram' },
+      { type: 'youtube', url: 'https://www.youtube.com/@IsabelleClausTeixeira', label: 'YouTube' },
+      { type: 'facebook', url: 'https://www.facebook.com/bhdasia/', label: 'Facebook' },
+      { type: 'website', url: 'https://bhdasia.com', label: 'BHD Asia' }
+    ],
+    facts: { location: 'Singapore (in person, regular visits) · Japan · Online worldwide', languages: 'English · French · Spanish · conversational Japanese & German', formats: '1:1 · Groups · Corporate · Certification training', certified: 'Global TRE™ Certifying Trainer (TRE™ for All) · ICF PCC' },
+    about: [
+      'Isabelle is a somatic and trauma-informed Executive Coach (ICF PCC), Global TRE™ Certifying Trainer and Mindfulness Teacher. She trained directly under Dr. David Berceli, the founder of TRE™, and began her own TRE™ practice in 2017.',
+      'After 30 years in senior HR roles across nine countries, working with professionals, executives and teams of more than 40 nationalities, she brings both corporate fluency and deep somatic experience to every session. She founded HummingBeing — science-backed processes with TRE™, coaching and somatic practices — and leads TRE™ in Singapore under Business and Human Development Consulting Pte Ltd.',
+      'In Singapore she runs the full Global TRE™ Provider Certification (Modules 1–3), the only TRE™ training in the world that carries ICF CCEUs, and works with individuals, groups and organisations in person and online.'
+    ],
+    highlights: [
+      'Global TRE™ Certifying Trainer, accredited by TRE™ for All under Dr. David Berceli\'s methodology',
+      'ICF PCC Executive Coach · Mindfulness Teacher · Certified Reiki Level II',
+      'Trained with Dr. David Berceli, Michelle Beck, Ching Meoh Cheong and Donna Philips',
+      '30 years in senior HR and leadership roles across 9 countries and 40+ nationalities',
+      'Leads TRE™ trainings in Singapore, Bucharest and online; speaker at the TRE™ Asia conferences'
+    ],
+    offers: [
+      { title: 'Individual TRE™ sessions', text: 'One-to-one sessions online or in Singapore — a personalised introduction to TRE™ or deeper ongoing work.' },
+      { title: 'Group sessions & corporate programmes', text: 'TRE™ for teams, lunch-and-learns, offsites and resilience programmes for organisations in Singapore.' },
+      { title: 'Global TRE™ Provider Certification', text: 'Modules 1–3 in Singapore (Module 1 also online) with 12 online sessions and ongoing supervision.' },
+      { title: 'Workshops for coaches', text: 'Nervous system regulation and self-induced neurogenic tremoring for coaches — 21 ICF CCEUs.' }
+    ],
+    gallery: [
+      { src: FAC_IMG + 'gallery-isabelle-teaching-tre.jpg', caption: 'Teaching TRE™ Module 1' },
+      { src: FAC_IMG + 'gallery-isabelle-students-module1-may2026.jpg', caption: 'TRE™ Module 1 — May 2026' },
+      { src: FAC_IMG + 'gallery-tre-module1-2026.jpg', caption: 'TRE™ Module 1 — January 2026' },
+      { src: FAC_IMG + 'gallery-ws-1.jpg', caption: 'TRE™ Module 1 training' },
+      { src: FAC_IMG + 'gallery-danang-tre-conference-nov2025.jpg', caption: 'Da Nang TRE™ Conference — November 2025' },
+      { src: FAC_IMG + 'gallery-dinner-david-berceli-founders.jpg', caption: 'Dinner with David Berceli, founder of TRE™' },
+      { src: FAC_IMG + 'gallery-asia-tre-trainers-david.jpg', caption: 'Asia TRE™ trainers with David Berceli' },
+      { src: FAC_IMG + 'gallery-isabelle-vietnam-tre.jpg', caption: 'TRE™ Asia Conference, Vietnam' },
+      { src: FAC_IMG + 'gallery-uk-tre-providers.jpg', caption: 'With UK TRE™ provider students' },
+      { src: FAC_IMG + 'gallery-ws-2.jpg', caption: 'At the Esplanade, Singapore' },
+      { src: FAC_IMG + 'isabelle-global-journey.jpg', caption: '9 countries, 40+ nationalities' }
+    ],
+    events: ['tre-provider-certification-singapore', 'tre-module-2-singapore', 'from-shaking-to-shaping-online', 'tre-module-1-bucharest', 'from-shaking-to-shaping-bucharest', 'tre-module-3-singapore'],
     meta: [
       { icon: 'pin', text: 'Singapore (in person, regular visits) · Japan · Online worldwide' },
       { icon: 'globe', text: 'English · French · Spanish · conversational Japanese & German' },
       { icon: 'award', text: 'Trained with Dr. David Berceli, Michelle Beck, Ching Meoh Cheong and Donna Philips' }
-    ],
-    actions: [
-      { label: 'Book a free call', url: 'https://calendly.com/bhdasia/tre-certification-intake-call' },
-      { label: 'Profile', url: 'facilitators.html' }
     ]
   },
   {
@@ -39,14 +86,39 @@ window.TRE_FACILITATORS = [
     role: 'Global TRE™ Certifying Trainer · Creator of Internal Alchemy',
     tag: 'Visiting Trainer', tagClass: 'badge-gold',
     initials: 'SS', photoClass: 'bronze',
-    bio: 'More than 25 years of hands-on practice in bodywork, nervous system regulation and energetic healing. Developed the Internal Alchemy system — breathwork, fascial release, grounding and tremor work — in collaboration with Dr. David Berceli. Practice: Living with the Spirit.',
+    bio: 'More than 25 years of hands-on practice in bodywork, nervous system regulation and energetic healing. Developed the Internal Alchemy system — breathwork, fascial release, grounding and tremor work — in collaboration with Dr. David Berceli.',
+    summary: 'Global TRE™ Certifying Trainer and creator of Internal Alchemy — an integrated system of breathwork, fascial release, grounding and tremor work that restores the nervous system at the level where tension actually lives.',
+    contact: { email: 'mailto:isabelle@bhdasia.com?subject=Internal%20Alchemy%20%2F%20Simba%20Stenqvist%20enquiry', whatsapp: WA + '?text=Hi%2C%20I%27d%20like%20to%20know%20about%20the%20next%20Internal%20Alchemy%20workshop%20in%20Singapore', book: 'contact.html?interest=event' },
+    website: { url: 'https://livingwiththespirit.com/', label: 'livingwiththespirit.com' },
+    socials: [
+      { type: 'instagram', url: 'https://www.instagram.com/internalalchemywithsimba/', label: 'Internal Alchemy on Instagram' },
+      { type: 'instagram', url: 'https://www.instagram.com/livingwiththespirit', label: 'Living with the Spirit on Instagram' }
+    ],
+    facts: { location: 'Visiting Singapore · teaches internationally', languages: 'English', formats: 'Workshops · Certification training · Bodywork', certified: 'Global TRE™ Certifying Trainer (TRE™ for All)' },
+    about: [
+      'Simba Stenqvist is a Global TRE™ Certifying Trainer and the creator of Internal Alchemy — a system born from more than twenty-five years of hands-on practice in bodywork, nervous system regulation and energetic healing, developed in close collaboration with Dr David Berceli, founder of TRE™.',
+      'Internal Alchemy combines breathwork, fascial release, grounding and tremor work to restore the nervous system at the level where tension actually lives. His official practice is Living with the Spirit.',
+      'Simba taught the first Internal Alchemy introductory workshop in Singapore on 1 September 2026, hosted by HummingBeing and TRE™ in Singapore. Enquiries about his next visit go through Isabelle.'
+    ],
+    highlights: [
+      'Global TRE™ Certifying Trainer',
+      'Creator of the Internal Alchemy system — breathwork, fascial release, grounding and tremor work',
+      '25+ years of hands-on bodywork and nervous-system practice',
+      'Developed his method in close collaboration with Dr. David Berceli'
+    ],
+    offers: [
+      { title: 'Internal Alchemy workshops', text: 'Two-hour introductory evenings and longer immersions when visiting Singapore.' },
+      { title: 'TRE™ certification training', text: 'Certifying Trainer for the Global TRE™ Provider Certification internationally.' }
+    ],
+    gallery: [
+      { src: EVT_IMG + 'event-internal-alchemy.webp', caption: 'Internal Alchemy — introductory workshop, Singapore, 1 September 2026' },
+      { src: FAC_IMG + 'gallery-insead-simba-stenqvist.jpg', caption: 'Visiting INSEAD campus with Simba Stenqvist' },
+      { src: FAC_IMG + 'gallery-isabelle-david-simba-nikki.jpg', caption: 'With David Berceli, Simba Stenqvist and Nikki Tay' }
+    ],
+    events: ['internal-alchemy-singapore'],
     meta: [
       { icon: 'calendar', text: 'Taught the Internal Alchemy introductory workshop in Singapore, 1 Sep 2026' },
       { icon: 'globe', text: 'English · teaches internationally' }
-    ],
-    actions: [
-      { label: 'Workshop details', url: 'event.html?id=internal-alchemy-singapore' },
-      { label: 'livingwiththespirit.com', url: 'https://livingwiththespirit.com/' }
     ]
   },
   {
@@ -55,15 +127,47 @@ window.TRE_FACILITATORS = [
     role: 'Founder & President, Asociația TRE™ România · Certified TRE™ Provider · Trainer Trainee',
     tag: 'Visiting Co-facilitator', tagClass: 'badge-gold',
     initials: 'SR', photoClass: 'deep',
-    bio: 'Holistic Coach, Trainer & Mentor and pioneer of TRE™ in Romania, building the TRE™ practitioner community across Eastern Europe. Co-facilitates "From Shaking to Shaping" and TRE™ Module 1 in Bucharest with Isabelle — in English and Romanian.',
+    bio: 'Holistic Coach, Trainer & Mentor and pioneer of TRE™ in Romania, building the TRE™ practitioner community across Eastern Europe. Co-facilitates "From Shaking to Shaping" and TRE™ Module 1 in Bucharest with Isabelle.',
+    summary: 'Pioneer of TRE™ in Romania and founder of Neurogenic Integration and Asociația TRE™ România. Saymara co-facilitates the Bucharest trainings and the "From Shaking to Shaping" workshops with Isabelle — in English and Romanian.',
+    contact: { email: 'mailto:isabelle@bhdasia.com?subject=Bucharest%20TRE%E2%84%A2%20events%20%E2%80%94%20Saymara%20Ryon', whatsapp: WA + '?text=Hi%2C%20I%27d%20like%20to%20ask%20about%20the%20TRE%E2%84%A2%20events%20in%20Bucharest', book: 'event.html?id=tre-module-1-bucharest' },
+    website: { url: 'https://treromania.org/', label: 'treromania.org' },
+    socials: [
+      { type: 'linkedin', url: 'https://ro.linkedin.com/in/saymara-ryon-7252845', label: 'LinkedIn' },
+      { type: 'instagram', url: 'https://www.instagram.com/treromania/', label: 'TRE™ România on Instagram' },
+      { type: 'facebook', url: 'https://www.facebook.com/TREromania', label: 'TRE™ România on Facebook' },
+      { type: 'website', url: 'https://www.atelierdesuflet.ro/', label: 'Atelier de Suflet' },
+      { type: 'website', url: 'https://neurogenic-integration.com/', label: 'Neurogenic Integration' }
+    ],
+    facts: { location: 'Bucharest, Romania · Online', languages: 'English · Romanian', formats: '1:1 · Groups · Workshops · Co-facilitated trainings', certified: 'Certified TRE™ Provider · TRE™ Trainer Trainee' },
+    about: [
+      'Saymara Ryon is the Founder and President of Asociația TRE™ România, a Holistic Coach, Trainer and Mentor, Certified TRE™ Provider and Trainer Trainee. She founded Învață să Zbori SRL (Learn to Fly) and Neurogenic Integration, and is the pioneer of TRE™ in Romania — bringing embodied healing and somatic practices to the Romanian professional community and building the practitioner network across Eastern Europe.',
+      'With Isabelle she co-facilitates "From Shaking to Shaping — Use of TRE™ in a Coaching Context" (online and in Bucharest) and TRE™ Module 1 in Bucharest, the first ICF-accredited Module 1 in Europe delivered in English. In-person sessions are facilitated in English and Romanian.'
+    ],
+    highlights: [
+      'Founder & President, Asociația TRE™ România',
+      'Certified TRE™ Provider and Trainer Trainee under the Global TRE™ Certification Program',
+      'Founder of Neurogenic Integration and Învață să Zbori SRL (Learn to Fly)',
+      'Co-facilitator of the Bucharest TRE™ trainings with Isabelle Claus Teixeira'
+    ],
+    offers: [
+      { title: 'From Shaking to Shaping', text: 'Half-day intensives on using TRE™ in a coaching context — online (8 Oct) and in Bucharest (20 & 24 Oct 2026).' },
+      { title: 'TRE™ Module 1 — Bucharest', text: 'Three-day certification training, 15–17 October 2026, co-facilitated in English; 21 ICF CCEUs.' },
+      { title: 'TRE™ sessions in Romania', text: 'Individual and group TRE™ sessions through Neurogenic Integration and TRE™ România.' }
+    ],
+    gallery: [
+      { src: FAC_IMG + 'gallery-isabelle-saymara.jpg', caption: 'Isabelle and Saymara' },
+      { src: EVT_IMG + 'event-shaking-online.webp', caption: 'From Shaking to Shaping — live online, 8 October 2026' },
+      { src: EVT_IMG + 'event-bucharest-module1.webp', caption: 'TRE™ Module 1 — Bucharest, 15–17 October 2026' },
+      { src: FAC_IMG + 'gallery-isabelle-saymara-2.jpg', caption: 'Isabelle and Saymara' },
+      { src: FAC_IMG + 'gallery-isabelle-saymara-3.jpg', caption: 'Isabelle and Saymara' },
+      { src: FAC_IMG + 'gallery-isabelle-saymara-4.jpg', caption: 'Isabelle and Saymara' },
+      { src: EVT_IMG + 'event-shaking-to-shaping.webp', caption: 'From Shaking to Shaping — Bucharest sessions' }
+    ],
+    events: ['from-shaking-to-shaping-online', 'tre-module-1-bucharest', 'from-shaking-to-shaping-bucharest'],
     meta: [
       { icon: 'pin', text: 'Bucharest, Romania · Online' },
       { icon: 'globe', text: 'English · Romanian' },
       { icon: 'calendar', text: 'Co-leads the 8 Oct online workshop and TRE™ Module 1, Bucharest, 15–17 Oct 2026' }
-    ],
-    actions: [
-      { label: 'Online workshop', url: 'event.html?id=from-shaking-to-shaping-online' },
-      { label: 'TRE™ Romania', url: 'https://treromania.org/' }
     ]
   },
 
@@ -75,8 +179,16 @@ window.TRE_FACILITATORS = [
     tag: 'Certified Provider', tagClass: 'badge-navy',
     initials: 'CP', photoClass: '',
     bio: 'Individual sessions for chronic pain, sleep and post-injury recovery. Combines TRE™ with movement rehabilitation for clients who want a body-first approach.',
+    summary: 'Sample profile. A certified TRE™ provider combining TRE™ with movement rehabilitation for clients who want a body-first approach to chronic pain, sleep and recovery.',
+    contact: { email: 'mailto:isabelle@bhdasia.com?subject=Provider%20enquiry', whatsapp: WA + '?text=Hi%2C%20I%27d%20like%20to%20book%20a%20TRE%E2%84%A2%20session%20with%20a%20certified%20provider%20in%20Singapore', book: 'contact.html?interest=session' },
+    website: { url: 'facilitators.html#get-listed', label: 'Provider website (added when listed)' },
+    socials: [],
+    facts: { location: 'Novena · Online', languages: 'English · Mandarin', formats: '1:1 · Small groups', certified: 'Certified TRE™ Provider' },
+    about: ['This is a sample profile showing how a listed provider appears. Real providers replace the text, photo, gallery and links when they join the directory.'],
+    highlights: ['Certified TRE™ Provider (Global TRE™ Certification Program)', 'Physiotherapist'],
+    offers: [{ title: 'Individual sessions', text: 'TRE™ for chronic pain, sleep and post-injury recovery.' }, { title: 'Small groups', text: 'Body-first sessions combining TRE™ with movement rehabilitation.' }],
+    gallery: [],
     meta: [ { icon: 'pin', text: 'Novena · Online' }, { icon: 'globe', text: 'English · Mandarin' }, { icon: 'group', text: '1:1 · Small groups' } ],
-    actions: [ { label: 'Email', url: 'mailto:isabelle@bhdasia.com?subject=Provider%20enquiry' }, { label: 'Directory', url: 'facilitators.html#directory' } ],
     sample: true
   },
   {
@@ -86,8 +198,16 @@ window.TRE_FACILITATORS = [
     tag: 'Certified Provider', tagClass: 'badge-navy',
     initials: 'CP', photoClass: 'deep',
     bio: 'Corporate group sessions and leadership resilience programmes. Works with HR teams to embed TRE™ in wellbeing calendars and offsites.',
+    summary: 'Sample profile. A certified TRE™ provider and ICF ACC coach running corporate group sessions and leadership resilience programmes.',
+    contact: { email: 'mailto:isabelle@bhdasia.com?subject=Provider%20enquiry', whatsapp: WA + '?text=Hi%2C%20I%27d%20like%20to%20book%20a%20TRE%E2%84%A2%20session%20with%20a%20certified%20provider%20in%20Singapore', book: 'contact.html?interest=session' },
+    website: { url: 'facilitators.html#get-listed', label: 'Provider website (added when listed)' },
+    socials: [],
+    facts: { location: 'CBD · Client offices · Online', languages: 'English · Malay', formats: 'Groups · Workplace', certified: 'Certified TRE™ Provider · ICF ACC' },
+    about: ['This is a sample profile showing how a listed provider appears. Real providers replace the text, photo, gallery and links when they join the directory.'],
+    highlights: ['Certified TRE™ Provider (Global TRE™ Certification Program)', 'ICF ACC Coach'],
+    offers: [{ title: 'Corporate group sessions', text: 'TRE™ embedded in wellbeing calendars and offsites.' }, { title: 'Leadership resilience programmes', text: 'Multi-week programmes for leadership teams.' }],
+    gallery: [],
     meta: [ { icon: 'pin', text: 'CBD · Client offices · Online' }, { icon: 'globe', text: 'English · Malay' }, { icon: 'group', text: 'Groups · Workplace' } ],
-    actions: [ { label: 'Email', url: 'mailto:isabelle@bhdasia.com?subject=Provider%20enquiry' }, { label: 'Directory', url: 'facilitators.html#directory' } ],
     sample: true
   },
   {
@@ -97,8 +217,16 @@ window.TRE_FACILITATORS = [
     tag: 'Certified Provider', tagClass: 'badge-navy',
     initials: 'CP', photoClass: 'bronze',
     bio: 'Weekly TRE™ community classes and yoga-integrated sessions for students who want deeper release and faster recovery.',
+    summary: 'Sample profile. A certified TRE™ provider and RYT-500 yoga teacher running weekly community classes and yoga-integrated sessions.',
+    contact: { email: 'mailto:isabelle@bhdasia.com?subject=Provider%20enquiry', whatsapp: WA + '?text=Hi%2C%20I%27d%20like%20to%20book%20a%20TRE%E2%84%A2%20session%20with%20a%20certified%20provider%20in%20Singapore', book: 'contact.html?interest=session' },
+    website: { url: 'facilitators.html#get-listed', label: 'Provider website (added when listed)' },
+    socials: [],
+    facts: { location: 'Tiong Bahru · East Coast', languages: 'English · Tamil', formats: 'Classes · 1:1', certified: 'Certified TRE™ Provider · RYT-500' },
+    about: ['This is a sample profile showing how a listed provider appears. Real providers replace the text, photo, gallery and links when they join the directory.'],
+    highlights: ['Certified TRE™ Provider (Global TRE™ Certification Program)', 'Yoga Teacher (RYT-500)'],
+    offers: [{ title: 'Weekly community classes', text: 'Group TRE™ classes for students who want deeper release.' }, { title: 'Yoga-integrated 1:1 sessions', text: 'TRE™ woven into a personal yoga practice.' }],
+    gallery: [],
     meta: [ { icon: 'pin', text: 'Tiong Bahru · East Coast' }, { icon: 'globe', text: 'English · Tamil' }, { icon: 'group', text: 'Classes · 1:1' } ],
-    actions: [ { label: 'Email', url: 'mailto:isabelle@bhdasia.com?subject=Provider%20enquiry' }, { label: 'Directory', url: 'facilitators.html#directory' } ],
     sample: true
   },
   {
@@ -108,8 +236,16 @@ window.TRE_FACILITATORS = [
     tag: 'Provider-in-training', tagClass: 'badge-gold',
     initials: 'PT', photoClass: '',
     bio: 'Offers supervised one-to-one practice sessions as part of certification. Sessions are free or low-cost and supervised by the Certifying Trainer.',
+    summary: 'Sample profile. A provider-in-training offering supervised one-to-one practice sessions while completing the Global TRE™ Provider Certification.',
+    contact: { email: 'mailto:isabelle@bhdasia.com?subject=Practice%20session%20enquiry', whatsapp: WA + '?text=Hi%2C%20I%27d%20like%20to%20book%20a%20supervised%20TRE%E2%84%A2%20practice%20session', book: 'contact.html?interest=session' },
+    website: { url: 'facilitators.html#get-listed', label: 'Website (added when listed)' },
+    socials: [],
+    facts: { location: 'Bukit Timah · Online', languages: 'English', formats: '1:1 practice sessions', certified: 'Completing TRE™ Module 2' },
+    about: ['This is a sample profile showing how a provider-in-training appears. Practice sessions are free or low-cost and supervised by the Certifying Trainer.'],
+    highlights: ['Completed TRE™ Module 1 · completing Module 2', 'Counsellor'],
+    offers: [{ title: 'Supervised practice sessions', text: 'One-to-one sessions as part of certification, supervised by Isabelle.' }],
+    gallery: [],
     meta: [ { icon: 'pin', text: 'Bukit Timah · Online' }, { icon: 'globe', text: 'English' }, { icon: 'group', text: '1:1 practice sessions' } ],
-    actions: [ { label: 'Email', url: 'mailto:isabelle@bhdasia.com?subject=Provider%20enquiry' }, { label: 'Directory', url: 'facilitators.html#directory' } ],
     sample: true
   }
 ];

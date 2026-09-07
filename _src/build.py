@@ -47,6 +47,8 @@ PAGES = [
      "Upcoming TRE™ events in Singapore and online: provider certification modules, workshops for coaches, community practice circles and introductory sessions.", "events"),
     ("event.body.html", "event.html", "Event details — TRE™ in Singapore",
      "Details, programme, pricing and registration for TRE™ events in Singapore, Bucharest and online.", "events"),
+    ("facilitator.body.html", "facilitator.html", "Facilitator profile — TRE™ in Singapore",
+     "Profile of a TRE™ facilitator in Singapore: background, credentials, sessions offered, gallery and how to book.", "facilitators"),
     ("blog.body.html", "blog.html", "Blog — TRE™ in Singapore",
      "Articles on TRE™, neurogenic tremors, nervous system regulation, self-care for practitioners and life as a TRE™ provider in Singapore.", "blog"),
     ("contact.body.html", "contact.html", "Contact TRE™ in Singapore",

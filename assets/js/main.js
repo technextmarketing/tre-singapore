@@ -376,15 +376,109 @@
     return { list: list, day: dayIndex, cycleDay: step + 1, perCycle: perCycle };
   }
   window.TRE_featuredFor = function (iso) { return featuredFor(iso ? new Date(iso) : new Date()).list.map(function (f) { return f.name; }); };
+  var CTA_ICONS = {
+    email: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    website: FAC_ICONS.globe,
+    whatsapp: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 12 12 0 0 0 4.6 4c1.7.7 2.1.6 2.8.5.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.4-.3z"/></svg>',
+    book: ICONS.calendar
+  };
+  function ctaLink(url, cls, icon, label) { return '<a class="' + cls + '" href="' + esc(url) + '"' + (isExternal(url) ? ' target="_blank" rel="noopener"' : '') + '>' + CTA_ICONS[icon] + esc(label) + '</a>'; }
   function renderFacilitator(f, i) {
     var meta = (f.meta || []).map(function (m) { return '<li>' + (FAC_ICONS[m.icon] || FAC_ICONS.pin) + '<span>' + esc(m.text) + '</span></li>'; }).join('');
-    var acts = (f.actions || []).map(function (a, k) { return extLink(a.url, 'btn ' + (k === 0 ? 'btn-primary' : 'btn-outline') + ' btn-sm', a.label); }).join('');
+    var c = f.contact, acts = '';
+    if (c) {
+      if (c.email) acts += ctaLink(c.email, 'btn btn-outline btn-sm', 'email', 'Email');
+      if (c.whatsapp) acts += ctaLink(c.whatsapp, 'btn btn-outline btn-sm', 'whatsapp', 'WhatsApp');
+      if (c.book) acts += ctaLink(c.book, 'btn btn-primary btn-sm', 'book', 'Book now');
+    } else acts = (f.actions || []).map(function (a, k) { return extLink(a.url, 'btn ' + (k === 0 ? 'btn-primary' : 'btn-outline') + ' btn-sm', a.label); }).join('');
+    var profile = ROOT + 'facilitator.html?id=' + encodeURIComponent(f.id);
     return '<article class="fac-card reveal in" style="--i:' + i + '">' +
       (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') +
-      '<div class="fac-photo ' + esc(f.photoClass || '') + '">' + (f.photo ? '<img src="' + esc(f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '<span class="feat-badge">Featured today</span></div>' +
+      '<a class="fac-photo ' + esc(f.photoClass || '') + '" href="' + esc(profile) + '" aria-label="View profile: ' + esc(f.name) + '">' + (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '<span class="feat-badge">Featured today</span></a>' +
       '<div class="fac-body">' + (f.tag ? '<div class="tags"><span class="badge ' + esc(f.tagClass || 'badge-navy') + '">' + esc(f.tag) + '</span></div>' : '') +
-      '<h3>' + esc(f.name) + '</h3><div class="fac-role">' + esc(f.role) + '</div><p>' + esc(f.bio) + '</p>' +
-      (meta ? '<ul class="fac-meta">' + meta + '</ul>' : '') + (acts ? '<div class="fac-actions">' + acts + '</div>' : '') + '</div></article>';
+      '<h3><a href="' + esc(profile) + '">' + esc(f.name) + '</a></h3><div class="fac-role">' + esc(f.role) + '</div>' +
+      '<a class="link-arrow" href="' + esc(profile) + '">View profile</a><p>' + esc(f.bio) + '</p>' +
+      (meta ? '<ul class="fac-meta">' + meta + '</ul>' : '') +
+      (acts ? '<div class="fac-actions">' + acts + '</div>' : '') + '</div></article>';
+  }
+
+  /* ---------- Facilitator profile page (facilitator.html?id=slug) ---------- */
+  var SOCIAL_ICONS = {
+    linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.5 8.5H3.5V21h3V8.5zM5 3.5a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5zM21 13.6c0-3.4-1.8-5.3-4.5-5.3-2 0-3 1.1-3.5 1.9V8.5h-3V21h3v-6.6c0-1.7.6-2.9 2.2-2.9 1.5 0 1.9 1.2 1.9 2.9V21H21v-7.4z"/></svg>',
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
+    youtube: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2c-.3-1.2-1.1-2-2.3-2.3C18.9 4.5 12 4.5 12 4.5s-6.9 0-8.7.4C2.1 5.2 1.3 6 1 7.2.6 9 .6 12 .6 12s0 3 .4 4.8c.3 1.2 1.1 2 2.3 2.3 1.8.4 8.7.4 8.7.4s6.9 0 8.7-.4c1.2-.3 2-1.1 2.3-2.3.4-1.8.4-4.8.4-4.8s0-3-.4-4.8zM9.8 15.5v-7l6 3.5-6 3.5z"/></svg>',
+    facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg>',
+    website: FAC_ICONS.globe
+  };
+  function initFacilitatorPage() {
+    var root = $('#facilitator-page'); if (!root || !window.TRE_FACILITATORS) return;
+    var id = new URLSearchParams(location.search).get('id') || '';
+    var f = window.TRE_FACILITATORS.filter(function (x) { return x.id === id; })[0];
+    if (!f) {
+      root.innerHTML = '<section class="section"><div class="container event-not-found"><span class="eyebrow">Facilitators</span><h1>Profile not found</h1><p class="muted">That profile may have been renamed or removed.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="facilitators.html">Browse all facilitators</a></div></div></section>';
+      document.title = 'Profile not found — TRE™ in Singapore'; return;
+    }
+    document.title = f.name + ' — TRE™ facilitator in Singapore';
+    var md = $('meta[name="description"]'); if (md) md.setAttribute('content', f.summary || f.bio || '');
+    var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', f.name + ' — ' + f.role);
+    var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', f.summary || f.bio || '');
+    var ogI = $('meta[property="og:image"]'); if (ogI && f.photo) ogI.setAttribute('content', new URL(f.photo, location.href).href);
+
+    var c = f.contact || {};
+    var ctas = (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-ghost-light', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-ghost-light', 'whatsapp', 'WhatsApp') : '');
+    var socials = (f.website ? '<a href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + esc(f.website.label || 'Website') + '</a>' : '') +
+      (f.socials || []).map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + esc(s.label || s.type) + '</a>'; }).join('');
+    var fx = f.facts || {};
+    var facts = '<div class="fact">' + ICONS.pin + '<div><b>Where</b><span>' + esc(fx.location || '—') + '</span></div></div>' +
+      '<div class="fact">' + FAC_ICONS.globe + '<div><b>Languages</b><span>' + esc(fx.languages || '—') + '</span></div></div>' +
+      '<div class="fact">' + FAC_ICONS.group + '<div><b>Formats</b><span>' + esc(fx.formats || '—') + '</span></div></div>' +
+      '<div class="fact">' + ICONS.award + '<div><b>Certification</b><span>' + esc(fx.certified || '—') + '</span></div></div>';
+
+    var h = '<section class="fp-hero"><div class="container"><div>' +
+      '<p class="crumbs"><a href="facilitators.html">Facilitators</a> › ' + esc(f.tag || 'Profile') + '</p>' +
+      '<div class="badges"><span class="badge gold">' + esc(f.tag || 'Facilitator') + '</span>' + (f.sample ? '<span class="badge">Sample profile</span>' : '') + '</div>' +
+      '<h1>' + esc(f.name) + '</h1><p class="role">' + esc(f.role) + '</p><p class="lead">' + esc(f.summary || f.bio) + '</p>' +
+      '<div class="btn-row">' + ctas + '</div>' + (socials ? '<div class="fp-socials">' + socials + '</div>' : '') + '</div>' +
+      '<div class="fp-photo ' + esc(f.photoClass || '') + '">' + (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') + (f.photo ? '<img src="' + esc(f.photo) + '" alt="' + esc(f.name) + '"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '</div>' +
+      '</div></section>';
+    h += '<div class="container evt-facts fp-facts"><div class="grid">' + facts + '</div></div>';
+    h += '<section class="section"><div class="container fp-layout"><div class="fp-main">';
+    if (f.about && f.about.length) h += '<h2>About ' + esc(f.name.split(' ')[0]) + '</h2>' + f.about.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
+    if (f.highlights && f.highlights.length) h += '<h2>Credentials & training</h2><ul class="list-check">' + f.highlights.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    if (f.offers && f.offers.length) h += '<h2>What you can book</h2><div class="fp-offers">' + f.offers.map(function (o) { return '<div class="fp-offer"><h4>' + esc(o.title) + '</h4><p>' + esc(o.text) + '</p></div>'; }).join('') + '</div>';
+    if (f.gallery && f.gallery.length) {
+      h += '<h2 id="gallery">Gallery</h2><div class="fp-gallery">' + f.gallery.map(function (g, k) { return '<a href="' + esc(g.src) + '" data-gal="' + k + '"><img src="' + esc(g.src) + '" alt="' + esc(g.caption || f.name) + '" loading="lazy" decoding="async" onerror="this.closest(\'a\').remove()"/>' + (g.caption ? '<figcaption>' + esc(g.caption) + '</figcaption>' : '') + '</a>'; }).join('') + '</div>';
+    } else if (f.sample) {
+      h += '<h2 id="gallery">Gallery</h2><p class="muted">Photos are added when the provider is listed.</p>';
+    }
+    /* related events: explicit slugs + any event naming this facilitator */
+    if (window.TRE_EVENTS) {
+      var evs = normaliseEvents(window.TRE_EVENTS).filter(function (e) { return !e._past && ((f.events || []).indexOf(e.slug) >= 0 || (e.facilitator || '').indexOf(f.name) >= 0); }).sort(function (a, b) { return a._start - b._start; }).slice(0, 3);
+      if (evs.length) h += '<h2>Upcoming with ' + esc(f.name.split(' ')[0]) + '</h2><div class="event-grid">' + evs.map(renderCard).join('') + '</div>';
+    }
+    h += '</div><aside class="fp-side">';
+    h += '<div class="evt-box"><h3>Get in touch</h3><div class="btn-row" style="margin:0;display:grid;gap:.5rem">' + (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-outline', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-outline', 'whatsapp', 'WhatsApp') : '') + '</div>' +
+      (f.sample ? '<p class="fine">Sample profile — enquiries go to TRE™ in Singapore, who will connect you with a certified provider.</p>' : '<p class="fine">Questions before booking? Ask before the session rather than on the day — we are glad to help.</p>') + '</div>';
+    if (f.website || (f.socials && f.socials.length)) {
+      h += '<div class="evt-box"><h3>Website & socials</h3><ul class="fp-links">' + (f.website ? '<li><a href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + '<span>' + esc(f.website.label || 'Website') + '<small>Website</small></span></a></li>' : '') +
+        (f.socials || []).map(function (s) { return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + '<span>' + esc(s.label || s.type) + '<small>' + esc(s.type.charAt(0).toUpperCase() + s.type.slice(1)) + '</small></span></a></li>'; }).join('') + '</ul></div>';
+    }
+    h += '<div class="evt-box"><h3>More facilitators</h3><ul class="fp-links">' + window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id && !x.sample; }).map(function (x) { return '<li><a href="facilitator.html?id=' + encodeURIComponent(x.id) + '">' + FAC_ICONS.group + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + '</small></span></a></li>'; }).join('') + '<li><a href="facilitators.html#directory">' + ICONS.pin + '<span>Provider directory<small>All certified providers in Singapore</small></span></a></li></ul></div>';
+    h += '</aside></div></section>';
+    root.innerHTML = h;
+
+    /* lightbox */
+    root.addEventListener('click', function (e) {
+      var a = e.target.closest('.fp-gallery a'); if (!a) return;
+      e.preventDefault();
+      var img = a.querySelector('img'), cap = a.querySelector('figcaption');
+      var lb = document.createElement('figure'); lb.className = 'fp-lightbox';
+      lb.innerHTML = '<button class="close" type="button" aria-label="Close">&times;</button><img src="' + esc(a.getAttribute('href')) + '" alt="' + esc(img ? img.alt : '') + '"/>' + (cap ? '<figcaption>' + esc(cap.textContent) + '</figcaption>' : '');
+      document.body.appendChild(lb);
+      function close() { lb.remove(); document.removeEventListener('keydown', onKey); }
+      function onKey(ev) { if (ev.key === 'Escape') close(); }
+      lb.addEventListener('click', close); document.addEventListener('keydown', onKey);
+    });
   }
   function initFeatured() {
     var grids = $all('[data-featured-facilitators]'); if (!grids.length || !window.TRE_FACILITATORS) return;
@@ -424,7 +518,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    initChrome(); initNav(); initYear(); initReveal(); initInteractions(); initEvents(); initEventPage(); initFeatured();
+    initChrome(); initNav(); initYear(); initReveal(); initInteractions(); initEvents(); initEventPage(); initFeatured(); initFacilitatorPage();
     var form = document.getElementById('contact-form'); if (form) initForm(form);
   });
 })();
