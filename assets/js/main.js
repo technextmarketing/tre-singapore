@@ -453,7 +453,7 @@
     }
     /* related events: explicit slugs + any event naming this facilitator */
     if (window.TRE_EVENTS) {
-      var evs = normaliseEvents(window.TRE_EVENTS).filter(function (e) { return !e._past && ((f.events || []).indexOf(e.slug) >= 0 || (e.facilitator || '').indexOf(f.name) >= 0); }).sort(function (a, b) { return a._start - b._start; }).slice(0, 3);
+      var evs = normaliseEvents(window.TRE_EVENTS).filter(function (e) { return !e._past && ((f.events || []).indexOf(e.slug) >= 0 || (e.facilitator || '').indexOf(f.name) >= 0); }).sort(function (a, b) { return a._start - b._start; }).slice(0, 2);
       if (evs.length) h += '<h2>Upcoming with ' + esc(f.name.split(' ')[0]) + '</h2><div class="event-grid event-grid-2">' + evs.map(renderCard).join('') + '</div>';
     }
     h += '</div><aside class="fp-side">';
