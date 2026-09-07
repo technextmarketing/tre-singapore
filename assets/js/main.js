@@ -242,9 +242,25 @@
     }
     if (d.includes && d.includes.length) { h += '<h2>What is included</h2><ul class="list-check">' + list(d.includes) + '</ul>'; }
     if (d.facilitators && d.facilitators.length) {
-      h += '<h2>Your facilitator' + (d.facilitators.length > 1 ? 's' : '') + '</h2><div class="evt-people">' + d.facilitators.map(function (f) {
-        return '<div class="person"><span class="role">' + esc(f.role) + '</span><h4>' + esc(f.name) + '</h4><p>' + esc(f.bio) + '</p>' + (f.link ? extLink(f.link, 'link-arrow', f.linkText || 'Learn more') : '') + '</div>';
-      }).join('') + '</div>' + (d.partners ? '<p class="note" style="margin-top:1rem">' + esc(d.partners) + '</p>' : '');
+      /* presentation cards: match each event facilitator to the directory by name to pull photo, tags and contact buttons */
+      var pool = window.TRE_FACILITATORS || [], FI = (typeof FAC_ICONS !== 'undefined') ? FAC_ICONS : {};
+      h += '<h2>Your facilitator' + (d.facilitators.length > 1 ? 's' : '') + '</h2><div class="evt-people' + (d.facilitators.length === 1 ? ' one' : '') + '">' + d.facilitators.map(function (f) {
+        var m = pool.filter(function (x) { return (x.name || '').toLowerCase() === (f.name || '').toLowerCase(); })[0];
+        var profile = m ? ROOT + 'facilitator.html?id=' + encodeURIComponent(m.id) : (f.link || '');
+        var initials = (m && m.initials) || (f.name || '').split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 3);
+        var avatar = (m && m.photo) ? '<img src="' + esc(ROOT + m.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span>' + esc(initials) + '</span>';
+        var pc = esc((m && m.photoClass) || '');
+        var photo = profile ? '<a class="person-photo ' + pc + '" href="' + esc(profile) + '"' + (isExternal(profile) ? ' target="_blank" rel="noopener"' : '') + ' aria-label="View profile: ' + esc(f.name) + '">' + avatar + '</a>' : '<div class="person-photo ' + pc + '">' + avatar + '</div>';
+        var tags = m ? (m.services || m.tags || []).slice(0, 4).map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('') : '';
+        var meta = m ? (m.meta || []).slice(0, 2).map(function (x) { return '<li>' + (FI[x.icon] || ICONS.pin) + '<span>' + esc(x.text) + '</span></li>'; }).join('') : '';
+        var c = (m && m.contact) || {}, acts = '';
+        if (profile) acts += '<a class="btn btn-navy btn-sm" href="' + esc(profile) + '"' + (isExternal(profile) ? ' target="_blank" rel="noopener"' : '') + '>' + (m ? 'View profile' : esc(f.linkText || 'Learn more')) + '</a>';
+        if (c.email) acts += ctaLink(c.email, 'btn btn-outline btn-sm', 'email', 'Email');
+        if (c.whatsapp) acts += ctaLink(c.whatsapp, 'btn btn-outline btn-sm', 'whatsapp', 'WhatsApp');
+        if (c.book) acts += ctaLink(c.book, 'btn btn-primary btn-sm', 'book', 'Book now');
+        return '<article class="person v2">' + photo + '<div class="person-body"><span class="role">' + esc(f.role) + '</span><h4>' + (profile ? '<a href="' + esc(profile) + '">' + esc(f.name) + '</a>' : esc(f.name)) + '</h4><p>' + esc(f.bio) + '</p>' +
+          (meta ? '<ul class="person-meta">' + meta + '</ul>' : '') + (tags ? '<div class="person-tags">' + tags + '</div>' : '') + (acts ? '<div class="person-actions">' + acts + '</div>' : '') + '</div></article>';
+      }).join('') + '</div>' + (d.partners ? '<p class="note" style="margin:-1.6rem 0 var(--s6)">' + esc(d.partners) + '</p>' : '');
     }
     if (d.online) {
       h += '<div class="prep-box" id="prepare"><span class="eyebrow" style="color:var(--gold)">Joining online? Prepare your space first</span><h2>Preparing for your online TRE® session</h2>' +
@@ -263,10 +279,10 @@
     h += '<div class="evt-box"><h3>' + (ev._past ? 'This event has ended' : ev._soldOut ? 'Sold out — waitlist' : 'Register') + '</h3>';
     if (d.pricing && d.pricing.length) {
       h += '<div class="evt-price-tiers">' + d.pricing.map(function (t) {
-        return '<div class="tier' + (t.hl ? ' hl' : '') + (t.soldOut ? ' soldout' : '') + '"><div class="tl">' + esc(t.label) + (t.sub ? '<small>' + esc(t.sub) + '</small>' : '') + '</div><div class="tp">' + esc(t.price) + (t.note ? '<small>' + esc(t.note) + '</small>' : '') + '</div></div>';
+        return '<div class="tier' + (t.hl ? ' hl' : '') + (t.soldOut ? ' soldout' : '') + '"><div class="tl">' + esc(t.label) + (t.sub ? '<small>' + esc(t.sub) + '</small>' : '') + '</div><div class="tp"><b>' + esc(t.price) + '</b>' + (t.note ? '<small>' + esc(t.note) + '</small>' : '') + '</div></div>';
       }).join('') + '</div>';
     } else if (ev.price) {
-      h += '<div class="evt-price-tiers"><div class="tier hl"><div class="tl">' + esc(ev.title) + '</div><div class="tp">' + esc(ev.price) + (ev.priceNote ? '<small>' + esc(ev.priceNote) + '</small>' : '') + '</div></div></div>';
+      h += '<div class="evt-price-tiers"><div class="tier hl"><div class="tl">' + esc(ev.title) + '</div><div class="tp"><b>' + esc(ev.price) + '</b>' + (ev.priceNote ? '<small>' + esc(ev.priceNote) + '</small>' : '') + '</div></div></div>';
     } else if (ev.priceText) { h += '<p class="muted" style="margin:0">' + esc(ev.priceText) + '</p>'; }
     if (!ev._past) {
       (d.register || []).forEach(function (r, i) { h += extLink(r.url, 'btn ' + (r.primary || i === 0 ? 'btn-primary' : 'btn-outline'), r.label); });
