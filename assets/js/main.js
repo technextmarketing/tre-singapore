@@ -454,7 +454,7 @@
     /* related events: explicit slugs + any event naming this facilitator */
     if (window.TRE_EVENTS) {
       var evs = normaliseEvents(window.TRE_EVENTS).filter(function (e) { return !e._past && ((f.events || []).indexOf(e.slug) >= 0 || (e.facilitator || '').indexOf(f.name) >= 0); }).sort(function (a, b) { return a._start - b._start; }).slice(0, 3);
-      if (evs.length) h += '<h2>Upcoming with ' + esc(f.name.split(' ')[0]) + '</h2><div class="event-grid">' + evs.map(renderCard).join('') + '</div>';
+      if (evs.length) h += '<h2>Upcoming with ' + esc(f.name.split(' ')[0]) + '</h2><div class="event-grid event-grid-2">' + evs.map(renderCard).join('') + '</div>';
     }
     h += '</div><aside class="fp-side">';
     h += '<div class="evt-box"><h3>Get in touch</h3><div class="btn-row" style="margin:0;display:grid;gap:.5rem">' + (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-outline', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-outline', 'whatsapp', 'WhatsApp') : '') + '</div>' +
