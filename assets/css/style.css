@@ -923,6 +923,8 @@ a.fac-photo{display:grid;text-decoration:none}
   filter:saturate(.85)}
 .fp-hero.has-bg::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,31,61,.96) 0%,rgba(15,31,61,.86) 40%,rgba(15,31,61,.35) 100%),linear-gradient(180deg,rgba(15,31,61,.35),transparent 30%,transparent 70%,rgba(15,31,61,.6));z-index:0}
 .fp-hero.has-bg .container{z-index:1}
+/* single-column layouts: the photo sits above the text, so darken the whole backdrop for legibility */
+@media (max-width:900px){.fp-hero.has-bg::before{background:linear-gradient(180deg,rgba(15,31,61,.62) 0%,rgba(15,31,61,.9) 38%,rgba(15,31,61,.97) 100%)}.fp-hero-bg{opacity:.45}}
 .fp-ticker{background:var(--navy-ink);border-color:rgba(255,255,255,.08);padding:11px 0}
 .fp-ticker span{color:#dbe3f1;font-size:.82rem;letter-spacing:.02em}
 .fp-ticker span i{background:var(--gold)}
@@ -995,6 +997,10 @@ a.fac-photo{display:grid;text-decoration:none}
 
 /* guide page */
 .guide-hero{padding-bottom:72px}
+/* links inside dark heroes must read as links (gold), never navy-on-navy */
+.page-hero .prep{margin-top:1.3rem;font-size:.92rem;color:#c5d0e4}
+.page-hero p a,.page-hero .prep a,.fp-hero .lead a,.evt-hero .lead a,.events-hero p a,.hero-full p a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.page-hero p a:hover,.fp-hero .lead a:hover,.evt-hero .lead a:hover{color:#fff}
 .cam-grid .card{padding:var(--s4) var(--s4) var(--s5)}
 .cam-svg{width:100%;height:auto;display:block;border-radius:10px;margin-bottom:var(--s4)}
 .cam-tips{display:grid;grid-template-columns:1fr 1fr;gap:.4rem 2rem;max-width:960px;margin:var(--s6) auto 0}
