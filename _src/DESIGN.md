@@ -1,4 +1,4 @@
-# DESIGN.md — TRE™ in Singapore
+# DESIGN.md — TRE® in Singapore
 
 Design system for the static site. Tokens live in `assets/css/style.css` (`:root`). Mode: **persuade** (marketing site for a wellbeing practice) with a **read** mode for blog articles.
 

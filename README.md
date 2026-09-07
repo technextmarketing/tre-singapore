@@ -1,21 +1,26 @@
-# TRE™ in Singapore — website
+# TRE® in Singapore — website
 
-A static, dependency-free HTML/CSS/JS website for **TRE™ in Singapore** (tre-in-singapore.com), built as a community hub for TRE™ (Tension & Trauma Releasing Exercises) practitioners in Singapore.
+A static, dependency-free HTML/CSS/JS website for **TRE® in Singapore** (tre-in-singapore.com), built as a community hub for TRE® (Tension & Trauma Releasing Exercises) practitioners in Singapore.
 
 ## Pages
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Home — hero, pillars, what is TRE™, practitioner hub, upcoming events, founder spotlight, blog teasers |
+| `index.html` | Home — hero, pillars, what is TRE®, practitioner hub, upcoming events, founder spotlight, blog teasers |
 | `about.html` | Who we are, Isabelle's biography and milestones, values, the operating company |
-| `education.html` | What TRE™ is, how it works, safety, who it is for, the 3-module certification, fees table, FAQ |
-| `facilitators.html` | Certifying Trainer profile, visiting trainers, provider directory, "get listed" |
-| `events.html` | Events & Sessions (modelled on hummingbeing.com/events.html): countdown, filter tabs, event cards, past events, online prep guide |
+| `education.html` | What TRE® is, how it works, safety, who it is for, the 3-module certification, fees table, FAQ |
+| `facilitators.html` | One filterable, searchable grid of every trainer and provider (order shuffles on each load; data in `assets/js/facilitators-data.js`), "get listed" |
+| `facilitator.html?id=…` | Facilitator profile: masked hero photo, services ticker, credentials, offers, gallery with lightbox, upcoming events, contact/socials |
+| `events.html` | Events & Sessions (mirrors hummingbeing.com/events.html): countdown, filter tabs, event cards, past events, online prep summary |
+| `event.html?id=…` | Event detail page rendered from `assets/js/events-data.js` |
+| `online-session-guide.html` | Our own guide to setting up for an online TRE® session (camera diagrams, checklist, safety, Zoom, on-the-day, FAQ) |
 | `blog.html` | Article listing + newsletter box |
 | `blog/*.html` | Six full articles |
 | `contact.html` | Contact details, form, map, response times, FAQ |
 
-Shared assets: `assets/css/style.css`, `assets/js/main.js`, `assets/js/events-data.js`, `assets/img/favicon.svg`.
+Shared assets: `assets/css/style.css`, `assets/js/main.js` (site behaviour, event/facilitator rendering, TRE® explainer bubble, lobby ambience), `assets/js/chatbot.js` (rule-based site assistant, no external calls), `assets/js/events-data.js`, `assets/js/facilitators-data.js`, `assets/img/`.
+
+Site-wide behaviours: every "TRE®" in page text becomes a tappable term that opens a bubble explaining the name and origin; a soft generative ambient pad plays at 10% volume after the visitor's first tap (toggle bottom-right, remembered in localStorage); the floating cluster is back-to-top + WhatsApp on the bottom row with sound and "Ask us" chat above. The home hero is full-screen and video-ready — uncomment the `<video>` in `index.html` and drop in a muted loop.
 
 ## Editing the header, navigation or footer
 

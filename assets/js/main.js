@@ -1,4 +1,4 @@
-/* TRE™ in Singapore — site behaviour (v2)
+/* TRE® in Singapore — site behaviour (v2)
    - header scroll state, scroll progress, back-to-top
    - mobile navigation
    - staggered scroll reveal, stat count-up, button ripple, CTA spotlight
@@ -203,11 +203,11 @@
     var ev = events.filter(function (e) { return e.slug === id; })[0];
     if (!ev) {
       root.innerHTML = '<section class="section"><div class="container event-not-found"><span class="eyebrow">Events</span><h1>Event not found</h1><p class="muted">That event may have been renamed or removed. Browse the calendar for the latest dates.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="events.html">Browse all events</a></div></div></section>';
-      document.title = 'Event not found — TRE™ in Singapore';
+      document.title = 'Event not found — TRE® in Singapore';
       return;
     }
     var d = ev.details || {};
-    document.title = ev.title + ' — TRE™ in Singapore';
+    document.title = ev.title + ' — TRE® in Singapore';
     var md = $('meta[name="description"]'); if (md) md.setAttribute('content', d.summary || ev.description || '');
     var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', ev.title);
     var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', d.summary || ev.description || '');
@@ -247,14 +247,14 @@
       }).join('') + '</div>' + (d.partners ? '<p class="note" style="margin-top:1rem">' + esc(d.partners) + '</p>' : '');
     }
     if (d.online) {
-      h += '<div class="prep-box" id="prepare"><span class="eyebrow" style="color:var(--gold)">Joining online? Prepare your space first</span><h2>Preparing for your online TRE™ session</h2>' +
+      h += '<div class="prep-box" id="prepare"><span class="eyebrow" style="color:var(--gold)">Joining online? Prepare your space first</span><h2>Preparing for your online TRE® session</h2>' +
         '<p>Everything your facilitator can offer you comes through the camera — so we must be able to see you <strong>head to toe, both standing and on the mat</strong>. Please test your camera before the session starts.</p>' +
         '<ul class="list-check"><li><strong>Space & camera:</strong> a room where the device can sit about 2–2.5 m away, landscape, roughly hip height — to the side of your mat, not at your head or feet.</li>' +
         '<li><strong>Kit:</strong> a yoga mat, a device with a camera (the bigger the screen the better), wireless headphones (required in group classes), reliable internet, and pillows, cushions or blankets.</li>' +
         '<li><strong>Lighting & clothing:</strong> light the room well and face the light; wear loose, stretchy, light-coloured trousers — dark clothing hides your tremors.</li>' +
         '<li><strong>Someone you trust nearby:</strong> in the same home or next door for the duration, with their name and phone number on your consent form.</li>' +
         '<li><strong>Zoom:</strong> install the Zoom app, sign in with the email you registered with, test camera and microphone, and join through the app (not the browser) a few minutes early.</li></ul>' +
-        '<div class="btn-row"><a class="btn btn-primary" href="' + esc(window.TRE_PREP_GUIDE || '#') + '" target="_blank" rel="noopener">Read the full preparation guide</a><a class="btn btn-ghost-light" href="' + esc(window.TRE_PREP_PDF || '#') + '" target="_blank" rel="noopener">Download the PDF guide</a></div></div>';
+        '<div class="btn-row"><a class="btn btn-primary" href="' + ROOT + 'online-session-guide.html">Read the full set-up guide</a><a class="btn btn-ghost-light" href="' + esc(window.TRE_PREP_PDF || '#') + '" target="_blank" rel="noopener">Download the PDF guide</a></div></div>';
     }
     h += '</div>';
 
@@ -383,7 +383,9 @@
     book: ICONS.calendar
   };
   function ctaLink(url, cls, icon, label) { return '<a class="' + cls + '" href="' + esc(url) + '"' + (isExternal(url) ? ' target="_blank" rel="noopener"' : '') + '>' + CTA_ICONS[icon] + esc(label) + '</a>'; }
-  function renderFacilitator(f, i) {
+  function shuffleArr(arr) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function renderFacilitator(f, i, opts) {
+    var featured = !!(opts && opts.featured);
     var meta = (f.meta || []).map(function (m) { return '<li>' + (FAC_ICONS[m.icon] || FAC_ICONS.pin) + '<span>' + esc(m.text) + '</span></li>'; }).join('');
     var c = f.contact, acts = '';
     if (c) {
@@ -394,7 +396,7 @@
     var profile = ROOT + 'facilitator.html?id=' + encodeURIComponent(f.id);
     return '<article class="fac-card reveal in" style="--i:' + i + '">' +
       (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') +
-      '<a class="fac-photo ' + esc(f.photoClass || '') + '" href="' + esc(profile) + '" aria-label="View profile: ' + esc(f.name) + '">' + (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '<span class="feat-badge">Featured today</span></a>' +
+      '<a class="fac-photo ' + esc(f.photoClass || '') + '" href="' + esc(profile) + '" aria-label="View profile: ' + esc(f.name) + '">' + (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + (featured ? '<span class="feat-badge">Featured today</span>' : '') + '</a>' +
       '<div class="fac-body">' + (f.tag ? '<div class="tags"><span class="badge ' + esc(f.tagClass || 'badge-navy') + '">' + esc(f.tag) + '</span></div>' : '') +
       '<h3><a href="' + esc(profile) + '">' + esc(f.name) + '</a></h3><div class="fac-role">' + esc(f.role) + '</div>' +
       '<a class="link-arrow" href="' + esc(profile) + '">View profile</a><p>' + esc(f.bio) + '</p>' +
@@ -416,9 +418,9 @@
     var f = window.TRE_FACILITATORS.filter(function (x) { return x.id === id; })[0];
     if (!f) {
       root.innerHTML = '<section class="section"><div class="container event-not-found"><span class="eyebrow">Facilitators</span><h1>Profile not found</h1><p class="muted">That profile may have been renamed or removed.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="facilitators.html">Browse all facilitators</a></div></div></section>';
-      document.title = 'Profile not found — TRE™ in Singapore'; return;
+      document.title = 'Profile not found — TRE® in Singapore'; return;
     }
-    document.title = f.name + ' — TRE™ facilitator in Singapore';
+    document.title = f.name + ' — TRE® facilitator in Singapore';
     var md = $('meta[name="description"]'); if (md) md.setAttribute('content', f.summary || f.bio || '');
     var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', f.name + ' — ' + f.role);
     var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', f.summary || f.bio || '');
@@ -434,13 +436,17 @@
       '<div class="fact">' + FAC_ICONS.group + '<div><b>Formats</b><span>' + esc(fx.formats || '—') + '</span></div></div>' +
       '<div class="fact">' + ICONS.award + '<div><b>Certification</b><span>' + esc(fx.certified || '—') + '</span></div></div>';
 
-    var h = '<section class="fp-hero"><div class="container"><div>' +
+    var h = '<section class="fp-hero' + (f.hero ? ' has-bg' : '') + '">' + (f.hero ? '<div class="fp-hero-bg" style="background-image:url(\'' + esc(f.hero) + '\')"></div>' : '') + '<div class="container"><div>' +
       '<p class="crumbs"><a href="facilitators.html">Facilitators</a> › ' + esc(f.tag || 'Profile') + '</p>' +
       '<div class="badges"><span class="badge gold">' + esc(f.tag || 'Facilitator') + '</span>' + (f.sample ? '<span class="badge">Sample profile</span>' : '') + '</div>' +
       '<h1>' + esc(f.name) + '</h1><p class="role">' + esc(f.role) + '</p><p class="lead">' + esc(f.summary || f.bio) + '</p>' +
       '<div class="btn-row">' + ctas + '</div>' + (socials ? '<div class="fp-socials">' + socials + '</div>' : '') + '</div>' +
       '<div class="fp-photo ' + esc(f.photoClass || '') + '">' + (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') + (f.photo ? '<img src="' + esc(f.photo) + '" alt="' + esc(f.name) + '"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '</div>' +
       '</div></section>';
+    if (f.services && f.services.length) {
+      var tags = f.services.map(function (s) { return '<span>' + esc(s) + ' <i></i></span>'; }).join('');
+      h += '<div class="marquee fp-ticker" aria-label="Services offered"><div class="marquee-track"><span>' + tags + '</span><span aria-hidden="true">' + tags + '</span></div></div>';
+    }
     h += '<div class="container evt-facts fp-facts"><div class="grid">' + facts + '</div></div>';
     h += '<section class="section"><div class="container fp-layout"><div class="fp-main">';
     if (f.about && f.about.length) h += '<h2>About ' + esc(f.name.split(' ')[0]) + '</h2>' + f.about.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
@@ -458,33 +464,141 @@
     }
     h += '</div><aside class="fp-side">';
     h += '<div class="evt-box"><h3>Get in touch</h3><div class="btn-row" style="margin:0;display:grid;gap:.5rem">' + (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-outline', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-outline', 'whatsapp', 'WhatsApp') : '') + '</div>' +
-      (f.sample ? '<p class="fine">Sample profile — enquiries go to TRE™ in Singapore, who will connect you with a certified provider.</p>' : '<p class="fine">Questions before booking? Ask before the session rather than on the day — we are glad to help.</p>') + '</div>';
+      (f.sample ? '<p class="fine">Sample profile — enquiries go to TRE® in Singapore, who will connect you with a certified provider.</p>' : '<p class="fine">Questions before booking? Ask before the session rather than on the day — we are glad to help.</p>') + '</div>';
     if (f.website || (f.socials && f.socials.length)) {
       h += '<div class="evt-box"><h3>Website & socials</h3><ul class="fp-links">' + (f.website ? '<li><a href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + '<span>' + esc(f.website.label || 'Website') + '<small>Website</small></span></a></li>' : '') +
         (f.socials || []).map(function (s) { return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + '<span>' + esc(s.label || s.type) + '<small>' + esc(s.type.charAt(0).toUpperCase() + s.type.slice(1)) + '</small></span></a></li>'; }).join('') + '</ul></div>';
     }
-    h += '<div class="evt-box"><h3>More facilitators</h3><ul class="fp-links">' + window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id && !x.sample; }).map(function (x) { return '<li><a href="facilitator.html?id=' + encodeURIComponent(x.id) + '">' + FAC_ICONS.group + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + '</small></span></a></li>'; }).join('') + '<li><a href="facilitators.html#directory">' + ICONS.pin + '<span>Provider directory<small>All certified providers in Singapore</small></span></a></li></ul></div>';
+    h += '<div class="evt-box"><h3>More facilitators</h3><ul class="fp-links">' + shuffleArr(window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id; })).slice(0, 4).map(function (x) { return '<li><a href="facilitator.html?id=' + encodeURIComponent(x.id) + '">' + FAC_ICONS.group + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + (x.sample ? ' · sample' : '') + '</small></span></a></li>'; }).join('') + '<li><a href="facilitators.html#directory">' + ICONS.pin + '<span>All facilitators<small>Trainers and providers in Singapore</small></span></a></li></ul></div>';
     h += '</aside></div></section>';
     root.innerHTML = h;
 
-    /* lightbox */
+    /* lightbox with previous / next */
+    var gal = (f.gallery || []).filter(function (g) { return g && g.src; });
     root.addEventListener('click', function (e) {
       var a = e.target.closest('.fp-gallery a'); if (!a) return;
       e.preventDefault();
-      var img = a.querySelector('img'), cap = a.querySelector('figcaption');
+      var idx = parseInt(a.getAttribute('data-gal'), 10) || 0;
       var lb = document.createElement('figure'); lb.className = 'fp-lightbox';
-      lb.innerHTML = '<button class="close" type="button" aria-label="Close">&times;</button><img src="' + esc(a.getAttribute('href')) + '" alt="' + esc(img ? img.alt : '') + '"/>' + (cap ? '<figcaption>' + esc(cap.textContent) + '</figcaption>' : '');
+      lb.innerHTML = '<button class="close" type="button" aria-label="Close">&times;</button><span class="count"></span><div class="frame"><button class="nav prev" type="button" aria-label="Previous photo">&#8249;</button><img alt=""/><button class="nav next" type="button" aria-label="Next photo">&#8250;</button></div><figcaption></figcaption>';
       document.body.appendChild(lb);
+      var im = lb.querySelector('img'), cap = lb.querySelector('figcaption'), cnt = lb.querySelector('.count');
+      function show(i) { idx = (i + gal.length) % gal.length; im.src = gal[idx].src; im.alt = gal[idx].caption || f.name; cap.textContent = gal[idx].caption || ''; cnt.textContent = (idx + 1) + ' / ' + gal.length; lb.querySelector('.prev').hidden = lb.querySelector('.next').hidden = gal.length < 2; }
       function close() { lb.remove(); document.removeEventListener('keydown', onKey); }
-      function onKey(ev) { if (ev.key === 'Escape') close(); }
-      lb.addEventListener('click', close); document.addEventListener('keydown', onKey);
+      function onKey(ev) { if (ev.key === 'Escape') close(); else if (ev.key === 'ArrowLeft') show(idx - 1); else if (ev.key === 'ArrowRight') show(idx + 1); }
+      lb.addEventListener('click', function (ev) { if (ev.target.closest('.prev')) show(idx - 1); else if (ev.target.closest('.next')) show(idx + 1); else if (ev.target === lb || ev.target === im || ev.target.closest('.close')) close(); });
+      var sx = null; lb.addEventListener('touchstart', function (ev) { sx = ev.touches[0].clientX; }, { passive: true }); lb.addEventListener('touchend', function (ev) { if (sx == null) return; var dx = ev.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1)); sx = null; });
+      document.addEventListener('keydown', onKey); show(idx);
     });
+  }
+
+  /* ---------- Facilitators page: one shuffled grid + filters + search ---------- */
+  function initFacilitatorsGrid() {
+    var grid = $('[data-facilitators-grid]'); if (!grid || !window.TRE_FACILITATORS) return;
+    var order = shuffleArr(window.TRE_FACILITATORS), kind = 'all', mode = 'all', q = '';
+    var count = $('[data-fac-count]');
+    function hay(f) { return [f.name, f.role, f.bio, f.tag, (f.services || []).join(' '), (f.meta || []).map(function (m) { return m.text; }).join(' '), f.facts && f.facts.location, f.facts && f.facts.languages].join(' ').toLowerCase(); }
+    function render() {
+      var list = order.filter(function (f) { return (kind === 'all' || f.kind === kind) && (mode === 'all' || (f.modes || []).indexOf(mode) >= 0) && (!q || hay(f).indexOf(q) >= 0); });
+      grid.innerHTML = list.length ? list.map(function (f, i) { return renderFacilitator(f, i); }).join('') : '<div class="event-empty" style="grid-column:1/-1">No facilitators match those filters. <button type="button" class="link-arrow" data-fac-reset>Show everyone</button></div>';
+      if (count) count.textContent = list.length + ' of ' + order.length + ' facilitators · order shuffles on every visit';
+    }
+    $all('[data-fac-filter="kind"] .filter-btn').forEach(function (b) { b.addEventListener('click', function () { $all('[data-fac-filter="kind"] .filter-btn').forEach(function (x) { x.classList.remove('active'); }); b.classList.add('active'); kind = b.getAttribute('data-value'); render(); }); });
+    $all('[data-fac-filter="mode"] .chip').forEach(function (b) { b.addEventListener('click', function () { $all('[data-fac-filter="mode"] .chip').forEach(function (x) { x.classList.remove('active'); }); b.classList.add('active'); mode = b.getAttribute('data-value'); render(); }); });
+    var search = $('[data-fac-search]'); if (search) search.addEventListener('input', function () { q = search.value.trim().toLowerCase(); render(); });
+    var shuf = $('[data-fac-shuffle]'); if (shuf) shuf.addEventListener('click', function () { order = shuffleArr(order); render(); });
+    grid.addEventListener('click', function (e) { if (e.target.closest('[data-fac-reset]')) { kind = 'all'; mode = 'all'; q = ''; if (search) search.value = ''; $all('[data-fac-filter] .filter-btn, [data-fac-filter] .chip').forEach(function (x) { x.classList.toggle('active', x.getAttribute('data-value') === 'all'); }); render(); } });
+    render();
+  }
+
+  /* ---------- TRE® explainer bubble: tap any "TRE®" to see what it stands for ---------- */
+  var TRE_HTML = '<b>TRE® — Tension &amp; Trauma Releasing Exercises</b><p>A series of seven simple exercises that switch on the body\'s natural tremor reflex (neurogenic tremors) to release deep muscular tension, stress and trauma from the nervous system.</p><p>Created by Dr. David Berceli, PhD, an international trauma-recovery specialist, after years of working with communities in conflict zones and natural disasters. It is now taught worldwide through certified providers.</p><p>TRE® is a registered trademark of TRE For All, Inc. · <a href="' + ROOT + 'education.html">How TRE® works</a></p>';
+  function initTreTerm() {
+    var scope = $('main') || document.body; if (!scope) return;
+    var walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
+      if (!/TRE[®™]/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
+      var p = n.parentElement; if (!p || p.closest('script,style,textarea,input,select,option,.tre-term,.tre-pop,.marquee,.fp-ticker,.cb-panel,svg,.brand')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT; } });
+    var nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      var parts = n.nodeValue.split(/(TRE[®™])/); if (parts.length < 2) return;
+      var frag = document.createDocumentFragment();
+      parts.forEach(function (t) {
+        if (/^TRE[®™]$/.test(t)) { var s = document.createElement('span'); s.className = 'tre-term'; s.setAttribute('role', 'button'); s.setAttribute('tabindex', '0'); s.setAttribute('title', 'What does TRE® stand for?'); s.textContent = 'TRE®'; frag.appendChild(s); }
+        else if (t) frag.appendChild(document.createTextNode(t));
+      });
+      n.parentNode.replaceChild(frag, n);
+    });
+    var pop = null;
+    function closePop() { if (pop) { pop.remove(); pop = null; } }
+    function openPop(term) {
+      closePop();
+      pop = document.createElement('div'); pop.className = 'tre-pop'; pop.setAttribute('role', 'dialog'); pop.innerHTML = TRE_HTML + '<button class="x" type="button" aria-label="Close">&times;</button>';
+      document.body.appendChild(pop);
+      var r = term.getBoundingClientRect(), w = pop.offsetWidth, h = pop.offsetHeight;
+      var left = Math.min(Math.max(12, r.left + r.width / 2 - w / 2), window.innerWidth - w - 12), top = r.top - h - 12, below = false;
+      if (top < 12) { top = r.bottom + 12; below = true; }
+      pop.style.left = left + 'px'; pop.style.top = top + 'px'; pop.classList.toggle('below', below);
+      pop.style.setProperty('--ax', Math.max(18, Math.min(w - 18, r.left + r.width / 2 - left)) + 'px');
+      pop.querySelector('.x').addEventListener('click', closePop);
+    }
+    document.addEventListener('click', function (e) {
+      var t = e.target.closest('.tre-term');
+      if (t) { e.preventDefault(); e.stopPropagation(); if (pop && pop._for === t) { closePop(); return; } openPop(t); pop._for = t; return; }
+      if (pop && !pop.contains(e.target)) closePop();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePop(); if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('tre-term')) { e.preventDefault(); openPop(e.target); pop._for = e.target; } });
+    window.addEventListener('scroll', closePop, { passive: true });
+    window.addEventListener('resize', closePop);
+  }
+
+  /* ---------- Lobby ambience: soft generative pad at 10% volume, loops, toggle bottom-right ---------- */
+  function initAmbient() {
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    var KEY = 'tre-ambient', pref = 'on'; try { pref = localStorage.getItem(KEY) || 'on'; } catch (e) {}
+    var ctx = null, master = null, filter = null, timer = null, running = false, step = 0;
+    var CHORDS = [[0, 4, 7, 11], [-3, 0, 4, 7], [-7, -3, 0, 4], [-5, -1, 2, 7], [0, 4, 7, 9], [-8, -3, 0, 4]]; // Cmaj7 · Am7 · Fmaj7 · G · C6 · Ebmaj-ish drift
+    var BASE = 130.81; // C3
+    var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'snd-fab';
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h3l4 4V6L7 10H4z"/><path class="w1" d="M15 9.5a4 4 0 0 1 0 5"/><path class="w2" d="M17.5 7a7.5 7.5 0 0 1 0 10"/></svg><span class="tip"></span>';
+    document.body.appendChild(btn);
+    function label() { btn.setAttribute('aria-label', running ? 'Turn lobby music off' : 'Turn lobby music on'); btn.querySelector('.tip').textContent = running ? 'Lobby music on · click to mute' : (pref === 'on' ? 'Lobby music starts on your first tap' : 'Lobby music off · click to play'); btn.classList.toggle('on', running); }
+    function voice(freq, type, when, dur, peak) {
+      var o = ctx.createOscillator(), g = ctx.createGain(), lfo = ctx.createOscillator(), lg = ctx.createGain();
+      o.type = type; o.frequency.value = freq; lfo.frequency.value = 0.07 + Math.random() * 0.06; lg.gain.value = 2.2; lfo.connect(lg); lg.connect(o.detune);
+      g.gain.setValueAtTime(0.0001, when); g.gain.exponentialRampToValueAtTime(peak, when + 3.5); g.gain.setValueAtTime(peak, when + dur - 4.5); g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+      o.connect(g); g.connect(filter); o.start(when); lfo.start(when); o.stop(when + dur + 0.1); lfo.stop(when + dur + 0.1);
+    }
+    function chord() {
+      if (!running) return;
+      var notes = CHORDS[step % CHORDS.length], t = ctx.currentTime, dur = 12;
+      notes.forEach(function (n, k) { voice(BASE * Math.pow(2, n / 12) * (k === 3 ? 2 : 1), k % 2 ? 'triangle' : 'sine', t, dur, 0.16 / notes.length); });
+      voice(BASE / 2 * Math.pow(2, notes[0] / 12), 'sine', t, dur, 0.09); // soft bass
+      step++; timer = setTimeout(chord, 8000);
+    }
+    function start() {
+      if (running) return;
+      try { ctx = ctx || new AC(); } catch (e) { return; }
+      if (ctx.state === 'suspended') ctx.resume();
+      if (!master) { master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination); filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 820; filter.Q.value = 0.4; filter.connect(master); }
+      running = true; master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value, ctx.currentTime); master.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 5); // 10% volume
+      chord(); label();
+    }
+    function stop() {
+      if (!running) return; running = false; clearTimeout(timer);
+      master.gain.cancelScheduledValues(ctx.currentTime); master.gain.setValueAtTime(master.gain.value, ctx.currentTime); master.gain.linearRampToValueAtTime(0, ctx.currentTime + 1.2); label();
+    }
+    btn.addEventListener('click', function () { if (running) { stop(); pref = 'off'; } else { pref = 'on'; start(); } try { localStorage.setItem(KEY, pref); } catch (e) {} });
+    function firstGesture() { document.removeEventListener('pointerdown', firstGesture); document.removeEventListener('keydown', firstGesture); if (pref === 'on') start(); }
+    document.addEventListener('pointerdown', firstGesture); document.addEventListener('keydown', firstGesture);
+    document.addEventListener('visibilitychange', function () { if (!ctx) return; if (document.hidden && running) ctx.suspend(); else if (!document.hidden && running) ctx.resume(); });
+    label();
   }
   function initFeatured() {
     var grids = $all('[data-featured-facilitators]'); if (!grids.length || !window.TRE_FACILITATORS) return;
     var pick = featuredFor(new Date(), 3);
     grids.forEach(function (grid) {
-      grid.innerHTML = pick.list.map(renderFacilitator).join('');
+      grid.innerHTML = pick.list.map(function (f, i) { return renderFacilitator(f, i, { featured: true }); }).join('');
       var note = $('[data-featured-note]'); if (note) {
         var sg = new Date(Date.now() + (new Date().getTimezoneOffset() + 480) * 60000);
         note.textContent = 'Featured on ' + sg.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) + ' (Singapore time) · a new set of three every day · day ' + pick.cycleDay + ' of ' + pick.perCycle + ' in this rotation.';
@@ -518,7 +632,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    initChrome(); initNav(); initYear(); initReveal(); initInteractions(); initEvents(); initEventPage(); initFeatured(); initFacilitatorPage();
+    initChrome(); initNav(); initYear(); initReveal(); initInteractions(); initEvents(); initEventPage(); initFeatured(); initFacilitatorPage(); initFacilitatorsGrid(); initTreTerm(); initAmbient();
     var form = document.getElementById('contact-form'); if (form) initForm(form);
   });
 })();
