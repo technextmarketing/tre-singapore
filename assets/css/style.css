@@ -837,3 +837,8 @@ a.fac-photo{display:grid;text-decoration:none}
 .featured-fac a.fac-photo{display:block}
 .event-grid-2{grid-template-columns:repeat(2,1fr)}
 @media (max-width:640px){.event-grid-2{grid-template-columns:1fr}}
+/* compact CTA row on facilitator cards: Email · WhatsApp · Book now */
+.fac-actions{display:flex;flex-wrap:wrap;gap:.4rem}
+.fac-actions .btn{flex:1 1 auto;font-size:.74rem;padding:.45rem .7rem;min-height:34px;gap:.3rem;letter-spacing:0}
+.fac-actions .btn svg{width:13px;height:13px;flex:0 0 13px}
+.fac-actions .btn-primary::after{display:none}
