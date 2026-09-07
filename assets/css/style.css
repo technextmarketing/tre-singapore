@@ -949,7 +949,7 @@ a.fac-photo{display:grid;text-decoration:none}
 @media (max-width:640px){.cb-panel{right:12px;left:12px;width:auto;bottom:140px;max-height:calc(100vh - 160px)}}
 
 /* TRE(R) term bubble */
-.tre-term{cursor:help;border-bottom:1px dotted currentColor;text-decoration:none;font:inherit;color:inherit;background:none;padding:0}
+.tre-term,abbr.tre-term,.stat span.tre-term,.date-chip span.tre-term,.when span.tre-term{display:inline;margin:0;padding:0;cursor:help;border-bottom:1px dotted currentColor;text-decoration:none;font:inherit;font-size:inherit;letter-spacing:inherit;text-transform:inherit;line-height:inherit;color:inherit;background:none;white-space:nowrap}
 .tre-term:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}
 .tre-pop{position:fixed;z-index:800;width:min(320px,calc(100vw - 24px));background:var(--navy-ink);color:#fff;border-radius:12px;padding:14px 16px;box-shadow:0 18px 50px rgba(0,0,0,.35);font-size:.86rem;line-height:1.55;animation:rise .2s var(--ease-out) both}
 .tre-pop::after{content:"";position:absolute;left:var(--ax,50%);bottom:-8px;width:16px;height:16px;background:var(--navy-ink);transform:translateX(-50%) rotate(45deg)}

@@ -517,14 +517,16 @@
     var scope = $('main') || document.body; if (!scope) return;
     var walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
       if (!/TRE[®™]/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
-      var p = n.parentElement; if (!p || p.closest('script,style,textarea,input,select,option,.tre-term,.tre-pop,.marquee,.fp-ticker,.cb-panel,svg,.brand')) return NodeFilter.FILTER_REJECT;
+      /* links and buttons keep their own click behaviour (and flex gaps), so terms inside them are left as plain text */
+      var p = n.parentElement; if (!p || p.closest('script,style,textarea,input,select,option,a,button,.btn,.tre-term,.tre-pop,.marquee,.fp-ticker,.cb-panel,svg,.brand')) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT; } });
     var nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach(function (n) {
       var parts = n.nodeValue.split(/(TRE[®™])/); if (parts.length < 2) return;
       var frag = document.createDocumentFragment();
       parts.forEach(function (t) {
-        if (/^TRE[®™]$/.test(t)) { var s = document.createElement('span'); s.className = 'tre-term'; s.setAttribute('role', 'button'); s.setAttribute('tabindex', '0'); s.setAttribute('title', 'What does TRE® stand for?'); s.textContent = 'TRE®'; frag.appendChild(s); }
+        /* <abbr> rather than <span>: descendant selectors such as ".stat span{display:block}" must not restyle the term */
+        if (/^TRE[®™]$/.test(t)) { var s = document.createElement('abbr'); s.className = 'tre-term'; s.setAttribute('role', 'button'); s.setAttribute('tabindex', '0'); s.setAttribute('title', 'What does TRE® stand for?'); s.textContent = 'TRE®'; frag.appendChild(s); }
         else if (t) frag.appendChild(document.createTextNode(t));
       });
       n.parentNode.replaceChild(frag, n);
