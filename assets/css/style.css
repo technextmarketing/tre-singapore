@@ -828,7 +828,7 @@ table.price .hl:hover{background:var(--cream-2)}
 .fp-lightbox img{max-width:100%;max-height:82vh;border-radius:8px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
 .fp-lightbox figcaption{position:absolute;left:0;right:0;bottom:22px;text-align:center;color:#fff;font-size:.95rem;padding:0 20px}
 .fp-lightbox .close{position:absolute;top:16px;right:16px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:1.5rem;cursor:pointer}
-@media (max-width:900px){.fp-hero .container{grid-template-columns:1fr;gap:var(--s6);padding-top:44px;padding-bottom:44px}.fp-photo{max-width:320px;margin:0 auto;order:-1}.fp-layout{grid-template-columns:1fr}.fp-side{position:static}.fp-facts .grid{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.fp-hero .container{grid-template-columns:1fr;gap:var(--s6);padding-top:44px;padding-bottom:44px}.fp-photo{width:100%;max-width:320px;margin:0 auto;order:-1}.fp-layout{grid-template-columns:1fr}.fp-side{position:static}.fp-facts .grid{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.fp-offers{grid-template-columns:1fr}.fp-gallery{grid-template-columns:1fr 1fr}.fp-gallery a:nth-child(1){grid-column:span 2;grid-row:auto;aspect-ratio:16/10}.fp-hero .btn-row .btn{flex:1 1 45%;justify-content:center}}
 @media (max-width:520px){.fp-facts .grid{grid-template-columns:1fr}.fp-hero h1{font-size:2rem}.fp-photo{max-width:240px}}
 .fac-card .fac-body > .link-arrow{min-height:auto;padding:0;font-size:.88rem;margin:-.15rem 0 .1rem}
