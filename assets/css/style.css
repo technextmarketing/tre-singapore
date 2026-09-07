@@ -587,6 +587,95 @@ table.price .hl:hover{background:var(--cream-2)}
 .mini h3{font-size:1rem;margin-bottom:.25rem;color:#fff}
 .mini p{font-size:.94rem;margin:0;color:#cdd8ea}
 
+/* ---------- Mobile refinements (≤640px) ---------- */
+@media (max-width:640px){
+  h1{font-size:clamp(1.9rem,8vw,2.3rem)}
+  h2{font-size:clamp(1.5rem,6.4vw,1.85rem)}
+  .lead{font-size:1.05rem}
+  .section-head{margin-bottom:var(--s6)}
+  .section-head.row{gap:.4rem}
+  .btn-row{gap:.6rem}
+  .btn-row .btn{flex:1 1 auto;justify-content:center}
+  /* hero */
+  .hero-media{min-height:260px}
+  .hero-panel{padding:var(--s6) var(--s5) var(--s7)}
+  .marquee{padding:11px 0}
+  .marquee span{font-size:.84rem}
+  /* stats */
+  .stats{gap:var(--s3)}
+  .stat{padding:18px 12px}
+  .stat b{font-size:1.9rem}
+  .stat span{font-size:.84rem;margin-top:.35rem}
+  /* media */
+  .frame-offset::after{inset:12px 0 -12px 12px}
+  .media-frame.tall{aspect-ratio:4/3}
+  .split{gap:var(--s5)}
+  /* cards */
+  .card{padding:var(--s5)}
+  .featured-fac{gap:var(--s5)}
+  .featured-fac .fac-photo{aspect-ratio:16/10}
+  .featured-fac .fac-photo .initials{font-size:2.6rem}
+  .fac-photo{aspect-ratio:4/3}
+  .mini-grid{gap:var(--s3)}
+  /* countdown bar */
+  .countdown-inner{padding:14px 0;gap:12px}
+  .countdown-inner > div:first-child{flex:1 1 100%}
+  .countdown-title{font-size:1rem}
+  .countdown{width:100%;justify-content:space-between;gap:8px}
+  .countdown div{flex:1;min-width:0;padding:8px 4px}
+  .countdown b{font-size:1.3rem}
+  #countdown-link{width:100%;justify-content:center}
+  /* filters become a swipeable row */
+  .filters{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;padding:4px var(--s5) 12px;margin:0 calc(-1 * var(--s5)) var(--s6);scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;
+    mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 28px),transparent)}
+  .filters::-webkit-scrollbar{display:none}
+  .filter-btn{flex:0 0 auto;scroll-snap-align:start}
+  .event-body{padding:20px}
+  .event-foot .btn{flex:1 1 auto;justify-content:center}
+  /* price table stacks into cards */
+  .table-wrap{border:0;background:none;box-shadow:none;overflow:visible}
+  table.price{min-width:0;display:block}
+  table.price thead{display:none}
+  table.price tbody,table.price tr,table.price td{display:block}
+  table.price tr{background:#fff;border:1px solid var(--line-2);border-radius:var(--radius-sm);margin-bottom:12px;box-shadow:var(--shadow-1);overflow:hidden}
+  table.price td{border-bottom:1px solid var(--line-2);padding:11px 16px;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+  table.price td:first-child{display:block;background:var(--blue-tint)}
+  table.price td[data-label]::before{content:attr(data-label);font-family:var(--font-display);font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  table.price tr.hl{background:#fff}
+  table.price tr.hl td:first-child{background:var(--gold-soft)}
+  table.price tbody tr:hover{background:#fff}
+  /* steps */
+  .step{padding:var(--s5)}
+  .step-num{width:44px;height:44px;font-size:1rem}
+  .step-compact{grid-template-columns:44px 1fr}
+  /* contact */
+  .contact-card{padding:16px 18px}
+  .form{padding:var(--s5)}
+  .hours li{flex-direction:column;gap:.05rem}
+  .hours b{text-align:left}
+  .map-frame{aspect-ratio:4/3}
+  /* blog / article */
+  .post-featured .post-body{padding:var(--s5)}
+  .article-head{padding:var(--s6) 0 var(--s5)}
+  .article-cover{aspect-ratio:16/9}
+  .article-body{font-size:1.02rem}
+  .article-body blockquote{padding:1.3rem 1.2rem 1.3rem 2.6rem;font-size:1.05rem}
+  .article-author{flex-direction:column;align-items:flex-start}
+  .article-nav{flex-direction:column}
+  /* cta band */
+  .cta-band h2{font-size:1.5rem}
+  .cta-band .btn-row{width:100%}
+  /* footer tighter */
+  .site-footer{padding:var(--s6) 0 var(--s4)}
+  .footer-top{gap:var(--s5)}
+  .footer-brand p{margin-top:.6rem;font-size:.9rem}
+  .footer-bottom{margin-top:var(--s5);flex-direction:column;align-items:flex-start;gap:.8rem}
+  /* floating controls */
+  .wa-float{width:50px;height:50px;right:14px;bottom:14px}
+  .wa-float svg{width:26px;height:26px}
+  .to-top{right:17px;bottom:74px;width:42px;height:42px}
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
