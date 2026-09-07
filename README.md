@@ -29,7 +29,9 @@ This regenerates all pages. The `_src` folder is not needed on the web server.
 
 ## Editing events
 
-All events live in **`assets/js/events-data.js`** — one object per event, documented at the top of the file. Events move to "Past events" automatically once their end date passes. Two listings are marked `sample: true` (they show a "Sample listing" badge); confirm or delete them before launch.
+All events live in **`assets/js/events-data.js`** — one object per event, documented at the top of the file. Events move to "Past events" automatically once their end date passes.
+
+The listings mirror **hummingbeing.com/events.html** and its event pages (last aligned 7 September 2026). Each event has a `slug`, a 16:9 `image` in `assets/img/events/` (the same posters used on hummingbeing.com) and a `details` block that feeds **`event.html?id=<slug>`** — the per-event detail page with programme, pricing tiers, facilitators, registration links and, for online events, the preparation guide (aligned with hummingbeing.com/online-session-preparation.html). The same preparation guide is reproduced on `events.html#online-prep`.
 
 ## Before launch — checklist
 

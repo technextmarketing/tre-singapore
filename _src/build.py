@@ -45,6 +45,8 @@ PAGES = [
      "Find a certified TRE™ provider in Singapore for individual or group sessions. Meet our Certifying Trainer and join the practitioner directory.", "facilitators"),
     ("events.body.html", "events.html", "TRE™ Events, Workshops and Certification Dates — Singapore",
      "Upcoming TRE™ events in Singapore and online: provider certification modules, workshops for coaches, community practice circles and introductory sessions.", "events"),
+    ("event.body.html", "event.html", "Event details — TRE™ in Singapore",
+     "Details, programme, pricing and registration for TRE™ events in Singapore, Bucharest and online.", "events"),
     ("blog.body.html", "blog.html", "Blog — TRE™ in Singapore",
      "Articles on TRE™, neurogenic tremors, nervous system regulation, self-care for practitioners and life as a TRE™ provider in Singapore.", "blog"),
     ("contact.body.html", "contact.html", "Contact TRE™ in Singapore",
