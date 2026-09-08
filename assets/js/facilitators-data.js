@@ -1,7 +1,7 @@
 /* =========================================================
    FACILITATORS DATA — one object per facilitator. Used by:
      • facilitators.html — the single, filterable grid (order is shuffled on every load)
-     • index.html — "Featured facilitators" (3 per day, rotating)
+     • index.html — "Featured facilitators" (a random three on every page load)
      • facilitator.html?id=<id> — the full profile page
    Each entry supports:
      id, name, role, tag, tagClass ("badge-navy" | "badge-gold" | "badge-cream")
