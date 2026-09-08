@@ -412,7 +412,7 @@
     var profile = ROOT + 'facilitator.html?id=' + encodeURIComponent(f.id);
     return '<article class="fac-card reveal in" style="--i:' + i + '">' +
       (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') +
-      '<a class="fac-photo ' + esc(f.photoClass || '') + '" href="' + esc(profile) + '" aria-label="View profile: ' + esc(f.name) + '">' + (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + (featured ? '<span class="feat-badge">Featured today</span>' : '') + '</a>' +
+      '<a class="fac-photo ' + esc(f.photoClass || '') + '" href="' + esc(profile) + '" aria-label="View profile: ' + esc(f.name) + '">' + (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + (featured ? '<span class="feat-badge">Featured</span>' : '') + '</a>' +
       '<div class="fac-body">' + (f.tag ? '<div class="tags"><span class="badge ' + esc(f.tagClass || 'badge-navy') + '">' + esc(f.tag) + '</span></div>' : '') +
       '<h3><a href="' + esc(profile) + '">' + esc(f.name) + '</a></h3><div class="fac-role">' + esc(f.role) + '</div>' +
       '<a class="link-arrow" href="' + esc(profile) + '">View profile</a><p>' + esc(f.bio) + '</p>' +
@@ -614,13 +614,17 @@
   }
   function initFeatured() {
     var grids = $all('[data-featured-facilitators]'); if (!grids.length || !window.TRE_FACILITATORS) return;
-    var pick = featuredFor(new Date(), 3);
+    /* a fresh random three on every page load (fair over time); keep at least one real, non-sample profile in the set */
+    var pool = window.TRE_FACILITATORS, K = Math.min(3, pool.length);
+    function rnd(arr) { var a = arr.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    var list = rnd(pool).slice(0, K);
+    if (list.length && !list.some(function (f) { return !f.sample; })) {
+      var real = rnd(pool.filter(function (f) { return !f.sample; }))[0];
+      if (real) list[Math.floor(Math.random() * list.length)] = real;
+    }
     grids.forEach(function (grid) {
-      grid.innerHTML = pick.list.map(function (f, i) { return renderFacilitator(f, i, { featured: true }); }).join('');
-      var note = $('[data-featured-note]'); if (note) {
-        var sg = new Date(Date.now() + (new Date().getTimezoneOffset() + 480) * 60000);
-        note.textContent = 'Featured on ' + sg.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' }) + ' (Singapore time) · a new set of three every day · day ' + pick.cycleDay + ' of ' + pick.perCycle + ' in this rotation.';
-      }
+      grid.innerHTML = list.map(function (f, i) { return renderFacilitator(f, i, { featured: true }); }).join('');
+      var note = $('[data-featured-note]'); if (note) note.textContent = 'A different three on every visit — refresh the page to meet more of the team, or browse everyone below.';
     });
   }
 
