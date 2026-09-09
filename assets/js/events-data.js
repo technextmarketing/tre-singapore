@@ -46,9 +46,80 @@ var SAYMARA = {
   bio: 'Holistic Coach, Trainer & Mentor, Certified TRE® Provider and Trainer Trainee. Founder of Învață să Zbori SRL (Learn to Fly) and pioneer of TRE® in Romania, building the TRE® practitioner community across Eastern Europe.',
   link: 'https://treromania.org/', linkText: 'TRE® Romania'
 };
+var SIMBA = {
+  name: 'Simba Stenqvist',
+  role: 'Global TRE® Certifying Trainer · Creator of Internal Alchemy',
+  bio: 'Global TRE® Certifying Trainer and creator of Internal Alchemy — an integrated system of breathwork, fascial release, grounding and tremor work drawn from more than 25 years of hands-on practice in bodywork, nervous-system regulation and energetic healing, developed in close collaboration with Dr. David Berceli.',
+  link: 'https://livingwiththespirit.com/', linkText: 'livingwiththespirit.com'
+};
 var CALENDLY = 'https://calendly.com/bhdasia/tre-certification-intake-call';
 
 window.TRE_EVENTS = [
+
+  /* ---------- Singapore certification 2027 cohort (Modules 1–3 + bonuses) ---------- */
+  {
+    slug: 'tre-provider-certification-2027-singapore',
+    title: 'Become a Certified TRE® Provider — 2027 Cohort (Singapore)',
+    category: 'Certification',
+    region: 'singapore',
+    location: 'Singapore',
+    venue: 'Singapore (venue confirmed on registration)',
+    format: 'In-Person + online sessions',
+    start: '2027-02-27',
+    end: '2027-10-31',
+    dateText: 'Feb–Oct 2027 · Module 1: 27–28 Feb · Module 2: 3–4 Jul · Module 3: 30–31 Oct 2027',
+    chip: { top: '2027', bottom: 'Cohort' },
+    image: 'assets/img/events/event-certification-2027.webp',
+    description: 'The 2027 Singapore cohort of the Global TRE® Provider Certification — boosted by Internal Alchemy and co-taught by two TRE® Trainers, Isabelle Claus Teixeira & Simba Stenqvist. Three modules plus online supervisions and three self-paced bonus programs. Bundle from S$5,888 early bird.',
+    facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
+    credits: 'ICF CCE with Module 1',
+    price: 'S$5,888',
+    priceNote: 'full certification + bonuses · early bird to 31 Dec 2026 (then S$6,688)',
+    link: 'https://www.hummingbeing.com/event-certification-2027.html',
+    linkText: 'Register',
+    isNew: true,
+    theme: 'theme-deep',
+    details: {
+      summary: 'The 2027 Singapore cohort of the Global TRE® Provider Certification — co-taught by Isabelle Claus Teixeira and Simba Stenqvist, and boosted by Internal Alchemy. Three modules take you from your own TRE® practice to confidently teaching individuals and groups. One cohort per year.',
+      about: [
+        'The Global TRE® Provider Certification qualifies you to offer TRE® to the general public, in individual and group settings.',
+        'The 2027 Singapore cohort is boosted by Internal Alchemy and co-taught by two TRE® Trainers — Isabelle Claus Teixeira and Simba Stenqvist — for richer, varied learning. Only one cohort runs in Singapore each year.'
+      ],
+      forWho: [
+        'A coach (ACC, PCC, MCC or in training) wanting somatic tools',
+        'A therapist, counsellor or psychologist seeking body-based approaches',
+        'An HR, wellbeing or corporate resilience professional',
+        'A yoga teacher, physiotherapist or movement practitioner',
+        'Someone who has experienced TRE® and wants to share it professionally'
+      ],
+      schedule: [
+        { when: 'Module 1', time: '27–28 Feb 2027 · Singapore · SGT', title: 'Your Personal TRE® Practice', text: 'For your personal use — can be purchased alone. A 2-day in-person workshop plus 4 online TRE® sessions (2 personal & individual with a different trainer, and 2 online group sessions on 1 Apr & 1 Jun 2027). 21 ICF CCE for coaches included.' },
+        { when: 'Module 2', time: '3–4 Jul 2027 · Singapore · SGT', title: 'Teaching TRE® to One Person', text: 'Open after Module 1. A 2-day in-person workshop plus 2 online group supervisions (19 Jul & 16 Aug 2027) and 2 individual supervisions with a different trainer.' },
+        { when: 'Module 3', time: '30–31 Oct 2027 · Singapore · SGT', title: 'Teaching TRE® to Groups', text: 'Open after Module 2. A 2-day in-person workshop plus 1 online group supervision (13 Nov 2027) and 3 individual supervisions. Completes your Global TRE® Provider certification.' },
+        { when: 'Bonuses', time: 'Self-paced online', title: 'Three bonus programs', text: 'Grounding (Simba Stenqvist), Verbal Interventions (Isabelle Claus Teixeira) and an Internal Alchemy introduction (Simba Stenqvist) — each with the option to attend a live workshop for a discounted add-on.' }
+      ],
+      includes: [
+        'Three 2-day in-person workshops — Modules 1, 2 & 3 in Singapore',
+        'Taught by 2 TRE® Trainers — varied perspectives and richer learning',
+        'Online TRE® sessions & supervisions — individual and group, across all three modules',
+        'Three self-paced bonus programs — Grounding, Verbal Interventions and an Internal Alchemy introduction',
+        'ICF CCE for coaches — included with Module 1',
+        'Global TRE® Provider certificate — qualify to offer TRE® to individuals and groups'
+      ],
+      pricing: [
+        { label: 'Full Certification + Bonus Programs', sub: 'Modules 1–3 + 3 bonuses', price: 'S$5,888', note: 'early bird to 31 Dec 2026 · then S$6,688', hl: true },
+        { label: 'Module 1 only · Personal Practice', sub: 'can be taken alone · ICF CCE for coaches', price: 'S$1,888', note: 'early bird to 31 Dec 2026 · then S$1,988' }
+      ],
+      pricingNote: 'All prices in Singapore Dollars. Early-bird pricing applies until 31 December 2026. All tickets are non-refundable and non-cancellable.',
+      facilitators: [ISABELLE, SIMBA],
+      online: true,
+      register: [
+        { label: 'Register your interest', url: 'https://www.hummingbeing.com/event-certification-2027.html#reserve', primary: true },
+        { label: 'Book a certification intake call', url: CALENDLY }
+      ],
+      source: 'https://www.hummingbeing.com/event-certification-2027.html'
+    }
+  },
 
   /* ---------- Singapore certification (Modules 1–3) ---------- */
   {
@@ -70,7 +141,9 @@ window.TRE_EVENTS = [
     price: 'S$3,699',
     priceNote: 'full bundle · super early bird (early bird S$4,200 · normal S$4,500)',
     link: 'https://www.hummingbeing.com/event-certification.html',
-    linkText: 'Register',
+    linkText: 'Join waitlist',
+    soldOut: true,
+    waitlistLink: CALENDLY,
     theme: 'theme-deep',
     details: {
       summary: 'Transform your practice. Empower others. The complete Global TRE® Provider Certification with Isabelle Claus Teixeira — three modules that take you from your own TRE® practice to confidently teaching TRE® to individuals and groups.',
