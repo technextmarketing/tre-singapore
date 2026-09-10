@@ -250,14 +250,14 @@ window.TRE_EVENTS = [
     region: 'international',
     location: 'Bucharest, Romania',
     venue: 'Bucharest, Romania',
-    format: 'In-Person (online session on 3 Sep sold out)',
+    format: 'In-Person · English & Romanian',
     start: '2026-10-20T19:00',
     end: '2026-10-24',
     dateText: 'Tuesday 20 October & Saturday 24 October 2026',
     timeText: '20 Oct: 19:00–22:00 EET · 24 Oct: 14:30–17:30 EET',
     chip: { top: '20 · 24', bottom: 'Oct 2026' },
     image: 'assets/img/events/event-shaking-to-shaping.webp',
-    description: 'A half-day intensive on integrating TRE® into your coaching practice — neurogenic tremoring as a somatic tool for nervous system regulation and embodied presence. Two in-person sessions in Bucharest; the 3 September online session is sold out.',
+    description: 'A half-day intensive on integrating TRE® into your coaching practice — neurogenic tremoring as a somatic tool for nervous system regulation and embodied presence. Two in-person sessions in Bucharest, România.',
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     price: '€97',
     priceNote: 'per participant · free with TRE® Module 1 registration',
@@ -269,7 +269,7 @@ window.TRE_EVENTS = [
       about: [
         'TRE® (Tension, Stress & Trauma Releasing Exercises) activates the body\'s natural tremoring response — a neurogenic mechanism that discharges accumulated stress, tension and trauma from the nervous system.',
         'In this workshop you explore how to use TRE® within your coaching practice — not just as a self-care tool, but as a somatic method that helps clients move from a state of activation to regulated presence, from trembling uncertainty to purposeful, embodied action.',
-        'Each session is a standalone half-day intensive. The 3 September online session (10:00–13:00 EET, €89) is sold out — email isabelle@bhdasia.com to join the waitlist.'
+        'Each session is a standalone half-day intensive. The 3 September online session has now taken place — see the archived online session for details.'
       ],
       forWho: [
         'Coaches who want to integrate TRE® into 1-on-1 and group coaching contexts',
@@ -277,9 +277,8 @@ window.TRE_EVENTS = [
         'Anyone considering TRE® Module 1 in Bucharest (15–17 Oct 2026) — this workshop is free with Module 1 registration'
       ],
       schedule: [
-        { when: 'Session 1', time: '3 Sep 2026 · 10:00–13:00 EET · Online (English)', title: 'Sold out', text: '€89 per participant. Fully booked — email isabelle@bhdasia.com for the waitlist.' },
-        { when: 'Session 2', time: '20 Oct 2026 · 19:00–22:00 EET · Bucharest', title: 'In-person · English & Romanian', text: '€97 per participant. Free if you register for TRE® Module 1 (March 2027 cohort) or the full certification on the same cohort.' },
-        { when: 'Session 3', time: '24 Oct 2026 · 14:30–17:30 EET · Bucharest', title: 'In-person · English & Romanian', text: '€97 per participant. Free if you register for TRE® Module 1 (March 2027 cohort) or the full certification on the same cohort.' }
+        { when: 'Session 1', time: '20 Oct 2026 · 19:00–22:00 EET · Bucharest', title: 'In-person · English & Romanian', text: '€97 per participant. Free if you register for TRE® Module 1 (March 2027 cohort) or the full certification on the same cohort.' },
+        { when: 'Session 2', time: '24 Oct 2026 · 14:30–17:30 EET · Bucharest', title: 'In-person · English & Romanian', text: '€97 per participant. Free if you register for TRE® Module 1 (March 2027 cohort) or the full certification on the same cohort.' }
       ],
       includes: [
         'The neuroscience behind neurogenic tremoring and nervous system regulation',
@@ -289,7 +288,6 @@ window.TRE_EVENTS = [
         'A full TRE® session experience guided by a Global TRE® Certifying Trainer'
       ],
       pricing: [
-        { label: 'Online session · 3 Sep 2026', sub: '10:00–13:00 EET', price: '€89', note: 'sold out — waitlist by email', soldOut: true },
         { label: 'Bucharest · 20 Oct 2026', sub: '19:00–22:00 EET', price: '€97', note: 'per participant', hl: true },
         { label: 'Bucharest · 24 Oct 2026', sub: '14:30–17:30 EET', price: '€97', note: 'per participant', hl: true }
       ],
@@ -303,6 +301,66 @@ window.TRE_EVENTS = [
         { label: 'Event page on HummingBeing', url: 'https://www.hummingbeing.com/event-shaking-to-shaping.html' }
       ],
       source: 'https://www.hummingbeing.com/event-shaking-to-shaping.html'
+    }
+  },
+
+  /* ---------- From Shaking to Shaping — Online (3 Sep 2026, past) ---------- */
+  {
+    slug: 'from-shaking-to-shaping-online-sep3',
+    title: 'From Shaking to Shaping — Online (3 September 2026)',
+    category: 'Workshop',
+    region: 'online',
+    location: 'Online',
+    venue: 'Zoom',
+    format: 'Live online · English',
+    start: '2026-09-03T10:00',
+    end: '2026-09-03',
+    dateText: 'Thursday 3 September 2026',
+    timeText: '10:00–13:00 EET (Eastern European Time)',
+    chip: { top: '3', bottom: 'Sep 2026' },
+    image: 'assets/img/events/event-shaking-to-shaping.webp',
+    description: 'The 3 September 2026 online session of From Shaking to Shaping — use of TRE® in a coaching context, co-facilitated by Isabelle Claus Teixeira & Saymara Ryon. Fully booked; this session has now taken place.',
+    facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
+    price: '€89',
+    priceNote: 'per participant · sold out',
+    soldOut: true,
+    link: 'https://www.hummingbeing.com/event-shaking-to-shaping-sep3.html',
+    linkText: 'View event',
+    theme: 'theme-bronze',
+    details: {
+      summary: 'The 3 September 2026 online session of From Shaking to Shaping — a half-day intensive on using TRE® in a coaching context. This session was fully booked and has now taken place; the in-person Bucharest sessions (20 & 24 October 2026) are still open.',
+      about: [
+        'TRE® (Tension, Stress & Trauma Releasing Exercises) activates the body\'s natural tremoring response — a neurogenic mechanism that discharges accumulated stress, tension and trauma from the nervous system.',
+        'In this workshop you explore how to use TRE® within your coaching practice — not just as a self-care tool, but as a somatic method that helps clients move from a state of activation to regulated presence.',
+        'This online session took place on 3 September 2026 (10:00–13:00 EET) and was fully booked. For the next opportunity, see the in-person Bucharest sessions or our upcoming events.'
+      ],
+      forWho: [
+        'Coaches who want to integrate TRE® into 1-on-1 and group coaching contexts',
+        'Practitioners looking for somatic self-care practices to prevent compassion fatigue and burnout',
+        'Anyone considering TRE® Module 1 in Bucharest (15–17 Oct 2026)'
+      ],
+      schedule: [
+        { when: '3 Sep 2026', time: '10:00–13:00 EET · Online (English)', title: 'Completed', text: '€89 per participant. This session was fully booked and has now taken place.' }
+      ],
+      includes: [
+        'The neuroscience behind neurogenic tremoring and nervous system regulation',
+        'How to integrate TRE® into 1-on-1 and group coaching contexts',
+        'Somatic self-care practices to prevent compassion fatigue and burnout',
+        'Embodied presence and body-led listening skills as a coach',
+        'A full TRE® session experience guided by a Global TRE® Certifying Trainer'
+      ],
+      pricing: [
+        { label: 'Online session · 3 Sep 2026', sub: '10:00–13:00 EET', price: '€89', note: 'sold out — event ended', soldOut: true }
+      ],
+      pricingNote: 'This session has ended. All tickets were non-refundable and non-cancellable.',
+      facilitators: [ISABELLE, SAYMARA],
+      partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE® România · HummingBeing',
+      online: true,
+      register: [
+        { label: 'See upcoming events', url: 'events.html', primary: true },
+        { label: 'Bucharest sessions (20 & 24 Oct)', url: 'event.html?id=from-shaking-to-shaping-bucharest' }
+      ],
+      source: 'https://www.hummingbeing.com/event-shaking-to-shaping-sep3.html'
     }
   },
 
