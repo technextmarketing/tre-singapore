@@ -463,7 +463,7 @@ window.TRE_EVENTS = [
       includes: [
         'Module 1 Certification — valid as Module 1 of the Global TRE® Provider Certification Program',
         '21 ICF CCEUs — 16 Resource Development + 5 Core Competencies (ICF-accredited)',
-        '3 full training days — including the evening workshop on Day 1',
+        '2.5 training days — including the evening workshop on Day 1',
         'Co-facilitation — taught by two internationally certified TRE® trainers, in English',
         'Global certification recognition under the Global TRE® Certification Program'
       ],
