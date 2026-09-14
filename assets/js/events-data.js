@@ -436,7 +436,7 @@ window.TRE_EVENTS = [
     start: '2026-10-28T19:00',
     dateText: 'Wednesday 28 October 2026',
     timeText: '7:00 \u2013 9:30pm Singapore time (6pm Bangkok)',
-    image: 'assets/img/events/event-feminine-masculine.webp',
+    image: 'assets/img/events/event-feminine-masculine.webp?v=2',
     description: 'A live online workshop with Sara Marie \u2014 The Alchemist \u2014 bringing energetic awareness together with somatic embodiment, so navigating masculine corporate structures becomes a place of liberation, ease and personal power.',
     facilitator: 'Sara Marie',
     priceText: 'Public 88 SGD (69 USD) \u00b7 TRE\u00ae providers 68 SGD',
