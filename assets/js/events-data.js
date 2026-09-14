@@ -52,6 +52,13 @@ var SIMBA = {
   bio: 'Global TRE® Certifying Trainer and creator of Internal Alchemy — an integrated system of breathwork, fascial release, grounding and tremor work drawn from more than 25 years of hands-on practice in bodywork, nervous-system regulation and energetic healing, developed in close collaboration with Dr. David Berceli.',
   link: 'https://livingwiththespirit.com/', linkText: 'livingwiththespirit.com'
 };
+var SARA = {
+  name: 'Sara Marie',
+  role: 'The Alchemist · CEO, Living with the Spirit',
+  bio: 'Sara Marie brings decades of experience from a wide range of masculine structures, having worked in marketing with global brands including L\u2019Or\u00e9al Paris, the Volvo brands and Dolce & Gabbana. That world eventually led her into a severe burnout, and the road back to her health became the place where she learned to release the masculine weight she had been carrying. She has spent the past decade in Chiang Mai as CEO of Living with the Spirit, running a retreat centre and the Internal Alchemy Certification Trainings alongside her husband Simba.',
+  photo: 'assets/img/facilitators/sara-marie.webp',
+  link: 'https://linktr.ee/saramariespirit', linkText: 'Linktree'
+};
 var CALENDLY = 'https://calendly.com/bhdasia/tre-certification-intake-call';
 
 window.TRE_EVENTS = [
@@ -415,6 +422,62 @@ window.TRE_EVENTS = [
         { label: 'Enquire via HummingBeing', url: 'https://www.hummingbeing.com/event-shaking-online.html' }
       ],
       source: 'https://www.hummingbeing.com/event-shaking-online.html'
+    }
+  },
+
+  {
+    slug: 'feminine-masculine-energetics-corporate',
+    title: 'Navigating Feminine & Masculine Energetics Inside Corporate Structures',
+    category: 'Workshop',
+    region: 'online',
+    location: 'Online',
+    venue: 'Zoom (joining details sent on registration)',
+    format: 'Live online',
+    start: '2026-10-28T19:00',
+    dateText: 'Wednesday 28 October 2026',
+    timeText: '7:00 \u2013 9:30pm Singapore time (6pm Bangkok)',
+    image: 'assets/img/events/event-feminine-masculine.webp',
+    description: 'A live online workshop with Sara Marie \u2014 The Alchemist \u2014 bringing energetic awareness together with somatic embodiment, so navigating masculine corporate structures becomes a place of liberation, ease and personal power.',
+    facilitator: 'Sara Marie',
+    priceText: 'Public 88 SGD (69 USD) \u00b7 TRE\u00ae providers 68 SGD',
+    link: 'https://calendly.com/sara-spirit/feminine-masculine-energetics-in-the-corporate-world',
+    linkText: 'Register & pay',
+    isNew: true,
+    theme: 'theme-orange',
+    details: {
+      summary: 'The corporate structure is one of the clearest expressions of masculine dynamics in the modern world. This live online workshop brings energetic awareness together with somatic embodiment, so navigating those structures becomes a place of liberation, ease and personal power.',
+      about: [
+        'This workshop is for women working inside corporate environments \u2014 or carrying the effects of having left them \u2014 for entrepreneurs holding the full weight of their business inside masculine business structures, and for practitioners, coaches and somatic therapists working inside these dynamics or supporting clients who are.',
+        'When a woman moves through a masculine structure day after day, her system starts to organise around it as if it were the only reality available: a body that stays tense even at rest, a mind that keeps producing when the day is done, and a growing distance from her own cycles and instincts. Over time this creates real cost \u2014 exhaustion that sleep does not fix, a nervous system stuck in overdrive, and disconnection from her own feminine intelligence.',
+        'Registration and payment are handled by Sara Marie via Calendly, and all proceeds go directly to her. A replay is available to all registrants.'
+      ],
+      forWho: [
+        'Women working inside corporate environments, or carrying the effects of having left them',
+        'Entrepreneurs holding the full weight of their business inside masculine business structures',
+        'Practitioners, coaches and somatic therapists working inside these dynamics or supporting clients who are'
+      ],
+      schedule: [
+        { when: 'Wed 28 Oct', time: '7:00 \u2013 9:30pm \u00b7 Zoom', title: 'Navigating Feminine & Masculine Energetics \u2014 live online', text: 'Three parts: an interactive workshop with an energetic transmission on the masculine dynamics in corporate and global structures, a spinal flow with neurogenic tremors, and space for questions.' }
+      ],
+      includes: [
+        'An energetic transmission on the masculine dynamics running through corporate and global structures',
+        'How these structures affect the feminine body, and how to alchemise that pressure into personal power',
+        'How Sara worked with her own masculine buildup from years inside masculine environments, and brought it into balance',
+        'A spinal flow with neurogenic tremors, and space for questions'
+      ],
+      pricing: [
+        { label: 'Public', sub: 'open to all', price: '88 SGD', note: '69 USD' },
+        { label: 'TRE\u00ae providers trained by Isabelle & Simba', sub: 'concession', price: '68 SGD', note: '' }
+      ],
+      pricingNote: 'Registration and payment via Sara Marie on Calendly, and all proceeds go to her. Guest and concessionary places are arranged directly with Isabelle. All tickets are non-refundable and non-cancellable.',
+      facilitators: [SARA],
+      partners: 'Presented with Living with the Spirit',
+      online: true,
+      register: [
+        { label: 'Register & pay on Calendly', url: 'https://calendly.com/sara-spirit/feminine-masculine-energetics-in-the-corporate-world', primary: true },
+        { label: 'Event page on HummingBeing', url: 'https://www.hummingbeing.com/event-feminine-masculine-energetics.html' }
+      ],
+      source: 'https://www.hummingbeing.com/event-feminine-masculine-energetics.html'
     }
   },
 

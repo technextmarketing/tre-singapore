@@ -248,7 +248,7 @@
         var m = pool.filter(function (x) { return (x.name || '').toLowerCase() === (f.name || '').toLowerCase(); })[0];
         var profile = m ? ROOT + 'facilitator.html?id=' + encodeURIComponent(m.id) : (f.link || '');
         var initials = (m && m.initials) || (f.name || '').split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 3);
-        var avatar = (m && m.photo) ? '<img src="' + esc(ROOT + m.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span>' + esc(initials) + '</span>';
+        var avatar = (m && m.photo) ? '<img src="' + esc(ROOT + m.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span>' + esc(initials) + '</span>');
         var pc = esc((m && m.photoClass) || '');
         var photo = profile ? '<a class="person-photo ' + pc + '" href="' + esc(profile) + '"' + (isExternal(profile) ? ' target="_blank" rel="noopener"' : '') + ' aria-label="View profile: ' + esc(f.name) + '">' + avatar + '</a>' : '<div class="person-photo ' + pc + '">' + avatar + '</div>';
         var tags = m ? (m.services || m.tags || []).slice(0, 4).map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('') : '';
