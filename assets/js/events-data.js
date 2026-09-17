@@ -252,6 +252,8 @@ window.TRE_EVENTS = [
   /* ---------- From Shaking to Shaping — Bucharest (in-person) ---------- */
   {
     slug: 'from-shaking-to-shaping-bucharest',
+    soldOut: true,
+    waitlistLink: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest',
     title: 'From Shaking to Shaping — Use of TRE® in a Coaching Context',
     category: 'Workshop',
     region: 'international',
@@ -264,12 +266,12 @@ window.TRE_EVENTS = [
     timeText: '20 Oct: 19:00–22:00 EET · 24 Oct: 14:30–17:30 EET',
     chip: { top: '20 · 24', bottom: 'Oct 2026' },
     image: 'assets/img/events/event-shaking-to-shaping.webp',
-    description: 'A half-day intensive on integrating TRE® into your coaching practice — neurogenic tremoring as a somatic tool for nervous system regulation and embodied presence. Two in-person sessions in Bucharest, România.',
+    description: 'A half-day intensive on integrating TRE® into your coaching practice — neurogenic tremoring as a somatic tool for nervous system regulation and embodied presence. Two in-person sessions in Bucharest, România. Now ICF-accredited: 3 ICF CCEs (1.5 Resource Development + 1.5 Core Competencies).',
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     price: '€97',
     priceNote: 'per participant · free with TRE® Module 1 registration',
-    link: 'https://www.atelierdesuflet.ro/training-workshops-retrreat-tre/from-shaking-to-shaping-use-of-tre-in-a-coaching-context-35.html',
-    linkText: 'Buy tickets',
+    link: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest',
+    linkText: 'Join the waitlist',
     theme: 'theme-bronze',
     details: {
       summary: 'Use of TRE® in a coaching context — a half-day intensive exploring how neurogenic tremoring can deepen your somatic presence, prevent burnout and transform the way you work with clients. Taught in English; in-person sessions also facilitated in Romanian.',
@@ -295,16 +297,15 @@ window.TRE_EVENTS = [
         'A full TRE® session experience guided by a Global TRE® Certifying Trainer'
       ],
       pricing: [
-        { label: 'Bucharest · 20 Oct 2026', sub: '19:00–22:00 EET', price: '€97', note: 'per participant', hl: true },
-        { label: 'Bucharest · 24 Oct 2026', sub: '14:30–17:30 EET', price: '€97', note: 'per participant', hl: true }
+        { label: 'Bucharest · 20 Oct 2026', sub: '19:00–22:00 EET', price: '€97', note: 'sold out', soldOut: true },
+        { label: 'Bucharest · 24 Oct 2026', sub: '14:30–17:30 EET', price: '€97', note: 'sold out', soldOut: true }
       ],
       pricingNote: 'Free if you register for TRE® Module 1 or the full TRE® certification on the same cohort. All tickets are non-refundable and non-cancellable.',
       facilitators: [ISABELLE, SAYMARA],
       partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE® România · HummingBeing',
       online: false,
       register: [
-        { label: 'Buy tickets (Atelier de Suflet)', url: 'https://www.atelierdesuflet.ro/training-workshops-retrreat-tre/from-shaking-to-shaping-use-of-tre-in-a-coaching-context-35.html', primary: true },
-        { label: 'Reserve by email', url: 'mailto:isabelle@bhdasia.com?subject=From%20Shaking%20to%20Shaping%20%E2%80%94%20Bucharest' },
+        { label: 'Join the waitlist', url: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest', primary: true },
         { label: 'Event page on HummingBeing', url: 'https://www.hummingbeing.com/event-shaking-to-shaping.html' }
       ],
       source: 'https://www.hummingbeing.com/event-shaking-to-shaping.html'
@@ -384,7 +385,7 @@ window.TRE_EVENTS = [
     dateText: 'Thursday 8 October 2026',
     timeText: '7:00 – 9:00pm (confirm your time zone on registration)',
     image: 'assets/img/events/event-shaking-online.webp',
-    description: 'A live online workshop on using TRE® in a coaching context — nervous system regulation, embodied presence and resilience. Co-led by Isabelle Claus Teixeira & Saymara Ryon, in partnership with Neurogenic Integration.',
+    description: 'A live online workshop on using TRE® in a coaching context — nervous system regulation, embodied presence and resilience. Co-led by Isabelle Claus Teixeira & Saymara Ryon, in partnership with Neurogenic Integration. Now ICF-accredited: 3 ICF CCEs (1.5 Resource Development + 1.5 Core Competencies).',
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     priceText: 'Registration via Neurogenic Integration',
     link: 'https://neurogenic-integration.com/',
@@ -484,6 +485,8 @@ window.TRE_EVENTS = [
   /* ---------- TRE Module 1 — Bucharest ---------- */
   {
     slug: 'tre-module-1-bucharest',
+    soldOut: true,
+    waitlistLink: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
     title: 'TRE® Module 1 — Bucharest, Romania (in English)',
     category: 'Certification',
     region: 'international',
@@ -501,8 +504,8 @@ window.TRE_EVENTS = [
     credits: '21 ICF CCEUs',
     price: 'From €739',
     priceNote: 'per person · tiers rise as tickets sell (€739 · €769 · €799)',
-    link: 'https://www.atelierdesuflet.ro/tre-module-1-bucharest-romania-21-icf-cceus-only-tre-training-in-the-world-with-icf-accreditation.html',
-    linkText: 'Buy tickets',
+    link: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
+    linkText: 'Join the waitlist',
     theme: 'theme-deep',
     details: {
       summary: 'A 3-day immersive certification training — valid as Module 1 of the Global TRE® Provider Certification Program. Learn to use and teach Tension & Trauma Releasing Exercises under two internationally certified trainers. Ideal for Singapore-based practitioners travelling in Europe.',
@@ -531,18 +534,17 @@ window.TRE_EVENTS = [
         'Global certification recognition under the Global TRE® Certification Program'
       ],
       pricing: [
-        { label: 'Super Early Bird', sub: 'First 5 tickets · limited, sells first', price: '€739', note: 'per person', hl: true },
-        { label: 'Early Bird', sub: 'Next 5 tickets', price: '€769', note: 'per person' },
-        { label: 'Full Price', sub: 'Final 10 tickets', price: '€799', note: 'per person' }
+        { label: 'Super Early Bird', sub: 'First 5 tickets · limited, sells first', price: '€739', note: 'sold out — postponed', soldOut: true },
+        { label: 'Early Bird', sub: 'Next 5 tickets', price: '€769', note: 'sold out — postponed', soldOut: true },
+        { label: 'Full Price', sub: 'Final 10 tickets', price: '€799', note: 'sold out — postponed', soldOut: true }
       ],
       pricingNote: 'Only 20 places. Prices step up automatically as each block of tickets sells — register early to secure the lowest tier. A single registration form and QR code are provided on confirmation. All tickets are non-refundable and non-cancellable.',
       facilitators: [ISABELLE, SAYMARA],
       partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE® România · HummingBeing',
       online: false,
       register: [
-        { label: 'Buy tickets — official webshop', url: 'https://www.atelierdesuflet.ro/tre-module-1-bucharest-romania-21-icf-cceus-only-tre-training-in-the-world-with-icf-accreditation.html', primary: true },
-        { label: 'Register via Isabelle (email)', url: 'mailto:isabelle@bhdasia.com?subject=TRE%20Module%201%20%E2%80%94%20Bucharest%2015%E2%80%9317%20Oct%202026' },
-        { label: 'Book a call via Calendly', url: CALENDLY }
+        { label: 'Join the waitlist — postponed', url: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)', primary: true },
+        { label: 'Book a certification intake call', url: CALENDLY }
       ],
       source: 'https://www.hummingbeing.com/event-tre-module1-bucharest.html'
     }
