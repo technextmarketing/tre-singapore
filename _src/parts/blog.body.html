@@ -73,7 +73,11 @@
         <span class="badge badge-gold">Newsletter</span>
         <h3>New articles and event dates, monthly</h3>
         <p class="muted small">One email a month with new posts, upcoming events in Singapore and certification news. No spam, unsubscribe any time.</p>
-        <form action="mailto:isabelle@bhdasia.com?subject=Newsletter%20signup" method="post" enctype="text/plain" style="display:flex;gap:.5rem;flex-wrap:wrap">
+        <form action="https://formsubmit.co/isabelle@bhdasia.com" method="post" style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <input type="hidden" name="_subject" value="New newsletter signup — TRE Singapore">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_next" value="https://technextmarketing.github.io/tre-singapore/blog.html?subscribed=1">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
           <label class="sr-only" for="nl-email">Email address</label>
           <input id="nl-email" name="email" type="email" required placeholder="you@example.com" style="flex:1;min-width:160px;font:inherit;padding:.7rem .9rem;border:1px solid var(--line);border-radius:8px">
           <button class="btn btn-navy btn-sm" type="submit">Subscribe</button>

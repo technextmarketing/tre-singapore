@@ -129,7 +129,10 @@
         message pre-filled (mailto). To send silently through a form service instead, add
         data-endpoint="https://formspree.io/f/XXXXXXXX" (or any endpoint that accepts JSON POST).
       -->
-      <form class="form" id="contact-form" novalidate data-mailto="isabelle@bhdasia.com">
+      <form class="form" id="contact-form" novalidate data-mailto="isabelle@bhdasia.com" data-endpoint="https://formsubmit.co/ajax/isabelle@bhdasia.com">
+        <input type="hidden" name="_subject" value="New enquiry from TRE Singapore website">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <h3 style="margin-bottom:1.2rem">Send a message</h3>
         <div class="form-row">
           <div class="field"><label for="f-name">Name <span class="req">*</span></label><input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Your full name"></div>
