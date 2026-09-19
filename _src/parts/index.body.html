@@ -1,13 +1,12 @@
 
-<!-- ===== HERO (full screen; to add the loop video, uncomment the <video> and set its src — MP4/WebM, muted, 10–20 s, under 8 MB) ===== -->
+<!-- ===== HERO (full screen; looping background video with poster fallback — replace assets/video/hero-loop.* to change it) ===== -->
 <section class="hero-full" id="top">
   <div class="hero-full-media" aria-hidden="true">
-    <!--
-    <video class="hero-video" autoplay muted loop playsinline poster="assets/img/hero-poster.jpg">
+    <img src="assets/img/hero-poster.jpg" alt="" loading="eager" decoding="async">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/img/hero-poster.jpg">
+      <source src="assets/video/hero-loop.webm" type="video/webm">
       <source src="assets/video/hero-loop.mp4" type="video/mp4">
     </video>
-    -->
-    <img src="https://img1.wsimg.com/isteam/ip/054a6a19-ef6d-4393-93ec-79c75c9f2844/Photo%20Isabelle%20doing%20TRE.png" alt="" loading="eager" decoding="async" onerror="this.remove()">
   </div>
   <div class="hero-full-overlay"></div>
   <div class="container hero-full-content">
