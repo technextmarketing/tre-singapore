@@ -1,9 +1,9 @@
-# DESIGN.md — TRE® in Singapore
+# DESIGN.md — TRE™ in Singapore
 
 Design system for the static site. Tokens live in `assets/css/style.css` (`:root`). Mode: **persuade** (marketing site for a wellbeing practice) with a **read** mode for blog articles.
 
 ## Brand
-Derived from the TRE Singapore logo: a navy/blue globe with bronze continents and a bronze eagle, the navy "TRE®" wordmark, and "Singapore" in brown italic. The existing site adds an orange CTA colour and warm cream panels.
+Derived from the TRE Singapore logo: a navy/blue globe with bronze continents and a bronze eagle, the navy "TRE™" wordmark, and "Singapore" in brown italic. The existing site adds an orange CTA colour and warm cream panels.
 
 ## Colour
 | Token | Value | Use |
@@ -34,7 +34,7 @@ Rules: one orange CTA per view; text on coloured backgrounds is white or tinted 
 - **Buttons**: pill, 46px min height, sentence case. Primary = orange with sheen sweep and arrow slide; navy; outline; light; ghost-light. Hover lifts 2px; active scales .98; click ripple.
 - **Cards**: white, 1px tinted border, soft two-layer shadow; hover lift 4px. Icons are inline (no icon tiles). No cards nested inside cards.
 - **Badges**: max two per card (location + category). Status is a coloured dot + text line, not a third chip.
-- **Header**: sticky, 78px → 66px on scroll with shadow; single-row brand (mark + "TRE® Singapore"); gold underline slides in on hover/active.
+- **Header**: sticky, 78px → 66px on scroll with shadow; single-row brand (mark + "TRE™ Singapore"); gold underline slides in on hover/active.
 - **Footer**: compact three-column block + one-line legal bar with social icons.
 
 ## Motion

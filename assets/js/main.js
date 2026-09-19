@@ -1,4 +1,4 @@
-/* TRE® in Singapore — site behaviour (v2)
+/* TRE™ in Singapore — site behaviour (v2)
    - header scroll state, scroll progress, back-to-top
    - mobile navigation
    - staggered scroll reveal, stat count-up, button ripple, CTA spotlight
@@ -203,11 +203,11 @@
     var ev = events.filter(function (e) { return e.slug === id; })[0];
     if (!ev) {
       root.innerHTML = '<section class="section"><div class="container event-not-found"><span class="eyebrow">Events</span><h1>Event not found</h1><p class="muted">That event may have been renamed or removed. Browse the calendar for the latest dates.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="events.html">Browse all events</a></div></div></section>';
-      document.title = 'Event not found — TRE® in Singapore';
+      document.title = 'Event not found — TRE™ in Singapore';
       return;
     }
     var d = ev.details || {};
-    document.title = ev.title + ' — TRE® in Singapore';
+    document.title = ev.title + ' — TRE™ in Singapore';
     var md = $('meta[name="description"]'); if (md) md.setAttribute('content', d.summary || ev.description || '');
     var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', ev.title);
     var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', d.summary || ev.description || '');
@@ -263,7 +263,7 @@
       }).join('') + '</div>' + (d.partners ? '<p class="note" style="margin:-1.6rem 0 var(--s6)">' + esc(d.partners) + '</p>' : '');
     }
     if (d.online) {
-      h += '<div class="prep-box" id="prepare"><span class="eyebrow" style="color:var(--gold)">Joining online? Prepare your space first</span><h2>Preparing for your online TRE® session</h2>' +
+      h += '<div class="prep-box" id="prepare"><span class="eyebrow" style="color:var(--gold)">Joining online? Prepare your space first</span><h2>Preparing for your online TRE™ session</h2>' +
         '<p>Everything your facilitator can offer you comes through the camera — so we must be able to see you <strong>head to toe, both standing and on the mat</strong>. Please test your camera before the session starts.</p>' +
         '<ul class="list-check"><li><strong>Space & camera:</strong> a room where the device can sit about 2–2.5 m away, landscape, roughly hip height — to the side of your mat, not at your head or feet.</li>' +
         '<li><strong>Kit:</strong> a yoga mat, a device with a camera (the bigger the screen the better), wireless headphones (required in group classes), reliable internet, and pillows, cushions or blankets.</li>' +
@@ -434,9 +434,9 @@
     var f = window.TRE_FACILITATORS.filter(function (x) { return x.id === id; })[0];
     if (!f) {
       root.innerHTML = '<section class="section"><div class="container event-not-found"><span class="eyebrow">Facilitators</span><h1>Profile not found</h1><p class="muted">That profile may have been renamed or removed.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="facilitators.html">Browse all facilitators</a></div></div></section>';
-      document.title = 'Profile not found — TRE® in Singapore'; return;
+      document.title = 'Profile not found — TRE™ in Singapore'; return;
     }
-    document.title = f.name + ' — TRE® facilitator in Singapore';
+    document.title = f.name + ' — TRE™ facilitator in Singapore';
     var md = $('meta[name="description"]'); if (md) md.setAttribute('content', f.summary || f.bio || '');
     var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', f.name + ' — ' + f.role);
     var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', f.summary || f.bio || '');
@@ -480,7 +480,7 @@
     }
     h += '</div><aside class="fp-side">';
     h += '<div class="evt-box"><h3>Get in touch</h3><div class="btn-row" style="margin:0;display:grid;gap:.5rem">' + (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-outline', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-outline', 'whatsapp', 'WhatsApp') : '') + '</div>' +
-      (f.sample ? '<p class="fine">Sample profile — enquiries go to TRE® in Singapore, who will connect you with a certified provider.</p>' : '<p class="fine">Questions before booking? Ask before the session rather than on the day — we are glad to help.</p>') + '</div>';
+      (f.sample ? '<p class="fine">Sample profile — enquiries go to TRE™ in Singapore, who will connect you with a certified provider.</p>' : '<p class="fine">Questions before booking? Ask before the session rather than on the day — we are glad to help.</p>') + '</div>';
     if (f.website || (f.socials && f.socials.length)) {
       h += '<div class="evt-box"><h3>Website & socials</h3><ul class="fp-links">' + (f.website ? '<li><a href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + '<span>' + esc(f.website.label || 'Website') + '<small>Website</small></span></a></li>' : '') +
         (f.socials || []).map(function (s) { return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + '<span>' + esc(s.label || s.type) + '<small>' + esc(s.type.charAt(0).toUpperCase() + s.type.slice(1)) + '</small></span></a></li>'; }).join('') + '</ul></div>';
@@ -527,8 +527,8 @@
     render();
   }
 
-  /* ---------- TRE® explainer bubble: tap any "TRE®" to see what it stands for ---------- */
-  var TRE_HTML = '<b>TRE® — Tension &amp; Trauma Releasing Exercises</b><p>A series of seven simple exercises that switch on the body\'s natural tremor reflex (neurogenic tremors) to release deep muscular tension, stress and trauma from the nervous system.</p><p>Created by Dr. David Berceli, PhD, an international trauma-recovery specialist, after years of working with communities in conflict zones and natural disasters. It is now taught worldwide through certified providers.</p><p>TRE® is a registered trademark of TRE For All, Inc. · <a href="' + ROOT + 'education.html">How TRE® works</a></p>';
+  /* ---------- TRE™ explainer bubble: tap any "TRE™" to see what it stands for ---------- */
+  var TRE_HTML = '<b>TRE™ — Tension &amp; Trauma Releasing Exercises</b><p>A series of seven simple exercises that switch on the body\'s natural tremor reflex (neurogenic tremors) to release deep muscular tension, stress and trauma from the nervous system.</p><p>Created by Dr. David Berceli, PhD, an international trauma-recovery specialist, after years of working with communities in conflict zones and natural disasters. It is now taught worldwide through certified providers.</p><p>TRE™ is a registered trademark of TRE For All, Inc. · <a href="' + ROOT + 'education.html">How TRE™ works</a></p>';
   function initTreTerm() {
     var scope = $('main') || document.body; if (!scope) return;
     var walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
@@ -542,7 +542,7 @@
       var frag = document.createDocumentFragment();
       parts.forEach(function (t) {
         /* <abbr> rather than <span>: descendant selectors such as ".stat span{display:block}" must not restyle the term */
-        if (/^TRE[®™]$/.test(t)) { var s = document.createElement('abbr'); s.className = 'tre-term'; s.setAttribute('role', 'button'); s.setAttribute('tabindex', '0'); s.setAttribute('title', 'What does TRE® stand for?'); s.textContent = 'TRE®'; frag.appendChild(s); }
+        if (/^TRE[®™]$/.test(t)) { var s = document.createElement('abbr'); s.className = 'tre-term'; s.setAttribute('role', 'button'); s.setAttribute('tabindex', '0'); s.setAttribute('title', 'What does TRE™ stand for?'); s.textContent = 'TRE™'; frag.appendChild(s); }
         else if (t) frag.appendChild(document.createTextNode(t));
       });
       n.parentNode.replaceChild(frag, n);
