@@ -216,14 +216,14 @@ window.TRE_FACILITATORS = [
     ]
   },
   {
-    /* TODO: add photo (drop nikki-tay.webp into assets/img/facilitators/ and set photo below) + her direct contact/IG when provided */
+    /* TODO: swap the hub contact below for Nikki's own email/WhatsApp/IG when she provides them */
     id: 'nikki-tay',
     name: 'Nikki Tay',
     role: 'Certified TRE® Provider · MEd Special Education',
     tag: 'Certified Provider', tagClass: 'badge-navy', kind: 'provider',
     modes: ['1:1', 'Groups', 'In-person', 'Online'],
     services: ['TRE® sessions', 'Gentle body-based practice', 'Nervous-system settling', 'Special-education background', 'Neurodivergent-friendly', 'Singapore'],
-    initials: 'NT', photoClass: 'deep',
+    initials: 'NT', photoClass: 'deep', photo: FAC_IMG + 'nikki-tay.webp',
     bio: 'Certified TRE® Provider drawing on nearly three decades in early-childhood and special education to offer a gentle, body-based way to release tension.',
     summary: 'After almost three decades in early childhood and special education — supporting children, families and neurodivergent individuals — Nikki offers TRE® as a gentle, body-based practice that helps people release tension, feel more settled and reconnect with themselves.',
     contact: { email: 'mailto:isabelle@bhdasia.com?subject=TRE%C2%AE%20session%20with%20Nikki%20Tay', book: 'contact.html?interest=session' },
