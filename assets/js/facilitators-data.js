@@ -176,6 +176,81 @@ window.TRE_FACILITATORS = [
     ]
   },
 
+  {
+    id: 'yan',
+    name: 'Yan',
+    role: 'Holistic Healing & Wellness Facilitator · Certified TRE® Provider',
+    tag: 'Certified Provider', tagClass: 'badge-navy', kind: 'provider',
+    modes: ['1:1', 'Groups', 'Workshops', 'In-person', 'Online'],
+    services: ['TRE®', 'Family Constellations', 'Brainspotting & Expressive Art', 'PSYCH-K® & NLP', 'Themed workshops', '1:1 integrated sessions', 'Subconscious healing', 'West Singapore · Online'],
+    initials: 'Y', photoClass: '', photo: FAC_IMG + 'yan.webp',
+    bio: 'Holistic facilitator blending Family Constellations, Brainspotting, TRE® and PSYCH-K® to clear subconscious blocks and heal generational patterns.',
+    summary: 'Helping you clear subconscious blocks, heal generational patterns, and step into authentic happiness and love. Through an integrative, mind-body approach, Yan holds a safe, transformative space to process trauma, release tension and create lasting emotional balance.',
+    contact: { email: 'mailto:blooms.n.beyond.love@gmail.com?subject=Session%20enquiry%20%E2%80%94%20Blooms%20n%20Beyond', whatsapp: 'https://wa.me/6588560573?text=Hi%20Yan%2C%20I%27d%20like%20to%20ask%20about%20a%20session', book: 'https://wa.me/6588560573?text=Hi%20Yan%2C%20I%27d%20like%20to%20book%20a%20session' },
+    website: { url: 'https://www.instagram.com/blooms.n.beyond/', label: '@blooms.n.beyond' },
+    socials: [ { type: 'instagram', url: 'https://www.instagram.com/blooms.n.beyond/', label: '@blooms.n.beyond' } ],
+    facts: { location: 'West Singapore · In-person & online', languages: 'English', formats: '1:1 integrated sessions · Themed workshops', certified: 'Certified in TRE®, PSYCH-K® & NLP' },
+    about: [
+      'Yan is a holistic healing and wellness facilitator helping people clear subconscious blocks, heal generational patterns and step into authentic happiness and love. Her work combines a mind-body approach with a safe, transformative space to process trauma, release tension and create lasting emotional balance.',
+      'In her 1:1 integrated private sessions she tailors one or two modalities to your unique needs — from Family Constellations and Brainspotting to TRE®, PSYCH-K® and NLP — and she runs themed group workshops on relationship healing, subconscious alignment, emotional regulation and self-discovery. She practises as Blooms n Beyond.'
+    ],
+    highlights: [
+      'Family Constellations — heals systemic family dynamics and generational patterns',
+      'Brainspotting & Expressive Art — processes deep-seated trauma via somatic and creative pathways',
+      'TRE® (Tension & Trauma Releasing Exercises) — somatic tremoring to release nervous-system stress',
+      'PSYCH-K® & NLP — rewires limiting subconscious beliefs and communication patterns'
+    ],
+    offers: [
+      { title: '1:1 Integrated Private Sessions', text: 'Deeply customised sessions combining one or two tailored modalities based on your unique needs.' },
+      { title: 'Family Constellations', text: 'Uncover and heal systemic family dynamics and generational patterns affecting your relationships and wellbeing.' },
+      { title: 'Brainspotting & Expressive Art', text: 'Process deep-seated trauma and access implicit memory through visual, somatic and creative pathways.' },
+      { title: 'TRE® sessions', text: 'Somatic tremoring techniques to safely release physical tension and nervous-system stress.' },
+      { title: 'PSYCH-K® & NLP', text: 'Rewire limiting subconscious beliefs and communication patterns to align with self-love, joy and fulfilment.' },
+      { title: 'Themed Workshops', text: 'Group experiences focused on relationship healing, subconscious alignment, emotional regulation and self-discovery.' }
+    ],
+    gallery: [],
+    meta: [
+      { icon: 'pin', text: 'West Singapore · In-person & online' },
+      { icon: 'group', text: '1:1 integrated sessions · Themed workshops' },
+      { icon: 'award', text: 'TRE® · Family Constellations · Brainspotting · PSYCH-K® · NLP' }
+    ]
+  },
+  {
+    /* TODO: add photo (drop nikki-tay.webp into assets/img/facilitators/ and set photo below) + her direct contact/IG when provided */
+    id: 'nikki-tay',
+    name: 'Nikki Tay',
+    role: 'Certified TRE® Provider · MEd Special Education',
+    tag: 'Certified Provider', tagClass: 'badge-navy', kind: 'provider',
+    modes: ['1:1', 'Groups', 'In-person', 'Online'],
+    services: ['TRE® sessions', 'Gentle body-based practice', 'Nervous-system settling', 'Special-education background', 'Neurodivergent-friendly', 'Singapore'],
+    initials: 'NT', photoClass: 'deep',
+    bio: 'Certified TRE® Provider drawing on nearly three decades in early-childhood and special education to offer a gentle, body-based way to release tension.',
+    summary: 'After almost three decades in early childhood and special education — supporting children, families and neurodivergent individuals — Nikki offers TRE® as a gentle, body-based practice that helps people release tension, feel more settled and reconnect with themselves.',
+    contact: { email: 'mailto:isabelle@bhdasia.com?subject=TRE%C2%AE%20session%20with%20Nikki%20Tay', book: 'contact.html?interest=session' },
+    socials: [],
+    facts: { location: 'Singapore · In-person & online', languages: 'English', formats: '1:1 · Groups', certified: 'Certified TRE® Provider · MEd Special Education (University of Birmingham)' },
+    about: [
+      'For almost three decades Nikki Tay has worked in early childhood education and special education, supporting children, families and neurodivergent individuals. Over the years she has seen how stress shows up in the body, in behaviour, in learning and in everyday life.',
+      'That is what drew her to TRE®. She wanted to offer a gentle, body-based practice that helps people release tension, feel more settled and reconnect with themselves.'
+    ],
+    highlights: [
+      'Certified TRE® Provider',
+      'MEd Special Education, University of Birmingham',
+      'Nearly 30 years in early-childhood and special education',
+      'Experience supporting children, families and neurodivergent individuals'
+    ],
+    offers: [
+      { title: 'Individual TRE® sessions', text: 'Gentle, body-based one-to-one sessions to release tension and settle the nervous system.' },
+      { title: 'Group sessions', text: 'TRE® in a supportive group setting, welcoming to neurodivergent participants.' }
+    ],
+    gallery: [],
+    meta: [
+      { icon: 'pin', text: 'Singapore · In-person & online' },
+      { icon: 'award', text: 'MEd Special Education · Certified TRE® Provider' },
+      { icon: 'group', text: '1:1 · Groups' }
+    ]
+  },
+
   /* ---------- Sample provider profiles (replace with real providers as they join) ---------- */
   {
     id: 'sample-physio',
