@@ -9,21 +9,27 @@ Edit the header/nav/footer once in parts/head.html or parts/footer.html, then ru
 from the site root (or from anywhere — paths are resolved relative to this file).
 The finished pages are written to the site root and blog/ folder. No dependencies beyond Python 3.
 """
-import os, re
+import os, re, datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PARTS = os.path.join(HERE, "parts")
 OUT = os.path.dirname(HERE)  # site root
 
+BASE = "https://technextmarketing.github.io/tre-singapore/"  # absolute site root (for canonical/OG/sitemap)
 NAV_IDS = ["home", "about", "education", "facilitators", "events", "blog", "contact"]
 
 def read(p):
     with open(p, encoding="utf-8") as f:
         return f.read()
 
+def canonical_for(out_rel):
+    rel = out_rel.replace("\\", "/")
+    return BASE if rel == "index.html" else BASE + rel
+
 def build(body_file, out_rel, title, desc, active, root=""):
     html = read(os.path.join(PARTS, "head.html")) + read(os.path.join(PARTS, body_file)) + read(os.path.join(PARTS, "footer.html"))
     html = html.replace("{{TITLE}}", title).replace("{{DESC}}", desc).replace("{{ROOT}}", root)
+    html = html.replace("{{CANONICAL}}", canonical_for(out_rel))
     for nid in NAV_IDS:
         html = html.replace("{{A_%s}}" % nid, "active" if nid == active else "")
     html = re.sub(r' class=""', "", html)
@@ -73,9 +79,37 @@ POSTS = [
      "The path from a first TRE™ session in 2017 to Global TRE™ Certifying Trainer in 2025, and what it means for Singapore."),
 ]
 
+def write_sitemap_and_robots():
+    """Generate sitemap.xml (crawlable content pages) and robots.txt."""
+    today = datetime.date.today().isoformat()
+    # event.html and facilitator.html are query-param templates, not standalone URLs
+    skip = {"event.html", "facilitator.html"}
+    urls = [BASE]  # home
+    for _, out, *_ in PAGES:
+        if out in skip or out == "index.html":
+            continue
+        urls.append(canonical_for(out))
+    for _, out, *_ in POSTS:
+        urls.append(canonical_for(out))
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for u in urls:
+        pri = "1.0" if u == BASE else ("0.7" if "/blog/" in u else "0.8")
+        lines += ["  <url>", f"    <loc>{u}</loc>", f"    <lastmod>{today}</lastmod>",
+                  f"    <priority>{pri}</priority>", "  </url>"]
+    lines.append("</urlset>")
+    with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(lines) + "\n")
+    print("built sitemap.xml (%d urls)" % len(urls))
+    robots = "User-agent: *\nAllow: /\n\nSitemap: %ssitemap.xml\n" % BASE
+    with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8", newline="\n") as f:
+        f.write(robots)
+    print("built robots.txt")
+
 if __name__ == "__main__":
     for body, out, title, desc, active in PAGES:
         build(body, out, title, desc, active, root="")
     for body, out, title, desc in POSTS:
         build(body, out, title, desc, "blog", root="../")
+    write_sitemap_and_robots()
     print("done")
