@@ -538,7 +538,7 @@
     var walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
       if (!/TRE[®™]/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
       /* links and buttons keep their own click behaviour (and flex gaps), so terms inside them are left as plain text */
-      var p = n.parentElement; if (!p || p.closest('script,style,textarea,input,select,option,a,button,.btn,.tre-term,.tre-pop,.marquee,.fp-ticker,.cb-panel,svg,.brand')) return NodeFilter.FILTER_REJECT;
+      var p = n.parentElement; if (!p || p.closest('script,style,textarea,input,select,option,a,button,.btn,summary,.event-foot,.countdown-title,.tre-term,.tre-pop,.marquee,.fp-ticker,.cb-panel,svg,.brand')) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT; } });
     var nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach(function (n) {
