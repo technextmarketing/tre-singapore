@@ -301,7 +301,10 @@
   function initEvents() {
     if (!window.TRE_EVENTS) return;
     var events = normaliseEvents(window.TRE_EVENTS);
-    var upcoming = events.filter(function (e) { return !e._past; }).sort(function (a, b) { return a._start - b._start; });
+    var upcoming = events.filter(function (e) { return !e._past; }).sort(function (a, b) {
+      if (!!a._soldOut !== !!b._soldOut) return a._soldOut ? 1 : -1; // available upcoming first (priority), sold-out to the back
+      return a._start - b._start;
+    });
     var past = events.filter(function (e) { return e._past; }).sort(function (a, b) { return b._start - a._start; });
 
     $all('[data-events-preview]').forEach(function (grid) {
