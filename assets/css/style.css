@@ -757,7 +757,7 @@ table.price .hl:hover{background:var(--cream-2)}
 .evt-day h4{margin:0 0 .3rem}
 .evt-day p{margin:0;color:var(--muted);font-size:.95rem}
 @media (max-width:520px){.evt-day{grid-template-columns:1fr}}
-.evt-people{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+.evt-people{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);align-items:start}
 @media (max-width:640px){.evt-people{grid-template-columns:1fr}}
 .person{background:#fff;border:1px solid var(--line-2);border-radius:var(--radius);padding:var(--s5)}
 .person .role{font-family:var(--font-display);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--bronze);font-weight:700}
@@ -766,7 +766,7 @@ table.price .hl:hover{background:var(--cream-2)}
 /* facilitator presentation cards on event pages */
 .evt-people{margin-bottom:var(--s7)}
 .evt-people.one{grid-template-columns:1fr}
-.person.v2{display:grid;grid-template-columns:96px minmax(0,1fr);gap:var(--s4) var(--s5);align-items:start;box-shadow:var(--shadow-1);transition:transform var(--d2) var(--ease-out),box-shadow var(--d2)}
+.person.v2{display:grid;grid-template-columns:96px minmax(0,1fr);gap:var(--s4) var(--s5);align-items:start;align-content:start;box-shadow:var(--shadow-1);transition:transform var(--d2) var(--ease-out),box-shadow var(--d2)}
 .person.v2:hover{transform:translateY(-3px);box-shadow:var(--shadow-2)}
 .person-photo{position:relative;display:block;width:96px;height:96px;border-radius:50%;overflow:hidden;background:linear-gradient(150deg,var(--navy),var(--blue) 65%,var(--bronze-soft));color:#fff;font-family:var(--font-display);font-weight:800;font-size:1.4rem;display:grid;place-items:center;border:3px solid var(--gold-soft);box-shadow:var(--shadow-1)}
 .person-photo.bronze{background:linear-gradient(150deg,var(--bronze),var(--gold) 70%,var(--cream-2))}
