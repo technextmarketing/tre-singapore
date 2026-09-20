@@ -428,6 +428,7 @@ table.price .hl:hover{background:var(--cream-2)}
 .post-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-2)}
 .post-media{aspect-ratio:16/9;position:relative;display:grid;place-items:center;overflow:hidden;background:linear-gradient(150deg,var(--navy),var(--blue) 60%,var(--bronze-soft));color:rgba(255,255,255,.92)}
 .post-media svg{width:60px;height:60px;position:relative;transition:transform var(--d3) var(--ease-out)}
+.post-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .post-card:hover .post-media svg,.post-featured:hover .post-media svg{transform:scale(1.1) rotate(-4deg)}
 .post-media.theme-bronze{background:linear-gradient(150deg,var(--brown),var(--bronze) 55%,var(--gold))}
 .post-media.theme-deep{background:linear-gradient(150deg,var(--navy-deep),var(--navy) 55%,var(--blue))}
