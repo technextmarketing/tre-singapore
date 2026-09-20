@@ -317,6 +317,7 @@
       function render() {
         var list;
         if (current === 'past') list = past;
+        else if (current === 'soldout') list = events.filter(function (e) { return e._soldOut; }).sort(function (a, b) { return a._start - b._start; });
         else list = upcoming.filter(function (e) {
           if (current === 'all') return true;
           if (current === 'certification') return e.category === 'Certification';

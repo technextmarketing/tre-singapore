@@ -137,6 +137,8 @@ strong{color:var(--ink);font-weight:700}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;min-height:78px;transition:min-height var(--d2) var(--ease)}
 .scrolled .header-inner{min-height:66px}
 .brand{display:flex;align-items:center;gap:.7rem;color:var(--navy)}
+.brand-logo{height:58px;width:auto;max-width:none;display:block;transition:height var(--d2) var(--ease)}
+.scrolled .brand-logo{height:46px}
 .brand:hover{color:var(--navy)}
 .brand-mark{width:46px;height:46px;flex:0 0 46px;transition:transform var(--d3) var(--ease-out)}
 .brand:hover .brand-mark{transform:rotate(-8deg) scale(1.04)}
@@ -179,6 +181,7 @@ strong{color:var(--ink);font-weight:700}
 @media (max-width:480px){
   .header-inner{min-height:68px}.scrolled .header-inner{min-height:60px}
   .brand-mark{width:40px;height:40px;flex-basis:40px}
+  .brand-logo{height:42px}
   .brand-word{font-size:1.25rem}
 }
 
@@ -537,6 +540,9 @@ table.price .hl:hover{background:var(--cream-2)}
 @media (max-width:900px){.footer-top{grid-template-columns:1fr 1fr}}
 @media (max-width:600px){.footer-top{grid-template-columns:1fr}}
 .footer-brand .brand{color:#fff}
+.footer-wordmark{font-family:var(--font-display);font-weight:800;font-style:italic;font-size:1.2rem;letter-spacing:-.02em;color:#fff;display:block;margin-bottom:.5rem}
+.footer-powered{flex-basis:100%;order:3;text-align:center;margin:.2rem 0 0;color:#8c9bb6;font-size:.82rem}
+.footer-powered a{color:#c9d3e6;font-weight:700}.footer-powered a:hover{color:var(--gold)}
 .footer-brand .brand-word{color:#fff}
 .footer-brand .brand-word em{color:var(--gold)}
 .footer-brand .brand-tag{color:#9fb0cc;display:block}
