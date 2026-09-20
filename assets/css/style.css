@@ -461,6 +461,7 @@ table.price .hl:hover{background:var(--cream-2)}
 .article-head .post-meta{justify-content:center;margin-top:1rem}
 .article-cover{aspect-ratio:21/9;border-radius:var(--radius);margin:0 auto var(--s7);max-width:980px;position:relative;display:grid;place-items:center;overflow:hidden;background:linear-gradient(150deg,var(--navy),var(--blue) 60%,var(--bronze-soft));color:rgba(255,255,255,.92);box-shadow:var(--shadow-2)}
 .article-cover svg{width:90px;height:90px;animation:floaty 6s var(--ease) infinite alternate}
+.article-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 @keyframes floaty{from{transform:translateY(-6px)}to{transform:translateY(6px)}}
 .article-body{font-size:1.08rem;line-height:1.7}
 .article-body h2{font-size:1.55rem;margin-top:2.2rem}
@@ -542,7 +543,7 @@ table.price .hl:hover{background:var(--cream-2)}
 .footer-brand .brand{color:#fff}
 .footer-brand .socials{margin-top:1.1rem}
 .footer-wordmark{font-family:var(--font-display);font-weight:800;font-style:italic;font-size:1.2rem;letter-spacing:-.02em;color:#fff;display:block;margin-bottom:.5rem}
-.footer-powered{flex-basis:100%;order:3;text-align:center;margin:.2rem 0 0;color:#8c9bb6;font-size:.82rem}
+.footer-powered{margin:0;color:#8c9bb6;font-size:.82rem;text-align:right}
 .footer-powered a{color:#c9d3e6;font-weight:700}.footer-powered a:hover{color:var(--gold)}
 .footer-brand .brand-word{color:#fff}
 .footer-brand .brand-word em{color:var(--gold)}
