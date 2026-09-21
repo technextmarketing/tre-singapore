@@ -83,7 +83,7 @@ window.TRE_FACILITATORS = [
   },
   {
     id: 'yan',
-    name: 'Yan',
+    name: 'Yan Lau',
     role: 'Holistic Healing & Wellness Facilitator · Certified TRE™ Provider',
     tag: 'Certified Provider', tagClass: 'badge-navy', kind: 'provider',
     modes: ['1:1', 'Groups', 'Workshops', 'In-person', 'Online'],
@@ -121,7 +121,6 @@ window.TRE_FACILITATORS = [
     ]
   },
   {
-    /* TODO: swap the hub contact below for Nikki's own email/WhatsApp/IG when she provides them */
     id: 'nikki-tay',
     name: 'Nikki Tay',
     role: 'Certified TRE™ Provider · MEd Special Education',
@@ -131,7 +130,8 @@ window.TRE_FACILITATORS = [
     initials: 'NT', photoClass: 'deep', photo: FAC_IMG + 'nikki-tay.webp',
     bio: 'Certified TRE™ Provider drawing on nearly three decades in early-childhood and special education to offer a gentle, body-based way to release tension.',
     summary: 'After almost three decades in early childhood and special education — supporting children, families and neurodivergent individuals — Nikki offers TRE™ as a gentle, body-based practice that helps people release tension, feel more settled and reconnect with themselves.',
-    contact: { email: 'mailto:isabelle@bhdasia.com?subject=TRE%E2%84%A2%20session%20with%20Nikki%20Tay', book: 'contact.html?interest=session' },
+    contact: { email: 'mailto:steadyessentials@gmail.com?subject=TRE%E2%84%A2%20session%20enquiry', whatsapp: 'https://wa.me/6590266965?text=Hi%20Nikki%2C%20I%27d%20like%20to%20ask%20about%20a%20TRE%E2%84%A2%20session', book: 'https://wa.me/6590266965?text=Hi%20Nikki%2C%20I%27d%20like%20to%20book%20a%20TRE%E2%84%A2%20session' },
+    website: { url: 'https://www.steadyessentials.com', label: 'steadyessentials.com' },
     socials: [],
     facts: { location: 'Singapore · In-person & online', languages: 'English', formats: '1:1 · Groups', certified: 'Certified TRE™ Provider · MEd Special Education (University of Birmingham)' },
     about: [
