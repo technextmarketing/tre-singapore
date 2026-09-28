@@ -59,9 +59,69 @@ var SARA = {
   photo: 'assets/img/facilitators/sara-marie.webp',
   link: 'https://linktr.ee/saramariespirit', linkText: 'Linktree'
 };
+var AUN = {
+  name: 'Aun Ali',
+  role: 'Certified TRE\u2122 Trainer \u00b7 Founder, Trauma Release and Wellness Centre \u00b7 Clinically Certified Trauma Specialist (CCTS-I, F, A)',
+  bio: 'Aun Ali is a Certified TRE\u2122 Trainer and Clinically Certified Trauma Specialist (CCTS-I, F, A), and the founder of the Trauma Release and Wellness Centre. His work sits at the meeting point of psychotherapy and the body: helping psychologists, counsellors and narrative therapists bring TRE\u2122 and somatic practice into trauma-informed care safely, in the right phase, without abandoning the model they already trust.',
+  photo: 'assets/img/facilitators/aun-ali.webp'
+};
 var CALENDLY = 'https://calendly.com/bhdasia/tre-certification-intake-call';
 
 window.TRE_EVENTS = [
+  /* ---------- The Body in the Room \u2014 Aun Ali (online, 25 Nov 2026) ---------- */
+  {
+    slug: 'the-body-in-the-room',
+    title: 'The Body in the Room \u2014 Integrating TRE\u2122 and Somatic Practice into Psychotherapy',
+    category: 'Workshop',
+    region: 'online',
+    location: 'Online',
+    venue: 'Zoom (meeting ID 861 0820 2439)',
+    format: 'Live online',
+    start: '2026-11-25T19:00',
+    dateText: 'Wednesday 25 November 2026',
+    timeText: '7:00pm Singapore time',
+    image: 'assets/img/events/event-body-in-the-room.webp',
+    description: 'An online workshop with Aun Ali \u2014 Certified TRE\u2122 Trainer and Clinically Certified Trauma Specialist \u2014 for psychologists, counsellors and narrative therapists who sense that talk alone is not always enough, and want a safe, structured way to bring the body into their work. A trauma-informed approach.',
+    facilitator: 'Aun Ali',
+    priceText: 'Open online workshop \u00b7 join on Zoom',
+    link: 'https://us02web.zoom.us/j/86108202439',
+    linkText: 'Join on Zoom',
+    isNew: true,
+    theme: 'theme-deep',
+    details: {
+      summary: 'Many of us were trained to work with stories, thoughts and meaning. Then we sat with clients who could tell their story perfectly and still feel unsafe in their own skin. This workshop is a space for therapists and TRE\u2122 practitioners to talk honestly about what changes when the body becomes part of the therapeutic process.',
+      about: [
+        'We will look at the framework of trauma-informed care, and explore how and when TRE\u2122 and other body-based practices can be woven into each stage of therapy \u2014 without overwhelming the client or abandoning your existing model.',
+        'Led by Aun Ali: Certified TRE\u2122 Trainer, founder of the Trauma Release and Wellness Centre, and Clinically Certified Trauma Specialist (CCTS-I, F, A).',
+        'Live on Zoom, Wednesday 25 November 2026 at 7:00pm Singapore time. Meeting ID 861 0820 2439.'
+      ],
+      forWho: [
+        'Psychologists, counsellors and narrative therapists',
+        'Social workers and other mental health professionals curious about safely integrating somatic practice',
+        'TRE\u2122 students and certified providers'
+      ],
+      schedule: [
+        { when: 'Wed 25 Nov', time: '7:00pm SGT \u00b7 Zoom', title: 'The Body in the Room \u2014 live online workshop', text: 'The foundations of trauma-informed care; the phased approach to trauma therapy; where TRE\u2122 fits in each phase; when to hold back; bridging talk and body; real practice, real stories.' }
+      ],
+      includes: [
+        'The foundations of trauma-informed care \u2014 safety, trust, choice, collaboration and empowerment, and what they look like in the body, not just on paper',
+        'The phased approach to trauma therapy \u2014 stabilisation, processing and integration, and why the nervous system needs to feel safe before a story can be safely told',
+        'Where TRE\u2122 fits in each phase \u2014 regulation and resourcing early on, titrated release during processing, self-practice for long-term integration',
+        'When to hold back \u2014 recognising overwhelm, dissociation and shutdown, the window of tolerance, and when body-based work is not the right step yet',
+        'Bridging talk and body \u2014 combining somatic awareness with your existing approach, tracking sensation alongside the client\u2019s narrative',
+        'Real practice, real stories \u2014 reflections from TRE\u2122 practitioners on how including the body has shifted their work'
+      ],
+      pricingNote: 'Join directly on Zoom at the session time. Questions beforehand: isabelle@bhdasia.com.',
+      facilitators: [AUN],
+      partners: 'With the Trauma Release and Wellness Centre',
+      online: true,
+      register: [
+        { label: 'Join on Zoom (25 Nov, 7pm SGT)', url: 'https://us02web.zoom.us/j/86108202439', primary: true },
+        { label: 'Ask a question (email)', url: 'mailto:isabelle@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%2025%20Nov' }
+      ],
+      source: 'https://bhdasia.com/event-body-in-the-room.html'
+    }
+  },
 
   /* ---------- Singapore certification 2027 cohort (Modules 1–3 + bonuses) ---------- */
   {
