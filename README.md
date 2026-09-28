@@ -53,4 +53,4 @@ Upload the whole folder to any static host (GoDaddy, Netlify, Cloudflare Pages, 
 
 ## Design notes
 
-Palette taken from the TRE Singapore logo: navy `#1c3d7a` (TRE wordmark), globe blue `#2a63a8`, bronze `#8b6b45` (continents/eagle), brown `#5f4630` ("Singapore"), plus the orange `#e08a2e` CTA colour and cream `#fbf5ec` panels used on the current site. Fonts: Montserrat (headings, italic accents echoing the logo) and Nunito Sans (body), loaded from Google Fonts with system fallbacks.
+Palette taken from the TRE Singapore logo: navy `#1c3d7a` (TRE wordmark), globe blue `#2a63a8`, bronze `#8b6b45` (continents/eagle), brown `#5f4630` ("Singapore"), plus the orange `#e08a2e` CTA colour and cream `#fbf5ec` panels used on the current site. Fonts match technext.asia: Plus Jakarta Sans (headings, italic accents echoing the logo) and Inter (body), loaded from Google Fonts with system fallbacks.

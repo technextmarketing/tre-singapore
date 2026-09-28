@@ -21,8 +21,9 @@ Derived from the TRE Singapore logo: a navy/blue globe with bronze continents an
 Rules: one orange CTA per view; text on coloured backgrounds is white or tinted light (`#cdd8ea`), never grey; no purple gradients; no glass blur.
 
 ## Typography
-- Display: **Montserrat** 700/800 (italic 800 for the wordmark, echoing the logo). Tracking −0.022em on headings.
-- Body: **Nunito Sans** 400/600/700, 17px, line-height 1.6.
+Same faces as technext.asia (TechNext's site), loaded from Google Fonts with the same fallback stacks.
+- Display: **Plus Jakarta Sans** 600/700/800 (italic 800 for the wordmark, echoing the logo). Tracking −0.015em on headings, −0.025em on h1 (technext.asia's values).
+- Body: **Inter** 400/600/700, 16px, line-height 1.65 (technext.asia's body setting; sets the same line length the old 17px Nunito Sans did).
 - Scale: h1 `clamp(2.2rem,4.6vw,3.5rem)`, h2 `clamp(1.65rem,3vw,2.35rem)`, h3 1.22rem, h4 1.02rem.
 - Labels/eyebrows: uppercase .72rem with **.08em** tracking (was .22em — too wide). Nav and buttons are sentence case with 0 tracking.
 - Measure: article body ≤ 740px.
