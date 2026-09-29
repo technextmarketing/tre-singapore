@@ -134,6 +134,24 @@ POSTS = [
 BASE_404 = ("<script>(function(){var s=location.pathname.split('/')[1];"
             "document.write('<base href=\"/'+(/github\\.io$/.test(location.hostname)&&s?s+'/':'')+'\">')})();</script>")
 
+# Addresses of the old GoDaddy Website Builder site that Google indexed (site: search, 2026-09-29), mapped to the new
+# pages. Each gets a static redirect page (instant meta refresh = a permanent move for Google, canonical to the
+# target). Old paths that cannot exist as a file name on Windows (a literal "?") are redirected by the 404 page.
+REDIRECTS = {"certified-tre-providers": "facilitators"}
+REDIRECTS_404 = {"/who-are-we?": "about", "/who-are-we": "about", "/certified-tre-providers": "facilitators"}
+BASE_404 += ("<script>(function(){var m=" + seo.json.dumps(REDIRECTS_404) + ",p=decodeURIComponent(location.pathname);"
+             "if(m[p])location.replace('/'+m[p]+location.hash)})();</script>")
+
+
+def redirect_page(old, new):
+    url = canonical_for(new + ".html")
+    return (f'<!DOCTYPE html>\n<html lang="en-SG">\n<head>\n<meta charset="utf-8">\n'
+            f'<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+            f'<title>Moved — TRE™ in Singapore</title>\n<link rel="canonical" href="{url}">\n'
+            f'<meta http-equiv="refresh" content="0; url={new}">\n'
+            f"<script>location.replace('{new}'+location.search+location.hash)</script>\n</head>\n"
+            f'<body><p>This page has moved to <a href="{new}">{url}</a>.</p></body>\n</html>\n')
+
 
 def record_body(template, container, rid, static_html):
     pat = re.compile(r'<div id="%s"><section\b.*?</section></div>' % container, re.S)
@@ -282,6 +300,8 @@ def main(only):
         assemble(read("404.body.html"), "404.html", "Page not found — TRE™ in Singapore",
                  "This page has moved or no longer exists.", meta, "", "", manifest, head_first=BASE_404)
     if not only:
+        for old, new in REDIRECTS.items():
+            write(old + ".html", redirect_page(old, new))
         write_sitemap_robots_llms(events, facs)
     print("done")
 
