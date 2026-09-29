@@ -223,12 +223,17 @@
       '<div class="fact">' + ICONS.award + '<div><b>' + (ev.credits ? 'Credits' : 'Investment') + '</b><span>' + esc(ev.credits || ev.price || ev.priceText || 'Enquire') + '</span></div></div>';
 
     var h = '';
-    h += '<section class="evt-hero">' + (ev.image ? '<div class="bg" style="background-image:url(\'' + esc(ev.image) + '\')"></div>' : '') +
-      '<div class="container' + (ev.image ? ' with-poster' : '') + '"><div class="hero-copy"><p class="crumbs"><a href="events.html">Events</a> › ' + esc(ev.category) + '</p>' +
+    /* hero background: a real session photo matched to the event type (the poster stays in the window) */
+    var bgName = ({ Certification: 'hero-education', Workshop: 'hero-events' })[ev.category] || 'hero-events';
+    var bg = ROOT + 'assets/img/gallery/' + bgName;
+    h += '<section class="hx hx-evt" style="--fx:60%;--fy:55%">' +
+      '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="' + bg + '-1600.webp" srcset="' + bg + '-960.webp 960w, ' + bg + '-1600.webp 1600w" sizes="100vw" alt="" fetchpriority="high" decoding="async"></div>' +
+      '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
+      '<div class="container hx-inner' + (ev.image ? ' hx-split' : '') + '"><div class="hero-copy"><p class="crumbs"><a href="events.html">Events</a> › ' + esc(ev.category) + '</p>' +
       '<div class="badges"><span class="badge">' + esc(ev.location) + '</span><span class="badge cat">' + esc(ev.category) + '</span>' + (ev.credits ? '<span class="badge">' + esc(ev.credits) + '</span>' : '') + status + '</div>' +
       '<h1>' + esc(ev.title) + '</h1><p class="lead">' + esc(d.summary || ev.description) + '</p>' +
       '<div class="btn-row">' + (ev._past ? '<a class="btn btn-ghost-light" href="events.html">See upcoming events</a>' : (primary ? extLink(primary.url, 'btn btn-primary', primary.label) : '') + (d.online ? '<a class="btn btn-ghost-light" href="#prepare">Prepare for the online session</a>' : '<a class="btn btn-ghost-light" href="#programme">See the programme</a>')) + '</div></div>' +
-      (ev.image ? '<figure class="poster"><img src="' + esc(ev.image) + '" alt="' + esc(ev.title) + ' — event poster" decoding="async"/></figure>' : '') +
+      (ev.image ? '<figure class="poster hx-window"><img src="' + esc(ev.image) + '" alt="' + esc(ev.title) + ' — event poster" decoding="async"/></figure>' : '') +
       '</div></section>';
     h += '<div class="container evt-facts"><div class="grid">' + facts + '</div></div>';
 
@@ -456,12 +461,16 @@
       '<div class="fact">' + FAC_ICONS.group + '<div><b>Formats</b><span>' + esc(fx.formats || '—') + '</span></div></div>' +
       '<div class="fact">' + ICONS.award + '<div><b>Certification</b><span>' + esc(fx.certified || '—') + '</span></div></div>';
 
-    var h = '<section class="fp-hero' + (f.hero ? ' has-bg' : '') + '">' + (f.hero ? '<div class="fp-hero-bg" style="background-image:url(\'' + esc(f.hero) + '\')"></div>' : '') + '<div class="container"><div>' +
+    /* hero background: the Asia TRE™ trainers photo (every listed trainer's community); the portrait stays in the window */
+    var h = '<section class="hx hx-fp" style="--fx:60%;--fy:44%;--shift:30%;--feather:30%">' +
+      '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="assets/img/gallery/hero-facilitators-1600.webp" srcset="assets/img/gallery/hero-facilitators-960.webp 960w, assets/img/gallery/hero-facilitators-1600.webp 1600w" sizes="100vw" alt="" fetchpriority="high" decoding="async"></div>' +
+      '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
+      '<div class="container hx-inner hx-split"><div>' +
       '<p class="crumbs"><a href="facilitators.html">Facilitators</a> › ' + esc(f.tag || 'Profile') + '</p>' +
       '<div class="badges"><span class="badge gold">' + esc(f.tag || 'Facilitator') + '</span>' + (f.sample ? '<span class="badge">Sample profile</span>' : '') + '</div>' +
       '<h1>' + esc(f.name) + '</h1><p class="role">' + esc(f.role) + '</p><p class="lead">' + esc(f.summary || f.bio) + '</p>' +
       '<div class="btn-row">' + ctas + '</div>' + (socials ? '<div class="fp-socials">' + socials + '</div>' : '') + '</div>' +
-      '<div class="fp-photo ' + esc(f.photoClass || '') + '">' + (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') + (f.photo ? '<img src="' + esc(f.photo) + '" alt="' + esc(f.name) + '"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '</div>' +
+      '<div class="fp-photo hx-window ' + esc(f.photoClass || '') + '">' + (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') + (f.photo ? '<img src="' + esc(f.photo) + '" alt="' + esc(f.name) + '"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '</div>' +
       '</div></section>';
     if (f.services && f.services.length) {
       var tags = f.services.map(function (s) { return '<span>' + esc(s) + ' <i></i></span>'; }).join('');
@@ -538,7 +547,7 @@
     var walker = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
       if (!/TRE[®™]/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
       /* links and buttons keep their own click behaviour (and flex gaps), so terms inside them are left as plain text */
-      var p = n.parentElement; if (!p || p.closest('script,style,textarea,input,select,option,a,button,.btn,summary,.event-foot,.countdown-title,.tre-term,.tre-pop,.marquee,.fp-ticker,.cb-panel,svg,.brand')) return NodeFilter.FILTER_REJECT;
+      var p = n.parentElement; if (!p || p.closest('script,style,textarea,input,select,option,a,button,.btn,summary,.event-foot,.countdown-title,.tre-term,.tre-pop,.marquee,.fp-ticker,.cb-panel,svg,.brand,.hx-credit,figcaption,.lx-strip')) return NodeFilter.FILTER_REJECT;
       return NodeFilter.FILTER_ACCEPT; } });
     var nodes = []; while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach(function (n) {
