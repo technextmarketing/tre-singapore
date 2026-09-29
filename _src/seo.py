@@ -192,8 +192,11 @@ def item_list(url, name, items):
 
 
 def post_date(body):
+    """The article's stated date as an ISO datetime at the start of that day in Singapore (Google wants a time zone)."""
     m = re.search(r"(\d{1,2}) (" + "|".join(MONTHS) + r") (20\d\d)", text(body))
-    return datetime.date(int(m.group(3)), MONTHS[m.group(2)], int(m.group(1))).isoformat() if m else None
+    if not m:
+        return None
+    return datetime.date(int(m.group(3)), MONTHS[m.group(2)], int(m.group(1))).isoformat() + "T00:00:00+08:00"
 
 
 def blog_posting(url, body, desc, image):
