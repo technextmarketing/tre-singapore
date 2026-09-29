@@ -4,7 +4,7 @@
    Last aligned: 7 September 2026.
 
    Each event object supports:
-     slug         : string (required) — used by event.html?id=<slug>
+     slug         : string (required) — used by event?id=<slug>
      title        : string (required)
      category     : "Certification" | "Workshop" | "Community" | "Coaching"
      region       : "singapore" | "online" | "international"   (used by the filter tabs)
@@ -425,8 +425,8 @@ window.TRE_EVENTS = [
       partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE™ România · HummingBeing',
       online: true,
       register: [
-        { label: 'See upcoming events', url: 'events.html', primary: true },
-        { label: 'Bucharest sessions (20 & 24 Oct)', url: 'event.html?id=from-shaking-to-shaping-bucharest' }
+        { label: 'See upcoming events', url: 'events', primary: true },
+        { label: 'Bucharest sessions (20 & 24 Oct)', url: 'event?id=from-shaking-to-shaping-bucharest' }
       ],
       source: 'https://www.hummingbeing.com/event-shaking-to-shaping-sep3.html'
     }
@@ -718,7 +718,7 @@ window.TRE_EVENTS = [
       online: false,
       register: [
         { label: 'Join the waitlist', url: 'https://www.hummingbeing.com/event-selfcare-coaches-singapore.html', primary: true },
-        { label: 'See the next Module 1 (Bucharest)', url: 'event.html?id=tre-module-1-bucharest' }
+        { label: 'See the next Module 1 (Bucharest)', url: 'event?id=tre-module-1-bucharest' }
       ],
       source: 'https://www.hummingbeing.com/event-selfcare-coaches-singapore.html'
     }

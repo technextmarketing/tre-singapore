@@ -1,21 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-SG">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{TITLE}}</title>
 <meta name="description" content="{{DESC}}">
-<link rel="canonical" href="{{CANONICAL}}">
-<meta property="og:title" content="{{TITLE}}">
-<meta property="og:description" content="{{DESC}}">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{CANONICAL}}">
-<meta property="og:site_name" content="TRE™ in Singapore">
-<meta property="og:image" content="https://technextmarketing.github.io/tre-singapore/assets/img/og-cover.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{TITLE}}">
-<meta name="twitter:description" content="{{DESC}}">
-<meta name="twitter:image" content="https://technextmarketing.github.io/tre-singapore/assets/img/og-cover.jpg">
+{{META}}
 <meta name="theme-color" content="#1c3d7a">
 <link rel="icon" type="image/svg+xml" href="{{ROOT}}assets/img/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,27 +13,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,700;1,800&family=Inter:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ROOT}}assets/css/style.css?v=20260929c">
 <link rel="stylesheet" href="{{ROOT}}assets/css/layer.css?v=20260929c">
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add('js');(function(){try{var p=location.pathname,c=p.replace(/\/index\.html$/,'/').replace(/\.html$/,'');if(c!==p)history.replaceState(history.state,'',c+location.search+location.hash)}catch(e){}})();</script>
 </head>
 <body>
 <a class="sr-only" href="#main">Skip to content</a>
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="{{ROOT}}index.html" aria-label="TRE™ in Singapore — home">
+    <a class="brand" href="{{HOME}}" aria-label="TRE™ in Singapore — home">
       <img class="brand-logo" src="{{ROOT}}assets/img/logo-tre-singapore.png" alt="TRE™ in Singapore" width="107" height="58" decoding="async">
     </a>
     <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
       <span></span><span></span><span></span>
     </button>
     <nav class="nav" id="site-nav" aria-label="Main navigation">
-      <a href="{{ROOT}}index.html" class="{{A_home}}">Home</a>
-      <a href="{{ROOT}}about.html" class="{{A_about}}">About</a>
-      <a href="{{ROOT}}education.html" class="{{A_education}}">Education</a>
-      <a href="{{ROOT}}facilitators.html" class="{{A_facilitators}}">Facilitators</a>
-      <a href="{{ROOT}}events.html" class="{{A_events}}">Events</a>
-      <a href="{{ROOT}}blog.html" class="{{A_blog}}">Blog</a>
-      <a href="{{ROOT}}contact.html" class="{{A_contact}}">Contact</a>
+      <a href="{{HOME}}" class="{{A_home}}">Home</a>
+      <a href="{{ROOT}}about" class="{{A_about}}">About</a>
+      <a href="{{ROOT}}education" class="{{A_education}}">Education</a>
+      <a href="{{ROOT}}facilitators" class="{{A_facilitators}}">Facilitators</a>
+      <a href="{{ROOT}}events" class="{{A_events}}">Events</a>
+      <a href="{{ROOT}}blog" class="{{A_blog}}">Blog</a>
+      <a href="{{ROOT}}contact" class="{{A_contact}}">Contact</a>
       <a class="btn btn-primary btn-sm" href="https://calendly.com/bhdasia/tre-certification-intake-call" target="_blank" rel="noopener">Book a call</a>
     </nav>
   </div>
