@@ -299,7 +299,7 @@ def event_node(e, image):
                      "address": {"@type": "PostalAddress", "addressLocality": city, "addressCountry": country}})
     if online:
         zoom = next((u for u in [e.get("link") or ""] + [r.get("url") or "" for r in d.get("register") or []] if "zoom.us" in u), None)
-        locs.append({"@type": "VirtualLocation", "url": zoom or _register_url(e)})
+        locs.append({"@type": "VirtualLocation", "url": zoom or url})  # a private join link: the event page itself
     node = {"@type": "Event", "@id": url + "#event", "name": e["title"], "url": url,
             "description": d.get("summary") or e.get("description") or "", "startDate": event_start(e),
             "eventAttendanceMode": f"https://schema.org/{mode}EventAttendanceMode",
@@ -319,6 +319,12 @@ def event_node(e, image):
     if off:
         node["offers"] = off
     return node
+
+
+def href(u, root):
+    """A link from the data files, for a page `root` levels down: anything with a scheme (http:, mailto:, tel:) as is."""
+    u = u or ""
+    return u if re.match(r"^([a-z][a-z0-9+.-]*:|#|//)", u) else root + u
 
 
 def _li(items):
@@ -355,7 +361,7 @@ def event_static(e, root):
         h.append(f"<p>{esc(d['partners'])}</p>")
     links = [r for r in d.get("register") or [] if r.get("url")]
     if not e.get("_past") and links:
-        h.append("<p>" + " · ".join(f'<a href="{esc(r["url"] if r["url"].startswith("http") else root + r["url"])}">{esc(r.get("label") or "Register")}</a>' for r in links) + "</p>")
+        h.append("<p>" + " · ".join(f'<a href="{esc(href(r["url"], root))}">{esc(r.get("label") or "Register")}</a>' for r in links) + "</p>")
     h.append(f'<p><a href="{root}events">All TRE™ events</a>' + (f' · <a href="{root}online-session-guide">Online session guide</a>' if d.get("online") else "") + "</p>")
     h.append("</div></section>")
     return "\n".join(h)

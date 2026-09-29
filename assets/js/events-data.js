@@ -75,17 +75,18 @@ window.TRE_EVENTS = [
     category: 'Workshop',
     region: 'online',
     location: 'Online',
-    venue: 'Zoom (meeting ID 861 0820 2439)',
+    venue: 'Zoom (link sent after registration)',
     format: 'Live online',
     start: '2026-11-25T19:00',
     dateText: 'Wednesday 25 November 2026',
-    timeText: '7:00pm Singapore time',
+    timeText: '7:00\u20139:00pm Singapore time',
     image: 'assets/img/events/event-body-in-the-room.webp',
     description: 'An online workshop with Aun Ali \u2014 Certified TRE\u2122 Trainer and Clinically Certified Trauma Specialist \u2014 for psychologists, counsellors and narrative therapists who sense that talk alone is not always enough, and want a safe, structured way to bring the body into their work. A trauma-informed approach.',
     facilitator: 'Aun Ali',
-    priceText: 'Open online workshop \u00b7 join on Zoom',
-    link: 'https://us02web.zoom.us/j/86108202439',
-    linkText: 'Join on Zoom',
+    price: 'S$88',
+    priceText: 'S$88 \u00b7 discounted S$68 with a code',
+    link: 'https://buy.stripe.com/5kQcMX8kX3BD62Y1WFaR200',
+    linkText: 'Register \u2014 S$88',
     isNew: true,
     theme: 'theme-deep',
     details: {
@@ -93,7 +94,8 @@ window.TRE_EVENTS = [
       about: [
         'We will look at the framework of trauma-informed care, and explore how and when TRE\u2122 and other body-based practices can be woven into each stage of therapy \u2014 without overwhelming the client or abandoning your existing model.',
         'Led by Aun Ali: Certified TRE\u2122 Trainer, founder of the Trauma Release and Wellness Centre, and Clinically Certified Trauma Specialist (CCTS-I, F, A).',
-        'Live on Zoom, Wednesday 25 November 2026 at 7:00pm Singapore time. Meeting ID 861 0820 2439.'
+        'Live on Zoom, Wednesday 25 November 2026, 7:00\u20139:00pm Singapore time. The Zoom link is shared with registered participants.',
+        'In partnership with the Trauma Release and Wellness Centre, Karachi, Pakistan.'
       ],
       forWho: [
         'Psychologists, counsellors and narrative therapists',
@@ -101,7 +103,7 @@ window.TRE_EVENTS = [
         'TRE\u2122 students and certified providers'
       ],
       schedule: [
-        { when: 'Wed 25 Nov', time: '7:00pm SGT \u00b7 Zoom', title: 'The Body in the Room \u2014 live online workshop', text: 'The foundations of trauma-informed care; the phased approach to trauma therapy; where TRE\u2122 fits in each phase; when to hold back; bridging talk and body; real practice, real stories.' }
+        { when: 'Wed 25 Nov', time: '7:00\u20139:00pm SGT \u00b7 Zoom', title: 'The Body in the Room \u2014 live online workshop', text: 'The foundations of trauma-informed care; the phased approach to trauma therapy; where TRE\u2122 fits in each phase; when to hold back; bridging talk and body; real practice, real stories.' }
       ],
       includes: [
         'The foundations of trauma-informed care \u2014 safety, trust, choice, collaboration and empowerment, and what they look like in the body, not just on paper',
@@ -111,12 +113,17 @@ window.TRE_EVENTS = [
         'Bridging talk and body \u2014 combining somatic awareness with your existing approach, tracking sensation alongside the client\u2019s narrative',
         'Real practice, real stories \u2014 reflections from TRE\u2122 practitioners on how including the body has shifted their work'
       ],
-      pricingNote: 'Join directly on Zoom at the session time. Questions beforehand: isabelle@bhdasia.com.',
+      pricing: [
+        { label: 'Public price', sub: 'live online workshop \u00b7 Zoom', price: 'S$88', hl: true },
+        { label: 'Discounted price', sub: 'with a discount code', price: 'S$68', note: 'email Isabelle for the discounted registration link' }
+      ],
+      pricingNote: 'All prices in Singapore Dollars. Have a discount code? Email isabelle@bhdasia.com for the discounted registration link. The Zoom link is shared with registered participants.',
       facilitators: [AUN],
-      partners: 'With the Trauma Release and Wellness Centre',
+      partners: 'In partnership with the Trauma Release and Wellness Centre, Karachi, Pakistan',
       online: true,
       register: [
-        { label: 'Join on Zoom (25 Nov, 7pm SGT)', url: 'https://us02web.zoom.us/j/86108202439', primary: true },
+        { label: 'Register \u2014 S$88', url: 'https://buy.stripe.com/5kQcMX8kX3BD62Y1WFaR200', primary: true },
+        { label: 'Discount code? Email Isabelle', url: 'mailto:isabelle@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%20discounted%20registration' },
         { label: 'Ask a question (email)', url: 'mailto:isabelle@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%2025%20Nov' }
       ],
       source: 'https://bhdasia.com/event-body-in-the-room.html'
