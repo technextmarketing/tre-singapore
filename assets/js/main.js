@@ -202,7 +202,7 @@
     var events = normaliseEvents(window.TRE_EVENTS);
     var ev = events.filter(function (e) { return e.slug === id; })[0];
     if (!ev) {
-      root.innerHTML = '<section class="section"><div class="container event-not-found"><span class="eyebrow">Events</span><h1>Event not found</h1><p class="muted">That event may have been renamed or removed. Browse the calendar for the latest dates.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="events.html">Browse all events</a></div></div></section>';
+      root.innerHTML = '<section class="section"><div class="container event-not-found"><h1>Event not found</h1><p class="muted">That event may have been renamed or removed. Browse the calendar for the latest dates.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="events.html">Browse all events</a></div></div></section>';
       document.title = 'Event not found — TRE™ in Singapore';
       return;
     }
@@ -213,14 +213,8 @@
     var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', d.summary || ev.description || '');
     var ogI = $('meta[property="og:image"]'); if (ogI && ev.image) ogI.setAttribute('content', new URL(ev.image, location.href).href);
 
-    var list = function (arr) { return (arr || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join(''); };
     var status = ev._past ? '<span class="badge soldout">Completed</span>' : ev._soldOut ? '<span class="badge soldout">Sold out</span>' : ev._live ? '<span class="badge">In progress</span>' : '';
     var primary = (d.register || []).filter(function (r) { return r.primary; })[0] || (d.register || [])[0];
-    var facts = '' +
-      '<div class="fact">' + ICONS.calendar + '<div><b>Date</b><span>' + esc(ev.dateText) + '</span></div></div>' +
-      '<div class="fact">' + ICONS.clock + '<div><b>Time</b><span>' + esc(ev.timeText || (ev.end ? 'Full days — see programme' : 'See programme')) + '</span></div></div>' +
-      '<div class="fact">' + ICONS.pin + '<div><b>Where</b><span>' + esc(ev.venue || ev.location) + (ev.format ? ' · ' + esc(ev.format) : '') + '</span></div></div>' +
-      '<div class="fact">' + ICONS.award + '<div><b>' + (ev.credits ? 'Credits' : 'Investment') + '</b><span>' + esc(ev.credits || ev.price || ev.priceText || 'Enquire') + '</span></div></div>';
 
     var h = '';
     /* hero background: a real session photo matched to the event type (the poster stays in the window) */
@@ -235,71 +229,96 @@
       '<div class="btn-row">' + (ev._past ? '<a class="btn btn-ghost-light" href="events.html">See upcoming events</a>' : (primary ? extLink(primary.url, 'btn btn-primary', primary.label) : '') + (d.online ? '<a class="btn btn-ghost-light" href="#prepare">Prepare for the online session</a>' : '<a class="btn btn-ghost-light" href="#programme">See the programme</a>')) + '</div></div>' +
       (ev.image ? '<figure class="poster hx-window"><img src="' + esc(ev.image) + '" alt="' + esc(ev.title) + ' — event poster" decoding="async"/></figure>' : '') +
       '</div></section>';
-    h += '<div class="container evt-facts"><div class="grid">' + facts + '</div></div>';
+    /* ===== after the hero (dt-*): facts band · content column + sticky register box · related events · close.
+       Styles: assets/css/detail.css · behaviour (rails, tier choice, prep ticks, sticky, phone register action): assets/js/detail.js ===== */
+    var lines = function (s) { return String(s == null ? '' : s).split(' · ').map(function (x) { return '<span class="dt-ln">' + esc(x) + '</span>'; }).join('<span class="dt-sep"> · </span>'); };
+    var lead = function (s) { var t = String(s == null ? '' : s), k = t.indexOf(' — '); return k > 0 ? '<b>' + esc(t.slice(0, k)) + '</b><span class="dt-sep"> — </span>' + esc(t.slice(k + 3)) : esc(t); };
+    var fact = function (icon, label, value) { return '<div class="dt-fact"><dt>' + icon + label + '</dt><dd>' + lines(value) + '</dd></div>'; };
+    var CHECK = '<svg class="dt-check" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="dt-ring" pathLength="1" d="M12 3a9 9 0 1 1 0 18a9 9 0 1 1 0-18"/><path class="dt-tick" pathLength="1" d="m7.9 12.3 2.8 2.8 5.5-5.9"/></svg>';
+    var CLOSE = '<div class="dt-close"><svg class="dt-close-lines" aria-hidden="true" focusable="false"></svg>' +   /* three gold lines drawn to the panel's size by detail.js */
+      '<h2>Ready to learn TRE™?</h2><div class="btn-row"><a class="btn btn-ghost-light" href="facilitators.html">Find a certified provider</a><a class="btn btn-primary" href="https://calendly.com/bhdasia/tre-certification-intake-call" target="_blank" rel="noopener">Book a certification intake call</a></div></div>';
 
-    h += '<section class="section"><div class="container evt-layout"><div class="evt-main">';
-    if (d.about && d.about.length) { h += '<h2>About this event</h2>' + d.about.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join(''); }
-    if (d.forWho && d.forWho.length) { h += '<h2>Who it is for</h2><ul class="list-check">' + list(d.forWho) + '</ul>'; }
+    h += '<div class="container dt-facts-wrap"><dl class="dt-facts">' +
+      fact(ICONS.calendar, 'Date', ev.dateText) +
+      fact(ICONS.clock, 'Time', ev.timeText || (ev.end ? 'Full days — see programme' : 'See programme')) +
+      fact(ICONS.pin, 'Where', (ev.venue || ev.location) + (ev.format ? ' · ' + ev.format : '')) +
+      fact(ICONS.award, ev.credits ? 'Credits' : 'Investment', ev.credits || ev.price || ev.priceText || 'Enquire') +
+      '</dl></div>';
+
+    h += '<section class="dt-body"><div class="container dt-layout"><div class="dt-main">';
+    if (d.about && d.about.length) h += '<div class="dt-sec dt-about"><h2>About this event</h2>' + d.about.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
+    if (d.forWho && d.forWho.length) h += '<div class="dt-sec dt-for"><h2>Who it is for</h2><ul class="dt-checks">' + d.forWho.map(function (x, i) { return '<li style="--i:' + i + '">' + CHECK + '<span>' + esc(x) + '</span></li>'; }).join('') + '</ul></div>';
     if (d.schedule && d.schedule.length) {
-      h += '<h2 id="programme">Programme</h2><div class="evt-sched">' + d.schedule.map(function (s) {
-        return '<div class="evt-day"><div class="when"><b>' + esc(s.when) + '</b><span>' + esc(s.time || '') + '</span></div><div><h4>' + esc(s.title) + '</h4><p>' + esc(s.text) + '</p></div></div>';
-      }).join('') + '</div>';
+      /* the programme as a timeline: the rail draws with scroll and each node fills as the line reaches it (detail.js) */
+      h += '<div class="dt-sec dt-prog"><h2 id="programme">Programme</h2><ol class="dt-steps" data-dt-rail="scroll">' + d.schedule.map(function (s) {
+        return '<li class="dt-step"><span class="dt-node" aria-hidden="true"></span><p class="dt-when"><b>' + esc(s.when) + '</b> <span>' + esc(s.time || '') + '</span></p><h3>' + esc(s.title) + '</h3><p>' + esc(s.text) + '</p></li>';
+      }).join('') + '</ol></div>';
     }
-    if (d.includes && d.includes.length) { h += '<h2>What is included</h2><ul class="list-check">' + list(d.includes) + '</ul>'; }
+    if (d.includes && d.includes.length) h += '<div class="dt-sec dt-inc"><h2>What is included</h2><ul class="dt-incl">' + d.includes.map(function (x) { return '<li>' + lead(x) + '</li>'; }).join('') + '</ul></div>';
+    h += '<div class="dt-slot" data-dt-slot></div>';   /* phones: detail.js moves the register box here, after the value and before the people */
     if (d.facilitators && d.facilitators.length) {
-      /* presentation cards: match each event facilitator to the directory by name to pull photo, tags and contact buttons */
+      /* presentation cards: match each event facilitator to the directory by name to pull the portrait, tags and contact buttons */
       var pool = window.TRE_FACILITATORS || [], FI = (typeof FAC_ICONS !== 'undefined') ? FAC_ICONS : {};
-      h += '<h2>Your facilitator' + (d.facilitators.length > 1 ? 's' : '') + '</h2><div class="evt-people' + (d.facilitators.length === 1 ? ' one' : '') + '">' + d.facilitators.map(function (f) {
+      h += '<div class="dt-sec dt-people"><h2>Your facilitator' + (d.facilitators.length > 1 ? 's' : '') + '</h2><div class="dt-people-list">' + d.facilitators.map(function (f) {
         var m = pool.filter(function (x) { return (x.name || '').toLowerCase() === (f.name || '').toLowerCase(); })[0];
         var profile = m ? ROOT + 'facilitator.html?id=' + encodeURIComponent(m.id) : (f.link || '');
+        var ext = isExternal(profile) ? ' target="_blank" rel="noopener"' : '';
         var initials = (m && m.initials) || (f.name || '').split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 3);
-        var avatar = (m && m.photo) ? '<img src="' + esc(ROOT + m.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span>' + esc(initials) + '</span>');
-        var pc = esc((m && m.photoClass) || '');
-        var photo = profile ? '<a class="person-photo ' + pc + '" href="' + esc(profile) + '"' + (isExternal(profile) ? ' target="_blank" rel="noopener"' : '') + ' aria-label="View profile: ' + esc(f.name) + '">' + avatar + '</a>' : '<div class="person-photo ' + pc + '">' + avatar + '</div>';
-        var tags = m ? (m.services || m.tags || []).slice(0, 4).map(function (t) { return '<span class="chip">' + esc(t) + '</span>'; }).join('') : '';
+        var src = (m && m.photo) || f.photo || '';
+        var face = src ? '<img src="' + esc(ROOT + src) + '" alt="' + esc(f.name) + '" loading="lazy" decoding="async"/>' : '<span class="dt-mono">' + esc(initials) + '</span>';
+        var pcls = 'dt-portrait' + (src ? '' : ' is-mono');
+        var portrait = profile ? '<a class="' + pcls + '" href="' + esc(profile) + '"' + ext + ' aria-label="View profile: ' + esc(f.name) + '">' + face + '</a>' : '<div class="' + pcls + '">' + face + '</div>';
+        var tags = m ? (m.services || m.tags || []).slice(0, 4).map(function (t) { return '<span class="dt-tag">' + esc(t) + '</span>'; }).join('') : '';
         var meta = m ? (m.meta || []).slice(0, 2).map(function (x) { return '<li>' + (FI[x.icon] || ICONS.pin) + '<span>' + esc(x.text) + '</span></li>'; }).join('') : '';
         var c = (m && m.contact) || {}, acts = '';
-        if (profile) acts += '<a class="btn btn-navy btn-sm" href="' + esc(profile) + '"' + (isExternal(profile) ? ' target="_blank" rel="noopener"' : '') + '>' + (m ? 'View profile' : esc(f.linkText || 'Learn more')) + '</a>';
+        if (profile) acts += '<a class="btn btn-navy btn-sm" href="' + esc(profile) + '"' + ext + '>' + (m ? 'View profile' : esc(f.linkText || 'Learn more')) + '</a>';
         if (c.email) acts += ctaLink(c.email, 'btn btn-outline btn-sm', 'email', 'Email');
         if (c.whatsapp) acts += ctaLink(c.whatsapp, 'btn btn-outline btn-sm', 'whatsapp', 'WhatsApp');
-        if (c.book) acts += ctaLink(c.book, 'btn btn-primary btn-sm', 'book', 'Book now');
-        return '<article class="person v2">' + photo + '<div class="person-body"><span class="role">' + esc(f.role) + '</span><h4>' + (profile ? '<a href="' + esc(profile) + '">' + esc(f.name) + '</a>' : esc(f.name)) + '</h4><p>' + esc(f.bio) + '</p>' +
-          (meta ? '<ul class="person-meta">' + meta + '</ul>' : '') + (tags ? '<div class="person-tags">' + tags + '</div>' : '') + (acts ? '<div class="person-actions">' + acts + '</div>' : '') + '</div></article>';
-      }).join('') + '</div>' + (d.partners ? '<p class="note" style="margin:-1.6rem 0 var(--s6)">' + esc(d.partners) + '</p>' : '');
+        if (c.book) acts += ctaLink(c.book, 'btn btn-outline btn-sm', 'book', 'Book now');
+        return '<article class="dt-person">' + portrait +
+          '<div class="dt-phead"><h3>' + (profile ? '<a class="dt-name" href="' + esc(profile) + '"' + ext + '>' + esc(f.name) + '</a>' : esc(f.name)) + '</h3><p class="dt-role">' + esc(f.role) + '</p></div>' +
+          '<div class="dt-ptext"><p class="dt-bio">' + esc(f.bio) + '</p>' + (meta ? '<ul class="dt-pmeta">' + meta + '</ul>' : '') + (tags ? '<div class="dt-tags">' + tags + '</div>' : '') + (acts ? '<div class="dt-acts">' + acts + '</div>' : '') + '</div></article>';
+      }).join('') + '</div>' + (d.partners ? '<p class="dt-partners">' + esc(d.partners) + '</p>' : '') + '</div>';
     }
     if (d.online) {
-      h += '<div class="prep-box" id="prepare"><span class="eyebrow" style="color:var(--gold)">Joining online? Prepare your space first</span><h2>Preparing for your online TRE™ session</h2>' +
-        '<p>Everything your facilitator can offer you comes through the camera — so we must be able to see you <strong>head to toe, both standing and on the mat</strong>. Please test your camera before the session starts.</p>' +
-        '<ul class="list-check"><li><strong>Space & camera:</strong> a room where the device can sit about 2–2.5 m away, landscape, roughly hip height — to the side of your mat, not at your head or feet.</li>' +
-        '<li><strong>Kit:</strong> a yoga mat, a device with a camera (the bigger the screen the better), wireless headphones (required in group classes), reliable internet, and pillows, cushions or blankets.</li>' +
-        '<li><strong>Lighting & clothing:</strong> light the room well and face the light; wear loose, stretchy, light-coloured trousers — dark clothing hides your tremors.</li>' +
-        '<li><strong>Someone you trust nearby:</strong> in the same home or next door for the duration, with their name and phone number on your consent form.</li>' +
-        '<li><strong>Zoom:</strong> install the Zoom app, sign in with the email you registered with, test camera and microphone, and join through the app (not the browser) a few minutes early.</li></ul>' +
-        '<div class="btn-row"><a class="btn btn-primary" href="' + ROOT + 'online-session-guide.html">Read the full set-up guide</a><a class="btn btn-ghost-light" href="' + esc(window.TRE_PREP_PDF || '#') + '" target="_blank" rel="noopener">Download the PDF guide</a></div></div>';
+      /* online preparation: each step can be ticked off (detail.js); the text is unchanged */
+      h += '<div class="dt-prep" id="prepare"><div class="dt-prep-head"><h2>Preparing for your online TRE™ session</h2>' +
+        '<p>Everything your facilitator can offer you comes through the camera — so we must be able to see you <strong>head to toe, both standing and on the mat</strong>. Please test your camera before the session starts.</p></div>' +
+        '<ul class="dt-prep-list"><li><span class="dt-prep-t"><strong>Space & camera:</strong> a room where the device can sit about 2–2.5 m away, landscape, roughly hip height — to the side of your mat, not at your head or feet.</span></li>' +
+        '<li><span class="dt-prep-t"><strong>Kit:</strong> a yoga mat, a device with a camera (the bigger the screen the better), wireless headphones (required in group classes), reliable internet, and pillows, cushions or blankets.</span></li>' +
+        '<li><span class="dt-prep-t"><strong>Lighting & clothing:</strong> light the room well and face the light; wear loose, stretchy, light-coloured trousers — dark clothing hides your tremors.</span></li>' +
+        '<li><span class="dt-prep-t"><strong>Someone you trust nearby:</strong> in the same home or next door for the duration, with their name and phone number on your consent form.</span></li>' +
+        '<li><span class="dt-prep-t"><strong>Zoom:</strong> install the Zoom app, sign in with the email you registered with, test camera and microphone, and join through the app (not the browser) a few minutes early.</span></li></ul>' +
+        '<div class="btn-row"><a class="btn btn-light" href="' + ROOT + 'online-session-guide.html">Read the full set-up guide</a><a class="btn btn-ghost-light" href="' + esc(window.TRE_PREP_PDF || '#') + '" target="_blank" rel="noopener">Download the PDF guide</a></div></div>';
     }
     h += '</div>';
 
-    /* sidebar */
-    h += '<aside class="evt-side">';
-    h += '<div class="evt-box"><h3>' + (ev._past ? 'This event has ended' : ev._soldOut ? 'Sold out — waitlist' : 'Register') + '</h3>';
-    if (d.pricing && d.pricing.length) {
-      h += '<div class="evt-price-tiers">' + d.pricing.map(function (t) {
-        return '<div class="tier' + (t.hl ? ' hl' : '') + (t.soldOut ? ' soldout' : '') + '"><div class="tl">' + esc(t.label) + (t.sub ? '<small>' + esc(t.sub) + '</small>' : '') + '</div><div class="tp"><b>' + esc(t.price) + '</b>' + (t.note ? '<small>' + esc(t.note) + '</small>' : '') + '</div></div>';
-      }).join('') + '</div>';
-    } else if (ev.price) {
-      h += '<div class="evt-price-tiers"><div class="tier hl"><div class="tl">' + esc(ev.title) + '</div><div class="tp"><b>' + esc(ev.price) + '</b>' + (ev.priceNote ? '<small>' + esc(ev.priceNote) + '</small>' : '') + '</div></div></div>';
-    } else if (ev.priceText) { h += '<p class="muted" style="margin:0">' + esc(ev.priceText) + '</p>'; }
-    if (!ev._past) {
-      (d.register || []).forEach(function (r, i) { h += extLink(r.url, 'btn ' + (r.primary || i === 0 ? 'btn-primary' : 'btn-outline'), r.label); });
-    } else { h += '<a class="btn btn-primary" href="events.html">Browse upcoming events</a>'; }
-    if (d.pricingNote) h += '<p class="fine">' + esc(d.pricingNote) + '</p>';
-    h += '</div>';
-    h += '<div class="evt-box"><h3>Questions?</h3><p class="muted" style="margin:0 0 .4rem">Ask before the event rather than on the day — we are glad to help.</p><p style="margin:0"><a href="mailto:isabelle@bhdasia.com">isabelle@bhdasia.com</a><br><a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a></p>' + (d.source ? '<p class="fine">Details as published on <a href="' + esc(d.source) + '" target="_blank" rel="noopener">hummingbeing.com</a>.</p>' : '') + '</div>';
+    /* sidebar: the register box stays in view on desktop; "Questions?" sits at the foot of the column */
+    h += '<aside class="dt-side"><div class="dt-stick"><div class="dt-stick-in">';
+    h += '<div class="dt-box dt-reg" id="dt-register"><h3>' + (ev._past ? 'This event has ended' : ev._soldOut ? 'Sold out — waitlist' : 'Register') + '</h3>';
+    var tier = function (label, sub, price, note, hl, out) {
+      return '<div class="dt-tier' + (hl ? ' is-hl' : '') + (out ? ' is-out' : '') + '"><span class="dt-dot" aria-hidden="true"></span><div class="dt-tl">' + esc(label) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>' +
+        '<div class="dt-tp"><b>' + esc(price) + '</b>' + (note ? '<small>' + esc(note) + '</small>' : '') + (out && !/sold out/i.test(note || '') ? '<span class="dt-out">Sold out</span>' : '') + '</div></div>';
+    };
+    if (d.pricing && d.pricing.length) h += '<div class="dt-tiers">' + d.pricing.map(function (t) { return tier(t.label, t.sub, t.price, t.note, t.hl, t.soldOut); }).join('') + '</div>';
+    else if (ev.price) h += '<div class="dt-tiers">' + tier(ev.title, '', ev.price, ev.priceNote, true, false) + '</div>';
+    else if (ev.priceText) h += '<p class="dt-pricetext">' + esc(ev.priceText) + '</p>';
+    h += '<div class="dt-reg-acts">';
+    if (!ev._past) (d.register || []).forEach(function (r, i) { h += extLink(r.url, 'btn ' + (r.primary || i === 0 ? 'btn-primary' : 'btn-outline'), r.label); });
+    else h += '<a class="btn btn-primary" href="events.html">Browse upcoming events</a>';
+    h += '</div>' + (d.pricingNote ? '<p class="dt-fine">' + esc(d.pricingNote) + '</p>' : '') + '</div>';
+    h += '</div></div>';
+    h += '<div class="dt-box dt-ask"><h3>Questions?</h3><p class="dt-muted">Ask before the event rather than on the day — we are glad to help.</p>' +
+      '<p class="dt-contact"><a class="dt-cl" href="mailto:isabelle@bhdasia.com">' + CTA_ICONS.email + '<span>isabelle@bhdasia.com</span></a><a class="dt-cl" href="https://wa.me/818065151778" target="_blank" rel="noopener">' + CTA_ICONS.whatsapp + '<span>WhatsApp +81 80 6515 1778</span></a></p>' +
+      (d.source ? '<p class="dt-fine">Details as published on <a href="' + esc(d.source) + '" target="_blank" rel="noopener">hummingbeing.com</a>.</p>' : '') + '</div>';
     h += '</aside></div></section>';
 
-    /* related */
+    /* related events, then the close (both paths) */
     var others = events.filter(function (e) { return !e._past && e.slug !== ev.slug; }).sort(function (a, b) { return a._start - b._start; }).slice(0, 3);
-    if (others.length) h += '<section class="section bg-cream evt-related"><div class="container"><div class="section-head row"><div><span class="eyebrow">More dates</span><h2>Other upcoming events</h2></div><a class="link-arrow" href="events.html">All events</a></div><div class="event-grid">' + others.map(renderCard).join('') + '</div></div></section>';
+    if (others.length) h += '<section class="dt-related"><div class="container"><div class="dt-related-head"><h2>Other upcoming events</h2><a class="link-arrow" href="events.html">All events</a></div><div class="event-grid dt-cards" data-scroll-x>' + others.map(renderCard).join('') + '</div>' + CLOSE + '</div></section>';
+    else h += '<section class="dt-end"><div class="container">' + CLOSE + '</div></section>';
+    /* phones: a floating register action (shown by detail.js while the hero button and the register box are off screen) */
+    if (!ev._past && primary) h += '<div class="dt-dock" hidden>' + extLink(primary.url, 'btn btn-primary btn-sm', primary.label) + '</div>';
     root.innerHTML = h;
   }
 
@@ -442,7 +461,7 @@
     var id = new URLSearchParams(location.search).get('id') || '';
     var f = window.TRE_FACILITATORS.filter(function (x) { return x.id === id; })[0];
     if (!f) {
-      root.innerHTML = '<section class="section"><div class="container event-not-found"><span class="eyebrow">Facilitators</span><h1>Profile not found</h1><p class="muted">That profile may have been renamed or removed.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="facilitators.html">Browse all facilitators</a></div></div></section>';
+      root.innerHTML = '<section class="section"><div class="container event-not-found"><h1>Profile not found</h1><p class="muted">That profile may have been renamed or removed.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="facilitators.html">Browse all facilitators</a></div></div></section>';
       document.title = 'Profile not found — TRE™ in Singapore'; return;
     }
     document.title = f.name + ' — TRE™ facilitator in Singapore';
@@ -456,10 +475,6 @@
     var socials = (f.website ? '<a href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + esc(f.website.label || 'Website') + '</a>' : '') +
       (f.socials || []).map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + esc(s.label || s.type) + '</a>'; }).join('');
     var fx = f.facts || {};
-    var facts = '<div class="fact">' + ICONS.pin + '<div><b>Where</b><span>' + esc(fx.location || '—') + '</span></div></div>' +
-      '<div class="fact">' + FAC_ICONS.globe + '<div><b>Languages</b><span>' + esc(fx.languages || '—') + '</span></div></div>' +
-      '<div class="fact">' + FAC_ICONS.group + '<div><b>Formats</b><span>' + esc(fx.formats || '—') + '</span></div></div>' +
-      '<div class="fact">' + ICONS.award + '<div><b>Certification</b><span>' + esc(fx.certified || '—') + '</span></div></div>';
 
     /* hero background: the Asia TRE™ trainers photo (every listed trainer's community); the portrait stays in the window */
     var h = '<section class="hx hx-fp" style="--fx:60%;--fy:44%;--shift:30%;--feather:30%">' +
@@ -472,53 +487,57 @@
       '<div class="btn-row">' + ctas + '</div>' + (socials ? '<div class="fp-socials">' + socials + '</div>' : '') + '</div>' +
       '<div class="fp-photo hx-window ' + esc(f.photoClass || '') + '">' + (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') + (f.photo ? '<img src="' + esc(f.photo) + '" alt="' + esc(f.name) + '"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '</div>' +
       '</div></section>';
+    /* ===== after the hero (dt-*): services ticker · facts · about, credentials, offers, gallery, upcoming events + contact column · close.
+       Styles: assets/css/detail.css · behaviour: assets/js/detail.js · gallery viewer: TRELayer.lightbox via [data-gallery] ===== */
+    var lines = function (s) { return String(s == null ? '' : s).split(' · ').map(function (x) { return '<span class="dt-ln">' + esc(x) + '</span>'; }).join('<span class="dt-sep"> · </span>'); };
+    var lead = function (s) { var t = String(s == null ? '' : s), k = t.indexOf(' — '); return k > 0 ? '<b>' + esc(t.slice(0, k)) + '</b><span class="dt-sep"> — </span>' + esc(t.slice(k + 3)) : esc(t); };
+    var fact = function (icon, label, value) { return '<div class="dt-fact"><dt>' + icon + label + '</dt><dd>' + lines(value) + '</dd></div>'; };
+    var CLOSE = '<div class="dt-close"><svg class="dt-close-lines" aria-hidden="true" focusable="false"></svg>' +   /* three gold lines drawn to the panel's size by detail.js */
+      '<h2>Ready to learn TRE™?</h2><div class="btn-row"><a class="btn btn-ghost-light" href="facilitators.html">Find a certified provider</a><a class="btn btn-primary" href="https://calendly.com/bhdasia/tre-certification-intake-call" target="_blank" rel="noopener">Book a certification intake call</a></div></div>';
     if (f.services && f.services.length) {
       var tags = f.services.map(function (s) { return '<span>' + esc(s) + ' <i></i></span>'; }).join('');
-      h += '<div class="marquee fp-ticker" aria-label="Services offered"><div class="marquee-track"><span>' + tags + '</span><span aria-hidden="true">' + tags + '</span></div></div>';
+      h += '<div class="marquee fp-ticker dt-ticker" aria-label="Services offered"><div class="marquee-track"><span>' + tags + '</span><span aria-hidden="true">' + tags + '</span></div></div>';
     }
-    h += '<div class="container evt-facts fp-facts"><div class="grid">' + facts + '</div></div>';
-    h += '<section class="section"><div class="container fp-layout"><div class="fp-main">';
-    if (f.about && f.about.length) h += '<h2>About ' + esc(f.name.split(' ')[0]) + '</h2>' + f.about.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
-    if (f.highlights && f.highlights.length) h += '<h2>Credentials & training</h2><ul class="list-check">' + f.highlights.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
-    if (f.offers && f.offers.length) h += '<h2>What you can book</h2><div class="fp-offers">' + f.offers.map(function (o) { return '<div class="fp-offer"><h4>' + esc(o.title) + '</h4><p>' + esc(o.text) + '</p></div>'; }).join('') + '</div>';
+    h += '<div class="container dt-facts-wrap is-flat"><dl class="dt-facts">' +
+      fact(ICONS.pin, 'Where', fx.location || '—') + fact(FAC_ICONS.globe, 'Languages', fx.languages || '—') +
+      fact(FAC_ICONS.group, 'Formats', fx.formats || '—') + fact(ICONS.award, 'Certification', fx.certified || '—') + '</dl></div>';
+
+    var first = esc(f.name.split(' ')[0]);
+    h += '<section class="dt-body"><div class="container dt-layout"><div class="dt-main">';
+    if (f.about && f.about.length) h += '<div class="dt-sec dt-about"><h2>About ' + first + '</h2>' + f.about.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
+    /* credentials as a drawn list: the rail draws once as it enters and each node fills as the line passes (detail.js) */
+    if (f.highlights && f.highlights.length) h += '<div class="dt-sec dt-cred"><h2>Credentials & training</h2><ol class="dt-steps dt-creds" data-dt-rail="once">' + f.highlights.map(function (x) { return '<li class="dt-step"><span class="dt-node" aria-hidden="true"></span><p>' + lead(x) + '</p></li>'; }).join('') + '</ol></div>';
+    if (f.offers && f.offers.length) h += '<div class="dt-sec dt-book"><h2>What you can book</h2><div class="dt-offers">' + f.offers.map(function (o) { return '<div class="dt-offer"><h3>' + esc(o.title) + '</h3><p>' + esc(o.text) + '</p></div>'; }).join('') + '</div></div>';
     if (f.gallery && f.gallery.length) {
-      h += '<h2 id="gallery">Gallery</h2><div class="fp-gallery">' + f.gallery.map(function (g, k) { return '<a href="' + esc(g.src) + '" data-gal="' + k + '"><img src="' + esc(g.src) + '" alt="' + esc(g.caption || f.name) + '" loading="lazy" decoding="async" onerror="this.closest(\'a\').remove()"/>' + (g.caption ? '<figcaption>' + esc(g.caption) + '</figcaption>' : '') + '</a>'; }).join('') + '</div>';
+      /* photo strip (drag on desktop, swipe on phones); a click opens TRELayer.lightbox — layer.js wires [data-gallery] */
+      h += '<div class="dt-sec dt-photos"><h2 id="gallery">Gallery</h2><div class="lx-strip dt-gal" data-gallery>' + f.gallery.map(function (g) {
+        var alt = esc(g.caption || f.name);
+        return '<figure class="lx-media dt-shot"><a class="dt-shot-a" href="' + esc(g.src) + '" data-caption="' + alt + '"><img src="' + esc(g.src) + '" alt="' + alt + '" loading="lazy" decoding="async" onerror="this.closest(\'figure\').remove()"/></a>' + (g.caption ? '<figcaption>' + esc(g.caption) + '</figcaption>' : '') + '</figure>';
+      }).join('') + '</div></div>';
     } else if (f.sample) {
-      h += '<h2 id="gallery">Gallery</h2><p class="muted">Photos are added when the provider is listed.</p>';
+      h += '<div class="dt-sec dt-photos"><h2 id="gallery">Gallery</h2><p class="muted">Photos are added when the provider is listed.</p></div>';
     }
     /* related events: explicit slugs + any event naming this facilitator */
     if (window.TRE_EVENTS) {
       var evs = normaliseEvents(window.TRE_EVENTS).filter(function (e) { return !e._past && ((f.events || []).indexOf(e.slug) >= 0 || (e.facilitator || '').indexOf(f.name) >= 0); }).sort(function (a, b) { return a._start - b._start; }).slice(0, 2);
-      if (evs.length) h += '<h2>Upcoming with ' + esc(f.name.split(' ')[0]) + '</h2><div class="event-grid event-grid-2">' + evs.map(renderCard).join('') + '</div>';
+      if (evs.length) h += '<div class="dt-sec dt-upcoming"><h2>Upcoming with ' + first + '</h2><div class="event-grid event-grid-2 dt-cards" data-scroll-x>' + evs.map(renderCard).join('') + '</div></div>';
     }
-    h += '</div><aside class="fp-side">';
-    h += '<div class="evt-box"><h3>Get in touch</h3><div class="btn-row" style="margin:0;display:grid;gap:.5rem">' + (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-outline', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-outline', 'whatsapp', 'WhatsApp') : '') + '</div>' +
-      (f.sample ? '<p class="fine">Sample profile — enquiries go to TRE™ in Singapore, who will connect you with a certified provider.</p>' : '<p class="fine">Questions before booking? Ask before the session rather than on the day — we are glad to help.</p>') + '</div>';
-    if (f.website || (f.socials && f.socials.length)) {
-      h += '<div class="evt-box"><h3>Website & socials</h3><ul class="fp-links">' + (f.website ? '<li><a href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + '<span>' + esc(f.website.label || 'Website') + '<small>Website</small></span></a></li>' : '') +
-        (f.socials || []).map(function (s) { return '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + '<span>' + esc(s.label || s.type) + '<small>' + esc(s.type.charAt(0).toUpperCase() + s.type.slice(1)) + '</small></span></a></li>'; }).join('') + '</ul></div>';
-    }
-    h += '<div class="evt-box"><h3>More facilitators</h3><ul class="fp-links">' + shuffleArr(window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id; })).slice(0, 4).map(function (x) { return '<li><a href="facilitator.html?id=' + encodeURIComponent(x.id) + '">' + FAC_ICONS.group + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + (x.sample ? ' · sample' : '') + '</small></span></a></li>'; }).join('') + '<li><a href="facilitators.html#directory">' + ICONS.pin + '<span>All facilitators<small>Trainers and providers in Singapore</small></span></a></li></ul></div>';
-    h += '</aside></div></section>';
-    root.innerHTML = h;
+    h += '</div>';
 
-    /* lightbox with previous / next */
-    var gal = (f.gallery || []).filter(function (g) { return g && g.src; });
-    root.addEventListener('click', function (e) {
-      var a = e.target.closest('.fp-gallery a'); if (!a) return;
-      e.preventDefault();
-      var idx = parseInt(a.getAttribute('data-gal'), 10) || 0;
-      var lb = document.createElement('figure'); lb.className = 'fp-lightbox';
-      lb.innerHTML = '<button class="close" type="button" aria-label="Close">&times;</button><span class="count"></span><div class="frame"><button class="nav prev" type="button" aria-label="Previous photo">&#8249;</button><img alt=""/><button class="nav next" type="button" aria-label="Next photo">&#8250;</button></div><figcaption></figcaption>';
-      document.body.appendChild(lb);
-      var im = lb.querySelector('img'), cap = lb.querySelector('figcaption'), cnt = lb.querySelector('.count');
-      function show(i) { idx = (i + gal.length) % gal.length; im.src = gal[idx].src; im.alt = gal[idx].caption || f.name; cap.textContent = gal[idx].caption || ''; cnt.textContent = (idx + 1) + ' / ' + gal.length; lb.querySelector('.prev').hidden = lb.querySelector('.next').hidden = gal.length < 2; }
-      function close() { lb.remove(); document.removeEventListener('keydown', onKey); }
-      function onKey(ev) { if (ev.key === 'Escape') close(); else if (ev.key === 'ArrowLeft') show(idx - 1); else if (ev.key === 'ArrowRight') show(idx + 1); }
-      lb.addEventListener('click', function (ev) { if (ev.target.closest('.prev')) show(idx - 1); else if (ev.target.closest('.next')) show(idx + 1); else if (ev.target === lb || ev.target === im || ev.target.closest('.close')) close(); });
-      var sx = null; lb.addEventListener('touchstart', function (ev) { sx = ev.touches[0].clientX; }, { passive: true }); lb.addEventListener('touchend', function (ev) { if (sx == null) return; var dx = ev.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1)); sx = null; });
-      document.addEventListener('keydown', onKey); show(idx);
-    });
+    /* contact column: "Get in touch" + website & socials stay in view on desktop; "More facilitators" sits at the foot */
+    h += '<aside class="dt-side"><div class="dt-stick"><div class="dt-stick-in">';
+    h += '<div class="dt-box dt-reg"><h3>Get in touch</h3><div class="dt-reg-acts">' + (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-outline', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-outline', 'whatsapp', 'WhatsApp') : '') + '</div>' +
+      (f.sample ? '<p class="dt-fine">Sample profile — enquiries go to TRE™ in Singapore, who will connect you with a certified provider.</p>' : '<p class="dt-fine">Questions before booking? Ask before the session rather than on the day — we are glad to help.</p>') + '</div>';
+    if (f.website || (f.socials && f.socials.length)) {
+      h += '<div class="dt-box"><h3>Website & socials</h3><ul class="dt-links">' + (f.website ? '<li><a class="dt-li" href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + '<span>' + esc(f.website.label || 'Website') + '<small>Website</small></span></a></li>' : '') +
+        (f.socials || []).map(function (s) { return '<li><a class="dt-li" href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + '<span>' + esc(s.label || s.type) + '<small>' + esc(s.type.charAt(0).toUpperCase() + s.type.slice(1)) + '</small></span></a></li>'; }).join('') + '</ul></div>';
+    }
+    h += '</div></div>';
+    h += '<div class="dt-box dt-more"><h3>More facilitators</h3><ul class="dt-links dt-faces">' + shuffleArr(window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id; })).slice(0, 4).map(function (x) { return '<li><a class="dt-li" href="facilitator.html?id=' + encodeURIComponent(x.id) + '">' + (x.photo ? '<img src="' + esc(ROOT + x.photo) + '" alt="" loading="lazy" decoding="async"/>' : FAC_ICONS.group) + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + (x.sample ? ' · sample' : '') + '</small></span></a></li>'; }).join('') +
+      '<li><a class="dt-li" href="facilitators.html#directory">' + ICONS.pin + '<span>All facilitators<small>Trainers and providers in Singapore</small></span></a></li></ul></div>';
+    h += '</aside></div></section>';
+    h += '<section class="dt-end"><div class="container">' + CLOSE + '</div></section>';
+    root.innerHTML = h;
   }
 
   /* ---------- Facilitators page: one shuffled grid + filters + search ---------- */
