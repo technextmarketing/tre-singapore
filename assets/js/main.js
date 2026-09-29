@@ -127,19 +127,41 @@
   }
 
   /* ---------- Events ---------- */
+  /* Event times in the data are wall-clock times at the event's own place: Singapore by default, or ev.tz
+     (Bucharest venues get 'Europe/Bucharest' automatically). Every visitor, in any time zone, sees the same moment:
+     an event is "past" once its last day has ended there, and the countdown runs to the real start. */
+  function eventTz(ev) { return ev.tz || (/bucharest|romania/i.test((ev.location || '') + ' ' + (ev.venue || '')) ? 'Europe/Bucharest' : 'Asia/Singapore'); }
+  function tzOffset(tz, t) { /* minutes east of UTC in zone tz at instant t */
+    try {
+      var p = {};
+      new Intl.DateTimeFormat('en-US', { timeZone: tz, hourCycle: 'h23', year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' })
+        .formatToParts(new Date(t)).forEach(function (x) { p[x.type] = +x.value; });
+      return Math.round((Date.UTC(p.year, p.month - 1, p.day, p.hour % 24, p.minute, p.second) - Math.floor(t / 1000) * 1000) / 60000);
+    } catch (e) { return tz === 'Europe/Bucharest' ? 120 : 480; }
+  }
+  function zoned(y, mo, d, h, mi, tz) { var g = Date.UTC(y, mo, d, h, mi); var t = g - tzOffset(tz, g) * 60000; return new Date(g - tzOffset(tz, t) * 60000); }
+  function eventDate(iso, tz, lastMoment) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(iso || ''); if (!m) return null;
+    if (lastMoment) return new Date(zoned(+m[1], +m[2] - 1, +m[3], 23, 59, tz).getTime() + 59999);
+    return zoned(+m[1], +m[2] - 1, +m[3], m[4] ? +m[4] : 0, m[5] ? +m[5] : 0, tz);
+  }
   function normaliseEvents(list) {
     var now = new Date();
     return list.map(function (ev) {
-      var start = parseDate(ev.start);
-      var end = ev.end ? endOfDay(parseDate(ev.end)) : endOfDay(start);
+      var tz = eventTz(ev);
+      var start = eventDate(ev.start, tz);
+      var end = eventDate(ev.end || ev.start, tz, true);
       var copy = Object.assign({}, ev);
-      copy._start = start; copy._end = end; copy._past = end < now; copy._soldOut = !!ev.soldOut; copy._live = !copy._past && start < now;
+      copy._tz = tz; copy._start = start; copy._end = end; copy._past = end < now; copy._soldOut = !!ev.soldOut; copy._live = !copy._past && start < now;
+      copy._off = ev.status === 'postponed' || ev.status === 'cancelled';  /* never counted down to */
       return copy;
     });
   }
+  window.TRE_normaliseEvents = normaliseEvents;  /* the chatbot uses the same rules */
   function chipFor(ev) {
     if (ev.chip) return { top: ev.chip.top, bottom: ev.chip.bottom };
-    var d = ev._start; return { top: String(d.getDate()), bottom: MONTHS[d.getMonth()] + ' ' + d.getFullYear() };
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(ev.start || '');  /* the event's own calendar date, not the visitor's */
+    return m ? { top: String(+m[3]), bottom: MONTHS[+m[2] - 1] + ' ' + m[1] } : { top: '', bottom: '' };
   }
   function themeFor(ev) {
     if (ev.theme) return ev.theme;
@@ -147,6 +169,8 @@
   }
   function statusFor(ev) {
     if (ev._past) return '<span class="event-status past">Completed</span>';
+    if (ev.status === 'cancelled') return '<span class="event-status soldout">Cancelled</span>';
+    if (ev.status === 'postponed') return '<span class="event-status soldout">Postponed · waitlist open</span>';
     if (ev._soldOut) return '<span class="event-status soldout">Sold out · waitlist open</span>';
     if (ev._live) return '<span class="event-status progress">In progress · later modules open</span>';
     if (ev.sample) return '<span class="event-status">Sample listing · details to confirm</span>';
@@ -231,7 +255,7 @@
       var ogI = $('meta[property="og:image"]'); if (ogI && ev.image) ogI.setAttribute('content', new URL(ROOT + ev.image, location.href).href);
     }
 
-    var status = ev._past ? '<span class="badge soldout">Completed</span>' : ev._soldOut ? '<span class="badge soldout">Sold out</span>' : ev._live ? '<span class="badge">In progress</span>' : '';
+    var status = ev._past ? '<span class="badge soldout">Completed</span>' : ev.status === 'cancelled' ? '<span class="badge soldout">Cancelled</span>' : ev.status === 'postponed' ? '<span class="badge soldout">Postponed</span>' : ev._soldOut ? '<span class="badge soldout">Sold out</span>' : ev._live ? '<span class="badge">In progress</span>' : '';
     var primary = (d.register || []).filter(function (r) { return r.primary; })[0] || (d.register || [])[0];
 
     var h = '';
@@ -314,7 +338,7 @@
 
     /* sidebar: the register box stays in view on desktop; "Questions?" sits at the foot of the column */
     h += '<aside class="dt-side"><div class="dt-stick"><div class="dt-stick-in">';
-    h += '<div class="dt-box dt-reg" id="dt-register"><h3>' + (ev._past ? 'This event has ended' : ev._soldOut ? 'Sold out — waitlist' : 'Register') + '</h3>';
+    h += '<div class="dt-box dt-reg" id="dt-register"><h3>' + (ev._past ? 'This event has ended' : ev.status === 'cancelled' ? 'This event is cancelled' : ev.status === 'postponed' ? 'Postponed — waitlist' : ev._soldOut ? 'Sold out — waitlist' : 'Register') + '</h3>';
     var tier = function (label, sub, price, note, hl, out) {
       return '<div class="dt-tier' + (hl ? ' is-hl' : '') + (out ? ' is-out' : '') + '"><span class="dt-dot" aria-hidden="true"></span><div class="dt-tl">' + esc(label) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</div>' +
         '<div class="dt-tp"><b>' + esc(price) + '</b>' + (note ? '<small>' + esc(note) + '</small>' : '') + (out && !/sold out/i.test(note || '') ? '<span class="dt-out">Sold out</span>' : '') + '</div></div>';
@@ -327,6 +351,10 @@
     else h += '<a class="btn btn-primary" href="' + ROOT + 'events">Browse upcoming events</a>';
     h += '</div>' + (d.pricingNote ? '<p class="dt-fine">' + esc(d.pricingNote) + '</p>' : '') + '</div>';
     h += '</div></div>';
+    var posts = ((window.TRE_EVENT_POSTS || {})[ev.slug] || []);
+    if (posts.length) h += '<div class="dt-box dt-posts"><h3>From the blog</h3><ul class="dt-links">' + posts.map(function (p) {
+      return '<li><a class="dt-li" href="' + ROOT + p.url + '">' + ICONS.calendar + '<span>' + esc(p.title) + '<small>' + (p.kind === 'recap' ? 'Event recap' : 'Event preview') + '</small></span></a></li>';
+    }).join('') + '</ul></div>';
     h += '<div class="dt-box dt-ask"><h3>Questions?</h3><p class="dt-muted">Ask before the event rather than on the day — we are glad to help.</p>' +
       '<p class="dt-contact"><a class="dt-cl" href="mailto:isabelle@bhdasia.com">' + CTA_ICONS.email + '<span>isabelle@bhdasia.com</span></a><a class="dt-cl" href="https://wa.me/818065151778" target="_blank" rel="noopener">' + CTA_ICONS.whatsapp + '<span>WhatsApp +81 80 6515 1778</span></a></p>' +
       (d.source ? '<p class="dt-fine">Details as published on <a href="' + esc(d.source) + '" target="_blank" rel="noopener">hummingbeing.com</a>.</p>' : '') + '</div>';
@@ -386,26 +414,43 @@
       render();
     }
 
-    // Countdown to the next event that has not started (real listings preferred over samples)
-    var now = new Date();
-    var notStarted = upcoming.filter(function (e) { return e._start > now; });
-    var next = notStarted.filter(function (e) { return !e.sample; })[0] || notStarted[0];
+    // Countdown to the next event that has not started (real listings preferred over samples; postponed and
+    // cancelled events are skipped). When that event starts, the bar moves on to the next one without a reload.
+    function nextEvent() {
+      var t = new Date();
+      var open = events.filter(function (e) { return e._start > t && !e._off; }).sort(function (a, b) {
+        if (!!a._soldOut !== !!b._soldOut) return a._soldOut ? 1 : -1;  /* events you can still join come first */
+        return a._start - b._start;
+      });
+      return open.filter(function (e) { return !e.sample; })[0] || open[0];
+    }
+    var next = nextEvent();
     var cd = $('#countdown');
     if (cd && next) {
-      $('#countdown-title').textContent = next.title;
-      $('#countdown-sub').textContent = next.dateText + ' · ' + (next.venue || next.location);
-      var link = $('#countdown-link');
-      if (link) { link.href = next.link ? siteUrl(next.link) : ROOT + 'events'; if (isExternal(next.link)) { link.target = '_blank'; link.rel = 'noopener'; } }
-      var target = next._start, cells = { d: $('#cd-d'), h: $('#cd-h'), m: $('#cd-m'), s: $('#cd-s') };
+      var link = $('#countdown-link'), target, cells = { d: $('#cd-d'), h: $('#cd-h'), m: $('#cd-m'), s: $('#cd-s') }, timer;
+      function show(ev) {
+        target = ev._start;
+        $('#countdown-title').textContent = ev.title;
+        $('#countdown-sub').textContent = ev.dateText + ' · ' + (ev.venue || ev.location);
+        if (link) {
+          link.href = ev.link ? siteUrl(ev.link) : ROOT + 'events';
+          if (isExternal(ev.link)) { link.target = '_blank'; link.rel = 'noopener'; } else { link.removeAttribute('target'); link.removeAttribute('rel'); }
+        }
+      }
       function set(el, v) { if (el.textContent !== v) { el.textContent = v; if (!REDUCED) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); } } }
       function tick() {
+        if (target - new Date() <= 0) {
+          var nx = nextEvent();
+          if (!nx) { clearInterval(timer); var bar = cd.closest('.countdown-bar'); if (bar) bar.hidden = true; return; }
+          show(nx);
+        }
         var diff = Math.max(0, target - new Date());
         set(cells.d, String(Math.floor(diff / 86400000)));
         set(cells.h, ('0' + (Math.floor(diff / 3600000) % 24)).slice(-2));
         set(cells.m, ('0' + (Math.floor(diff / 60000) % 60)).slice(-2));
         set(cells.s, ('0' + (Math.floor(diff / 1000) % 60)).slice(-2));
       }
-      tick(); setInterval(tick, 1000);
+      show(next); tick(); timer = setInterval(tick, 1000);
     } else if (cd) { var barEl = cd.closest('.countdown-bar'); if (barEl) barEl.hidden = true; }
   }
 

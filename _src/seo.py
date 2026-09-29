@@ -230,13 +230,23 @@ def rec_url(kind, rid):
     return BASE + kind + "/" + rid
 
 
-def normalise_events(events, today):
+def utc_offset_hours(e, d):
+    """The event's own clock: Bucharest venues follow Europe/Bucharest (EET/EEST), everything else Singapore (+8)."""
+    where = " ".join(str(e.get(k) or "") for k in ("location", "venue", "tz")).lower()
+    if "bucharest" in where or "romania" in where:
+        return 3 if _last_sunday(d.year, 3) <= d < _last_sunday(d.year, 10) else 2
+    return 8
+
+
+def normalise_events(events, now_utc):
+    """_past = the event's last day has ended at the event's own place (same rule as main.js)."""
     out = []
     for e in events or []:
         if not e.get("slug"):
             continue
         last = (e.get("end") or e.get("start") or "")[:10]
-        e = dict(e, _past=bool(last) and last < today.isoformat())
+        local_today = (now_utc + datetime.timedelta(hours=utc_offset_hours(e, now_utc.date()))).date()
+        e = dict(e, _past=bool(last) and last < local_today.isoformat())
         out.append(e)
     upcoming = sorted((e for e in out if not e["_past"]), key=lambda e: e.get("start") or "")
     past = sorted((e for e in out if e["_past"]), key=lambda e: e.get("start") or "", reverse=True)
@@ -306,7 +316,8 @@ def event_node(e, image):
     node = {"@type": "Event", "@id": url + "#event", "name": e["title"], "url": url,
             "description": d.get("summary") or e.get("description") or "", "startDate": event_start(e),
             "eventAttendanceMode": f"https://schema.org/{mode}EventAttendanceMode",
-            "eventStatus": "https://schema.org/EventScheduled", "image": [image], "inLanguage": "en"}
+            "eventStatus": {"postponed": "https://schema.org/EventPostponed", "cancelled": "https://schema.org/EventCancelled"}.get(
+                e.get("status"), "https://schema.org/EventScheduled"), "image": [image], "inLanguage": "en"}
     if e.get("end"):
         node["endDate"] = e["end"][:10] if "T" not in e["end"] else e["end"]
     if locs:
@@ -341,6 +352,10 @@ def event_static(e, root):
     h = [f'<section class="section rec-static"><div class="container">',
          f'<p class="crumbs"><a href="{root}">Home</a> › <a href="{root}events">Events</a> › {esc(e.get("category") or "")}</p>',
          f'<h1>{esc(e["title"])}</h1>', f'<p><strong>{esc(facts)}</strong></p>']
+    if e.get("status") in ("postponed", "cancelled"):
+        h.append(f'<p><strong>This event is {esc(e["status"])}.</strong></p>')
+    elif e.get("_past"):
+        h.append("<p><strong>This event has ended.</strong></p>")
     if e.get("facilitator"):
         h.append(f'<p>With {esc(e["facilitator"])}</p>')
     h.append(f'<p>{esc(d.get("summary") or e.get("description") or "")}</p>')
@@ -401,7 +416,8 @@ def events_static_list(events, root):
     if not events:
         return ""
     def row(e):
-        bits = " · ".join(x for x in [e.get("dateText"), e.get("location"), e.get("price")] if x)
+        bits = " · ".join(x for x in [e.get("dateText"), e.get("location"), e.get("price"),
+                                            (e.get("status") or "").capitalize() or None] if x)
         return f'<li><a href="{root}events/{esc(e["slug"])}">{esc(e["title"])}</a> — {esc(bits)}</li>'
     up = [row(e) for e in events if not e["_past"]]
     past = [row(e) for e in events if e["_past"]]
@@ -431,7 +447,7 @@ def llms_txt(pages, posts, events, facs):
          "TRE™ is a registered trademark of TRE For All, Inc. Method created by Dr. David Berceli.", "", "## Pages"]
     L += [f"- [{t}]({u}): {d}" for t, u, d in pages]
     L += ["", "## Guides and articles"] + [f"- [{t}]({u}): {d}" for t, u, d in posts]
-    up = [e for e in events if not e["_past"]]
+    up = [e for e in events if not e["_past"] and e.get("status") not in ("postponed", "cancelled")]
     if up:
         L += ["", "## Upcoming events"]
         L += [f"- [{e['title']}]({rec_url('events', e['slug'])}): " + " · ".join(x for x in [e.get("dateText"), e.get("location"), e.get("price")] if x) for e in up]

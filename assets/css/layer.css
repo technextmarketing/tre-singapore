@@ -312,3 +312,9 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 .nf-404{padding-block:var(--s8)}
 .nf-404 .nf-links{list-style:none;padding:0;margin:var(--s5) 0 0;display:grid;gap:.6rem}
 .nf-404 .nf-links a{font-weight:600}
+
+/* event blog posts (build.py + _src/event_posts.py): the draft banner and the note in a recap draft */
+.draft-banner{position:relative;z-index:5;background:#fff4e0;color:var(--navy-ink);border-bottom:1px solid var(--gold);padding:.65rem var(--s4);text-align:center;font-size:.9rem}
+.draft-note{background:var(--cream);border:1px dashed var(--bronze);border-radius:var(--radius-sm,10px);padding:var(--s3) var(--s4);margin:0 0 var(--s5);color:var(--ink)}
+.bl-events{margin-top:var(--s8)}
+.bl-events-h{margin:0 0 var(--s5)}

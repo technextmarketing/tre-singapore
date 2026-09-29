@@ -3,3 +3,5 @@ Thumbs.db
 *.log
 
 .impeccable/review/
+__pycache__/
+*.pyc

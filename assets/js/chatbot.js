@@ -12,6 +12,11 @@
   function parseDate(iso) { var m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(iso || ''); return m ? new Date(+m[1], +m[2] - 1, +m[3], m[4] ? +m[4] : 0, m[5] ? +m[5] : 0) : null; }
   function upcoming(filter) {
     var now = new Date();
+    if (window.TRE_normaliseEvents) {  /* same rules as the rest of the site: event time zones, postponed/cancelled */
+      return window.TRE_normaliseEvents(window.TRE_EVENTS || [])
+        .filter(function (e) { return !e._past && !e._off && (!filter || filter(e)); })
+        .sort(function (a, b) { return a._start - b._start; });
+    }
     return (window.TRE_EVENTS || []).map(function (e) { var end = parseDate(e.end || e.start); if (end) end.setHours(23, 59, 59); return Object.assign({}, e, { _start: parseDate(e.start), _end: end }); })
       .filter(function (e) { return e._end && e._end >= now && (!filter || filter(e)); })
       .sort(function (a, b) { return a._start - b._start; });
