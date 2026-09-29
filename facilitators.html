@@ -244,7 +244,7 @@
 
 /* ---------- 5 · Close: both paths ---------- */
 .fc-close.cta-band{display:block;margin:0;padding:var(--s9) 0;border-radius:0;background:radial-gradient(80% 90% at 12% 0%,rgba(42,99,168,.3),transparent 62%),radial-gradient(60% 80% at 100% 100%,rgba(139,107,69,.16),transparent 60%),var(--navy-ink);border-bottom:1px solid rgba(255,255,255,.08)}
-.fc-close.cta-band::before{opacity:.7}
+@media (hover:hover){.fc-close.cta-band:hover::before{opacity:.7}}
 .fc-close-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .fc-close-path{display:flex;flex-direction:column;align-items:flex-start;padding:var(--s2) var(--s8) var(--s2) 0}
 .fc-close-path + .fc-close-path{padding:var(--s2) 0 var(--s2) var(--s8);border-left:1px solid rgba(201,164,92,.34)}
@@ -319,6 +319,8 @@
   .fc-dir .fac-card,.fc-dir .fac-card:hover{translate:none}
   .fc-shot .lx-media img{scale:1}
 }
+/* finish review: on touch screens every card shows its actions, so their Book now is navy (one orange action per screen) */
+@media (hover:none),(max-width:760px){.fc-dir .fac-actions .btn-primary{background:var(--navy);border-color:var(--navy);color:#fff}.fc-dir .fac-actions .btn-primary:hover{background:var(--navy-deep);border-color:var(--navy-deep);color:#fff}}
 </style>
 
 <section class="page-hero hx" style="--fx:60%;--fy:44%;--fx-m:58%;--shift:34%;--feather:34%">

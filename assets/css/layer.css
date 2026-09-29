@@ -267,7 +267,7 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 }
 
 /* ---------- QA batch 1: contrast + legibility floor (real-browser audit, 2026-09-29) ---------- */
-.site-header .nav .btn-primary{color:var(--navy-ink)}                 /* 6.1:1 on orange (was ink-2 at 3.6:1) */
+.site-header .nav .btn-primary:not(.is-quiet){color:var(--navy-ink)}    /* 6.1:1 on orange (was ink-2 at 3.6:1) */
 .event-status.new,.st-new{color:#9a5510}                                 /* "New": 5.5:1 on white/cream */
 .event-status.past{color:var(--muted)}                                  /* "Completed": 5.3:1 */
 table.price .note{color:var(--ink-2)}                                   /* note on the highlighted gold row */
@@ -285,8 +285,9 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 /* home: the text side lands on navy ink, not slate */
 .hero-full .hero-full-overlay{background:linear-gradient(90deg,rgba(15,31,61,.94) 0%,rgba(15,31,61,.82) 40%,rgba(19,43,86,.42) 100%)}
 .hx .hx-credit{text-shadow:0 1px 10px rgba(15,31,61,.65)}
-/* orange stays the colour of the one primary action; its label is navy ink (6.1:1 on #e08a2e, 4.6:1 on the hover fill) */
-.btn-primary,.btn-primary:hover{color:var(--navy-ink)}
+/* orange stays the colour of the one primary action; its label is navy ink (6.1:1 on #e08a2e, 4.6:1 on the hover fill).
+   Only buttons whose fill really is orange get it (layer.js tags .is-orange); navy-filled primaries keep their white label */
+.btn-primary.is-orange,.btn-primary.is-orange:hover{color:var(--navy-ink)}
 /* while another orange action is on screen, the header's "Book a call" steps back to navy (layer.js sets .is-quiet) */
 @media (min-width:981px){
   .site-header .nav .btn-primary{transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease),transform var(--d2) var(--ease-out)}
@@ -295,3 +296,7 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 }
 /* JS-rendered heroes: badges follow the title (no label above the H1) */
 .hx h1 + .badges,.hx .role + .badges{margin:-.1rem 0 1rem}
+
+/* closing panels: the gold pointer glow appears only under a pointer (parked at rest it read as a grey smudge on navy) */
+.cta-band::before{opacity:0}
+@media (hover:hover){.cta-band:hover::before{opacity:.9}}

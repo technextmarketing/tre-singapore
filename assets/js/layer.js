@@ -100,7 +100,14 @@
           if (sh > 0.003) y += Math.sin(t * 19 + x * 0.085 + L.phase) * o.shiver * sh;
           if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-        ctx.strokeStyle = 'rgba(' + L.color + ',' + L.alpha + ')';
+        if (o.settleRight) {                         /* full strength under the copy, gone by ~78% of the width */
+          if (!L.grad || L.gw !== w) {
+            L.gw = w; L.grad = ctx.createLinearGradient(0, 0, w, 0);
+            L.grad.addColorStop(0, 'rgba(' + L.color + ',' + L.alpha + ')'); L.grad.addColorStop(0.4, 'rgba(' + L.color + ',' + L.alpha + ')');
+            L.grad.addColorStop(0.78, 'rgba(' + L.color + ',0)'); L.grad.addColorStop(1, 'rgba(' + L.color + ',0)');
+          }
+          ctx.strokeStyle = L.grad;
+        } else ctx.strokeStyle = 'rgba(' + L.color + ',' + L.alpha + ')';
         ctx.lineWidth = o.width; ctx.stroke();
       }
       if (running) raf = requestAnimationFrame(draw);
@@ -279,17 +286,32 @@
     });
   }
 
-  /* one orange action in view: the header CTA turns navy while any other .btn-primary is on screen */
+  /* .is-orange = this primary button's fill is orange (a page may repaint some primaries navy) */
+  function tagOrange(b) {
+    var m = /rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(getComputedStyle(b).backgroundColor || '');
+    var orange = !!m && +m[1] > 185 && +m[2] > 90 && +m[2] < 175 && +m[3] < 110;
+    if (orange === b.classList.contains('is-orange')) return;
+    var t = b.style.transition; b.style.transition = 'none';
+    b.classList.toggle('is-orange', orange);
+    void b.offsetWidth; b.style.transition = t;
+  }
+  /* one orange action in view: the header CTA turns navy while any other orange primary is on screen */
   function initCtaQuiet() {
     var head = $('.site-header .nav .btn-primary'); if (!head || !('IntersectionObserver' in window)) return;
     var seen = new Set();
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); });
+      es.forEach(function (e) { if (e.isIntersecting && e.target.classList.contains('is-orange')) seen.add(e.target); else seen.delete(e.target); });
       head.classList.toggle('is-quiet', seen.size > 0);
     }, { threshold: 0.01 });
-    function watch() { $all('.btn-primary').forEach(function (b) { if (!b.__cq && !b.closest('.site-header')) { b.__cq = true; io.observe(b); } }); }
-    watch();
+    function watch() {
+      $all('.btn-primary').forEach(function (b) {
+        tagOrange(b);
+        if (!b.__cq && !b.closest('.site-header')) { b.__cq = true; io.observe(b); }
+      });
+    }
+    watch(); tagOrange(head);
     if ('MutationObserver' in window) new MutationObserver(watch).observe($('main') || document.body, { childList: true, subtree: true });
+    var rt = 0; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(watch, 200); }, { passive: true });
   }
 
   window.TRELayer = { reduced: REDUCED, fine: FINE, onVisible: onVisible, tremor: tremor, draw: draw, parallax: parallax, lightbox: lightbox, strip: strip };
