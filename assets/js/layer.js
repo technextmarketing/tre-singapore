@@ -38,11 +38,12 @@
   function tremor(canvas, opts) {
     if (!canvas || !canvas.getContext) return null;
     var o = {
-      lines: 6, top: 0.6, bottom: 0.95,                // vertical band, as fractions of the canvas height
-      colors: ['201,164,92', '243,232,210', '201,164,92', '205,216,234'],
-      alpha: [0.07, 0.26], width: 1.15,
+      lines: 7, top: 0.6, bottom: 0.95,                // vertical band, as fractions of the canvas height
+      colors: ['201,164,92', '139,107,69', '201,164,92', '184,154,114'],   // gold / bronze only
+      alpha: [0.18, 0.45], width: 1.5,
       amp: 17, wave: [360, 640], breath: 8,            // breath cycle in seconds
-      fade: 0.55,                                      // lines thin out toward the right (over the photo)
+      fade: 0.55,                                      // (kept for page scripts that pass it)
+      rest: 0, restAmt: 0.5, settleRight: false,       // heroes: resting shiver under the copy + flat toward the photo
       reach: 150, shiver: 7, settle: 2.3,              // pointer radius (px), tremor amplitude (px), decay rate
       source: null,                                    // element that receives pointer events (default: canvas parent)
       idlePulse: 9                                     // seconds between gentle auto pulses (0 = off)
@@ -90,9 +91,13 @@
           if (d2 < R * R * 4) target = Math.exp(-d2 / (2 * R * R * 0.5));
           if (pulse && pulse.line === li) { var q = x - pulse.x; target = Math.max(target, 0.55 * Math.exp(-(q * q) / (2 * 90 * 90))); }
           E[i] += (target - E[i]) * (target > E[i] ? 1 - Math.exp(-dt * 9) : 1 - Math.exp(-dt * o.settle));
-          var u = clamp((x + 20) / (w + 40), 0, 1), env = Math.sin(Math.PI * u) * (1 - o.fade * u * u);
+          /* charge -> release -> settle, left to right: the wave is strongest under the copy and flat by the photo */
+          var u = clamp((x + 20) / (w + 40), 0, 1);
+          var env = o.settleRight ? Math.min(1, u / 0.06) * Math.pow(1 - u, 1.35) : Math.sin(Math.PI * u) * (1 - o.fade * u * u);
+          var restE = o.rest ? Math.pow(Math.max(0, 1 - u / o.rest), 2) * o.restAmt : 0;
           var y = baseY + Math.sin(x / L.lambda * 2 * Math.PI + L.phase + t * L.speed) * o.amp * breath * env;
-          if (E[i] > 0.003) y += Math.sin(t * 19 + x * 0.085 + L.phase) * o.shiver * E[i];
+          var sh = Math.max(E[i], restE);
+          if (sh > 0.003) y += Math.sin(t * 19 + x * 0.085 + L.phase) * o.shiver * sh;
           if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
         ctx.strokeStyle = 'rgba(' + L.color + ',' + L.alpha + ')';
@@ -131,7 +136,7 @@
     $all('.hx, .hero-full').forEach(function (hero) {
       var canvas = $('.hx-tremor', hero);
       if (!canvas) { canvas = document.createElement('canvas'); canvas.className = 'hx-tremor'; canvas.setAttribute('aria-hidden', 'true'); var content = $('.hero-full-content, .hx-inner, .container', hero); hero.insertBefore(canvas, content); }
-      tremor(canvas, { source: hero, top: hero.classList.contains('hero-full') ? 0.62 : 0.56 });
+      tremor(canvas, { source: hero, top: hero.classList.contains('hero-full') ? 0.62 : 0.56, rest: 0.46, settleRight: true });
       if (REDUCED || !FINE) return;
       var tx = 0, ty = 0, cx = 0, cy = 0, lens = 0, lensT = 0, lx = 0, ly = 0, raf = 0, active = false;
       function loop() {
@@ -274,8 +279,21 @@
     });
   }
 
+  /* one orange action in view: the header CTA turns navy while any other .btn-primary is on screen */
+  function initCtaQuiet() {
+    var head = $('.site-header .nav .btn-primary'); if (!head || !('IntersectionObserver' in window)) return;
+    var seen = new Set();
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); });
+      head.classList.toggle('is-quiet', seen.size > 0);
+    }, { threshold: 0.01 });
+    function watch() { $all('.btn-primary').forEach(function (b) { if (!b.__cq && !b.closest('.site-header')) { b.__cq = true; io.observe(b); } }); }
+    watch();
+    if ('MutationObserver' in window) new MutationObserver(watch).observe($('main') || document.body, { childList: true, subtree: true });
+  }
+
   window.TRELayer = { reduced: REDUCED, fine: FINE, onVisible: onVisible, tremor: tremor, draw: draw, parallax: parallax, lightbox: lightbox, strip: strip };
 
-  function boot() { initHeroes(); initButtons(); initMenu(); draw(document); parallax(document); initGalleries(); }
+  function boot() { initHeroes(); initButtons(); initMenu(); draw(document); parallax(document); initGalleries(); initCtaQuiet(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

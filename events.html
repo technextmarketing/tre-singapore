@@ -304,6 +304,14 @@
   .ev-ro-body,.ev-ro-body::before,.ev-ind{transition:none}
 }
 @media print{.ev-plot .ev-pre{opacity:1}.ev-node.ev-pre i{transform:none}}
+/* finish review: "Next event" folds into the title line instead of sitting above it */
+.ev-next-lbl{font-weight:600;color:var(--brown)}
+.ev-next-lbl::after{content:" ·";color:var(--bronze)}
+.ev-close-lbl::before{display:none}
+.ev-close-lbl{display:inline;margin-right:.35rem}
+.ev-close-lbl::after{content:" ·"}
+.ev-close-lbl + .ev-close-title{display:inline}
+.ev-close-title + .ev-close-sub{margin-top:.35rem}
 </style>
 
 <!-- ===== HERO (modelled on hummingbeing.com/events.html) ===== -->
@@ -327,8 +335,7 @@
 <div class="countdown-bar ev-next">
   <div class="container ev-next-in">
     <div class="ev-next-copy">
-      <div class="countdown-label">Next event</div>
-      <div class="countdown-title"><span id="countdown-title">Loading…</span><small id="countdown-sub"></small></div>
+      <div class="countdown-title"><span class="ev-next-lbl">Next event</span> <span id="countdown-title">Loading…</span><small id="countdown-sub"></small></div>
     </div>
     <div class="countdown" id="countdown" aria-live="off">
       <div><b id="cd-d">0</b><span>days</span></div>

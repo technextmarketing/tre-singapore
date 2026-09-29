@@ -224,8 +224,9 @@
       '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="' + bg + '-1600.webp" srcset="' + bg + '-960.webp 960w, ' + bg + '-1600.webp 1600w" sizes="100vw" alt="" fetchpriority="high" decoding="async"></div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner' + (ev.image ? ' hx-split' : '') + '"><div class="hero-copy"><p class="crumbs"><a href="events.html">Events</a> › ' + esc(ev.category) + '</p>' +
+      '<h1>' + esc(ev.title) + '</h1>' +
       '<div class="badges"><span class="badge">' + esc(ev.location) + '</span><span class="badge cat">' + esc(ev.category) + '</span>' + (ev.credits ? '<span class="badge">' + esc(ev.credits) + '</span>' : '') + status + '</div>' +
-      '<h1>' + esc(ev.title) + '</h1><p class="lead">' + esc(d.summary || ev.description) + '</p>' +
+      '<p class="lead">' + esc(d.summary || ev.description) + '</p>' +
       '<div class="btn-row">' + (ev._past ? '<a class="btn btn-ghost-light" href="events.html">See upcoming events</a>' : (primary ? extLink(primary.url, 'btn btn-primary', primary.label) : '') + (d.online ? '<a class="btn btn-ghost-light" href="#prepare">Prepare for the online session</a>' : '<a class="btn btn-ghost-light" href="#programme">See the programme</a>')) + '</div></div>' +
       (ev.image ? '<figure class="poster hx-window"><img src="' + esc(ev.image) + '" alt="' + esc(ev.title) + ' — event poster" decoding="async"/></figure>' : '') +
       '</div></section>';
@@ -482,8 +483,9 @@
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner hx-split"><div>' +
       '<p class="crumbs"><a href="facilitators.html">Facilitators</a> › ' + esc(f.tag || 'Profile') + '</p>' +
-      '<div class="badges"><span class="badge gold">' + esc(f.tag || 'Facilitator') + '</span>' + (f.sample ? '<span class="badge">Sample profile</span>' : '') + '</div>' +
-      '<h1>' + esc(f.name) + '</h1><p class="role">' + esc(f.role) + '</p><p class="lead">' + esc(f.summary || f.bio) + '</p>' +
+      '<h1>' + esc(f.name) + '</h1><p class="role">' + esc(f.role) + '</p>' +
+      (f.sample ? '<div class="badges"><span class="badge">Sample profile</span></div>' : '') +
+      '<p class="lead">' + esc(f.summary || f.bio) + '</p>' +
       '<div class="btn-row">' + ctas + '</div>' + (socials ? '<div class="fp-socials">' + socials + '</div>' : '') + '</div>' +
       '<div class="fp-photo hx-window ' + esc(f.photoClass || '') + '">' + (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') + (f.photo ? '<img src="' + esc(f.photo) + '" alt="' + esc(f.name) + '"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '</div>' +
       '</div></section>';
