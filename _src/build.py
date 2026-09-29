@@ -107,9 +107,14 @@ def write_sitemap_and_robots():
     print("built robots.txt")
 
 if __name__ == "__main__":
+    import sys
+    only = set(sys.argv[1:])  # optional: build just these outputs, e.g. `python _src/build.py about.html blog/what-is-tre.html`
     for body, out, title, desc, active in PAGES:
-        build(body, out, title, desc, active, root="")
+        if not only or out in only:
+            build(body, out, title, desc, active, root="")
     for body, out, title, desc in POSTS:
-        build(body, out, title, desc, "blog", root="../")
-    write_sitemap_and_robots()
+        if not only or out in only:
+            build(body, out, title, desc, "blog", root="../")
+    if not only:
+        write_sitemap_and_robots()
     print("done")
