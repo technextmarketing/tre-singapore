@@ -142,7 +142,7 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 .hx .prep{margin-top:1.3rem;font-size:.92rem;color:#c5d0e4}
 
 /* home: parallax on the video layer too */
-.hero-full .hero-full-media{inset:-3%;translate:var(--px,0px) var(--py,0px)}
+.hero-full .hero-full-media{inset:-3%;width:auto;height:auto;translate:var(--px,0px) var(--py,0px)}  /* style.css sets 100% sizes; auto lets the -3% bleed reach every edge */
 
 /* home: the full-screen video hero joins the system */
 .hero-full .hx-tremor{z-index:1}
