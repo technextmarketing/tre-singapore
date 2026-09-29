@@ -1,0 +1,63 @@
+# Product
+
+<!-- impeccable:product-schema 1 -->
+
+## Platform
+
+web
+
+## Users
+
+- **Newcomers in Singapore**: individuals, teams and organisations who want to try TRE™ (Tension & Trauma Releasing Exercises). Their job is to understand what TRE™ is and whether it is safe for them, then find a certified provider or join a workshop, practice circle or online session.
+- **Professionals considering certification**: ICF coaches, psychologists, counsellors, therapists, HR and wellbeing teams, movement and bodywork practitioners. Their job is to judge the three-module Global TRE™ Provider Certification taught in Singapore by Isabelle Claus Teixeira, then book the certification intake call.
+- **Certified providers**: practitioners who want to be listed in the facilitator directory ("Get listed").
+
+Confirmed 2026-09-29: the site serves **both paths equally**, so every page offers the newcomer route (provider, event) and the professional route (intake call).
+
+## Product Purpose
+
+A community hub for TRE™ in Singapore. It explains TRE™, connects people with certified providers, publishes events, workshops and certification dates, and brings professionals to the certification intake call. Success means that a newcomer finds a provider or registers for an event, and that a professional books the intake call (Calendly `calendly.com/bhdasia/tre-certification-intake-call`).
+
+## Positioning
+
+The Singapore home of TRE™, run by Isabelle Claus Teixeira, a Global TRE™ Certifying Trainer who teaches the full three-module certification in Singapore. Directory, events and certification sit in one place, and Module 1 carries 21 ICF CCEUs for coaches.
+
+## Operating Context
+
+- Static site on GitHub Pages (`technextmarketing/tre-singapore`, deployed by Actions from `main`). Pages are assembled by `_src/build.py` from `_src/parts/`.
+- Event detail (`event.html?id=`) and facilitator profile (`facilitator.html?id=`) pages are rendered by `assets/js/main.js` from `assets/js/events-data.js` and `assets/js/facilitators-data.js`.
+- Events mirror hummingbeing.com. Sister sites for the same client: hummingbeing.com and bhdasia.com.
+- The contact and newsletter forms post to FormSubmit for isabelle@bhdasia.com. WhatsApp is +81 80 6515 1778. The operating company is Business & Human Development Consulting Pte Ltd, 50 Raffles Place, Singapore Land Tower #30-00.
+- Client-facing changes ship first as an unlisted test link (`technextmarketing/tre-singapore-preview`, noindex) and go live only after sign-off.
+
+## Capabilities and Constraints
+
+- Pages: home, about, education (certification, fees, FAQ), facilitators (filterable directory), facilitator profile, events (countdown, filters), event detail, online-session guide, blog plus six articles, contact.
+- Site behaviours: every "TRE™" becomes a tappable explainer term, a rule-based offline "Ask us" chatbot, an optional ambient sound pad, back-to-top and WhatsApp buttons.
+- Confirmed for the 2026-09-29 redesign: keep pages, URLs, menu, copy, prices, links, forms and event/facilitator data unchanged. Layouts and heroes are rebuilt.
+- Writing rules: the brand is written TRE™ (never ®); PSYCH-K® stays as written.
+
+## Brand Commitments
+
+- The official TRE Singapore logo lockup (PNG) is used as supplied and is never redrawn.
+- The palette is derived from the logo (navy, globe blue, bronze, brown) plus the orange CTA colour.
+- Typefaces match technext.asia (Plus Jakarta Sans for headings, Inter for body). The user made this binding on 2026-09-29.
+- The footer carries the credit "Powered by TechNext".
+
+## Evidence on Hand
+
+- Real photography: the hummingbeing.com gallery (Isabelle's TRE™ trainings and sessions), facilitator portraits (`assets/img/facilitators/`), event posters (`assets/img/events/`), blog photos (`assets/img/blog/`), the home hero video.
+- Real facilitators: Isabelle Claus Teixeira, Yan Lau, Nikki Tay, Rina Ho. Real events are in `events-data.js`. Real fees and the module structure are on the education page.
+- Published figures: 7 exercises, 3 modules, 21 ICF CCEUs on Module 1, 12 online sessions in certification, 2017 (the year Isabelle's practice began).
+- Absences: no reviews or ratings, no participant counts, no client logos. Two quotes exist (home and about). Do not invent statistics, testimonials or outcomes.
+
+## Product Principles
+
+1. **Two paths, one hub.** Every page leads newcomers to a provider or event and professionals to the intake call.
+2. **Content is the client's truth.** Copy, prices, dates, links and data come from Isabelle and mirror hummingbeing.com. Design never adds claims.
+3. **A regulated experience.** The audience is looking for relief from stress and trauma. Motion is rich but calm and breath-paced, never jarring or overstimulating.
+4. **Proof through real people.** Real photos of real sessions and trainers carry trust. Use no stock people or invented personas.
+
+## Accessibility & Inclusion
+
+`prefers-reduced-motion` gets a fully still version. Text contrast meets WCAG AA. Touch targets are at least 44px. The site must be usable without JavaScript for its reading content.

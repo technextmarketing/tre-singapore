@@ -1,0 +1,256 @@
+/* =========================================================
+   TRE™ in Singapore — interactive layer (2026-09-29)
+   Loaded after style.css on every page.
+   - hero system (.hx): real session photo + navy wash + pointer lens,
+     tremor-line field (canvas) that trembles under the pointer and settles
+   - drawn SVG icons replace text arrows / plus glyphs
+   - button pointer glow + magnetic pull (fine pointers only)
+   - phone menu sheet
+   - shared building blocks for page scripts (.lx-*)
+   Motion is rich but calm: breath-paced, exponential ease-out, no springs.
+   Everything is visible by default and still under prefers-reduced-motion.
+   ========================================================= */
+
+:root{
+  --ease-breath:cubic-bezier(.45,.05,.35,1);
+  --ink-wash:15,31,61;             /* --navy-ink as rgb */
+  --deep-wash:19,43,86;            /* --navy-deep as rgb */
+  --i-arrow:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+  --i-plus:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+  --i-chev:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E");
+  --i-close:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E");
+}
+
+/* ---------- Browser surfaces ---------- */
+html{scrollbar-color:var(--bronze-soft) var(--cream);accent-color:var(--navy)}
+input,textarea,select{caret-color:var(--orange)}
+.hx ::selection,.site-footer ::selection{background:rgba(201,164,92,.45);color:#fff}
+main a:not(.btn):not(.link-arrow):not([class]){text-decoration:underline;text-decoration-color:rgba(28,61,122,.3);text-underline-offset:.22em;text-decoration-thickness:1px;transition:text-decoration-color var(--d1) var(--ease)}
+main a:not(.btn):not(.link-arrow):not([class]):hover{text-decoration-color:currentColor}
+table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:tabular-nums}
+
+/* ---------- No eyebrow labels above headings (craft floor) ---------- */
+.eyebrow{display:none!important}
+
+/* ---------- Drawn icons instead of text glyphs ---------- */
+.btn-primary::after,.link-arrow::after{
+  content:"";display:inline-block;width:1.05em;height:1.05em;flex:none;margin-left:.1rem;
+  background:currentColor;-webkit-mask:var(--i-arrow) center/contain no-repeat;mask:var(--i-arrow) center/contain no-repeat;
+}
+.link-arrow::after{background:var(--bronze)}
+.faq summary::after{
+  content:"";width:22px;height:22px;flex:none;background:var(--bronze);
+  -webkit-mask:var(--i-plus) center/contain no-repeat;mask:var(--i-plus) center/contain no-repeat;
+  transition:transform var(--d2) var(--ease-out)
+}
+.faq details[open] summary::after{transform:rotate(45deg)}
+
+/* ---------- Buttons: pointer glow + magnetic (JS sets --bx/--by and translate) ---------- */
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{background-image:radial-gradient(150px circle at var(--bx,50%) var(--by,50%),color-mix(in srgb,currentColor 18%,transparent),transparent 65%)}
+  .btn{transition:transform var(--d2) var(--ease-out),translate .45s var(--ease-out),box-shadow var(--d2) var(--ease),background-color var(--d2) var(--ease),color var(--d2) var(--ease),border-color var(--d2) var(--ease)}
+  .btn.is-magnet{transition:transform var(--d2) var(--ease-out),translate .12s linear,box-shadow var(--d2) var(--ease),background-color var(--d2) var(--ease),color var(--d2) var(--ease),border-color var(--d2) var(--ease)}
+}
+
+/* =========================================================
+   HERO SYSTEM (.hx)
+   <section class="page-hero hx">
+     <div class="hx-media" aria-hidden="true"><img class="hx-photo" …></div>
+     <div class="hx-wash" aria-hidden="true"></div>
+     <canvas class="hx-tremor" aria-hidden="true"></canvas>
+     <div class="container hx-inner">…h1, lead, buttons…</div>
+     <p class="hx-credit">…</p>
+   </section>
+   ========================================================= */
+.hx{
+  position:relative;isolation:isolate;overflow:hidden;color:#fff;
+  background:var(--navy-ink);
+  min-height:clamp(500px,68vh,720px);display:flex;align-items:center;
+  padding:calc(var(--s8) + 8px) 0 calc(var(--s8) + 24px);
+}
+.hx::before,.hx::after{content:none!important}               /* retire the old drifting blobs */
+.hx-media{position:absolute;inset:-3%;left:calc(-3% + var(--shift,0%));z-index:-3;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--feather,0%));mask-image:linear-gradient(90deg,transparent 0,#000 var(--feather,0%))}
+.hx-photo{
+  width:100%;height:100%;max-width:none;object-fit:cover;
+  object-position:var(--fx,62%) var(--fy,45%);
+  translate:var(--px,0px) var(--py,0px);scale:1.05;
+  animation:hx-push 32s var(--ease-breath) infinite alternate;
+  will-change:scale,translate;
+}
+@keyframes hx-push{from{scale:1.04}to{scale:1.12}}
+.hx-wash{
+  position:absolute;inset:0;z-index:-2;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(var(--ink-wash),.92) 0%,rgba(var(--ink-wash),.8) 34%,rgba(var(--deep-wash),.36) 62%,rgba(var(--deep-wash),.1) 100%),
+    linear-gradient(0deg,rgba(var(--ink-wash),.55) 0%,rgba(var(--ink-wash),0) 36%),
+    linear-gradient(180deg,rgba(var(--ink-wash),.28) 0%,rgba(var(--ink-wash),0) 18%);
+  /* the lens: where the pointer rests over the photo, the wash thins to reveal the room */
+  -webkit-mask-image:radial-gradient(circle calc(280px * var(--lens,0)) at var(--lx,50%) var(--ly,50%),rgba(0,0,0,.38) 0%,rgba(0,0,0,.62) 55%,#000 100%);
+  mask-image:radial-gradient(circle calc(280px * var(--lens,0)) at var(--lx,50%) var(--ly,50%),rgba(0,0,0,.38) 0%,rgba(0,0,0,.62) 55%,#000 100%);
+}
+.hx-tremor{position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block;pointer-events:none}
+.hx .container,.hx-inner{position:relative;z-index:1;width:100%}
+.hx h1{color:#fff;max-width:17ch;text-shadow:0 2px 28px rgba(var(--ink-wash),.45)}
+.hx p{color:#dbe3f1;max-width:600px}
+.hx .lead{font-size:1.16rem;line-height:1.6}
+.hx .crumbs,.hx .breadcrumb{color:#c7d2e6}
+.hx .crumbs a,.hx .breadcrumb a{color:#fff}
+.hx .btn-row{margin-top:1.9rem}
+.hx-credit{
+  position:absolute;right:max(var(--s5),calc((100vw - var(--max)) / 2 + var(--s5)));top:var(--s5);z-index:1;margin:0;
+  display:flex;align-items:center;gap:.6rem;max-width:min(360px,44vw);
+  font-size:.74rem;line-height:1.35;color:rgba(255,255,255,.78)!important;text-align:right;
+}
+.hx-credit::before{content:"";width:22px;height:1px;flex:none;background:var(--gold)}
+/* entrance: the copy settles out of a soft blur, staggered; visible by default */
+.hx .hx-inner > *{animation:hx-in .95s var(--ease-out) both}
+.hx .hx-inner > :nth-child(2){animation-delay:.09s}
+.hx .hx-inner > :nth-child(3){animation-delay:.18s}
+.hx .hx-inner > :nth-child(4){animation-delay:.27s}
+.hx .hx-inner > :nth-child(5){animation-delay:.36s}
+.hx .hx-inner > :nth-child(n+6){animation-delay:.45s}
+.hx-credit{animation:hx-in 1.2s .6s var(--ease-out) both}
+@keyframes hx-in{from{opacity:0;translate:0 14px;filter:blur(6px)}to{opacity:1;translate:0 0;filter:blur(0)}}
+/* retire the old per-child rise on page heroes that became .hx */
+.page-hero.hx > .container > *{opacity:1;transform:none}
+
+/* split variant: copy left, a second real photo framed on the right (event poster, facilitator portrait) */
+.hx-split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(28px,5vw,72px);align-items:center}
+.hx-window{
+  position:relative;margin:0;border-radius:var(--radius);overflow:hidden;background:var(--navy-ink);
+  box-shadow:0 30px 70px -28px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.14);
+}
+.hx-window img{display:block;width:100%;height:100%;object-fit:cover;translate:var(--wx,0px) var(--wy,0px);scale:1.05;transition:translate .6s var(--ease-out)}
+.hx-window.poster{aspect-ratio:16/9}
+.hx-window.fp-photo{aspect-ratio:1/1}
+
+/* hero furniture shared by the JS-rendered event (.hx-evt) and facilitator (.hx-fp) heroes */
+.hx strong{color:#fff}
+.hx p a:not(.btn),.hx .lead a{color:var(--gold);text-decoration:underline;text-underline-offset:3px}
+.hx p a:not(.btn):hover{color:#fff}
+.hx h1 em{color:var(--gold);font-style:italic}
+.hx .crumbs{font-size:.86rem;margin-bottom:1.2rem}
+.hx .crumbs a{opacity:.85}.hx .crumbs a:hover{opacity:1;color:var(--gold)}
+.hx .badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.hx .badge{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.22)}
+.hx .badge.cat,.hx .badge.gold{background:var(--gold);color:var(--navy-ink);border-color:var(--gold)}
+.hx .badge.soldout{background:var(--red);color:#fff;border-color:var(--red)}
+.hx .role{color:var(--gold);font-weight:700;font-size:1rem;line-height:1.5;margin-bottom:.9rem}
+.hx .btn-row .btn svg{width:15px;height:15px;flex:0 0 15px}
+.hx-evt h1,.hx-fp h1{max-width:20ch}
+.hx-fp .hx-split{grid-template-columns:minmax(0,1fr) minmax(260px,340px)}
+.hx .prep{margin-top:1.3rem;font-size:.92rem;color:#c5d0e4}
+
+/* home: parallax on the video layer too */
+.hero-full .hero-full-media{inset:-3%;translate:var(--px,0px) var(--py,0px)}
+
+/* home: the full-screen video hero joins the system */
+.hero-full .hx-tremor{z-index:1}
+.hero-full .hero-full-content{z-index:2}
+
+/* phones: compact hero sized to its content; the photo stays visible */
+@media (max-width:760px){
+  .hx{min-height:0;display:block;padding:calc(var(--s7) + 4px) 0 calc(var(--s7) + 40px)}
+  .hx-wash{background:
+    linear-gradient(180deg,rgba(var(--ink-wash),.55) 0%,rgba(var(--ink-wash),.78) 45%,rgba(var(--ink-wash),.9) 100%)}
+  .hx-photo{object-position:var(--fx-m,var(--fx,60%)) var(--fy-m,30%)}
+  .hx h1{max-width:none}
+  .hx-credit{left:var(--s5);right:auto;top:auto;bottom:var(--s4);max-width:calc(100vw - 110px);justify-content:flex-start;text-align:left}
+  .hx-media{left:-3%;-webkit-mask-image:none;mask-image:none}
+  .hx-split,.hx-fp .hx-split{grid-template-columns:1fr}
+  .hx-window{max-width:420px}
+  .hx-fp .hx-window{order:-1;max-width:260px}
+}
+@media (min-width:761px) and (max-width:900px){.hx-split,.hx-fp .hx-split{grid-template-columns:1fr}.hx-window{max-width:520px}.hx-fp .hx-window{order:-1;max-width:300px}}
+
+/* =========================================================
+   PHONE MENU SHEET (≤980px): the dropdown becomes a full-screen navy sheet
+   ========================================================= */
+@media (max-width:980px){
+  .site-header{z-index:80}
+  .nav-toggle{position:relative;z-index:92}
+  .nav{
+    display:flex!important;position:fixed;inset:0;z-index:90;top:0;
+    padding:calc(96px + env(safe-area-inset-top)) var(--s5) calc(var(--s6) + env(safe-area-inset-bottom));
+    background:radial-gradient(120% 70% at 100% 0%,rgba(42,99,168,.45),transparent 60%),var(--navy-ink);
+    border:0;box-shadow:none;max-height:none;overflow-y:auto;
+    flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;
+    visibility:hidden;opacity:0;clip-path:circle(0 at calc(100% - 44px) 40px);
+    transition:clip-path .55s var(--ease-out),opacity .3s var(--ease),visibility 0s linear .55s;
+  }
+  .nav.open{visibility:visible;opacity:1;clip-path:circle(150% at calc(100% - 44px) 40px);transition:clip-path .6s var(--ease-out),opacity .2s var(--ease),visibility 0s}
+  .nav a{
+    font-size:clamp(1.5rem,6.2vw,2rem);font-weight:700;letter-spacing:-.02em;color:#fff;
+    padding:.55rem 0;border-bottom:1px solid rgba(255,255,255,.1);min-height:56px;
+    opacity:0;transform:translateY(10px);animation:none;
+  }
+  .nav.open a{animation:mm-in .5s var(--ease-out) forwards}
+  .nav.open a:nth-child(1){animation-delay:.08s}.nav.open a:nth-child(2){animation-delay:.12s}.nav.open a:nth-child(3){animation-delay:.16s}
+  .nav.open a:nth-child(4){animation-delay:.2s}.nav.open a:nth-child(5){animation-delay:.24s}.nav.open a:nth-child(6){animation-delay:.28s}
+  .nav.open a:nth-child(7){animation-delay:.32s}.nav.open a:nth-child(8){animation-delay:.38s}
+  .nav a.active{color:var(--gold)}
+  .nav a:hover{color:var(--gold)}
+  .nav .btn{margin-top:var(--s6);min-height:54px;font-size:1rem;letter-spacing:0;border-bottom:2px solid var(--orange)}
+  .nav-extra{margin-top:auto;padding-top:var(--s6);display:grid;gap:.4rem;color:#9fb0cc;font-size:.92rem;opacity:0}
+  .nav.open .nav-extra{animation:mm-in .5s .44s var(--ease-out) forwards}
+  .nav-extra a{font-size:.98rem!important;font-weight:600!important;min-height:44px!important;border:0!important;padding:0!important;color:#dbe3f1!important;opacity:1!important;transform:none!important;animation:none!important}
+  html.menu-open .nav-toggle span{background:#fff}
+  html.menu-open .site-header{background:transparent;border-color:transparent;box-shadow:none}
+  html.menu-open .brand{position:relative;z-index:92}
+  html.menu-open .brand-logo{filter:brightness(0) invert(1)}
+  html.menu-open{overflow:hidden}
+}
+@media (min-width:981px){.nav-extra{display:none}}
+@keyframes mm-in{to{opacity:1;transform:none}}
+
+/* =========================================================
+   SHARED BUILDING BLOCKS for page scripts (prefix .lx-)
+   ========================================================= */
+/* scroll reveal: a softer settle than before (content visible without JS) */
+.reveal{filter:blur(4px)}
+.reveal.in{filter:none;transition:opacity .7s var(--ease-out),transform .7s var(--ease-out),filter .7s var(--ease-out)}
+
+/* a real photo in a rounded window, optional caption; [data-parallax] drifts it on scroll */
+.lx-media{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;background:var(--navy-ink);box-shadow:var(--shadow-2)}
+.lx-media img{display:block;width:100%;height:100%;object-fit:cover;scale:1.06;translate:0 var(--par,0px);transition:scale 1.2s var(--ease-out)}
+.lx-media:hover img{scale:1.09}
+.lx-media figcaption{position:absolute;left:0;right:0;bottom:0;padding:1.4rem 1rem .8rem;font-size:.8rem;line-height:1.4;color:#fff;background:linear-gradient(transparent,rgba(var(--ink-wash),.82))}
+
+/* horizontal photo strip (scroll-snap, drag on desktop) */
+.lx-strip{display:grid;grid-auto-flow:column;grid-auto-columns:clamp(220px,26vw,340px);gap:var(--s4);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding:4px 4px var(--s4);scrollbar-width:thin;cursor:grab}
+.lx-strip.is-drag{cursor:grabbing;scroll-snap-type:none}
+.lx-strip > *{scroll-snap-align:start}
+.lx-strip .lx-media{aspect-ratio:4/5}
+.lx-strip .lx-media.wide{aspect-ratio:auto}
+
+/* lightbox (built by TRELayer.lightbox) */
+.lx-lightbox{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:clamp(16px,4vw,48px);margin:0;background:rgba(10,20,40,.92);opacity:0;animation:lx-fade .3s var(--ease-out) forwards}
+.lx-lightbox img{max-width:min(1200px,92vw);max-height:78vh;width:auto;height:auto;border-radius:var(--radius-sm);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.lx-lightbox figcaption{margin-top:1rem;color:#dbe3f1;font-size:.92rem;text-align:center;max-width:60ch}
+.lx-lightbox .lx-lb-count{position:absolute;top:22px;left:24px;color:rgba(255,255,255,.7);font-size:.8rem;font-variant-numeric:tabular-nums}
+.lx-lightbox button{position:absolute;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);cursor:pointer;display:grid;place-items:center;transition:background var(--d1) var(--ease)}
+.lx-lightbox button:hover{background:rgba(255,255,255,.18)}
+.lx-lightbox button::before{content:"";width:22px;height:22px;background:#fff;-webkit-mask:var(--i-chev) center/contain no-repeat;mask:var(--i-chev) center/contain no-repeat}
+.lx-lightbox .lx-lb-close{top:16px;right:16px}
+.lx-lightbox .lx-lb-close::before{-webkit-mask-image:var(--i-close);mask-image:var(--i-close)}
+.lx-lightbox .lx-lb-prev{left:16px;top:50%;translate:0 -50%}
+.lx-lightbox .lx-lb-prev::before{transform:scaleX(-1)}
+.lx-lightbox .lx-lb-next{right:16px;top:50%;translate:0 -50%}
+@keyframes lx-fade{to{opacity:1}}
+
+/* drawn lines: any SVG path with [data-draw] draws with scroll progress (TRELayer.draw) */
+[data-draw]{stroke-dasharray:var(--len,1000);stroke-dashoffset:calc(var(--len,1000) * (1 - var(--p,1)))}
+
+/* a small drawn node ring used by flows and timelines */
+.lx-node{fill:var(--paper);stroke:var(--gold);stroke-width:2;transition:fill .5s var(--ease-out),r .5s var(--ease-out)}
+.lx-node.on{fill:var(--gold)}
+
+/* ---------- Reduced motion: still, complete, legible ---------- */
+@media (prefers-reduced-motion:reduce){
+  .hx-photo,.hx .hx-inner > *,.hx-credit{animation:none!important;scale:1.04;translate:none}
+  .reveal{filter:none}
+  .lx-media img{transition:none;scale:1}
+  .nav,.nav.open,.nav.open a,.nav.open .nav-extra{transition:none!important;animation:none!important;opacity:1;transform:none;clip-path:none}
+  .nav:not(.open){visibility:hidden}
+  [data-draw]{stroke-dashoffset:0}
+}
