@@ -96,12 +96,12 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 .hx .crumbs,.hx .breadcrumb{color:#c7d2e6}
 .hx .crumbs a,.hx .breadcrumb a{color:#fff}
 .hx .btn-row{margin-top:1.9rem}
-.hx-credit{
+.hx .hx-credit{
   position:absolute;right:max(var(--s5),calc((100vw - var(--max)) / 2 + var(--s5)));top:var(--s5);z-index:1;margin:0;
   display:flex;align-items:center;gap:.6rem;max-width:min(360px,44vw);
-  font-size:.74rem;line-height:1.35;color:rgba(255,255,255,.78)!important;text-align:right;
+  font-size:.74rem!important;line-height:1.35;color:rgba(255,255,255,.78)!important;text-align:right;
 }
-.hx-credit::before{content:"";width:22px;height:1px;flex:none;background:var(--gold)}
+.hx .hx-credit::before{content:"";width:22px;height:1px;flex:none;background:var(--gold)}
 /* entrance: the copy settles out of a soft blur, staggered; visible by default */
 .hx .hx-inner > *{animation:hx-in .95s var(--ease-out) both}
 .hx .hx-inner > :nth-child(2){animation-delay:.09s}
@@ -109,7 +109,7 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 .hx .hx-inner > :nth-child(4){animation-delay:.27s}
 .hx .hx-inner > :nth-child(5){animation-delay:.36s}
 .hx .hx-inner > :nth-child(n+6){animation-delay:.45s}
-.hx-credit{animation:hx-in 1.2s .6s var(--ease-out) both}
+.hx .hx-credit{animation:hx-in 1.2s .6s var(--ease-out) both}
 @keyframes hx-in{from{opacity:0;translate:0 14px;filter:blur(6px)}to{opacity:1;translate:0 0;filter:blur(0)}}
 /* retire the old per-child rise on page heroes that became .hx */
 .page-hero.hx > .container > *{opacity:1;transform:none}
@@ -155,7 +155,7 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
     linear-gradient(180deg,rgba(var(--ink-wash),.55) 0%,rgba(var(--ink-wash),.78) 45%,rgba(var(--ink-wash),.9) 100%)}
   .hx-photo{object-position:var(--fx-m,var(--fx,60%)) var(--fy-m,30%)}
   .hx h1{max-width:none}
-  .hx-credit{left:var(--s5);right:auto;top:auto;bottom:var(--s4);max-width:calc(100vw - 110px);justify-content:flex-start;text-align:left}
+  .hx .hx-credit{left:var(--s5);right:auto;top:auto;bottom:var(--s4);max-width:calc(100vw - 110px);justify-content:flex-start;text-align:left}
   .hx-media{left:-3%;-webkit-mask-image:none;mask-image:none}
   .hx-split,.hx-fp .hx-split{grid-template-columns:1fr}
   .hx-window{max-width:420px}
@@ -207,8 +207,8 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
    SHARED BUILDING BLOCKS for page scripts (prefix .lx-)
    ========================================================= */
 /* scroll reveal: a softer settle than before (content visible without JS) */
-.reveal{filter:blur(4px)}
-.reveal.in{filter:none;transition:opacity .7s var(--ease-out),transform .7s var(--ease-out),filter .7s var(--ease-out)}
+.js .reveal{transition-property:opacity,transform,filter}   /* keeps style.css durations + stagger delays */
+.js .reveal:not(.in){filter:blur(4px)}                     /* only when JS runs: no-JS pages stay sharp */
 
 /* a real photo in a rounded window, optional caption; [data-parallax] drifts it on scroll */
 .lx-media{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;background:var(--navy-ink);box-shadow:var(--shadow-2)}
@@ -247,10 +247,13 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 
 /* ---------- Reduced motion: still, complete, legible ---------- */
 @media (prefers-reduced-motion:reduce){
-  .hx-photo,.hx .hx-inner > *,.hx-credit{animation:none!important;scale:1.04;translate:none}
-  .reveal{filter:none}
+  .hx .hx-inner > *,.hx .hx-credit{animation:none!important}
+  .hx-photo{animation:none!important;scale:1.04;translate:none}
+  .js .reveal:not(.in),.reveal{filter:none}
   .lx-media img{transition:none;scale:1}
+  [data-draw]{stroke-dashoffset:0}
+}
+@media (prefers-reduced-motion:reduce) and (max-width:980px){
   .nav,.nav.open,.nav.open a,.nav.open .nav-extra{transition:none!important;animation:none!important;opacity:1;transform:none;clip-path:none}
   .nav:not(.open){visibility:hidden}
-  [data-draw]{stroke-dashoffset:0}
 }
