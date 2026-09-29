@@ -277,3 +277,21 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 .btn-primary:hover{box-shadow:0 14px 26px -14px rgba(15,31,61,.6)}
 /* footer column titles are h3 now (heading order), styled as before */
 .site-footer h3{color:#fff;font-family:var(--font-display);font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 .8rem}
+
+/* ---------- Finish review fixes (2026-09-29) ---------- */
+/* one world: every hero photo is graded toward the palette's navy while staying sharp (the user asked for a
+   high-quality image IN the background, so the photo is not blurred); luminance and detail stay the photo's own */
+.hx-media::after,.hero-full .hero-full-media::after{content:"";position:absolute;inset:0;background:var(--navy);mix-blend-mode:color;opacity:.42;pointer-events:none}
+/* home: the text side lands on navy ink, not slate */
+.hero-full .hero-full-overlay{background:linear-gradient(90deg,rgba(15,31,61,.94) 0%,rgba(15,31,61,.82) 40%,rgba(19,43,86,.42) 100%)}
+.hx .hx-credit{text-shadow:0 1px 10px rgba(15,31,61,.65)}
+/* orange stays the colour of the one primary action; its label is navy ink (6.1:1 on #e08a2e, 4.6:1 on the hover fill) */
+.btn-primary,.btn-primary:hover{color:var(--navy-ink)}
+/* while another orange action is on screen, the header's "Book a call" steps back to navy (layer.js sets .is-quiet) */
+@media (min-width:981px){
+  .site-header .nav .btn-primary{transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease),transform var(--d2) var(--ease-out)}
+  .site-header .nav .btn-primary.is-quiet{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:none}
+  .site-header .nav .btn-primary.is-quiet:hover{background:var(--navy-deep);border-color:var(--navy-deep);color:#fff}
+}
+/* JS-rendered heroes: badges follow the title (no label above the H1) */
+.hx h1 + .badges,.hx .role + .badges{margin:-.1rem 0 1rem}

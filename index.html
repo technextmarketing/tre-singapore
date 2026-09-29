@@ -145,10 +145,10 @@ html:not(.js) .hm-routes{margin-top:0}
 .hm-fact b{flex:none;font-family:var(--font-display);font-weight:700;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums;color:var(--hm-c2)}
 .hm-fact span{line-height:1.45}
 .hm-fact-lead{margin:0 0 var(--s6)}
-.hm-fact-lead b{font-size:clamp(2.6rem,4vw,3.3rem)}
+.hm-fact-lead b{font-size:inherit}
 .hm-fact-lead span{font-size:1.03rem;max-width:27ch;color:var(--ink)}
 .hm-route-pro .hm-fact-lead span{color:#e6ecf7}
-.hm-fact-sm b{font-size:1.5rem;min-width:2.3ch}
+.hm-fact-sm b{font-size:inherit;min-width:0}
 .hm-fact-sm span{font-size:.94rem}
 .hm-stops{list-style:none;margin:0;padding:0;display:grid;gap:var(--s6)}
 .hm-stop{position:relative}
@@ -204,7 +204,7 @@ html:not(.js) .hm-routes{margin-top:0}
   .hm-hub-head p{font-size:1.02rem}
   .hm-route{--pl:50px;--gx:22px;padding:var(--s5) var(--s5) var(--s6) var(--pl)}
   .hm-fact-lead{margin-bottom:var(--s5)}
-  .hm-fact-lead b{font-size:2.4rem}
+  .hm-fact-lead b{font-size:inherit}
   .hm-stops{gap:var(--s5)}
   .hm-go .btn{width:100%}
 }
@@ -442,6 +442,10 @@ html:not(.js) .hm-routes{margin-top:0}
   .hm-field-hint{display:none}
 }
 @media print{.hm-armed,.hm-armed *{opacity:1!important;animation:none!important}}
+/* finish review: the route figures read as words in the sentence, not as stat tiles */
+.hm-fact b{font-family:inherit;letter-spacing:0;line-height:inherit;margin-right:.1em}
+.hm-fact{align-items:baseline}
+.hm-fact-lead{font-size:1.08rem;line-height:1.5}
 </style>
 
 <!-- ===== MARQUEE (the page's taglines; drifts at breath pace, still under reduced motion) ===== -->

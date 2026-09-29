@@ -238,3 +238,8 @@ html.ar-doc .scroll-progress{display:none}
   .ar-rel-media img,.ar-toc-list li::before,.ar-steps > li::before,.ar-tick path,.ar-lbl{transition:none}
   .ar-rel-card:hover .ar-rel-media img{scale:1.02}
 }
+
+/* the article's own photo, now inside the reading column (the hero shows a real TRE room) */
+.ar-figure{margin:var(--s6) 0 var(--s6);border-radius:var(--radius);overflow:hidden;background:var(--cream);box-shadow:var(--shadow-1)}
+.ar-figure img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.ar-figure figcaption{padding:.75rem 1rem;font-size:.86rem;line-height:1.45;color:var(--ink-2)}

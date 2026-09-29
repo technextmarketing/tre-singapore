@@ -204,10 +204,10 @@
 .gd-qa details > p{margin:0;padding:0 0 1.3rem;max-width:62ch;color:var(--ink-2)}
 .gd-qa details::details-content{block-size:0;overflow:hidden;transition:block-size .45s var(--ease-out),content-visibility .45s allow-discrete}
 .gd-qa details[open]::details-content{block-size:auto}
-.gd-close{display:grid;grid-template-columns:48px auto;align-items:center;justify-content:start;gap:0 var(--s4);width:fit-content;max-width:100%;margin-top:var(--s7);padding:var(--s6) var(--s7) var(--s6) var(--s6);background:linear-gradient(120deg,var(--navy-ink),var(--navy-deep) 70%)}
+.gd-close{display:grid;grid-template-columns:48px auto;align-items:center;justify-content:start;gap:0 var(--s4);width:100%;max-width:100%;margin-top:var(--s7);padding:var(--s6) var(--s7) var(--s6) var(--s6);background:linear-gradient(120deg,var(--navy-ink),var(--navy-deep) 70%)}
 .gd-fork{width:48px;height:106px;overflow:visible;fill:none;stroke:var(--gold);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 .gd-fork circle{fill:var(--gold);stroke:none}
-.gd-close .btn-row{display:grid;gap:14px;justify-items:start;margin:0}
+.gd-close .btn-row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:0}
 @media (max-width:980px){.gd-faq-grid{grid-template-columns:1fr;gap:var(--s5)}}
 @media (max-width:600px){
   .gd-close{display:block;width:auto;padding:var(--s4)}
@@ -483,6 +483,7 @@
         <svg class="gd-fork" viewBox="0 0 48 106" aria-hidden="true"><circle cx="6" cy="23" r="4"/><path data-draw data-draw-dur="1300" d="M10 23H46M20 23V71Q20 83 32 83H46"/></svg>
         <div class="btn-row">
           <a class="btn btn-primary" href="events.html">See upcoming online sessions</a>
+          <a class="btn btn-ghost-light" href="https://calendly.com/bhdasia/tre-certification-intake-call" target="_blank" rel="noopener">Book a certification intake call</a>
           <a class="btn btn-ghost-light" href="contact.html">Still have a question? Get in touch</a>
         </div>
       </nav>
