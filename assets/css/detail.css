@@ -274,8 +274,8 @@ input.dt-dot:disabled{cursor:not-allowed}
 .dt-related-head{display:flex;justify-content:space-between;align-items:flex-end;gap:.4rem 2rem;flex-wrap:wrap;margin:0 0 var(--s6)}
 .dt-related-head h2{margin:0}
 /* orange stays with the page's own register / book action: card buttons turn navy here */
-.dt-cards .event-card .btn-primary{background:var(--navy);border-color:var(--navy);box-shadow:none}
-.dt-cards .event-card .btn-primary:hover{background:var(--navy-deep);border-color:var(--navy-deep);box-shadow:0 10px 24px rgba(19,43,86,.22)}
+.dt-cards .event-card .btn-primary{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:none}
+.dt-cards .event-card .btn-primary:hover{background:var(--navy-deep);border-color:var(--navy-deep);color:#fff;box-shadow:0 10px 24px rgba(19,43,86,.22)}
 @media (max-width:640px){
   .event-grid.dt-cards{
     grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:84%;

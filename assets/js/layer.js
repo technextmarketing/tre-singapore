@@ -43,7 +43,7 @@
       alpha: [0.18, 0.45], width: 1.5,
       amp: 17, wave: [360, 640], breath: 8,            // breath cycle in seconds
       fade: 0.55,                                      // (kept for page scripts that pass it)
-      rest: 0, restAmt: 0.5, settleRight: false,       // heroes: resting shiver under the copy + flat toward the photo
+      rest: 0, restAmt: 0.5, settleRight: false, fadeEnd: 0.46,       // heroes: resting shiver under the copy + flat toward the photo
       reach: 150, shiver: 7, settle: 2.3,              // pointer radius (px), tremor amplitude (px), decay rate
       source: null,                                    // element that receives pointer events (default: canvas parent)
       idlePulse: 9                                     // seconds between gentle auto pulses (0 = off)
@@ -100,11 +100,12 @@
           if (sh > 0.003) y += Math.sin(t * 19 + x * 0.085 + L.phase) * o.shiver * sh;
           if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
         }
-        if (o.settleRight) {                         /* full strength under the copy, gone by ~78% of the width */
+        if (o.settleRight) {                         /* full strength under the copy, gone just past it (fadeEnd), so no line crosses the people in the photo */
           if (!L.grad || L.gw !== w) {
+            var fe = o.fadeEnd, fs = Math.max(0.15, fe - 0.21);
             L.gw = w; L.grad = ctx.createLinearGradient(0, 0, w, 0);
-            L.grad.addColorStop(0, 'rgba(' + L.color + ',' + L.alpha + ')'); L.grad.addColorStop(0.4, 'rgba(' + L.color + ',' + L.alpha + ')');
-            L.grad.addColorStop(0.78, 'rgba(' + L.color + ',0)'); L.grad.addColorStop(1, 'rgba(' + L.color + ',0)');
+            L.grad.addColorStop(0, 'rgba(' + L.color + ',' + L.alpha + ')'); L.grad.addColorStop(fs, 'rgba(' + L.color + ',' + L.alpha + ')');
+            L.grad.addColorStop(fe, 'rgba(' + L.color + ',0)'); L.grad.addColorStop(1, 'rgba(' + L.color + ',0)');
           }
           ctx.strokeStyle = L.grad;
         } else ctx.strokeStyle = 'rgba(' + L.color + ',' + L.alpha + ')';
@@ -143,7 +144,8 @@
     $all('.hx, .hero-full').forEach(function (hero) {
       var canvas = $('.hx-tremor', hero);
       if (!canvas) { canvas = document.createElement('canvas'); canvas.className = 'hx-tremor'; canvas.setAttribute('aria-hidden', 'true'); var content = $('.hero-full-content, .hx-inner, .container', hero); hero.insertBefore(canvas, content); }
-      tremor(canvas, { source: hero, top: hero.classList.contains('hero-full') ? 0.62 : 0.56, rest: 0.46, settleRight: true });
+      tremor(canvas, { source: hero, top: hero.classList.contains('hero-full') ? 0.62 : 0.56, rest: 0.46, settleRight: true,
+        fadeEnd: parseFloat(getComputedStyle(hero).getPropertyValue('--lines-end')) || 0.46 });
       if (REDUCED || !FINE) return;
       var tx = 0, ty = 0, cx = 0, cy = 0, lens = 0, lensT = 0, lx = 0, ly = 0, raf = 0, active = false;
       function loop() {

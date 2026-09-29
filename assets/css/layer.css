@@ -286,8 +286,8 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 .hero-full .hero-full-overlay{background:linear-gradient(90deg,rgba(15,31,61,.94) 0%,rgba(15,31,61,.82) 40%,rgba(19,43,86,.42) 100%)}
 .hx .hx-credit{text-shadow:0 1px 10px rgba(15,31,61,.65)}
 /* orange stays the colour of the one primary action; its label is navy ink (6.1:1 on #e08a2e, 4.6:1 on the hover fill).
-   Only buttons whose fill really is orange get it (layer.js tags .is-orange); navy-filled primaries keep their white label */
-.btn-primary.is-orange,.btn-primary.is-orange:hover{color:var(--navy-ink)}
+   Pure CSS so it holds without JavaScript; every rule that repaints a primary navy sets its own white label */
+.btn-primary,.btn-primary:hover{color:var(--navy-ink)}
 /* while another orange action is on screen, the header's "Book a call" steps back to navy (layer.js sets .is-quiet) */
 @media (min-width:981px){
   .site-header .nav .btn-primary{transition:background-color .35s var(--ease),border-color .35s var(--ease),color .35s var(--ease),box-shadow .35s var(--ease),transform var(--d2) var(--ease-out)}
