@@ -219,8 +219,9 @@
     requestAnimationFrame(function () {
       ticking = false; var vh = window.innerHeight;
       scrollers.forEach(function (p) {
+        /* the drawn tip follows the reading line (~60% down the viewport); short graphics draw over half a screen of scroll */
         var box = (p.ownerSVGElement || p).getBoundingClientRect();
-        var k = clamp((vh * 0.88 - box.top) / (box.height + vh * 0.45), 0, 1);
+        var k = clamp((vh * 0.6 - box.top) / Math.max(box.height, vh * 0.5), 0, 1);
         p.style.setProperty('--p', k.toFixed(4));
       });
       parallaxers.forEach(function (el) {
