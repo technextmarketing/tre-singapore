@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Keep design notes out of the published site
-        run: rm -rf .impeccable PRODUCT.md
+        run: rm -rf .impeccable PRODUCT.md DESIGN.md
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
