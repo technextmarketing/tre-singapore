@@ -300,3 +300,15 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 /* closing panels: the gold pointer glow appears only under a pointer (parked at rest it read as a grey smudge on navy) */
 .cta-band::before{opacity:0}
 @media (hover:hover){.cta-band:hover::before{opacity:.9}}
+
+/* crawlable copies of the event / facilitator records and lists (build.py): read by search and AI crawlers
+   and by visitors without JavaScript; hidden while JavaScript renders the full interactive version */
+.js .rec-static{display:none}
+.rec-static{padding-block:var(--s6)}
+.rec-static h2{margin:var(--s6) 0 var(--s3)}
+.rec-static ul{padding-left:1.2rem;margin:0 0 var(--s4)}
+.rec-static li{margin:.35rem 0}
+/* 404 */
+.nf-404{padding-block:var(--s8)}
+.nf-404 .nf-links{list-style:none;padding:0;margin:var(--s5) 0 0;display:grid;gap:.6rem}
+.nf-404 .nf-links a{font-weight:600}

@@ -276,7 +276,7 @@
   <div class="hx-wash" aria-hidden="true"></div>
   <canvas class="hx-tremor" aria-hidden="true"></canvas>
   <div class="container hx-inner">
-      <h1>Facilitators in Singapore</h1>
+      <h1>TRE™ Facilitators in Singapore</h1>
       <p>Every facilitator listed here holds — or is completing — certification under the global TRE™ programme created by Dr. David Berceli. Book an individual session, join a group, or bring TRE™ to your organisation.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="#directory">Browse the directory</a>
@@ -339,11 +339,12 @@
         <div>
           <h3>Trainers and senior providers</h3>
           <p>If you are a Global TRE™ Certifying Trainer or senior provider visiting Singapore and would like to run a workshop or supervision day with our community, we would love to host you.</p>
-          <p class="fc-more-act"><span class="badge badge-navy">Coming to Singapore?</span><a class="link-arrow" href="contact.html?interest=event">Propose an event</a></p>
+          <p class="fc-more-act"><span class="badge badge-navy">Coming to Singapore?</span><a class="link-arrow" href="contact?interest=event">Propose an event</a></p>
         </div>
       </article>
     </div>
   </div>
+{{STATIC_FACILITATORS}}
 </section>
 
 <!-- ===== 2 · COMMUNITY — real trainer and cohort photos (hummingbeing.com gallery, captions from assets/img/gallery/manifest.json) ===== -->
@@ -389,7 +390,7 @@
       <div class="fc-cert-copy">
         <p>A <strong>Global TRE™ Certified Provider</strong> has completed all three modules of the certification — personal practice, teaching one-to-one and teaching groups — including twelve online sessions of personal practice and supervision, under a Global TRE™ Certifying Trainer accredited by TRE For All.</p>
         <p>Certified providers are trained to recognise signs of over-activation, teach self-regulation, and adapt the exercises for different bodies and histories. That is what makes TRE™ safe to learn.</p>
-        <a class="link-arrow" href="education.html#certification">See the certification pathway</a>
+        <a class="link-arrow" href="education#certification">See the certification pathway</a>
       </div>
     </div>
     <figure class="fc-path" data-fc-path>
@@ -434,7 +435,7 @@
       </li>
       <li class="fc-step fc-step-go">
         <div class="btn-row">
-          <a class="btn btn-primary" href="contact.html?interest=listing">Submit my profile</a>
+          <a class="btn btn-primary" href="contact?interest=listing">Submit my profile</a>
           <a class="btn btn-outline" href="mailto:isabelle@bhdasia.com?subject=Directory%20listing%20request">Email the details</a>
         </div>
       </li>
@@ -450,7 +451,7 @@
       <h2>Find a certified TRE™ provider in Singapore for individual or group sessions.</h2>
       <div class="btn-row">
         <a class="btn btn-primary" href="#directory">Browse the directory</a>
-        <a class="link-arrow" href="events.html">See upcoming events</a>
+        <a class="link-arrow" href="events">See upcoming events</a>
       </div>
     </div>
     <div class="fc-close-path">
@@ -458,7 +459,7 @@
       <h2>Meet our Certifying Trainer and join the practitioner directory.</h2>
       <div class="btn-row">
         <a class="btn btn-ghost-light" href="https://calendly.com/bhdasia/tre-certification-intake-call" target="_blank" rel="noopener">Book a certification intake call</a>
-        <a class="link-arrow" href="education.html#certification">See the certification pathway</a>
+        <a class="link-arrow" href="education#certification">See the certification pathway</a>
       </div>
     </div>
   </div>
@@ -508,7 +509,7 @@
   }
   function faces(list, cls) {
     return list.filter(function (f) { return f && f.photo; }).map(function (f) {
-      return '<a class="' + cls + '" href="facilitator.html?id=' + encodeURIComponent(f.id) + '" aria-label="View profile: ' + esc(f.name) + '" data-name="' + esc(f.name) + '"><img src="' + esc(f.photo) + '" alt="" width="64" height="64" loading="lazy" decoding="async"></a>';
+      return '<a class="' + cls + '" href="facilitator?id=' + encodeURIComponent(f.id) + '" aria-label="View profile: ' + esc(f.name) + '" data-name="' + esc(f.name) + '"><img src="' + esc(f.photo) + '" alt="" width="64" height="64" loading="lazy" decoding="async"></a>';
     }).join('');
   }
 

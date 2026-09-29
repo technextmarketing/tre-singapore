@@ -137,8 +137,8 @@
   /* ---------- prep checklist: tick what is done (kept in this browser only) ---------- */
   function checklists(body) {
     var lists = $all('ul.ar-check', body); if (!lists.length) return;
-    var key = 'ar-check:' + location.pathname.split('/').pop(), saved = {};
-    try { saved = JSON.parse(localStorage.getItem(key) || '{}') || {}; } catch (e) { saved = {}; }
+    var page = location.pathname.split('/').pop().replace(/\.html$/, ''), key = 'ar-check:' + page, saved = {};
+    try { saved = JSON.parse(localStorage.getItem(key) || localStorage.getItem(key + '.html') || '{}') || {}; } catch (e) { saved = {}; }
     function store() { try { localStorage.setItem(key, JSON.stringify(saved)); } catch (e) { /* private mode: ticks last for this visit */ } }
     lists.forEach(function (ul, u) {
       $all(':scope > li', ul).forEach(function (li, i) {
