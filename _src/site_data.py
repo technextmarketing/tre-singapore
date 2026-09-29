@@ -49,7 +49,7 @@ def load():
         page.write_text(PAGE.format(events=(SITE / "assets/js/events-data.js").as_uri(),
                                     facilitators=(SITE / "assets/js/facilitators-data.js").as_uri()), encoding="utf-8")
         out = subprocess.run([exe, "--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
-                              "--allow-file-access-from-files", f"--user-data-dir={tmp / 'profile'}", "--dump-dom", page.as_uri()],
+                              "--allow-file-access-from-files", f"--user-data-dir={tmp / 'profile'}"] + (["--no-sandbox"] if os.environ.get("CI") else []) + ["--dump-dom", page.as_uri()],
                              capture_output=True, text=True, encoding="utf-8", timeout=90).stdout
         a, b = out.find("@@JSON@@"), out.find("@@END@@")
         if a < 0 or b < 0:

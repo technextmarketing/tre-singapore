@@ -1,14 +1,25 @@
-# Static-site deploy via GitHub Actions. Replaces the legacy Pages builder,
-# which wedged on 2026-09-13 (stuck 0ms build, 500 on POST /pages/builds).
+# Static-site deploy via GitHub Actions (replaces the legacy Pages builder, which wedged on 2026-09-13).
+#
+# Runs on every push to main AND every night at 00:05 Singapore time, so the site keeps itself current:
+#   1. `python3 _src/build.py --auto-drafts` rebuilds every page with today's date. Events whose last day has ended
+#      move to "past" in the crawlable copies, the structured data, llms.txt and the sitemap (visitors' browsers
+#      already switch them live through main.js). Missing event blog posts are drafted: a preview for each new
+#      event and a recap the day after an event ends, at /drafts/<slug> (noindex, not linked, awaiting approval).
+#   2. The rebuilt files are committed back to main (so the repo matches the live site), the site is deployed,
+#      and each new draft opens an issue so the owner is notified.
+# If the build fails, the committed pages are deployed unchanged.
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: "5 16 * * *"   # 00:05 in Singapore (UTC+8)
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write   # commit the nightly rebuild and new drafts
+  issues: write     # one issue per new draft
   pages: write
   id-token: write
 
@@ -22,13 +33,58 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      TRE_NEW_DRAFTS: ${{ github.workspace }}/../new-drafts.jsonl
     steps:
       - uses: actions/checkout@v4
+
+      - name: Rebuild with today's date and draft missing event posts
+        run: |
+          if python3 _src/build.py --auto-drafts; then
+            echo "Rebuilt."
+          else
+            echo "::warning::The build failed - deploying the committed pages unchanged."
+            git checkout -- .
+            git clean -fdq -- drafts events facilitators _src/posts
+            rm -f "$TRE_NEW_DRAFTS"
+          fi
+
+      - name: Commit the rebuilt pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+          else
+            git commit -q -m "Nightly rebuild $(TZ=Asia/Singapore date +%F): event status and blog drafts"
+            git push || echo "::warning::Could not push the rebuild (main moved); the next run will redo it."
+          fi
+
       - name: Keep design notes out of the published site
         run: rm -rf .impeccable PRODUCT.md DESIGN.md
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
       - id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Open an issue for each new blog draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          [ -s "$TRE_NEW_DRAFTS" ] || { echo "No new drafts."; exit 0; }
+          while IFS= read -r line; do
+            kind=$(jq -r .kind <<<"$line"); title=$(jq -r .title <<<"$line"); url=$(jq -r .url <<<"$line")
+            slug=$(jq -r .slug <<<"$line"); event=$(jq -r .event <<<"$line")
+            if [ "$kind" = recap ]; then todo="Add 3-6 photos and two or three highlights (a moment, a quote, how many joined), then approve it."
+            else todo="Check the text, then approve it."; fi
+            gh issue create --title "Review the $kind blog post: $title" --body "A **$kind** blog post was drafted automatically for **$title**.
+
+          - Draft (hidden from Google, not linked anywhere): $url
+          - Event page: https://tre-in-singapore.com/events/$event
+
+          $todo To publish, tell Claude \"push\" - or set \`\"status\": \"published\"\` in \`_src/posts/$slug.html\` and run \`python _src/build.py\`."
+          done < "$TRE_NEW_DRAFTS"

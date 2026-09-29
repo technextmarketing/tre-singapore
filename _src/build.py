@@ -22,7 +22,7 @@ import datetime, glob, html as H, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import seo, site_data  # noqa: E402
+import event_posts as EP, seo, site_data  # noqa: E402
 
 PARTS = os.path.join(HERE, "parts")
 OUT = os.path.dirname(HERE)  # site root
@@ -178,7 +178,7 @@ def page_meta(out, title, desc, kind, crumb, image, body, events, facs, posts):
     if out == "education.html":
         nodes.append(seo.course(url, body))
     if out == "events.html":
-        nodes.append(seo.item_list(url, "Upcoming TRE™ events", [(e["title"], seo.rec_url("events", e["slug"])) for e in events if not e["_past"]]))
+        nodes.append(seo.item_list(url, "Upcoming TRE™ events", [(e["title"], seo.rec_url("events", e["slug"])) for e in events if not e["_past"] and e.get("status") not in ("postponed", "cancelled")]))
     if out == "facilitators.html":
         nodes.append(seo.item_list(url, "TRE™ facilitators in Singapore", [(f["name"], seo.rec_url("facilitators", f["id"])) for f in facs]))
     if out == "blog.html":
@@ -231,20 +231,80 @@ def facilitator_page(f, template, events, facs, manifest):
     assemble(body, out, title, desc, meta, "facilitators", "../", manifest)
 
 
-def write_sitemap_robots_llms(events, facs):
+def sg_now():
+    """(now in UTC, today's date in Singapore) - the build server may run in any time zone."""
+    now = datetime.datetime.now(datetime.timezone.utc)
+    return now, (now + datetime.timedelta(hours=8)).date()
+
+
+def pretty_date(iso):
+    try:
+        d = datetime.date.fromisoformat((iso or "")[:10])
+    except ValueError:
+        return ""
+    return f"{d.day} {d.strftime('%B')} {d.year}"
+
+
+GENERATED = "<!-- generated: event post -->"
+
+
+def event_post_pages(eposts, events, facs, manifest):
+    """Render every post in _src/posts: published ones to blog/, drafts to drafts/. Removes stale copies."""
+    by_slug = {e["slug"]: e for e in events}
+    upcoming = sorted((e for e in events if not e["_past"] and e.get("status") not in ("postponed", "cancelled")),
+                      key=lambda e: e.get("start") or "")
+    template = read("event-post.body.html")
+    keep = set()
+    for p in eposts:
+        e = by_slug.get(p.get("event"))
+        if not e:
+            print(f"event post {p['slug']}: no event '{p.get('event')}' in events-data.js; skipped")
+            continue
+        live = p.get("status") == "published"
+        out = f"{'blog' if live else 'drafts'}/{p['slug']}.html"
+        keep.add(out)
+        title, body = EP.render(p, e, upcoming, "../", template, seo.text, pretty_date)
+        page_title = f"{title} | TRE™ in Singapore" if len(title) <= 45 else title
+        desc = EP.post_description(p, e, seo.trim)
+        if live:
+            url = canonical_for(out)
+            img, size = og(f"assets/img/og/event-{e['slug']}.jpg")
+            art = {"@type": "BlogPosting", "@id": url + "#article", "headline": seo.trim(title, 110), "description": desc, "url": url,
+                   "mainEntityOfPage": {"@id": url + "#webpage"}, "image": [img], "inLanguage": "en-SG",
+                   "author": {"@id": seo.ORG_ID}, "publisher": {"@id": seo.ORG_ID},
+                   "about": {"@id": seo.rec_url("events", e["slug"]) + "#event"}, "articleSection": EP.KIND_LABEL[p["kind"]]}
+            if p.get("date"):
+                art["datePublished"] = art["dateModified"] = p["date"][:10] + "T00:00:00+08:00"
+            nodes = base_graph(facs) + [seo.webpage(url, page_title, desc, image=img, reviewedBy={"@id": seo.ISABELLE_ID}),
+                                        seo.breadcrumb(url, [("Blog", BASE + "blog"), (title, url)]), art]
+            extra = [("article:published_time", art["datePublished"])] if p.get("date") else []
+            meta = seo.head_meta(page_title, desc, url, img, "article", graph=nodes, extra=extra, image_size=size)
+        else:
+            meta = seo.head_meta(page_title, desc, url=None, robots="noindex,nofollow")
+        assemble(body + "\n" + GENERATED + "\n", out, page_title, desc, meta, "blog", "../", manifest)
+    for folder in ("drafts", "blog"):  # a post that moved (draft -> published) or was deleted leaves no copy behind
+        for path in glob.glob(os.path.join(OUT, folder, "*.html")):
+            rel = folder + "/" + os.path.basename(path)
+            if rel not in keep and (folder == "drafts" or GENERATED in open(path, encoding="utf-8").read()):
+                os.remove(path)
+                print("removed stale", rel)
+
+
+def write_sitemap_robots_llms(events, facs, eposts):
     """sitemap.xml (lastmod moves only for pages whose HTML changed), robots.txt, llms.txt."""
     old = {}
     sm = os.path.join(OUT, "sitemap.xml")
     if os.path.isfile(sm):
         for loc, mod in re.findall(r"<loc>([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>", read(sm)):
             old[loc] = mod
-    today = datetime.date.today().isoformat()
+    today = sg_now()[1].isoformat()
     entries = []
     for _, out, *rest in PAGES:
         if rest[3] is None:  # ?id= templates are not pages of their own
             continue
         entries.append((out, "1.0" if out == "index.html" else "0.8"))
     entries += [(out, "0.7") for _, out, *_ in POSTS]
+    entries += [(f"blog/{p['slug']}.html", "0.6") for p in EP.published(eposts)]
     entries += [(f"events/{e['slug']}.html", "0.5" if e["_past"] else "0.8") for e in events]
     entries += [(f"facilitators/{f['id']}.html", "0.7") for f in facs]
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -257,19 +317,36 @@ def write_sitemap_robots_llms(events, facs):
     write("robots.txt", "User-agent: *\nAllow: /\n\nSitemap: %ssitemap.xml\n" % BASE)
     pages = [(t, canonical_for(o), d) for _, o, t, d, *rest in PAGES if rest[1] is not None]
     posts = [(t, canonical_for(o), d) for _, o, t, d in POSTS]
+    by_slug = {e["slug"]: e for e in events}
+    posts += [(EP.post_title(p, by_slug[p["event"]]), canonical_for(f"blog/{p['slug']}.html"), EP.post_description(p, by_slug[p["event"]], seo.trim))
+              for p in EP.published(eposts) if p.get("event") in by_slug]
     write("llms.txt", seo.llms_txt(pages, posts, events, facs))
 
 
-def main(only):
+def main(only, auto_drafts=False):
     data = site_data.load()
-    today = datetime.date.today()
-    events = seo.normalise_events(data["events"], today) if data else []
+    now_utc, today = sg_now()
+    events = seo.normalise_events(data["events"], now_utc) if data else []
     facs = [f for f in (data or {}).get("facilitators", []) if not f.get("sample")]
+    eposts = EP.load_posts()
+    if data and auto_drafts:  # the daily job: a preview for each new event, a recap for each event that just ended
+        new = []
+        for kind, e in EP.missing_drafts(events, eposts, today):
+            slug = EP.write_draft(kind, e, today)
+            new.append({"slug": slug, "kind": kind, "event": e["slug"], "title": e["title"], "url": BASE + "drafts/" + slug})
+            print(f"new {kind} draft: drafts/{slug}")
+        if new:
+            eposts = EP.load_posts()
+            if os.environ.get("TRE_NEW_DRAFTS"):
+                with open(os.environ["TRE_NEW_DRAFTS"], "w", encoding="utf-8") as f:
+                    f.write("\n".join(seo.json.dumps(x, ensure_ascii=False) for x in new) + "\n")
     if data:
         manifest = seo.manifest_script(events, facs)
     else:  # no Chrome: keep linking to the record pages that already exist
         have = lambda k: sorted(os.path.basename(p)[:-5] for p in glob.glob(os.path.join(OUT, k, "*.html")))
         manifest = "<script>window.TRE_STATIC=" + seo.json.dumps({"events": have("events"), "facilitators": have("facilitators")}, separators=(",", ":")) + ";</script>"
+    manifest += EP.manifest_script(eposts, {e["slug"]: e for e in events}, seo.json.dumps)
+    event_cards = EP.blog_cards(eposts, {e["slug"]: e for e in events}, seo.trim, pretty_date, seo.text)
     home_text = seo.text(read("index.body.html"))
     if seo.TRE_DEFINITION not in home_text:
         print("warning: llms.txt quotes a TRE definition that is no longer on the home page (seo.TRE_DEFINITION)")
@@ -280,6 +357,7 @@ def main(only):
         body = read(body_file)
         body = body.replace("{{STATIC_EVENTS}}", seo.events_static_list(events, ""))
         body = body.replace("{{STATIC_FACILITATORS}}", seo.facilitators_static_list(facs, ""))
+        body = body.replace("{{EVENT_POSTS}}", event_cards)
         meta = page_meta(out, title, desc, kind, crumb, image, body, events, facs, POSTS)
         assemble(body, out, title, desc, meta, active, "", manifest)
     for body_file, out, title, desc in POSTS:
@@ -295,6 +373,8 @@ def main(only):
         for f in facs:
             if not only or f"facilitators/{f['id']}.html" in only:
                 facilitator_page(f, tfac, events, facs, manifest)
+        if not only:
+            event_post_pages(eposts, events, facs, manifest)
     if not only or "404.html" in only:
         meta = seo.head_meta("Page not found — TRE™ in Singapore", "This page has moved or no longer exists.", url=None, robots="noindex,follow")
         assemble(read("404.body.html"), "404.html", "Page not found — TRE™ in Singapore",
@@ -302,9 +382,10 @@ def main(only):
     if not only:
         for old, new in REDIRECTS.items():
             write(old + ".html", redirect_page(old, new))
-        write_sitemap_robots_llms(events, facs)
+        write_sitemap_robots_llms(events, facs, eposts)
     print("done")
 
 
 if __name__ == "__main__":
-    main(set(sys.argv[1:]))
+    args = sys.argv[1:]
+    main({a for a in args if not a.startswith("--")}, auto_drafts="--auto-drafts" in args)

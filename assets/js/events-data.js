@@ -24,6 +24,10 @@
      priceText    : shown when there is no price (optional)
      link         : primary registration URL   linkText: button label (optional)
      soldOut      : true/false   waitlistLink: URL shown when sold out
+     status       : 'postponed' | 'cancelled' (optional) - shown on the site, skipped by the countdown and the chatbot,
+                    marked for Google, and never given a preview or recap blog post
+     tz           : time zone of the event's own clock, e.g. 'Europe/Bucharest' (optional; default Singapore;
+                    Bucharest venues are detected automatically)
      isNew        : true to show a "New" badge
      theme        : "theme-deep" | "theme-bronze" | "theme-orange" | "theme-green" (fallback colour when no image)
      details      : { summary, about[], forWho[], schedule[], includes[], pricing[], pricingNote,
@@ -552,6 +556,7 @@ window.TRE_EVENTS = [
   /* ---------- TRE Module 1 — Bucharest ---------- */
   {
     slug: 'tre-module-1-bucharest',
+    status: 'postponed',
     soldOut: true,
     waitlistLink: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
     title: 'TRE™ Module 1 — Bucharest, Romania (in English)',
