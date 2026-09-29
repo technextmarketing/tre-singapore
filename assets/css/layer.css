@@ -265,3 +265,15 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
   .hx h1,.hx p,.hx .lead,.hx .crumbs,.hx .crumbs a,.hx .role{color:#000!important;text-shadow:none!important}
   .hx .hx-inner > *{animation:none!important;opacity:1!important;filter:none!important}
 }
+
+/* ---------- QA batch 1: contrast + legibility floor (real-browser audit, 2026-09-29) ---------- */
+.site-header .nav .btn-primary{color:var(--navy-ink)}                 /* 6.1:1 on orange (was ink-2 at 3.6:1) */
+.event-status.new,.st-new{color:#9a5510}                                 /* "New": 5.5:1 on white/cream */
+.event-status.past{color:var(--muted)}                                  /* "Completed": 5.3:1 */
+table.price .note{color:var(--ink-2)}                                   /* note on the highlighted gold row */
+.badge,.post-meta .badge,.countdown span,.event-media .date-chip span,.fac-photo .feat-badge,.fac-sample,.prep-card .req{font-size:.72rem}
+/* the orange CTA gets a neutral, offset depth instead of an orange glow (reads cleanly on navy panels) */
+.btn-primary{box-shadow:0 8px 18px -12px rgba(15,31,61,.6)}
+.btn-primary:hover{box-shadow:0 14px 26px -14px rgba(15,31,61,.6)}
+/* footer column titles are h3 now (heading order), styled as before */
+.site-footer h3{color:#fff;font-family:var(--font-display);font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 .8rem}
