@@ -1,0 +1,240 @@
+/* =========================================================
+   TRE™ in Singapore — articles (prefix ar-) 2026-09-29
+   Loaded only by the six posts in blog/ (after style.css + layer.css).
+   - hero: the article's own photo through the shared .hx system (.hx-article)
+   - reading-progress line, auto table of contents (sticky rail on desktop,
+     collapsible on phones), 66ch measure, pull quotes, callouts
+   - session timeline (.ar-steps), prep checklist (.ar-check), mechanism figure (.ar-fig),
+     photo strip (.ar-strip), related posts and a two-path close
+   Everything is readable without JS and still under prefers-reduced-motion.
+   ========================================================= */
+
+/* ---------- hero: the article photo is the background ---------- */
+.hx-article{min-height:clamp(460px,62vh,640px)}
+.hx-article h1{font-size:clamp(2.05rem,3.7vw,3.1rem);line-height:1.08;max-width:21ch;margin-bottom:0}
+.hx-article .breadcrumb{font-size:.88rem;margin:0 0 1.3rem;color:#c7d2e6}
+.hx-article .ar-crumb{color:#fff;text-decoration:underline;text-decoration-color:rgba(201,164,92,.7);text-underline-offset:.28em;text-decoration-thickness:1px;transition:color var(--d1) var(--ease),text-decoration-color var(--d1) var(--ease)}
+.hx-article .ar-crumb:hover{color:var(--gold);text-decoration-color:var(--gold)}
+.hx-article .post-meta{margin-top:1.6rem;gap:.55rem .7rem;font-size:.9rem;color:#dbe3f1}
+.hx-article .post-meta .badge{background:var(--gold);color:var(--navy-ink);border-color:var(--gold);font-size:.66rem}
+.hx-article .hx-credit{max-width:min(300px,34vw)}
+@media (max-width:760px){
+  .hx-article h1{font-size:clamp(1.8rem,7.4vw,2.2rem);max-width:none}
+  .hx-article .post-meta{font-size:.84rem;margin-top:1.2rem}
+  .hx-article .hx-credit{max-width:calc(100vw - 110px)}
+}
+
+/* ---------- reading-progress line (replaces the page bar on articles) ---------- */
+html.ar-doc .scroll-progress{display:none}
+.ar-progress{position:fixed;left:0;top:0;z-index:71;width:100%;height:2px;pointer-events:none;
+  background:linear-gradient(90deg,var(--bronze),var(--gold));transform-origin:0 50%;transform:scaleX(var(--ar-read,0))}
+
+/* ---------- layout: rail + reading column ---------- */
+.ar-read{padding:var(--s8) 0 var(--s9);background:var(--paper)}
+.ar-article{max-width:720px;margin:0 auto}
+@media (min-width:1100px){
+  .ar-wrap.ar-has-toc{display:grid;grid-template-columns:232px minmax(0,720px);column-gap:clamp(48px,6vw,88px);justify-content:center;align-items:start}
+  .ar-wrap.ar-has-toc .ar-article{margin:0}
+}
+
+/* ---------- table of contents ---------- */
+.ar-toc{max-width:720px;margin:0 auto var(--s6)}
+.ar-toc-box{border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--cream)}
+.ar-toc-sum{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:52px;padding:0 18px;cursor:pointer;
+  font-family:var(--font-display);font-weight:700;font-size:.95rem;color:var(--navy);border-radius:var(--radius-sm)}
+.ar-toc-sum::-webkit-details-marker{display:none}
+.ar-toc-sum svg{width:20px;height:20px;flex:none;fill:none;stroke:var(--bronze);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;transition:rotate var(--d2) var(--ease-out)}
+.ar-toc-box[open] .ar-toc-sum svg{rotate:180deg}
+.ar-toc-list{position:relative;list-style:none;margin:0;padding:0 18px 12px}
+.ar-toc-list li{position:relative;margin:0}
+.ar-toc-list a{display:flex;gap:.55rem;align-items:flex-start;min-height:44px;padding:.62rem 0;color:var(--ink-2);font-size:.94rem;line-height:1.42;text-decoration:none;border-top:1px solid var(--line-2);transition:color var(--d1) var(--ease)}
+.ar-toc-list li:first-child a{border-top:0}
+.ar-toc-list a:hover{color:var(--navy)}
+.ar-toc-list .ar-toc-n{flex:none;min-width:1.3em;font-family:var(--font-display);font-weight:700;color:var(--bronze);font-variant-numeric:tabular-nums}
+.ar-toc-list a[aria-current="true"]{color:var(--navy);font-weight:600}
+@media (min-width:1100px){
+  .ar-toc{position:sticky;top:104px;margin:0;max-height:calc(100vh - 132px);overflow:auto;padding:4px 6px 12px 2px;scrollbar-width:thin}
+  .ar-toc-box{border:0;background:none;border-radius:0}
+  .ar-toc-sum{pointer-events:none;min-height:0;padding:0 0 0 26px;margin:0 0 .9rem;font-size:.86rem;color:var(--navy)}
+  .ar-toc-sum svg{display:none}
+  .ar-toc-list{padding:0 0 0 26px}
+  /* the rail: a hairline with a gold fill that follows the reader, nodes ring each section */
+  .ar-toc-list::before,.ar-toc-list::after{content:"";position:absolute;left:6px;top:20px;width:1px;background:var(--line)}
+  .ar-toc-list::before{bottom:20px}
+  .ar-toc-list::after{background:var(--gold);height:var(--fill,0px)}
+  .ar-toc-list a{border-top:0;padding:.5rem 0;min-height:40px;font-size:.9rem;color:var(--muted)}
+  .ar-toc-list li::before{content:"";position:absolute;left:-26px;top:20px;width:11px;height:11px;margin-top:-5.5px;border-radius:50%;box-sizing:border-box;
+    background:var(--paper);border:1.5px solid var(--line);transition:background var(--d2) var(--ease-out),border-color var(--d2) var(--ease-out),box-shadow var(--d2) var(--ease-out)}
+  .ar-toc-list li.is-past::before{background:var(--gold);border-color:var(--gold)}
+  .ar-toc-list li.is-active::before{border-color:var(--gold);box-shadow:0 0 0 4px rgba(201,164,92,.2)}
+  .ar-toc-list a[aria-current="true"]{color:var(--navy)}
+}
+
+/* ---------- reading column ---------- */
+.ar-article .article-body{font-size:clamp(1.04rem,.98rem + .25vw,1.13rem);line-height:1.75;color:var(--ink)}
+.ar-article .article-body > *{max-width:66ch}
+.ar-article .article-body > p{margin:0 0 1.15em}
+.ar-article .article-body > .lead{font-size:1.2em;line-height:1.6;color:var(--ink-2);margin-bottom:1.6em}
+.ar-article .article-body h2{font-size:clamp(1.42rem,2.2vw,1.72rem);line-height:1.2;margin:2.4em 0 .7em}
+.ar-article .article-body > h2:first-of-type{margin-top:1.8em}
+.ar-article .article-body h3{font-size:1.18rem;line-height:1.3;margin:2em 0 .5em}
+.ar-article .article-body h2 + h3{margin-top:.9em}
+.ar-article .ar-n{color:var(--bronze);margin-right:.2em;font-variant-numeric:tabular-nums}
+.ar-article .ar-dur{color:var(--muted);font-weight:500;font-size:.72em;letter-spacing:0;white-space:nowrap}
+.ar-article .article-body strong{color:var(--navy-ink)}
+
+/* lists: small gold rings instead of bullets */
+.ar-article .article-body ul{list-style:none;padding:0;margin:0 0 1.5em}
+.ar-article .article-body ul > li{position:relative;padding-left:1.75rem;margin-bottom:.85em}
+.ar-article .article-body ul > li::before{content:"";position:absolute;left:.3rem;top:.86em;width:9px;height:9px;margin-top:-4.5px;border-radius:50%;box-sizing:border-box;border:1.5px solid var(--gold)}
+
+/* pull quotes: display type, a drawn tremor line that settles (JS) or a hairline (no JS) */
+.ar-article .article-body blockquote{position:relative;margin:2.3em 0;padding:1.4rem 0 0;max-width:30em;background:none;border-radius:0;
+  font-family:var(--font-display);font-style:normal;font-weight:600;font-size:clamp(1.28rem,1.1rem + .8vw,1.6rem);line-height:1.36;letter-spacing:-.012em;color:var(--navy)}
+.ar-article .article-body blockquote::before{content:"";position:absolute;left:0;top:0;width:56px;height:2px;border-radius:2px;background:var(--gold);font-size:0}
+.ar-article .article-body blockquote.ar-q{padding-top:0}
+.ar-article .article-body blockquote.ar-q::before{content:none}
+.ar-q-wave{display:block;width:132px;height:20px;margin:0 0 .9rem -2px;overflow:visible}
+.ar-q-wave path{fill:none;stroke:var(--gold);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+
+/* callouts: a warm reading ground, no side stripes */
+.ar-article .article-body .callout{margin:2.2em 0;padding:1.45rem 1.6rem;background:var(--cream);border:1px solid var(--line);border-radius:var(--radius)}
+.ar-article .article-body .callout p{font-size:.97em;line-height:1.68;color:var(--ink-2)}
+.ar-article .article-body .callout strong{color:var(--navy)}
+
+/* session timeline (What a session feels like): the rail fills as you read */
+.ar-steps{position:relative;list-style:none;padding:0;margin:1.6em 0 1.8em;counter-reset:ar-step}
+.ar-steps::before,.ar-steps::after{content:"";position:absolute;left:17px;top:17.5px;width:1px;background:var(--line)}
+.ar-steps::before{height:var(--track,calc(100% - 46px))}
+.ar-steps::after{background:var(--gold);height:calc(var(--track,calc(100% - 46px)) * var(--p,1))}
+.ar-steps > li{position:relative;counter-increment:ar-step;padding:.3rem 0 1.25rem 3.5rem;margin:0}
+.ar-steps > li:last-child{padding-bottom:.2rem}
+.ar-steps > li::before{content:counter(ar-step);position:absolute;left:0;top:0;width:35px;height:35px;border-radius:50%;box-sizing:border-box;display:grid;place-items:center;
+  background:var(--paper);border:1.5px solid var(--gold);font-family:var(--font-display);font-weight:700;font-size:.88rem;line-height:1;color:var(--bronze);
+  transition:background var(--d3) var(--ease-out),color var(--d3) var(--ease-out)}
+.ar-steps > li.on::before{background:var(--gold);color:var(--navy-ink)}
+.ar-steps strong{display:inline;color:var(--navy)}
+
+/* prep checklist (first session): tick what you have done; kept in this browser */
+.ar-article .article-body .ar-check > li{padding-left:2.9rem;min-height:44px;cursor:pointer;transition:color var(--d2) var(--ease)}
+.ar-article .article-body .ar-check > li::before{content:none}
+.ar-tick{position:absolute;left:-8px;top:-6px;width:44px;height:44px;padding:0;border:0;background:none;cursor:pointer;display:grid;place-items:center;border-radius:12px}
+.ar-tick::before{content:"";position:absolute;width:24px;height:24px;border-radius:7px;box-sizing:border-box;border:1.5px solid var(--bronze-soft);background:var(--paper);transition:background var(--d2) var(--ease-out),border-color var(--d2) var(--ease-out)}
+.ar-tick svg{position:relative;width:16px;height:16px;fill:none;stroke:var(--navy-ink);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ar-tick path{stroke-dasharray:22;stroke-dashoffset:22;transition:stroke-dashoffset .26s var(--ease-out)}
+.ar-tick[aria-pressed="true"]::before{background:var(--gold);border-color:var(--gold)}
+.ar-tick[aria-pressed="true"] path{stroke-dashoffset:0}
+.ar-check > li:hover .ar-tick::before{border-color:var(--bronze)}
+.ar-check > li.is-done{color:var(--muted)}
+.ar-check > li.is-done strong{color:var(--ink-2)}
+
+/* mechanism figure (science): charge -> discharge -> baseline, drawn once */
+.ar-fig{margin:2.4em 0;padding:clamp(18px,3vw,28px);max-width:none!important;background:var(--navy-ink);border-radius:var(--radius);color:#dbe3f1;box-shadow:var(--shadow-2)}
+.ar-fig-cap{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.2rem;margin:0 0 1rem;font-size:.8rem;line-height:1.35;color:#c7d2e6}
+.ar-fig-tag{font-family:var(--font-display);font-weight:700;font-size:.72rem;letter-spacing:.02em;color:var(--gold);border:1px solid rgba(201,164,92,.55);border-radius:999px;padding:.28rem .7rem;margin-right:auto}
+.ar-key{display:inline-flex;align-items:center;gap:.5rem;transition:opacity var(--d2) var(--ease)}
+.ar-key i{width:22px;height:2px;border-radius:2px;background:var(--gold)}
+.ar-key[data-k="b"] i{background:rgba(205,216,234,.7)}
+.ar-fig-plot{position:relative;aspect-ratio:640/300}
+.ar-fig-plot svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ar-fig-base{fill:none;stroke:rgba(205,216,234,.3);stroke-width:1.25;stroke-dasharray:2 7;stroke-linecap:round}
+.ar-fig-a,.ar-fig-b{fill:none;stroke-linecap:round;stroke-linejoin:round;transition:opacity var(--d2) var(--ease)}
+.ar-fig-a{stroke:var(--gold);stroke-width:2.6}
+.ar-fig-b{stroke:rgba(205,216,234,.72);stroke-width:2}
+.ar-fig-dot{fill:var(--navy-ink);stroke:var(--gold);stroke-width:2}
+.ar-fig-dot.b{stroke:rgba(205,216,234,.8)}
+.ar-draw{stroke-dasharray:var(--len,1200);stroke-dashoffset:calc(var(--len,1200) * (1 - var(--p,1)))}
+.ar-lbl{position:absolute;left:var(--x);top:var(--y);translate:-50% 0;font-size:.76rem;line-height:1.3;color:#dbe3f1;white-space:nowrap;transition:opacity .5s var(--ease-out)}
+.ar-lbl.r{translate:-100% 0;text-align:right}
+.ar-lbl.l{translate:0 0}
+.ar-lbl.wrap{white-space:normal;width:max-content;max-width:var(--w,28%)}
+.ar-lbl.gold{color:var(--gold)}
+.ar-fig-dot{transition:opacity .5s var(--ease-out)}
+.ar-fig.is-arming .ar-lbl,.ar-fig.is-arming .ar-fig-dot{opacity:0}
+.ar-fig.is-arming .ar-lbl.on,.ar-fig.is-arming .ar-fig-dot.on{opacity:1}
+.ar-fig[data-focus="a"] .ar-fig-b,.ar-fig[data-focus="a"] .ar-fig-dot.b,.ar-fig[data-focus="b"] .ar-fig-a,.ar-fig[data-focus="b"] .ar-fig-dot.a{opacity:.22}
+.ar-fig[data-focus="a"] .ar-key[data-k="b"],.ar-fig[data-focus="b"] .ar-key[data-k="a"]{opacity:.45}
+@media (max-width:640px){
+  .ar-fig-a{stroke-width:4}
+  .ar-fig-b{stroke-width:3.2}
+  .ar-fig-dot{stroke-width:3}
+  .ar-lbl{font-size:.68rem}
+  .ar-lbl.wrap{max-width:var(--w,34%)}
+}
+
+/* photo strip inside an article (Isabelle's journey) */
+.ar-strip{max-width:none!important;margin:2.2em 0 2.4em;grid-auto-columns:clamp(200px,24vw,260px)}
+.ar-strip .lx-media{aspect-ratio:4/5}
+.ar-strip .lx-media a{display:block;width:100%;height:100%}
+.ar-strip .lx-media figcaption{font-size:.76rem;pointer-events:none}
+
+/* author + prev/next */
+.ar-article .article-author{max-width:66ch;margin:var(--s8) 0 0;padding:var(--s5) 0 0;background:none;border:0;border-top:1px solid var(--line);border-radius:0;box-shadow:none;gap:1.1rem;align-items:flex-start}
+.ar-article .article-author .avatar{width:56px;height:56px;flex:0 0 56px;background:var(--navy-ink);color:var(--gold);box-shadow:inset 0 0 0 1.5px rgba(201,164,92,.75);font-size:.86rem;letter-spacing:.02em}
+.ar-article .article-author p{font-size:.95rem;line-height:1.6}
+.ar-article .article-nav{max-width:66ch;margin-top:var(--s6);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s4)}
+.ar-article .article-nav .link-arrow{font-size:.95rem;line-height:1.35}
+.ar-article .article-nav .link-arrow:last-child:not(:first-child){justify-self:end;text-align:right}
+.ar-article .ar-glyph{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ar-article .ar-prev::after{content:none}
+.ar-article .ar-prev::before{content:"";display:inline-block;width:1.05em;height:1.05em;flex:none;margin-right:.1rem;background:var(--bronze);
+  -webkit-mask:var(--i-arrow) center/contain no-repeat;mask:var(--i-arrow) center/contain no-repeat;transform:scaleX(-1);transition:translate var(--d2) var(--ease-out)}
+.ar-article .ar-prev:hover::before{translate:-5px 0}
+@media (max-width:640px){
+  .ar-article .article-author{flex-direction:row}
+  .ar-article .article-nav{grid-template-columns:1fr;gap:0}
+  .ar-article .article-nav .link-arrow:last-child:not(:first-child){justify-self:start;text-align:left}
+}
+
+/* ---------- more articles + close (cream reading ground) ---------- */
+.ar-more{background:var(--cream);padding:var(--s8) 0 88px}
+.ar-more-h{font-size:clamp(1.45rem,2.4vw,1.85rem);margin:0 0 var(--s5)}
+.ar-rel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s6) var(--s5)}
+.ar-rel-card{position:relative;display:flex;flex-direction:column;gap:.85rem;margin:0}
+.ar-rel-media{position:relative;aspect-ratio:16/10;border-radius:var(--radius);overflow:hidden;background:var(--navy-ink);box-shadow:var(--shadow-1)}
+.ar-rel-media img{display:block;width:100%;height:100%;object-fit:cover;scale:1.02;transition:scale 1.4s var(--ease-out)}
+.ar-rel-card:hover .ar-rel-media img{scale:1.07}
+.ar-rel-media .badge{position:absolute;left:14px;top:14px;z-index:1;background:var(--gold);color:var(--navy-ink)}
+.ar-rel-card h3{font-size:1.1rem;line-height:1.32;margin:0}
+.ar-rel-t{color:var(--navy);text-decoration:none;background:linear-gradient(var(--gold),var(--gold)) 0 100%/0 2px no-repeat;transition:background-size .6s var(--ease-out),color var(--d1) var(--ease)}
+.ar-rel-card:hover .ar-rel-t,.ar-rel-t:focus-visible{background-size:100% 2px}
+.ar-rel-t::after{content:"";position:absolute;inset:0;z-index:2}
+.ar-rel-card .post-meta{font-size:.82rem}
+.ar-rel-card:has(.ar-rel-t:focus-visible){outline:3px solid var(--gold);outline-offset:6px;border-radius:var(--radius)}
+.ar-rel-t:focus-visible{outline:none}
+@media (max-width:900px){.ar-rel{grid-template-columns:1fr;gap:var(--s4)}
+  .ar-rel-card{display:grid;grid-template-columns:132px minmax(0,1fr);gap:.4rem 1rem;align-items:start}
+  .ar-rel-media{grid-row:span 2;aspect-ratio:1/1}
+  .ar-rel-media .badge{left:8px;top:8px;font-size:.58rem;padding:.26rem .5rem}
+  .ar-rel-card h3{font-size:1.02rem;align-self:end}
+}
+@media (max-width:420px){.ar-rel-card{grid-template-columns:104px minmax(0,1fr)}}
+
+/* the close: both paths, on a navy ink field with settled lines */
+.ar-close.cta-band{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s6) var(--s7);align-items:start;margin-top:var(--s8);padding:var(--s7) var(--s7) calc(var(--s7) + 28px)}
+.ar-close .ar-path h2{font-size:clamp(1.35rem,2.1vw,1.7rem);margin:0 0 1.1rem;max-width:22ch}
+.ar-close .btn-row{margin:0;gap:.7rem;align-items:center}
+.ar-close .ar-path + .ar-path{padding-left:var(--s7);box-shadow:inset 1px 0 0 rgba(255,255,255,.14)}
+.ar-close .link-arrow{color:#fff}
+.ar-close .link-arrow::after{background:var(--gold)}
+.ar-close .link-arrow:hover{color:var(--gold)}
+/* settled lines live in the band's bottom padding, clear of the words and buttons */
+.ar-close .ar-lines{position:absolute;left:0;right:0;bottom:0;width:100%;height:56px;pointer-events:none;z-index:0;opacity:.55}
+.ar-lines path{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round}
+.ar-lines path:nth-child(2){stroke:#dbe3f1;opacity:.5}
+.ar-lines path:nth-child(3){opacity:.55}
+@media (max-width:760px){
+  .ar-close.cta-band{grid-template-columns:1fr;padding:var(--s6) var(--s5) calc(var(--s6) + 44px)}
+  .ar-close .ar-path + .ar-path{padding-left:0;padding-top:var(--s6);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+}
+
+/* ---------- entrance (armed by JS only below the fold) ---------- */
+.ar-arm{opacity:0;translate:0 16px;filter:blur(3px)}
+.ar-arm.ar-in{opacity:1;translate:0 0;filter:none;transition:opacity .8s var(--ease-out),translate .8s var(--ease-out),filter .8s var(--ease-out);transition-delay:calc(var(--ar-i,0) * 90ms)}
+
+/* ---------- reduced motion: complete and still ---------- */
+@media (prefers-reduced-motion:reduce){
+  .ar-arm{opacity:1;translate:none;filter:none}
+  .ar-rel-media img,.ar-toc-list li::before,.ar-steps > li::before,.ar-tick path,.ar-lbl{transition:none}
+  .ar-rel-card:hover .ar-rel-media img{scale:1.02}
+}
