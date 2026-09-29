@@ -257,3 +257,11 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
   .nav,.nav.open,.nav.open a,.nav.open .nav-extra{transition:none!important;animation:none!important;opacity:1;transform:none;clip-path:none}
   .nav:not(.open){visibility:hidden}
 }
+
+/* ---------- Print: heroes print as clean black-on-white headers ---------- */
+@media print{
+  .hx{min-height:0!important;display:block;background:#fff!important;color:#000!important;padding:12px 0 18px!important}
+  .hx-media,.hx-wash,.hx-tremor,.hx .hx-credit,.hx .btn,.hero-full .hero-full-media,.hero-full .hero-full-overlay{display:none!important}
+  .hx h1,.hx p,.hx .lead,.hx .crumbs,.hx .crumbs a,.hx .role{color:#000!important;text-shadow:none!important}
+  .hx .hx-inner > *{animation:none!important;opacity:1!important;filter:none!important}
+}
