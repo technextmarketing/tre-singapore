@@ -223,11 +223,13 @@
       return;
     }
     var d = ev.details || {};
-    document.title = ev.title + ' — TRE™ in Singapore';
-    var md = $('meta[name="description"]'); if (md) md.setAttribute('content', d.summary || ev.description || '');
-    var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', ev.title);
-    var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', d.summary || ev.description || '');
-    var ogI = $('meta[property="og:image"]'); if (ogI && ev.image) ogI.setAttribute('content', new URL(ROOT + ev.image, location.href).href);
+    if (!root.getAttribute('data-id')) {  /* the ?id= template has a generic head; a built page's own head is already right */
+      document.title = ev.title + ' — TRE™ in Singapore';
+      var md = $('meta[name="description"]'); if (md) md.setAttribute('content', d.summary || ev.description || '');
+      var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', ev.title);
+      var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', d.summary || ev.description || '');
+      var ogI = $('meta[property="og:image"]'); if (ogI && ev.image) ogI.setAttribute('content', new URL(ROOT + ev.image, location.href).href);
+    }
 
     var status = ev._past ? '<span class="badge soldout">Completed</span>' : ev._soldOut ? '<span class="badge soldout">Sold out</span>' : ev._live ? '<span class="badge">In progress</span>' : '';
     var primary = (d.register || []).filter(function (r) { return r.primary; })[0] || (d.register || [])[0];
@@ -482,11 +484,13 @@
       root.innerHTML = '<section class="section"><div class="container event-not-found"><h1>Profile not found</h1><p class="muted">That profile may have been renamed or removed.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="' + ROOT + 'facilitators">Browse all facilitators</a></div></div></section>';
       document.title = 'Profile not found — TRE™ in Singapore'; return;
     }
-    document.title = f.name + ' — TRE™ facilitator in Singapore';
-    var md = $('meta[name="description"]'); if (md) md.setAttribute('content', f.summary || f.bio || '');
-    var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', f.name + ' — ' + f.role);
-    var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', f.summary || f.bio || '');
-    var ogI = $('meta[property="og:image"]'); if (ogI && f.photo) ogI.setAttribute('content', new URL(ROOT + f.photo, location.href).href);
+    if (!root.getAttribute('data-id')) {  /* the ?id= template has a generic head; a built page's own head is already right */
+      document.title = f.name + ' — TRE™ facilitator in Singapore';
+      var md = $('meta[name="description"]'); if (md) md.setAttribute('content', f.summary || f.bio || '');
+      var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', f.name + ' — ' + f.role);
+      var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', f.summary || f.bio || '');
+      var ogI = $('meta[property="og:image"]'); if (ogI && f.photo) ogI.setAttribute('content', new URL(ROOT + f.photo, location.href).href);
+    }
 
     var c = f.contact || {};
     var ctas = (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-ghost-light', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-ghost-light', 'whatsapp', 'WhatsApp') : '');
