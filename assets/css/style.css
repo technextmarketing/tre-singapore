@@ -76,6 +76,8 @@ body{
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
 }
 img,svg{max-width:100%;display:block}
+picture{display:contents}   /* AVIF <picture> wrappers (build.py, main.js pic()) lay out exactly like the bare <img> they wrap */
+picture source{display:none}   /* or the empty <source> becomes a grid / flex item of the picture's parent */
 a{color:var(--navy);text-decoration:none;transition:color var(--d1) var(--ease)}
 a:hover{color:var(--blue)}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}

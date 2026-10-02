@@ -205,7 +205,11 @@
     var p = picParts(src), a = ' alt="' + esc(alt) + '"' + (extra || '');
     if (!p.m || !p.m[2] || !p.m[2].length) return '<img src="' + esc(ROOT + p.s) + '"' + a + '>';
     var set = p.m[2].map(function (w) { return p.stem + '-' + w + '.webp' + p.q + ' ' + w + 'w'; }).concat(ROOT + p.s + ' ' + p.m[0] + 'w');
-    return '<img src="' + esc(ROOT + p.s) + '" srcset="' + esc(set.join(', ')) + '" sizes="' + esc(sizes) + '"' + a + '>';
+    var img = '<img src="' + esc(ROOT + p.s) + '" srcset="' + esc(set.join(', ')) + '" sizes="' + esc(sizes) + '"' + a + '>';
+    if (!p.m[3]) return img;
+    /* AVIF twins (<name>.avif, same widths): browsers that read AVIF take them, the rest keep the WebP above */
+    var av = p.m[2].map(function (w) { return p.stem + '-' + w + '.avif' + p.q + ' ' + w + 'w'; }).concat(p.stem + '.avif' + p.q + ' ' + p.m[0] + 'w');
+    return '<picture><source type="image/avif" srcset="' + esc(av.join(', ')) + '" sizes="' + esc(sizes) + '">' + img + '</picture>';
   }
   function picUrl(src, max) {   /* the largest copy no wider than max (the lightbox does not need a 2000px original) */
     var p = picParts(src); if (!p.m || p.m[0] <= max) return ROOT + p.s;
@@ -213,6 +217,14 @@
     return fit ? p.stem + '-' + fit + '.webp' + p.q : ROOT + p.s;
   }
   window.TRE_pic = pic;
+  /* the hero photo main.js draws on event / profile pages: <base>-960/1600.webp, plus AVIF twins when the build lists
+     them in window.TRE_HERO_AVIF (an AVIF <source> that is missing would not fall back, so only listed ones get one) */
+  function heroPhoto(base, name) {
+    var sizes = '(max-width: 760px) 50vw, 100vw';
+    var img = '<img class="hx-photo" src="' + base + '-1600.webp" srcset="' + base + '-960.webp 960w, ' + base + '-1600.webp 1600w" sizes="' + sizes + '" alt="" fetchpriority="high" decoding="async">';
+    if ((window.TRE_HERO_AVIF || []).indexOf(name) < 0) return img;
+    return '<picture><source type="image/avif" srcset="' + base + '-960.avif 960w, ' + base + '-1600.avif 1600w" sizes="' + sizes + '">' + img + '</picture>';
+  }
   function extLink(url, cls, label) { return '<a class="' + cls + '" href="' + esc(url) + '"' + (isExternal(url) ? ' target="_blank" rel="noopener"' : '') + '>' + esc(label) + '</a>'; }
   function renderCard(ev, i) {
     var chip = chipFor(ev);
@@ -234,7 +246,7 @@
 
     var title = '<a href="' + esc(detailUrl(ev)) + '">' + esc(ev.title) + '</a>';
     var media = ev.image
-      ? '<div class="event-media has-img">' + pic(ev.image, '', '(max-width: 640px) 92vw, (max-width: 980px) 46vw, 362px', ' loading="lazy" decoding="async" onerror="this.parentNode.classList.remove(\'has-img\');this.remove()"')
+      ? '<div class="event-media has-img">' + pic(ev.image, '', '(max-width: 640px) 92vw, (max-width: 980px) 46vw, 362px', ' loading="lazy" decoding="async" onerror="var m=this.closest(\'.event-media\');if(m)m.classList.remove(\'has-img\');(this.closest(\'picture\')||this).remove()"')
       : '<div class="event-media ' + themeFor(ev) + '">';
 
     return '' +
@@ -282,7 +294,7 @@
     var bgName = ({ Certification: 'hero-education', Workshop: 'hero-events' })[ev.category] || 'hero-events';
     var bg = ROOT + 'assets/img/gallery/' + bgName;
     h += '<section class="hx hx-evt" style="--fx:60%;--fy:55%">' +
-      '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="' + bg + '-1600.webp" srcset="' + bg + '-960.webp 960w, ' + bg + '-1600.webp 1600w" sizes="(max-width: 760px) 50vw, 100vw" alt="" fetchpriority="high" decoding="async"></div>' +
+      '<div class="hx-media" aria-hidden="true">' + heroPhoto(bg, bgName) + '</div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner' + (ev.image ? ' hx-split' : '') + '"><div class="hero-copy"><p class="crumbs"><a href="' + ROOT + 'events">Events</a> › ' + esc(ev.category) + '</p>' +
       '<h1>' + esc(ev.title) + '</h1>' +
@@ -566,7 +578,7 @@
     /* hero background: the Asia TRE™ trainers photo (every listed trainer's community); the portrait stays in the window */
     var hb = ROOT + 'assets/img/gallery/hero-facilitators';   /* ROOT: profile pages live one folder down (/facilitators/<id>) */
     var h = '<section class="hx hx-fp" style="--fx:60%;--fy:44%;--shift:30%;--feather:30%">' +
-      '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="' + hb + '-1600.webp" srcset="' + hb + '-960.webp 960w, ' + hb + '-1600.webp 1600w" sizes="(max-width: 760px) 50vw, 100vw" alt="" fetchpriority="high" decoding="async"></div>' +
+      '<div class="hx-media" aria-hidden="true">' + heroPhoto(hb, 'hero-facilitators') + '</div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner hx-split"><div>' +
       '<p class="crumbs"><a href="' + ROOT + 'facilitators">Facilitators</a> › ' + esc(f.tag || 'Profile') + '</p>' +
