@@ -1,12 +1,11 @@
 
-<!-- ===== HERO (full screen; looping background video with poster fallback — replace assets/video/hero-loop.* to change it) ===== -->
+<!-- ===== HERO (full screen). The still photo paints first; layer.js starts the looping video once the page has loaded:
+     assets/video/hero-loop.webm/.mp4 (1080p) or hero-loop-960.* on phones — replace both cuts to change it. No video with
+     reduced motion or a data saver; the pause control pauses it with the rest of the site's motion. ===== -->
 <section class="hero-full" id="top">
   <div class="hero-full-media" aria-hidden="true">
-    <img src="assets/img/hero-poster.jpg" alt="" loading="eager" decoding="async">
-    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/img/hero-poster.jpg">
-      <source src="assets/video/hero-loop.webm" type="video/webm">
-      <source src="assets/video/hero-loop.mp4" type="video/mp4">
-    </video>
+    <img src="assets/img/hero-poster.jpg" srcset="assets/img/hero-poster-960.webp 960w, assets/img/hero-poster-1600.webp 1600w, assets/img/hero-poster.jpg 1920w" sizes="(max-width: 760px) 50vw, 100vw" width="1920" height="1080" alt="" fetchpriority="high" decoding="async">
+    <video class="hero-video" muted loop playsinline preload="none" data-src-wide="assets/video/hero-loop" data-src-narrow="assets/video/hero-loop-960"></video>
   </div>
   <div class="hero-full-overlay"></div>
   <div class="container hero-full-content">
@@ -65,7 +64,7 @@ html:not(.js) .hm-routes{margin-top:0}
 .hm-route::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--radius);background:var(--hm-bg);transition:box-shadow var(--d3) var(--ease-out)}
 .hm-route::after{content:"";position:absolute;z-index:-1;left:var(--gx);top:3.9rem;bottom:4.2rem;width:1.5px;translate:-50% 0;background:var(--hm-c);opacity:.4}
 .hm-has-svg .hm-route::after{display:none}
-.hm-route-pro{--hm-c:var(--gold);--hm-c2:var(--gold);--hm-bg:var(--navy-ink);color:#c9d4e7}
+.hm-route-pro{--hm-c:var(--gold);--hm-c2:var(--gold);--hm-bg:var(--navy-ink);color:var(--on-navy-2)}
 .hm-route-pro::before{background:radial-gradient(120% 70% at 100% 0%,rgba(42,99,168,.34),transparent 62%),var(--navy-ink)}
 @media (hover:hover){.hm-route:hover::before{box-shadow:0 26px 60px -30px rgba(15,31,61,.45)}}
 .hm-port{position:absolute;z-index:1;left:50%;top:0;width:12px;height:12px;border-radius:50%;translate:-50% -50%;border:2px solid var(--hm-c);background:var(--hm-c);box-shadow:0 0 0 4px var(--paper)}
@@ -106,14 +105,14 @@ html:not(.js) .hm-routes{margin-top:0}
 .hm-route-pro .hm-stop-name{color:#fff}
 .hm-route-pro .hm-stop-title{color:var(--gold)}
 .hm-stop > p{margin:0 0 .85rem;font-size:.97rem;line-height:1.62}
-.hm-route-pro .hm-stop > p{color:#c9d4e7}
+.hm-route-pro .hm-stop > p{color:var(--on-navy-2)}
 .hm-stop > .hm-fact{margin:0 0 .45rem}
 .hm-route-pro .link-arrow{color:#fff}
 .hm-route-pro .link-arrow::after{background:var(--gold)}
 .hm-route-pro .link-arrow:hover{color:var(--gold)}
 .hm-go{position:relative;margin-top:var(--s6)}
 .hm-facts{list-style:none;margin:0 0 .5rem;padding:0;display:grid;gap:.5rem}
-.hm-route-pro .hm-fact-sm span{color:#dbe3f1}
+.hm-route-pro .hm-fact-sm span{color:var(--on-navy)}
 [data-hm-mod]{cursor:default}
 /* Module 1 → 2 → 3, from personal practice to teaching groups */
 .hm-mods{margin:var(--s5) 0 var(--s5);padding:var(--s5) 0 var(--s4);border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}
@@ -136,7 +135,7 @@ html:not(.js) .hm-routes{margin-top:0}
 .hm-seg{display:none}
 @media (max-width:1100px){.hm-route{--pl:72px;--gx:34px;padding:var(--s6) var(--s6) var(--s6) var(--pl)}}
 @media (max-width:900px){
-  .hm-routes{grid-template-columns:1fr}
+  .hm-routes{grid-template-columns:minmax(0,1fr)}
   .hm-fork.hm-tabbed .hm-routes{margin-top:var(--s5)}
   .hm-fork.hm-tabbed .hm-route:not(.hm-active){display:none}
   .hm-port{display:none}
@@ -156,6 +155,7 @@ html:not(.js) .hm-routes{margin-top:0}
   .hm-stops{gap:var(--s5)}
   .hm-go .btn{width:100%}
 }
+@media (max-width:380px){.hm-go .btn{white-space:normal;text-align:center;line-height:1.3}}   /* 320px phones: the label wraps instead of widening the page */
 
 /* ---------- 3 · What TRE™ is: a checklist that ticks + a field to disturb ---------- */
 .hm-what{background:var(--cream);padding:var(--s9) 0 var(--s7)}
@@ -178,7 +178,7 @@ html:not(.js) .hm-routes{margin-top:0}
   box-shadow:0 30px 70px -32px rgba(15,31,61,.6),0 0 0 1px rgba(201,164,92,.18)}
 .hm-field canvas,.hm-field-art{position:absolute;inset:0;width:100%;height:100%;display:block}
 .hm-field.hm-live .hm-field-art{display:none}
-.hm-field-tag{position:absolute;z-index:2;top:18px;left:18px;padding:.42rem .72rem;border-radius:999px;border:1px solid rgba(201,164,92,.45);background:rgba(15,31,61,.55);font:600 .74rem/1 var(--font-display);letter-spacing:.02em;color:#f3e8d2}
+.hm-field-tag{position:absolute;z-index:2;top:18px;left:18px;padding:.42rem .72rem;border-radius:999px;border:1px solid rgba(201,164,92,.45);background:rgba(15,31,61,.55);font:600 .74rem/1 var(--font-display);letter-spacing:.02em;color:var(--gold-soft)}
 .hm-field-hint{position:absolute;z-index:2;top:18px;right:18px;display:flex;align-items:center;gap:.5rem;min-height:26px;font-size:.8rem;color:#b9c6dc;transition:opacity .6s var(--ease-out)}
 .hm-field-hint::before{content:"";width:22px;height:9px;flex:none;background:var(--gold);-webkit-mask:var(--hm-wave) center/contain no-repeat;mask:var(--hm-wave) center/contain no-repeat}
 .hm-field-hint:empty{display:none}
@@ -290,10 +290,10 @@ html:not(.js) .hm-routes{margin-top:0}
 @media (max-width:640px){.hm-events{padding:var(--s8) 0}.hm-ev-grid{grid-auto-columns:86%}.hm-rail{height:92px}}
 
 /* ---------- 7 · For practitioners: the hub drawn as a web around its promise ---------- */
-.hm-guild{background:linear-gradient(170deg,var(--navy-ink) 0%,var(--navy-deep) 60%,#1b3f7c 100%);color:#c9d4e7;padding:calc(var(--s9) + 8px) 0 var(--s9);overflow:hidden}
+.hm-guild{background:linear-gradient(170deg,var(--navy-ink) 0%,var(--navy-deep) 60%,#1b3f7c 100%);color:var(--on-navy-2);padding:calc(var(--s9) + 8px) 0 var(--s9);overflow:hidden}
 .hm-guild-head{max-width:760px;margin:0 auto var(--s8);text-align:center}
 .hm-guild-head h2{color:#fff;font-size:clamp(1.9rem,3.3vw,2.55rem)}
-.hm-guild-head p{margin:0 auto;max-width:640px;font-size:1.06rem;color:#c5d0e4}
+.hm-guild-head p{margin:0 auto;max-width:640px;font-size:1.06rem;color:var(--on-navy-2)}
 .hm-web{--hm-c:var(--gold);--hm-bg:var(--navy-deep);position:relative;z-index:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,1.05fr) minmax(0,1fr);grid-template-areas:"a q c" "b q d";gap:var(--s8) clamp(56px,7.5vw,112px);align-items:center}
 .hm-web-core{grid-area:q;position:relative;margin:0;display:grid;place-items:center;align-content:center;aspect-ratio:1;padding:13%;text-align:center}
 .hm-web-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(201,164,92,.45);background:radial-gradient(closest-side,rgba(201,164,92,.09),rgba(201,164,92,0) 72%)}
@@ -309,7 +309,7 @@ html:not(.js) .hm-routes{margin-top:0}
 .hm-web-c{grid-area:c;align-self:end;--hm-dl:.75s}
 .hm-web-d{grid-area:d;align-self:start;--hm-dl:.85s}
 .hm-web-item h3{margin:0 0 .4rem;font-size:1.12rem;color:#fff;transition:color var(--d2) var(--ease)}
-.hm-web-item p{margin:0;font-size:.95rem;line-height:1.6;color:#c5d0e4}
+.hm-web-item p{margin:0;font-size:.95rem;line-height:1.6;color:var(--on-navy-2)}
 .hm-web-item:hover h3{color:var(--gold)}
 .hm-web .hm-node{--pl:0px;--gx:0px;top:.66rem;width:12px;height:12px}
 .hm-web .hm-web-a .hm-node,.hm-web .hm-web-b .hm-node{left:auto;right:-22px;translate:50% -50%}
@@ -587,7 +587,7 @@ html:not(.js) .hm-routes{margin-top:0}
     </div>
     <div class="hm-read-grid">
       <article class="hm-post hm-post-lead">
-        <div class="hm-post-media"><img src="assets/img/blog/what-is-tre.jpg" alt="A person resting on a mat, letting the body settle into a gentle tremor" width="1600" height="900" loading="lazy" decoding="async"></div>
+        <div class="hm-post-media"><img src="assets/img/blog/what-is-tre.jpg" srcset="assets/img/blog/what-is-tre-800.webp 800w, assets/img/blog/what-is-tre.jpg 1600w" sizes="(max-width: 900px) 92vw, 590px" alt="A person resting on a mat, letting the body settle into a gentle tremor" width="1600" height="900" loading="lazy" decoding="async"></div>
         <div class="hm-post-body">
           <h3><a class="hm-post-link" href="blog/what-is-tre">What is TRE™? A plain-language guide</a></h3>
           <p>The seven exercises, the tremor reflex, and what a session actually feels like.</p>
@@ -595,7 +595,7 @@ html:not(.js) .hm-routes{margin-top:0}
         </div>
       </article>
       <article class="hm-post hm-post-row">
-        <div class="hm-post-media"><img src="assets/img/blog/science-of-neurogenic-tremors.jpg" alt="A person with eyes closed, breathing calmly" width="1600" height="900" loading="lazy" decoding="async"></div>
+        <div class="hm-post-media"><img src="assets/img/blog/science-of-neurogenic-tremors.jpg" srcset="assets/img/blog/science-of-neurogenic-tremors-800.webp 800w, assets/img/blog/science-of-neurogenic-tremors.jpg 1600w" sizes="(max-width: 640px) 112px, (max-width: 900px) 44vw, 240px" alt="A person with eyes closed, breathing calmly" width="1600" height="900" loading="lazy" decoding="async"></div>
         <div class="hm-post-body">
           <h3><a class="hm-post-link" href="blog/science-of-neurogenic-tremors">Why the body shakes</a></h3>
           <p>Neurogenic tremors, the psoas and polyvagal theory — the science in plain words.</p>
@@ -603,7 +603,7 @@ html:not(.js) .hm-routes{margin-top:0}
         </div>
       </article>
       <article class="hm-post hm-post-row">
-        <div class="hm-post-media"><img src="assets/img/blog/tre-for-coaches.jpg" alt="A coach and client in an attentive one-to-one conversation" width="1600" height="900" loading="lazy" decoding="async"></div>
+        <div class="hm-post-media"><img src="assets/img/blog/tre-for-coaches.jpg" srcset="assets/img/blog/tre-for-coaches-800.webp 800w, assets/img/blog/tre-for-coaches.jpg 1600w" sizes="(max-width: 640px) 112px, (max-width: 900px) 44vw, 240px" alt="A coach and client in an attentive one-to-one conversation" width="1600" height="900" loading="lazy" decoding="async"></div>
         <div class="hm-post-body">
           <h3><a class="hm-post-link" href="blog/tre-for-coaches">From Shaking to Shaping: TRE™ for coaches</a></h3>
           <p>Why ICF coaches and HR professionals are adding TRE™ to their toolkit.</p>

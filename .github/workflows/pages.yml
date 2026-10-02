@@ -1,6 +1,6 @@
 # Static-site deploy via GitHub Actions (replaces the legacy Pages builder, which wedged on 2026-09-13).
 #
-# Runs on every push to main AND every night at 00:05 Singapore time, so the site keeps itself current:
+# Runs on every push to main AND every night shortly after midnight Singapore time, so the site keeps itself current:
 #   1. `python3 _src/build.py --auto-drafts` rebuilds every page with today's date. Events whose last day has ended
 #      move to "past" in the crawlable copies, the structured data, llms.txt and the sitemap (visitors' browsers
 #      already switch them live through main.js). Missing event blog posts are drafted: a preview for each new
@@ -14,7 +14,8 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "5 16 * * *"   # 00:05 in Singapore (UTC+8)
+    - cron: "23 16 * * *"  # 00:23 in Singapore (UTC+8). Off the top of the hour, when GitHub queues scheduled runs
+                           # longest (runs at :05 started ~4.5 hours late); visitors' browsers switch events at midnight anyway.
   workflow_dispatch:
 
 permissions:
@@ -37,6 +38,9 @@ jobs:
       TRE_NEW_DRAFTS: ${{ github.workspace }}/../new-drafts.jsonl
     steps:
       - uses: actions/checkout@v4
+
+      - name: Image tools (smaller copies of newly added pictures; the build skips them if this fails)
+        run: python3 -m pip install --quiet --disable-pip-version-check --break-system-packages pillow || python3 -m pip install --quiet --disable-pip-version-check pillow || echo "::warning::Pillow not installed - new pictures keep their full size until the next build"
 
       - name: Rebuild with today's date and draft missing event posts
         run: |

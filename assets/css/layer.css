@@ -27,10 +27,9 @@ input,textarea,select{caret-color:var(--orange)}
 .hx ::selection,.site-footer ::selection{background:rgba(201,164,92,.45);color:#fff}
 main a:not(.btn):not(.link-arrow):not([class]){text-decoration:underline;text-decoration-color:rgba(28,61,122,.3);text-underline-offset:.22em;text-decoration-thickness:1px;transition:text-decoration-color var(--d1) var(--ease)}
 main a:not(.btn):not(.link-arrow):not([class]):hover{text-decoration-color:currentColor}
-table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:tabular-nums}
+table,time,.countdown,.event-price,.date-chip{font-variant-numeric:tabular-nums}
 
 /* ---------- No eyebrow labels above headings (craft floor) ---------- */
-.eyebrow{display:none!important}
 
 /* ---------- Drawn icons instead of text glyphs ---------- */
 .btn-primary::after,.link-arrow::after{
@@ -61,6 +60,8 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
      <div class="container hx-inner">…h1, lead, buttons…</div>
      <p class="hx-credit">…</p>
    </section>
+   The photo's sizes="(max-width: 760px) 50vw, 100vw" makes phones take the 960px copy whatever their pixel density:
+   under the navy wash the 1600px copy adds weight, not visible detail.
    ========================================================= */
 .hx{
   position:relative;isolation:isolate;overflow:hidden;color:#fff;
@@ -90,10 +91,10 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 }
 .hx-tremor{position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block;pointer-events:none}
 .hx .container,.hx-inner{position:relative;z-index:1;width:100%}
-.hx h1{color:#fff;max-width:17ch;text-shadow:0 2px 28px rgba(var(--ink-wash),.45)}
-.hx p{color:#dbe3f1;max-width:600px}
+.hx h1{color:#fff;max-width:12.036em;text-shadow:0 2px 28px rgba(var(--ink-wash),.45)}
+.hx p{color:var(--on-navy);max-width:600px}
 .hx .lead{font-size:1.16rem;line-height:1.6}
-.hx .crumbs,.hx .breadcrumb{color:#c7d2e6}
+.hx .crumbs,.hx .breadcrumb{color:var(--on-navy-2)}
 .hx .crumbs a,.hx .breadcrumb a{color:#fff}
 .hx .btn-row{margin-top:1.9rem}
 .hx .hx-credit{
@@ -137,9 +138,9 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 .hx .badge.soldout{background:var(--red);color:#fff;border-color:var(--red)}
 .hx .role{color:var(--gold);font-weight:700;font-size:1rem;line-height:1.5;margin-bottom:.9rem}
 .hx .btn-row .btn svg{width:15px;height:15px;flex:0 0 15px}
-.hx-evt h1,.hx-fp h1{max-width:20ch}
+.hx-evt h1,.hx-fp h1{max-width:14.16em}   /* hero h1 widths: Nch of Plus Jakarta Sans Bold (0 = .708em) written in em, so the fallback font cannot change the line breaks */
 .hx-fp .hx-split{grid-template-columns:minmax(0,1fr) minmax(260px,340px)}
-.hx .prep{margin-top:1.3rem;font-size:.92rem;color:#c5d0e4}
+.hx .prep{margin-top:1.3rem;font-size:.92rem;color:var(--on-navy-2)}
 
 /* home: parallax on the video layer too */
 .hero-full .hero-full-media{inset:-3%;width:auto;height:auto;translate:var(--px,0px) var(--py,0px)}  /* style.css sets 100% sizes; auto lets the -3% bleed reach every edge */
@@ -193,7 +194,7 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
   .nav .btn{margin-top:var(--s6);min-height:54px;font-size:1rem;letter-spacing:0;border-bottom:2px solid var(--orange)}
   .nav-extra{margin-top:auto;padding-top:var(--s6);display:grid;gap:.4rem;color:#9fb0cc;font-size:.92rem;opacity:0}
   .nav.open .nav-extra{animation:mm-in .5s .44s var(--ease-out) forwards}
-  .nav-extra a{font-size:.98rem!important;font-weight:600!important;min-height:44px!important;border:0!important;padding:0!important;color:#dbe3f1!important;opacity:1!important;transform:none!important;animation:none!important}
+  .nav-extra a{font-size:.98rem!important;font-weight:600!important;min-height:44px!important;border:0!important;padding:0!important;color:var(--on-navy)!important;opacity:1!important;transform:none!important;animation:none!important}
   html.menu-open .nav-toggle span{background:#fff}
   html.menu-open .site-header{background:transparent;border-color:transparent;box-shadow:none}
   html.menu-open .brand{position:relative;z-index:92}
@@ -226,7 +227,7 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 /* lightbox (built by TRELayer.lightbox) */
 .lx-lightbox{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:clamp(16px,4vw,48px);margin:0;background:rgba(10,20,40,.92);opacity:0;animation:lx-fade .3s var(--ease-out) forwards}
 .lx-lightbox img{max-width:min(1200px,92vw);max-height:78vh;width:auto;height:auto;border-radius:var(--radius-sm);box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.lx-lightbox figcaption{margin-top:1rem;color:#dbe3f1;font-size:.92rem;text-align:center;max-width:60ch}
+.lx-lightbox figcaption{margin-top:1rem;color:var(--on-navy);font-size:.92rem;text-align:center;max-width:60ch}
 .lx-lightbox .lx-lb-count{position:absolute;top:22px;left:24px;color:rgba(255,255,255,.7);font-size:.8rem;font-variant-numeric:tabular-nums}
 .lx-lightbox button{position:absolute;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);cursor:pointer;display:grid;place-items:center;transition:background var(--d1) var(--ease)}
 .lx-lightbox button:hover{background:rgba(255,255,255,.18)}
@@ -242,8 +243,6 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 [data-draw]{stroke-dasharray:var(--len,1000);stroke-dashoffset:calc(var(--len,1000) * (1 - var(--p,1)))}
 
 /* a small drawn node ring used by flows and timelines */
-.lx-node{fill:var(--paper);stroke:var(--gold);stroke-width:2;transition:fill .5s var(--ease-out),r .5s var(--ease-out)}
-.lx-node.on{fill:var(--gold)}
 
 /* ---------- Reduced motion: still, complete, legible ---------- */
 @media (prefers-reduced-motion:reduce){
@@ -271,12 +270,12 @@ table,time,.countdown,.event-price,.tier .tp b,.date-chip{font-variant-numeric:t
 .event-status.new,.st-new{color:#9a5510}                                 /* "New": 5.5:1 on white/cream */
 .event-status.past{color:var(--muted)}                                  /* "Completed": 5.3:1 */
 table.price .note{color:var(--ink-2)}                                   /* note on the highlighted gold row */
-.badge,.post-meta .badge,.countdown span,.event-media .date-chip span,.fac-photo .feat-badge,.fac-sample,.prep-card .req{font-size:.72rem}
+.badge,.post-meta .badge,.countdown span,.event-media .date-chip span,.fac-photo .feat-badge,.fac-sample{font-size:.72rem}
 /* the orange CTA gets a neutral, offset depth instead of an orange glow (reads cleanly on navy panels) */
 .btn-primary{box-shadow:0 8px 18px -12px rgba(15,31,61,.6)}
 .btn-primary:hover{box-shadow:0 14px 26px -14px rgba(15,31,61,.6)}
-/* footer column titles are h3 now (heading order), styled as before */
-.site-footer h3{color:#fff;font-family:var(--font-display);font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 .8rem}
+/* footer column titles are h2 (top-level sections of the footer, so no page skips a level - incl. the 404), styled as before */
+.site-footer h2{color:#fff;font-family:var(--font-display);font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;margin:0 0 .8rem}
 
 /* ---------- Finish review fixes (2026-09-29) ---------- */
 /* one world: every hero photo is graded toward the palette's navy while staying sharp (the user asked for a
@@ -304,6 +303,10 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 /* crawlable copies of the event / facilitator records and lists (build.py): read by search and AI crawlers
    and by visitors without JavaScript; hidden while JavaScript renders the full interactive version */
 .js .rec-static{display:none}
+/* until main.js has drawn the event or profile (.is-drawn), hold a hero's height and a screen below it, so the footer is
+   not painted near the top and then pushed away (a layout shift of the whole viewport) */
+.js #event-page:not(.is-drawn),.js #facilitator-page:not(.is-drawn){min-height:calc(100vh + 240px);background:linear-gradient(var(--navy-ink),var(--navy-ink)) top/100% clamp(520px,68vh,720px) no-repeat}
+@media (max-width:760px){.js #event-page:not(.is-drawn),.js #facilitator-page:not(.is-drawn){background-size:100% 600px}}
 .rec-static{padding-block:var(--s6)}
 .rec-static h2{margin:var(--s6) 0 var(--s3)}
 .rec-static ul{padding-left:1.2rem;margin:0 0 var(--s4)}
@@ -312,6 +315,49 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 .nf-404{padding-block:var(--s8)}
 .nf-404 .nf-links{list-style:none;padding:0;margin:var(--s5) 0 0;display:grid;gap:.6rem}
 .nf-404 .nf-links a{font-weight:600}
+
+/* ---------- Motion switch (layer.js, 2026-10-02): pause / play for everything that moves on its own (WCAG 2.2.2) ----------
+   One control in every hero and on every ribbon; they all drive one site-wide, remembered switch. Not shown under
+   prefers-reduced-motion (nothing moves there). Without JavaScript the ribbons and the photo drift stay still. */
+.mo-btn{
+  position:absolute;z-index:3;width:44px;height:44px;padding:0;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+  color:#fff;background:rgba(var(--ink-wash),.55);border:1px solid rgba(255,255,255,.3);box-shadow:0 6px 16px -8px rgba(0,0,0,.55);
+  transition:background-color var(--d1) var(--ease),border-color var(--d1) var(--ease),color var(--d1) var(--ease)
+}
+.mo-btn::before{content:"";position:absolute;inset:-4px;border-radius:50%}      /* a 44px+ target even where the disc is smaller */
+.mo-btn:hover{background:rgba(var(--ink-wash),.82);border-color:var(--gold);color:var(--gold)}
+.mo-i{display:grid;place-items:center}
+.mo-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mo-play svg{fill:currentColor;stroke-width:1.2;translate:1px 0}
+.mo-btn .mo-play,.motion-paused .mo-btn .mo-pause{display:none}
+.motion-paused .mo-btn .mo-play{display:grid}
+/* heroes: bottom right over the photo; the home hero bottom left, clear of the floating WhatsApp button */
+.mo-hero{right:max(var(--s5),calc((100vw - var(--max)) / 2 + var(--s5)));bottom:var(--s5)}
+.hero-full .mo-hero{right:auto;left:max(var(--s5),calc((100vw - var(--max)) / 2 + var(--s5)));bottom:22px}
+/* ribbons: at the right end; the words slide under a navy fade */
+.mo-strip{right:max(var(--s4),calc((100vw - var(--max)) / 2 + var(--s4)));top:50%;translate:0 -50%;width:38px;height:38px;
+  background:var(--navy-ink);border-color:rgba(255,255,255,.24);box-shadow:-30px 0 22px 2px var(--navy-ink)}
+.mo-strip:hover{background:var(--navy-ink)}
+.marquee:focus-within .marquee-track{animation-play-state:paused}
+.motion-paused .hx-photo,.motion-paused .marquee-track,.motion-paused .hero-full-media img,.motion-paused .hero-full-media video,
+.motion-paused .snd-fab.on::after{animation-play-state:paused!important}
+html:not(.js) .hx-photo,html:not(.js) .marquee-track{animation:none}
+/* home video: fades in over its identical still once it plays (layer.js adds .is-on) */
+.hero-full-media video{opacity:0;transition:opacity 1s var(--ease)}
+.hero-full-media video.is-on{opacity:1}
+@media print{.mo-btn{display:none!important}}
+
+/* ---------- Touch targets (audit 2026-10-02): small links reach 44px without moving the text ---------- */
+.footer-contact li:has(> a){align-items:center;margin-bottom:0}
+.footer-contact li > a{display:inline-flex;align-items:center;min-height:44px}
+.footer-contact li:has(> a) svg{margin-top:0}
+.fac-card .fac-body > .link-arrow{min-height:44px;margin:calc(-.15rem - 10.5px) 0 calc(.1rem - 10.5px)}   /* 23px label, 44px target */
+.hx-article .ar-crumb{display:inline-flex;align-items:center;min-height:44px;margin:-13px 0}
+
+/* form delivery failed (main.js): the problem and the way to still send the message */
+.form-fail{margin-top:1rem;padding:1rem 1.2rem;border-radius:var(--radius-sm);background:#fbefe9;border:1px solid #f0cdbf;color:#7d2a17;line-height:1.55}
+.form-fail a{color:#7d2a17;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.form-fail[hidden]{display:none}
 
 /* event blog posts (build.py + _src/event_posts.py): the draft banner and the note in a recap draft */
 .draft-banner{position:relative;z-index:5;background:#fff4e0;color:var(--navy-ink);border-bottom:1px solid var(--gold);padding:.65rem var(--s4);text-align:center;font-size:.9rem}

@@ -49,7 +49,7 @@
       var y = window.scrollY || document.documentElement.scrollTop;
       var max = document.documentElement.scrollHeight - window.innerHeight;
       if (header) header.classList.toggle('scrolled', y > 8);
-      bar.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + '%';
+      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ')';   /* transform, not width: no layout per scroll frame */
       top.classList.toggle('show', y > 640);
       ticking = false;
     }
@@ -194,6 +194,25 @@
     return ROOT + u;
   }
   window.TRE_recUrl = recUrl;
+  /* Responsive pictures. _src/images.py writes smaller WebP copies (<name>-<width>.webp) of the pictures in the data files and
+     build.py lists them in window.TRE_IMG {path: [width, height, [variant widths]]}; pic() turns an entry into srcset + sizes,
+     so a phone downloads a 480px poster instead of the 1920px original. A picture without an entry renders as before. */
+  function picParts(src) {
+    var s = String(src || ''), k = s.indexOf('?'), path = k < 0 ? s : s.slice(0, k);
+    return { s: s, path: path, q: k < 0 ? '' : s.slice(k), m: (window.TRE_IMG || {})[path], stem: ROOT + path.replace(/\.[a-z0-9]+$/i, '') };
+  }
+  function pic(src, alt, sizes, extra) {
+    var p = picParts(src), a = ' alt="' + esc(alt) + '"' + (extra || '');
+    if (!p.m || !p.m[2] || !p.m[2].length) return '<img src="' + esc(ROOT + p.s) + '"' + a + '>';
+    var set = p.m[2].map(function (w) { return p.stem + '-' + w + '.webp' + p.q + ' ' + w + 'w'; }).concat(ROOT + p.s + ' ' + p.m[0] + 'w');
+    return '<img src="' + esc(ROOT + p.s) + '" srcset="' + esc(set.join(', ')) + '" sizes="' + esc(sizes) + '"' + a + '>';
+  }
+  function picUrl(src, max) {   /* the largest copy no wider than max (the lightbox does not need a 2000px original) */
+    var p = picParts(src); if (!p.m || p.m[0] <= max) return ROOT + p.s;
+    var fit = (p.m[2] || []).filter(function (w) { return w <= max; }).pop();
+    return fit ? p.stem + '-' + fit + '.webp' + p.q : ROOT + p.s;
+  }
+  window.TRE_pic = pic;
   function extLink(url, cls, label) { return '<a class="' + cls + '" href="' + esc(url) + '"' + (isExternal(url) ? ' target="_blank" rel="noopener"' : '') + '>' + esc(label) + '</a>'; }
   function renderCard(ev, i) {
     var chip = chipFor(ev);
@@ -215,7 +234,7 @@
 
     var title = '<a href="' + esc(detailUrl(ev)) + '">' + esc(ev.title) + '</a>';
     var media = ev.image
-      ? '<div class="event-media has-img"><img src="' + esc(ROOT + ev.image) + '" alt="" loading="lazy" decoding="async" onerror="this.parentNode.classList.remove(\'has-img\');this.remove()"/>'
+      ? '<div class="event-media has-img">' + pic(ev.image, '', '(max-width: 640px) 92vw, (max-width: 980px) 46vw, 362px', ' loading="lazy" decoding="async" onerror="this.parentNode.classList.remove(\'has-img\');this.remove()"')
       : '<div class="event-media ' + themeFor(ev) + '">';
 
     return '' +
@@ -242,7 +261,7 @@
     var events = normaliseEvents(window.TRE_EVENTS);
     var ev = events.filter(function (e) { return e.slug === id; })[0];
     if (!ev) {
-      root.innerHTML = '<section class="section"><div class="container event-not-found"><h1>Event not found</h1><p class="muted">That event may have been renamed or removed. Browse the calendar for the latest dates.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="' + ROOT + 'events">Browse all events</a></div></div></section>';
+      root.innerHTML = '<section class="section"><div class="container event-not-found"><h1>Event not found</h1><p class="muted">That event may have been renamed or removed. Browse the calendar for the latest dates.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="' + ROOT + 'events">Browse all events</a></div></div></section>'; root.classList.add('is-drawn');
       document.title = 'Event not found — TRE™ in Singapore';
       return;
     }
@@ -263,14 +282,14 @@
     var bgName = ({ Certification: 'hero-education', Workshop: 'hero-events' })[ev.category] || 'hero-events';
     var bg = ROOT + 'assets/img/gallery/' + bgName;
     h += '<section class="hx hx-evt" style="--fx:60%;--fy:55%">' +
-      '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="' + bg + '-1600.webp" srcset="' + bg + '-960.webp 960w, ' + bg + '-1600.webp 1600w" sizes="100vw" alt="" fetchpriority="high" decoding="async"></div>' +
+      '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="' + bg + '-1600.webp" srcset="' + bg + '-960.webp 960w, ' + bg + '-1600.webp 1600w" sizes="(max-width: 760px) 50vw, 100vw" alt="" fetchpriority="high" decoding="async"></div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner' + (ev.image ? ' hx-split' : '') + '"><div class="hero-copy"><p class="crumbs"><a href="' + ROOT + 'events">Events</a> › ' + esc(ev.category) + '</p>' +
       '<h1>' + esc(ev.title) + '</h1>' +
       '<div class="badges"><span class="badge">' + esc(ev.location) + '</span><span class="badge cat">' + esc(ev.category) + '</span>' + (ev.credits ? '<span class="badge">' + esc(ev.credits) + '</span>' : '') + status + '</div>' +
       '<p class="lead">' + esc(d.summary || ev.description) + '</p>' +
       '<div class="btn-row">' + (ev._past ? '<a class="btn btn-ghost-light" href="' + ROOT + 'events">See upcoming events</a>' : (primary ? extLink(siteUrl(primary.url), 'btn btn-primary', primary.label) : '') + (d.online ? '<a class="btn btn-ghost-light" href="#prepare">Prepare for the online session</a>' : '<a class="btn btn-ghost-light" href="#programme">See the programme</a>')) + '</div></div>' +
-      (ev.image ? '<figure class="poster hx-window"><img src="' + esc(ROOT + ev.image) + '" alt="' + esc(ev.title) + ' — event poster" decoding="async"/></figure>' : '') +
+      (ev.image ? '<figure class="poster hx-window">' + pic(ev.image, ev.title + ' — event poster', '(max-width: 760px) 92vw, (max-width: 900px) 520px, (max-width: 1100px) 380px, 460px', ' decoding="async" fetchpriority="high"') + '</figure>' : '') +
       '</div></section>';
     /* ===== after the hero (dt-*): facts band · content column + sticky register box · related events · close.
        Styles: assets/css/detail.css · behaviour (rails, tier choice, prep ticks, sticky, phone register action): assets/js/detail.js ===== */
@@ -298,7 +317,7 @@
       }).join('') + '</ol></div>';
     }
     if (d.includes && d.includes.length) h += '<div class="dt-sec dt-inc"><h2>What is included</h2><ul class="dt-incl">' + d.includes.map(function (x) { return '<li>' + lead(x) + '</li>'; }).join('') + '</ul></div>';
-    if (d.posterTall && d.posterTall.src) h += '<div class="dt-sec dt-poster"><h2>Event poster</h2><figure class="dt-poster-fig"><a href="' + esc(ROOT + d.posterTall.src) + '" target="_blank" rel="noopener" aria-label="Open the full-size event poster"><img src="' + esc(ROOT + d.posterTall.src) + '" alt="' + esc(d.posterTall.alt || ev.title) + '" width="1080" height="1350" loading="lazy" decoding="async"></a><figcaption>Tap to open the full-size poster to save or share it.</figcaption></figure></div>';
+    if (d.posterTall && d.posterTall.src) h += '<div class="dt-sec dt-poster"><h2>Event poster</h2><figure class="dt-poster-fig"><a href="' + esc(ROOT + d.posterTall.src) + '" target="_blank" rel="noopener" aria-label="Open the full-size event poster">' + pic(d.posterTall.src, d.posterTall.alt || ev.title, '(max-width: 520px) 92vw, 440px', ' width="1080" height="1350" loading="lazy" decoding="async"') + '</a><figcaption>Tap to open the full-size poster to save or share it.</figcaption></figure></div>';
     h += '<div class="dt-slot" data-dt-slot></div>';   /* phones: detail.js moves the register box here, after the value and before the people */
     if (d.facilitators && d.facilitators.length) {
       /* presentation cards: match each event facilitator to the directory by name to pull the portrait, tags and contact buttons */
@@ -309,7 +328,7 @@
         var ext = isExternal(profile) ? ' target="_blank" rel="noopener"' : '';
         var initials = (m && m.initials) || (f.name || '').split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 3);
         var src = (m && m.photo) || f.photo || '';
-        var face = src ? '<img src="' + esc(ROOT + src) + '" alt="' + esc(f.name) + '" loading="lazy" decoding="async"/>' : '<span class="dt-mono">' + esc(initials) + '</span>';
+        var face = src ? pic(src, f.name, '(max-width: 600px) 92px, 172px', ' loading="lazy" decoding="async"') : '<span class="dt-mono">' + esc(initials) + '</span>';
         var pcls = 'dt-portrait' + (src ? '' : ' is-mono');
         var portrait = profile ? '<a class="' + pcls + '" href="' + esc(profile) + '"' + ext + ' aria-label="View profile: ' + esc(f.name) + '">' + face + '</a>' : '<div class="' + pcls + '">' + face + '</div>';
         var tags = m ? (m.services || m.tags || []).slice(0, 4).map(function (t) { return '<span class="dt-tag">' + esc(t) + '</span>'; }).join('') : '';
@@ -367,7 +386,7 @@
     else h += '<section class="dt-end"><div class="container">' + CLOSE + '</div></section>';
     /* phones: a floating register action (shown by detail.js while the hero button and the register box are off screen) */
     if (!ev._past && primary) h += '<div class="dt-dock" hidden>' + extLink(siteUrl(primary.url), 'btn btn-primary btn-sm', primary.label) + '</div>';
-    root.innerHTML = h;
+    root.innerHTML = h; root.classList.add('is-drawn');
   }
 
   function initEvents() {
@@ -505,7 +524,7 @@
     var profile = recUrl('facilitators', f.id);
     return '<article class="fac-card reveal in" style="--i:' + i + '">' +
       (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') +
-      '<a class="fac-photo ' + esc(f.photoClass || '') + '" href="' + esc(profile) + '" aria-label="View profile: ' + esc(f.name) + '">' + (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '" loading="lazy"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + (featured ? '<span class="feat-badge">Featured</span>' : '') + '</a>' +
+      '<a class="fac-photo ' + esc(f.photoClass || '') + '" href="' + esc(profile) + '" aria-label="View profile: ' + esc(f.name) + '">' + (f.photo ? pic(f.photo, f.name, featured ? '(max-width: 640px) 92vw, (max-width: 980px) 46vw, 362px' : '(max-width: 640px) 104px, (max-width: 860px) 44vw, (max-width: 1100px) 28vw, 250px', ' loading="lazy" decoding="async"') : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + (featured ? '<span class="feat-badge">Featured</span>' : '') + '</a>' +
       '<div class="fac-body">' + (f.tag ? '<div class="tags"><span class="badge ' + esc(f.tagClass || 'badge-navy') + '">' + esc(f.tag) + '</span></div>' : '') +
       '<h3><a href="' + esc(profile) + '">' + esc(f.name) + '</a></h3><div class="fac-role">' + esc(f.role) + '</div>' +
       '<a class="link-arrow" href="' + esc(profile) + '">View profile</a><p>' + esc(f.bio) + '</p>' +
@@ -527,7 +546,7 @@
     if (!root.getAttribute('data-id') && ((window.TRE_STATIC || {}).facilitators || []).indexOf(id) > -1) { location.replace(recUrl('facilitators', id) + location.hash); return; }
     var f = window.TRE_FACILITATORS.filter(function (x) { return x.id === id; })[0];
     if (!f) {
-      root.innerHTML = '<section class="section"><div class="container event-not-found"><h1>Profile not found</h1><p class="muted">That profile may have been renamed or removed.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="' + ROOT + 'facilitators">Browse all facilitators</a></div></div></section>';
+      root.innerHTML = '<section class="section"><div class="container event-not-found"><h1>Profile not found</h1><p class="muted">That profile may have been renamed or removed.</p><div class="btn-row" style="justify-content:center"><a class="btn btn-primary" href="' + ROOT + 'facilitators">Browse all facilitators</a></div></div></section>'; root.classList.add('is-drawn');
       document.title = 'Profile not found — TRE™ in Singapore'; return;
     }
     if (!root.getAttribute('data-id')) {  /* the ?id= template has a generic head; a built page's own head is already right */
@@ -545,8 +564,9 @@
     var fx = f.facts || {};
 
     /* hero background: the Asia TRE™ trainers photo (every listed trainer's community); the portrait stays in the window */
+    var hb = ROOT + 'assets/img/gallery/hero-facilitators';   /* ROOT: profile pages live one folder down (/facilitators/<id>) */
     var h = '<section class="hx hx-fp" style="--fx:60%;--fy:44%;--shift:30%;--feather:30%">' +
-      '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="assets/img/gallery/hero-facilitators-1600.webp" srcset="assets/img/gallery/hero-facilitators-960.webp 960w, assets/img/gallery/hero-facilitators-1600.webp 1600w" sizes="100vw" alt="" fetchpriority="high" decoding="async"></div>' +
+      '<div class="hx-media" aria-hidden="true"><img class="hx-photo" src="' + hb + '-1600.webp" srcset="' + hb + '-960.webp 960w, ' + hb + '-1600.webp 1600w" sizes="(max-width: 760px) 50vw, 100vw" alt="" fetchpriority="high" decoding="async"></div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner hx-split"><div>' +
       '<p class="crumbs"><a href="' + ROOT + 'facilitators">Facilitators</a> › ' + esc(f.tag || 'Profile') + '</p>' +
@@ -554,7 +574,7 @@
       (f.sample ? '<div class="badges"><span class="badge">Sample profile</span></div>' : '') +
       '<p class="lead">' + esc(f.summary || f.bio) + '</p>' +
       '<div class="btn-row">' + ctas + '</div>' + (socials ? '<div class="fp-socials">' + socials + '</div>' : '') + '</div>' +
-      '<div class="fp-photo hx-window ' + esc(f.photoClass || '') + '">' + (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') + (f.photo ? '<img src="' + esc(ROOT + f.photo) + '" alt="' + esc(f.name) + '"/>' : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '</div>' +
+      '<div class="fp-photo hx-window ' + esc(f.photoClass || '') + '">' + (f.sample ? '<span class="fac-sample">Sample profile</span>' : '') + (f.photo ? pic(f.photo, f.name, '(max-width: 760px) 260px, (max-width: 900px) 300px, 340px', ' decoding="async" fetchpriority="high"') : '<span class="initials">' + esc(f.initials || f.name.charAt(0)) + '</span>') + '</div>' +
       '</div></section>';
     /* ===== after the hero (dt-*): services ticker · facts · about, credentials, offers, gallery, upcoming events + contact column · close.
        Styles: assets/css/detail.css · behaviour: assets/js/detail.js · gallery viewer: TRELayer.lightbox via [data-gallery] ===== */
@@ -581,7 +601,7 @@
       /* photo strip (drag on desktop, swipe on phones); a click opens TRELayer.lightbox — layer.js wires [data-gallery] */
       h += '<div class="dt-sec dt-photos"><h2 id="gallery">Gallery</h2><div class="lx-strip dt-gal" data-gallery>' + f.gallery.map(function (g) {
         var alt = esc(g.caption || f.name);
-        return '<figure class="lx-media dt-shot"><a class="dt-shot-a" href="' + esc(ROOT + g.src) + '" data-caption="' + alt + '"><img src="' + esc(ROOT + g.src) + '" alt="' + alt + '" loading="lazy" decoding="async" onerror="this.closest(\'figure\').remove()"/></a>' + (g.caption ? '<figcaption>' + esc(g.caption) + '</figcaption>' : '') + '</figure>';
+        return '<figure class="lx-media dt-shot"><a class="dt-shot-a" href="' + esc(picUrl(g.src, 1200)) + '" data-caption="' + alt + '">' + pic(g.src, g.caption || f.name, '(max-width: 700px) 64vw, (max-width: 1308px) 26vw, 340px', ' loading="lazy" decoding="async" onerror="this.closest(\'figure\').remove()"') + '</a>' + (g.caption ? '<figcaption>' + esc(g.caption) + '</figcaption>' : '') + '</figure>';
       }).join('') + '</div></div>';
     } else if (f.sample) {
       h += '<div class="dt-sec dt-photos"><h2 id="gallery">Gallery</h2><p class="muted">Photos are added when the provider is listed.</p></div>';
@@ -602,11 +622,11 @@
         (f.socials || []).map(function (s) { return '<li><a class="dt-li" href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + '<span>' + esc(s.label || s.type) + '<small>' + esc(s.type.charAt(0).toUpperCase() + s.type.slice(1)) + '</small></span></a></li>'; }).join('') + '</ul></div>';
     }
     h += '</div></div>';
-    h += '<div class="dt-box dt-more"><h3>More facilitators</h3><ul class="dt-links dt-faces">' + shuffleArr(window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id; })).slice(0, 4).map(function (x) { return '<li><a class="dt-li" href="' + recUrl('facilitators', x.id) + '">' + (x.photo ? '<img src="' + esc(ROOT + x.photo) + '" alt="" loading="lazy" decoding="async"/>' : FAC_ICONS.group) + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + (x.sample ? ' · sample' : '') + '</small></span></a></li>'; }).join('') +
+    h += '<div class="dt-box dt-more"><h3>More facilitators</h3><ul class="dt-links dt-faces">' + shuffleArr(window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id; })).slice(0, 4).map(function (x) { return '<li><a class="dt-li" href="' + recUrl('facilitators', x.id) + '">' + (x.photo ? pic(x.photo, '', '42px', ' loading="lazy" decoding="async"') : FAC_ICONS.group) + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + (x.sample ? ' · sample' : '') + '</small></span></a></li>'; }).join('') +
       '<li><a class="dt-li" href="' + ROOT + 'facilitators#directory">' + ICONS.pin + '<span>All facilitators<small>Trainers and providers in Singapore</small></span></a></li></ul></div>';
     h += '</aside></div></section>';
     h += '<section class="dt-end"><div class="container">' + CLOSE + '</div></section>';
-    root.innerHTML = h;
+    root.innerHTML = h; root.classList.add('is-drawn');
   }
 
   /* ---------- Facilitators page: one shuffled grid + filters + search ---------- */
@@ -729,33 +749,77 @@
     });
   }
 
-  /* ---------- Contact form ---------- */
+  /* ---------- Forms (FormSubmit) ----------
+     FormSubmit answers {"success":"true"} when the message was delivered and {"success":"false", message} when it was
+     not (for example while the form still awaits its one-time activation for this domain). Only a real "true" counts as
+     sent; anything else shows what happened and a way to still reach Isabelle, with the message already written out. */
+  var WA = '<a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a>';
+  function post(endpoint, data) {
+    return fetch(endpoint, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || 'Not sent'); }); });
+  }
+  function note(scope, cls, html, after) {   /* a message box after `after` (created once; filled a beat later so screen readers announce it) */
+    var box = $('.' + cls, scope), fresh = !box;
+    if (fresh) { box = document.createElement('div'); box.className = cls; box.setAttribute('role', cls === 'form-fail' ? 'alert' : 'status'); after.parentNode.insertBefore(box, after.nextSibling); }
+    box.hidden = false;
+    if (fresh) setTimeout(function () { box.innerHTML = html; }, 60); else box.innerHTML = html;
+    return box;
+  }
   function initForm(form) {
+    var success = $('.form-success', form), btn = $('button[type="submit"]', form), label = btn.textContent;
+    var to = form.getAttribute('data-mailto') || 'isabelle@bhdasia.com';
+    function mailto(data) {
+      var subject = '[TRE Singapore website] ' + (data.interest || 'Enquiry') + ' — ' + (data.name || '');
+      var lines = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + (data.phone || '-'), 'I am: ' + (data.who || '-'),
+        'Interested in: ' + (data.interest || '-'), '', 'Message:', data.message || '-', '', 'Newsletter: ' + (data.newsletter || 'No')];
+      return 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+    }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
       var data = {};
       $all('input, select, textarea', form).forEach(function (f) { if (!f.name) return; data[f.name] = f.type === 'checkbox' ? (f.checked ? 'Yes' : 'No') : f.value.trim(); });
-      var endpoint = form.getAttribute('data-endpoint'); var success = $('.form-success', form); var btn = $('button[type="submit"]', form);
+      var endpoint = form.getAttribute('data-endpoint'), fail = $('.form-fail', form);
+      if (fail) fail.hidden = true;
       if (endpoint && isExternal(endpoint)) {
         btn.disabled = true; btn.textContent = 'Sending…';
-        fetch(endpoint, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-          .then(function (r) { if (!r.ok) throw new Error('Request failed'); form.reset(); success.classList.add('show'); })
-          .catch(function () { alert('Sorry, the message could not be sent. Please email isabelle@bhdasia.com directly.'); })
-          .then(function () { btn.disabled = false; btn.textContent = 'Send message'; });
+        post(endpoint, data)
+          .then(function () {
+            form.reset();
+            success.innerHTML = 'Thank you — your message is on its way to Isabelle, who replies within 1–2 working days. For anything urgent, ' + WA + '.';
+            success.classList.add('show');
+          })
+          .catch(function () {
+            note(form, 'form-fail', 'Sorry — the form could not send your message just now. <a href="' + esc(mailto(data)) + '">Send it by email instead</a> (your message is already written out) or ' + WA + '.', btn);
+          })
+          .then(function () { btn.disabled = false; btn.textContent = label; });
         return;
       }
-      var to = form.getAttribute('data-mailto') || 'isabelle@bhdasia.com';
-      var subject = '[TRE Singapore website] ' + (data.interest || 'Enquiry') + ' — ' + (data.name || '');
-      var lines = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + (data.phone || '-'), 'I am: ' + (data.who || '-'),
-        'Interested in: ' + (data.interest || '-'), '', 'Message:', data.message || '-', '', 'Newsletter: ' + (data.newsletter || 'No')];
-      window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+      window.location.href = mailto(data);
       success.classList.add('show');
+    });
+  }
+  /* other FormSubmit forms (the newsletter): sent in the page, answered in the page; without JavaScript they post as before */
+  function initSignup(form) {
+    var btn = $('button[type="submit"]', form), label = btn ? btn.textContent : '';
+    form.addEventListener('submit', function (e) {
+      if (!window.fetch || !btn) return;
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      var data = {};
+      $all('input', form).forEach(function (f) { if (f.name && f.name !== '_next') data[f.name] = f.value.trim(); });
+      btn.disabled = true; btn.textContent = 'Subscribing…';
+      var fail = $('.form-fail', form.parentNode); if (fail) fail.hidden = true;
+      post(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), data)
+        .then(function () { form.reset(); note(form.parentNode, 'form-success', 'Thank you — you are on the list for the monthly email with new articles and event dates.', form).classList.add('show'); })
+        .catch(function () { note(form.parentNode, 'form-fail', 'Sorry — the sign-up did not go through just now. <a href="mailto:isabelle@bhdasia.com?subject=' + encodeURIComponent('Newsletter sign-up') + '&body=' + encodeURIComponent('Please add ' + (data.email || 'me') + ' to the monthly TRE in Singapore email.') + '">Email Isabelle to be added</a> instead.', form); })
+        .then(function () { btn.disabled = false; btn.textContent = label; });
     });
   }
 
   document.addEventListener('DOMContentLoaded', function () {
     initChrome(); initNav(); initYear(); initReveal(); initInteractions(); initEvents(); initEventPage(); initFeatured(); initFacilitatorPage(); initFacilitatorsGrid(); initTreTerm(); initAmbient();
     var form = document.getElementById('contact-form'); if (form) initForm(form);
+    $all('form[action^="https://formsubmit.co/"]').forEach(initSignup);
   });
 })();

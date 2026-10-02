@@ -22,7 +22,7 @@ import datetime, glob, html as H, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import event_posts as EP, seo, site_data  # noqa: E402
+import event_posts as EP, images, seo, site_data  # noqa: E402
 
 PARTS = os.path.join(HERE, "parts")
 OUT = os.path.dirname(HERE)  # site root
@@ -200,11 +200,32 @@ def post_meta(out, title, desc, body, facs):
     return seo.head_meta(title, desc, url, img, "article", graph=nodes, extra=extra, image_size=None)
 
 
+SUFFIX = " | TRE™ in Singapore"
+
+
+def record_title(full, preferred=None, limit=65):
+    """Search-result title of a record page, at most `limit` characters: '<title> | TRE™ in Singapore' when that fits,
+    else the title alone. A longer title uses the record's seoTitle (events-data.js), else its part before ' — ' / ': ',
+    else it is cut at a word."""
+    t = (preferred or full).strip()
+    if len(t + SUFFIX) <= limit:
+        return t + SUFFIX
+    if len(t) <= limit:
+        return t
+    for sep in (" — ", ": ", " – "):
+        head = t.split(sep)[0]
+        if sep in t and 20 <= len(head) <= limit:
+            return head + SUFFIX if len(head + SUFFIX) <= limit else head
+    return t[:limit].rsplit(" ", 1)[0].rstrip(" ,;:—–-&")
+
+
+IMG = {}  # window.TRE_IMG of this build (path -> [width, height, [variant widths]])
+
+
 def event_page(e, template, facs, manifest):
     out = f"events/{e['slug']}.html"
     url = canonical_for(out)
-    title = f"{e['title']} | TRE™ in Singapore"
-    title = title if len(title) <= 65 else e["title"]
+    title = record_title(e["title"], e.get("seoTitle"))
     d = e.get("details") or {}
     desc = seo.trim(d.get("summary") or e.get("description") or "", 158)
     img, size = og(f"assets/img/og/event-{e['slug']}.jpg")
@@ -229,6 +250,42 @@ def facilitator_page(f, template, events, facs, manifest):
     meta = seo.head_meta(title, desc, url, img, "profile", graph=nodes, image_size=size)
     body = record_body(template, "facilitator-page", f["id"], seo.facilitator_static(f, events, "../"))
     assemble(body, out, title, desc, meta, "facilitators", "../", manifest)
+
+
+def next_event(events, now_utc):
+    """The event the countdown on events.html shows (the same rule as nextEvent() in main.js): not started yet, not
+    postponed or cancelled, events you can still join before sold-out ones, then the earliest; real listings first."""
+    def start(e):
+        s = e.get("start") or ""
+        try:
+            t = datetime.datetime.fromisoformat(s[:16] if "T" in s else s[:10])
+        except ValueError:
+            return None
+        return (t - datetime.timedelta(hours=seo.utc_offset_hours(e, t.date()))).replace(tzinfo=datetime.timezone.utc)
+    now = now_utc if now_utc.tzinfo else now_utc.replace(tzinfo=datetime.timezone.utc)
+    open_ = [e for e in events if start(e) and start(e) > now and e.get("status") not in ("postponed", "cancelled")]
+    open_.sort(key=lambda e: (bool(e.get("soldOut")), start(e)))
+    real = [e for e in open_ if not e.get("sample")]
+    return (real or open_ or [None])[0]
+
+
+def countdown_static(body, events, now_utc):
+    """Write the next event into the countdown band at build time, so the band has its final size before main.js runs
+    (it used to say "Loading…" and grow when the title arrived) and reads correctly without JavaScript."""
+    e = next_event(events, now_utc)
+    if not e:
+        return body
+    title = H.escape(e["title"], quote=False)
+    sub = H.escape(f"{e.get('dateText', '')} · {e.get('venue') or e.get('location') or ''}", quote=False)
+    link = e.get("link") or ""
+    m = re.match(r"^event\?id=([^&#]+)", link)
+    href = f"events/{m.group(1)}" if m else (link if link else "events")
+    ext = ' target="_blank" rel="noopener"' if re.match(r"^https?:", href) else ""
+    old_t = '<span id="countdown-title">Loading…</span><small id="countdown-sub"></small>'
+    old_l = '<a class="btn btn-navy btn-sm" id="countdown-link" href="#calendar">Register</a>'
+    assert body.count(old_t) == 1 and body.count(old_l) == 1, "events.body.html countdown markup changed"
+    body = body.replace(old_t, f'<span id="countdown-title">{title}</span><small id="countdown-sub">{sub}</small>')
+    return body.replace(old_l, f'<a class="btn btn-navy btn-sm" id="countdown-link" href="{H.escape(href)}"{ext}>Register</a>')
 
 
 def sg_now():
@@ -346,6 +403,10 @@ def main(only, auto_drafts=False):
         have = lambda k: sorted(os.path.basename(p)[:-5] for p in glob.glob(os.path.join(OUT, k, "*.html")))
         manifest = "<script>window.TRE_STATIC=" + seo.json.dumps({"events": have("events"), "facilitators": have("facilitators")}, separators=(",", ":")) + ";</script>"
     manifest += EP.manifest_script(eposts, {e["slug"]: e for e in events}, seo.json.dumps)
+    images.ensure_static()
+    if data:  # smaller copies of the data pictures for main.js (srcset); see _src/images.py
+        IMG.update(images.manifest(data["events"], data["facilitators"]))
+        manifest += "<script>window.TRE_IMG=" + seo.json.dumps(IMG, separators=(",", ":")) + ";</script>"
     event_cards = EP.blog_cards(eposts, {e["slug"]: e for e in events}, seo.trim, pretty_date, seo.text)
     home_text = seo.text(read("index.body.html"))
     if seo.TRE_DEFINITION not in home_text:
@@ -358,6 +419,8 @@ def main(only, auto_drafts=False):
         body = body.replace("{{STATIC_EVENTS}}", seo.events_static_list(events, ""))
         body = body.replace("{{STATIC_FACILITATORS}}", seo.facilitators_static_list(facs, ""))
         body = body.replace("{{EVENT_POSTS}}", event_cards)
+        if out == "events.html":
+            body = countdown_static(body, events, now_utc)
         meta = page_meta(out, title, desc, kind, crumb, image, body, events, facs, POSTS)
         assemble(body, out, title, desc, meta, active, "", manifest)
     for body_file, out, title, desc in POSTS:

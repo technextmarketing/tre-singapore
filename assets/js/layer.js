@@ -7,6 +7,7 @@
      .parallax(root)            wire every [data-parallax] under root (sets --par in px)
      .lightbox(items, index)    items = [{src, caption}]
      .strip(el)                 drag-to-scroll for an .lx-strip (mouse)
+     .motion                    the site-wide pause: .paused, .toggle(), .on(fn(paused)), .clock()
    Everything degrades to a still, complete page under prefers-reduced-motion.
 */
 (function () {
@@ -18,6 +19,40 @@
   function $all(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
   function clamp(v, a, b) { return v < a ? a : v > b ? b : v; }
   function lerp(a, b, t) { return a + (b - a) * t; }
+
+  /* =========================================================
+     MOTION SWITCH (WCAG 2.2.2) — one site-wide pause for everything that moves on its own: the home video, the slow
+     hero photo drift, the tremor lines' breathing and idle pulses, the ribbons. While paused the lines still answer the
+     visitor's own pointer, then settle back to still. The choice is remembered ('tre-motion' in localStorage; head.html
+     sets html.motion-paused before the first paint) and shared by open tabs. Under prefers-reduced-motion nothing
+     moves in the first place, so no switch is shown.
+     ========================================================= */
+  var MKEY = 'tre-motion', root = document.documentElement, subs = [];
+  var paused = root.classList.contains('motion-paused'), pausedAt = paused ? performance.now() : 0, pausedFor = 0;
+  function clock() { return (paused ? pausedAt : performance.now()) - pausedFor; }   /* a clock that stands still while paused */
+  function setPaused(p, save) {
+    p = !!p; if (p === paused) return;
+    var now = performance.now();
+    if (p) pausedAt = now; else pausedFor += now - pausedAt;
+    paused = p; root.classList.toggle('motion-paused', p);
+    if (save !== false) { try { if (p) localStorage.setItem(MKEY, 'paused'); else localStorage.removeItem(MKEY); } catch (e) {} }
+    subs.forEach(function (fn) { try { fn(p); } catch (e) {} });
+  }
+  window.addEventListener('storage', function (e) { if (e.key === MKEY) setPaused(e.newValue === 'paused', false); });
+  var motion = { toggle: function () { setPaused(!paused); }, set: setPaused, on: function (fn) { subs.push(fn); }, clock: clock };
+  Object.defineProperty(motion, 'paused', { get: function () { return paused; } });
+
+  var ICON_PAUSE = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11M15 6.5v11"/></svg>';
+  var ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8.5 6.4v11.2a.6.6 0 0 0 .9.5l9-5.6a.6.6 0 0 0 0-1l-9-5.6a.6.6 0 0 0-.9.5z"/></svg>';
+  /* the pause / play control (one per hero and ribbon; they all drive the same switch) */
+  function motionButton(cls) {
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'mo-btn ' + (cls || '');
+    b.innerHTML = '<span class="mo-i mo-pause">' + ICON_PAUSE + '</span><span class="mo-i mo-play">' + ICON_PLAY + '</span>';
+    function label() { var t = paused ? 'Play animation' : 'Pause animation'; b.setAttribute('aria-label', t); b.title = t; }
+    b.addEventListener('click', function (e) { e.stopPropagation(); setPaused(!paused); });
+    motion.on(label); label();
+    return b;
+  }
 
   /* ---------- visibility helper ---------- */
   function onVisible(el, cb, opts) {
@@ -50,7 +85,7 @@
     };
     for (var k in (opts || {})) o[k] = opts[k];
     var ctx = canvas.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1);
-    var w = 0, h = 0, lines = [], running = false, raf = 0, last = 0, t0 = performance.now();
+    var w = 0, h = 0, lines = [], running = false, raf = 0, last = 0, t0 = performance.now(), c0 = clock();
     var px = -1e4, py = -1e4, lastMove = 0, pulse = null, visible = false;
 
     function build() {
@@ -74,12 +109,14 @@
     }
     function draw(now) {
       var dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016); last = now;
-      var t = (now - t0) / 1000, breath = 0.62 + 0.38 * Math.sin(t * 2 * Math.PI / o.breath);
+      /* tw drives the breathing wave and stands still while motion is paused; t keeps time for the pointer's shiver */
+      var t = (now - t0) / 1000, tw = (clock() - c0) / 1000, breath = 0.62 + 0.38 * Math.sin(tw * 2 * Math.PI / o.breath), act = 0;
       /* idle pulse: a slow wave of release travels along one line */
-      if (!REDUCED && o.idlePulse && !pulse && now - lastMove > o.idlePulse * 1000 && (!lastMove || now - lastMove > 2500)) {
+      if (!REDUCED && !paused && o.idlePulse && !pulse && now - lastMove > o.idlePulse * 1000 && (!lastMove || now - lastMove > 2500)) {
         pulse = { x: -60, line: Math.floor(Math.random() * lines.length), speed: w / 3.2 }; lastMove = now;
       }
-      var pX = px, pY = py;
+      var still = paused && now - lastMove > 160;            /* paused: a resting pointer stops charging the lines */
+      var pX = still ? -1e4 : px, pY = still ? -1e4 : py;
       if (pulse) { pulse.x += pulse.speed * dt; if (pulse.x > w + 80) pulse = null; }
       ctx.clearRect(0, 0, w, h);
       for (var li = 0; li < lines.length; li++) {
@@ -91,11 +128,12 @@
           if (d2 < R * R * 4) target = Math.exp(-d2 / (2 * R * R * 0.5));
           if (pulse && pulse.line === li) { var q = x - pulse.x; target = Math.max(target, 0.55 * Math.exp(-(q * q) / (2 * 90 * 90))); }
           E[i] += (target - E[i]) * (target > E[i] ? 1 - Math.exp(-dt * 9) : 1 - Math.exp(-dt * o.settle));
+          if (E[i] > act) act = E[i];
           /* charge -> release -> settle, left to right: the wave is strongest under the copy and flat by the photo */
           var u = clamp((x + 20) / (w + 40), 0, 1);
           var env = o.settleRight ? Math.min(1, u / 0.06) * Math.pow(1 - u, 1.35) : Math.sin(Math.PI * u) * (1 - o.fade * u * u);
-          var restE = o.rest ? Math.pow(Math.max(0, 1 - u / o.rest), 2) * o.restAmt : 0;
-          var y = baseY + Math.sin(x / L.lambda * 2 * Math.PI + L.phase + t * L.speed) * o.amp * breath * env;
+          var restE = o.rest && !paused ? Math.pow(Math.max(0, 1 - u / o.rest), 2) * o.restAmt : 0;
+          var y = baseY + Math.sin(x / L.lambda * 2 * Math.PI + L.phase + tw * L.speed) * o.amp * breath * env;
           var sh = Math.max(E[i], restE);
           if (sh > 0.003) y += Math.sin(t * 19 + x * 0.085 + L.phase) * o.shiver * sh;
           if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
@@ -111,27 +149,30 @@
         } else ctx.strokeStyle = 'rgba(' + L.color + ',' + L.alpha + ')';
         ctx.lineWidth = o.width; ctx.stroke();
       }
-      if (running) raf = requestAnimationFrame(draw);
+      /* paused: keep drawing only while the visitor's own touch is still settling, then rest on a still frame */
+      if (running) { if (!paused || act > 0.004 || pulse) raf = requestAnimationFrame(draw); else running = false; }
     }
     function start() { if (running || REDUCED) return; running = true; last = 0; raf = requestAnimationFrame(draw); }
     function stop() { running = false; cancelAnimationFrame(raf); }
+    function wake() { if (paused && visible && !document.hidden) start(); }   /* paused: a touch draws until it settles */
 
     build(); size();
     if (REDUCED) { draw(t0 + 2000); }                   // one calm still frame
     var src = o.source || canvas.parentElement;
     if (!REDUCED && src) {
       src.addEventListener('pointermove', function (e) {
-        var r = canvas.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; lastMove = performance.now();
+        var r = canvas.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; lastMove = performance.now(); wake();
       }, { passive: true });
       src.addEventListener('pointerleave', function () { px = py = -1e4; });
     }
-    var ro = 'ResizeObserver' in window ? new ResizeObserver(function () { size(); if (REDUCED) draw(t0 + 2000); }) : null;
+    var ro = 'ResizeObserver' in window ? new ResizeObserver(function () { size(); if (REDUCED) draw(t0 + 2000); else if (!running) draw(performance.now()); }) : null;
     if (ro) ro.observe(canvas);
     onVisible(canvas, function (en, isIn) { visible = isIn; if (isIn && !document.hidden) start(); else stop(); });
     document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); else if (visible) start(); });
+    motion.on(function (p) { if (!p && visible && !document.hidden) start(); });   /* pausing lets the loop wind down by itself */
     return {
-      pulse: function (x, line) { pulse = { x: x == null ? -60 : x, line: line == null ? Math.floor(lines.length / 2) : line, speed: w / 3.2 }; },
-      poke: function (x, y) { px = x; py = y; lastMove = performance.now(); },
+      pulse: function (x, line) { pulse = { x: x == null ? -60 : x, line: line == null ? Math.floor(lines.length / 2) : line, speed: w / 3.2 }; wake(); },
+      poke: function (x, y) { px = x; py = y; lastMove = performance.now(); wake(); },
       stop: stop, start: start
     };
   }
@@ -146,6 +187,7 @@
       if (!canvas) { canvas = document.createElement('canvas'); canvas.className = 'hx-tremor'; canvas.setAttribute('aria-hidden', 'true'); var content = $('.hero-full-content, .hx-inner, .container', hero); hero.insertBefore(canvas, content); }
       tremor(canvas, { source: hero, top: hero.classList.contains('hero-full') ? 0.62 : 0.56, rest: 0.46, settleRight: true,
         fadeEnd: parseFloat(getComputedStyle(hero).getPropertyValue('--lines-end')) || 0.46 });
+      if (!REDUCED && !$('.mo-btn', hero)) hero.appendChild(motionButton('mo-hero'));
       if (REDUCED || !FINE) return;
       var tx = 0, ty = 0, cx = 0, cy = 0, lens = 0, lensT = 0, lx = 0, ly = 0, raf = 0, active = false;
       function loop() {
@@ -164,6 +206,48 @@
         active = true; if (!raf) raf = requestAnimationFrame(loop);
       }, { passive: true });
       hero.addEventListener('pointerleave', function () { tx = ty = 0; lensT = 0; active = false; if (!raf) raf = requestAnimationFrame(loop); });
+    });
+  }
+
+  /* =========================================================
+     HOME VIDEO — the hero shows its still photo first (the page's largest paint); the loop starts after the page has
+     loaded, in a lighter 960px cut on phones, never with reduced motion or a data saver, pauses off screen and with
+     the motion switch. The video fades in over the identical still once it plays.
+     ========================================================= */
+  function initVideo() {
+    var v = $('.hero-full .hero-video'); if (!v) return;
+    var conn = navigator.connection || {};
+    if (REDUCED || conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')) { v.remove(); return; }
+    var base = v.getAttribute(window.matchMedia('(max-width: 960px)').matches ? 'data-src-narrow' : 'data-src-wide');
+    if (!base) return;
+    var ready = false, loaded = false, inView = true;
+    v.muted = true;
+    function sync() {
+      if (!ready) return;
+      if (!paused && inView && !document.hidden) {
+        if (!loaded) { loaded = true; v.innerHTML = '<source src="' + base + '.webm" type="video/webm"><source src="' + base + '.mp4" type="video/mp4">'; v.preload = 'auto'; v.load(); }
+        var p = v.play(); if (p && p.catch) p.catch(function () {});
+      } else if (loaded) v.pause();
+    }
+    v.addEventListener('playing', function () { v.classList.add('is-on'); });
+    function begin() { ready = true; sync(); }
+    if (document.readyState === 'complete') setTimeout(begin, 400); else window.addEventListener('load', function () { setTimeout(begin, 400); });
+    onVisible(v.closest('.hero-full') || v, function (en, isIn) { inView = isIn; sync(); });
+    document.addEventListener('visibilitychange', sync);
+    motion.on(sync);
+  }
+
+  /* RIBBONS — every scrolling .marquee gets the pause / play control (beside it when the strip itself is aria-hidden) */
+  function initRibbons() {
+    if (REDUCED) return;
+    $all('.marquee').forEach(function (m) {
+      var host = m.getAttribute('aria-hidden') === 'true' ? m.parentElement : m;
+      if (!host || $('.mo-btn', host)) return;
+      var prev = host.previousElementSibling;   /* a ribbon right under a hero shares the hero's control */
+      while (prev && /^(STYLE|SCRIPT|LINK|TEMPLATE)$/.test(prev.tagName)) prev = prev.previousElementSibling;
+      if (prev && prev.matches('.hx, .hero-full') && $('.mo-btn', prev)) return;
+      if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+      host.appendChild(motionButton('mo-strip'));
     });
   }
 
@@ -316,8 +400,8 @@
     var rt = 0; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(watch, 200); }, { passive: true });
   }
 
-  window.TRELayer = { reduced: REDUCED, fine: FINE, onVisible: onVisible, tremor: tremor, draw: draw, parallax: parallax, lightbox: lightbox, strip: strip };
+  window.TRELayer = { reduced: REDUCED, fine: FINE, onVisible: onVisible, tremor: tremor, draw: draw, parallax: parallax, lightbox: lightbox, strip: strip, motion: motion };
 
-  function boot() { initHeroes(); initButtons(); initMenu(); draw(document); parallax(document); initGalleries(); initCtaQuiet(); }
+  function boot() { initHeroes(); initVideo(); initRibbons(); initButtons(); initMenu(); draw(document); parallax(document); initGalleries(); initCtaQuiet(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

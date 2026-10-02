@@ -33,7 +33,7 @@ window.TRE_FACILITATORS = [
     bio: 'Founder of TRE™ in Singapore; runs the full three-module certification and teaches individuals, groups and organisations.',
     summary: 'Founder of TRE™ in Singapore and HummingBeing. Isabelle runs the Global TRE™ Provider Certification in Singapore, teaches individuals, groups and organisations, and supervises trainees through Modules 1–3 — in person and online.',
     contact: { email: 'mailto:isabelle@bhdasia.com?subject=TRE%20session%20enquiry', whatsapp: WA + '?text=Hi%20Isabelle%2C%20I%27d%20like%20to%20ask%20about%20TRE%E2%84%A2%20in%20Singapore', book: 'https://calendly.com/bhdasia/tre-certification-intake-call' },
-    website: { url: 'https://hummingbeing.com', label: 'hummingbeing.com' },
+    website: { url: 'https://hummingbeing.com/', label: 'hummingbeing.com' },
     socials: [
       { type: 'linkedin', url: 'https://www.linkedin.com/in/isabelleclausteixeira/', label: 'LinkedIn' },
       { type: 'instagram', url: 'https://www.instagram.com/isabelleclausteixeira_bhd/', label: 'Instagram' },

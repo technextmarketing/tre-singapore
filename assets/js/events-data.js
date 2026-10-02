@@ -28,6 +28,8 @@
                     marked for Google, and never given a preview or recap blog post
      tz           : time zone of the event's own clock, e.g. 'Europe/Bucharest' (optional; default Singapore;
                     Bucharest venues are detected automatically)
+     seoTitle     : shorter title for search results when the title is over 65 characters (optional; the event page's
+                    <title> is "<title> | TRE™ in Singapore" when that fits, else the title, else the part before " — ")
      isNew        : true to show a "New" badge
      theme        : "theme-deep" | "theme-bronze" | "theme-orange" | "theme-green" (fallback colour when no image)
      details      : { summary, about[], forWho[], schedule[], includes[], pricing[], pricingNote,
@@ -36,14 +38,14 @@
                       register[{label,url,primary}], source }
    Events whose end date (or start date) has passed move automatically to "Past events".
    ========================================================= */
-window.TRE_PREP_GUIDE = 'https://hummingbeing.com/online-session-preparation.html';
+window.TRE_PREP_GUIDE = 'https://hummingbeing.com/online-session-preparation';
 window.TRE_PREP_PDF = 'https://hummingbeing.com/online-tre-session-guide.pdf?v=2';
 
 var ISABELLE = {
   name: 'Isabelle Claus Teixeira',
   role: 'Global TRE™ Certifying Trainer · ICF PCC',
   bio: 'Somatic and trauma-informed Executive Coach (ICF PCC), Global TRE™ Certifying Trainer and Mindfulness Teacher. Trained directly under Dr. David Berceli, founder of TRE™. Over 30 years of experience working with professionals, executives and teams across 9 countries and 40+ nationalities — in person and online.',
-  link: 'https://hummingbeing.com/isabelle.html', linkText: 'Meet Isabelle'
+  link: 'https://hummingbeing.com/isabelle', linkText: 'Meet Isabelle'
 };
 var SAYMARA = {
   name: 'Saymara Ryon',
@@ -77,6 +79,7 @@ window.TRE_EVENTS = [
   {
     slug: 'the-body-in-the-room',
     title: 'The Body in the Room \u2014 Integrating TRE\u2122 and Somatic Practice into Psychotherapy',
+    seoTitle: 'The Body in the Room \u2014 TRE\u2122 & Somatic Practice in Psychotherapy',
     category: 'Workshop',
     region: 'online',
     location: 'Online',
@@ -155,7 +158,7 @@ window.TRE_EVENTS = [
     credits: 'ICF CCE with Module 1',
     price: 'S$5,888',
     priceNote: 'full certification + bonuses · early bird to 31 Dec 2026 (then S$6,688)',
-    link: 'https://www.hummingbeing.com/event-certification-2027.html',
+    link: 'https://hummingbeing.com/event-certification-2027',
     linkText: 'Register',
     isNew: true,
     theme: 'theme-deep',
@@ -195,10 +198,10 @@ window.TRE_EVENTS = [
       facilitators: [ISABELLE, SIMBA],
       online: true,
       register: [
-        { label: 'Register your interest', url: 'https://www.hummingbeing.com/event-certification-2027.html#reserve', primary: true },
+        { label: 'Register your interest', url: 'https://hummingbeing.com/event-certification-2027#reserve', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
-      source: 'https://www.hummingbeing.com/event-certification-2027.html'
+      source: 'https://hummingbeing.com/event-certification-2027'
     }
   },
 
@@ -221,7 +224,7 @@ window.TRE_EVENTS = [
     credits: '21 ICF CCEUs on Module 1',
     price: 'S$3,699',
     priceNote: 'full bundle · super early bird (early bird S$4,200 · normal S$4,500)',
-    link: 'https://www.hummingbeing.com/event-certification.html',
+    link: 'https://hummingbeing.com/event-certification',
     linkText: 'Join waitlist',
     soldOut: true,
     waitlistLink: CALENDLY,
@@ -262,10 +265,10 @@ window.TRE_EVENTS = [
       facilitators: [ISABELLE],
       online: true,
       register: [
-        { label: 'Register your interest', url: 'https://www.hummingbeing.com/event-certification.html', primary: true },
+        { label: 'Register your interest', url: 'https://hummingbeing.com/event-certification', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
-      source: 'https://www.hummingbeing.com/event-certification.html'
+      source: 'https://hummingbeing.com/event-certification'
     }
   },
 
@@ -287,7 +290,7 @@ window.TRE_EVENTS = [
     description: 'Module 2 of the Global TRE™ Provider Certification. Deepens Module 1 content, Polyvagal theory, basic TRE™ interventions and hands-on practice teaching TRE™ one-to-one. Open to those who completed Module 1.',
     facilitator: 'Isabelle Claus Teixeira',
     priceText: 'Part of the certification bundle (from S$3,699)',
-    link: 'https://www.hummingbeing.com/event-certification.html',
+    link: 'https://hummingbeing.com/event-certification',
     linkText: 'Enquire',
     theme: 'theme-deep',
     details: {
@@ -316,10 +319,10 @@ window.TRE_EVENTS = [
       facilitators: [ISABELLE],
       online: false,
       register: [
-        { label: 'Enquire about Module 2', url: 'https://www.hummingbeing.com/event-certification.html', primary: true },
+        { label: 'Enquire about Module 2', url: 'https://hummingbeing.com/event-certification', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
-      source: 'https://www.hummingbeing.com/event-certification.html'
+      source: 'https://hummingbeing.com/event-certification'
     }
   },
 
@@ -380,9 +383,9 @@ window.TRE_EVENTS = [
       online: false,
       register: [
         { label: 'Join the waitlist', url: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest', primary: true },
-        { label: 'Event page on HummingBeing', url: 'https://www.hummingbeing.com/event-shaking-to-shaping.html' }
+        { label: 'Event page on HummingBeing', url: 'https://hummingbeing.com/event-shaking-to-shaping' }
       ],
-      source: 'https://www.hummingbeing.com/event-shaking-to-shaping.html'
+      source: 'https://hummingbeing.com/event-shaking-to-shaping'
     }
   },
 
@@ -406,7 +409,7 @@ window.TRE_EVENTS = [
     price: '€89',
     priceNote: 'per participant · sold out',
     soldOut: true,
-    link: 'https://www.hummingbeing.com/event-shaking-to-shaping-sep3.html',
+    link: 'https://hummingbeing.com/event-shaking-to-shaping-sep3',
     linkText: 'View event',
     theme: 'theme-bronze',
     details: {
@@ -442,7 +445,7 @@ window.TRE_EVENTS = [
         { label: 'See upcoming events', url: 'events', primary: true },
         { label: 'Bucharest sessions (20 & 24 Oct)', url: 'event?id=from-shaking-to-shaping-bucharest' }
       ],
-      source: 'https://www.hummingbeing.com/event-shaking-to-shaping-sep3.html'
+      source: 'https://hummingbeing.com/event-shaking-to-shaping-sep3'
     }
   },
 
@@ -494,15 +497,16 @@ window.TRE_EVENTS = [
       online: true,
       register: [
         { label: 'Register at Neurogenic Integration', url: 'https://neurogenic-integration.com/', primary: true },
-        { label: 'Enquire via HummingBeing', url: 'https://www.hummingbeing.com/event-shaking-online.html' }
+        { label: 'Enquire via HummingBeing', url: 'https://hummingbeing.com/event-shaking-online' }
       ],
-      source: 'https://www.hummingbeing.com/event-shaking-online.html'
+      source: 'https://hummingbeing.com/event-shaking-online'
     }
   },
 
   {
     slug: 'feminine-masculine-energetics-corporate',
     title: 'Navigating Feminine & Masculine Energetics Inside Corporate Structures',
+    seoTitle: 'Feminine & Masculine Energetics in Corporate Structures',
     category: 'Workshop',
     region: 'online',
     location: 'Online',
@@ -551,9 +555,9 @@ window.TRE_EVENTS = [
       online: true,
       register: [
         { label: 'Register & pay on Calendly', url: 'https://calendly.com/sara-spirit/feminine-masculine-energetics-in-the-corporate-world', primary: true },
-        { label: 'Event page on HummingBeing', url: 'https://www.hummingbeing.com/event-feminine-masculine-energetics.html' }
+        { label: 'Event page on HummingBeing', url: 'https://hummingbeing.com/event-feminine-masculine-energetics' }
       ],
-      source: 'https://www.hummingbeing.com/event-feminine-masculine-energetics.html'
+      source: 'https://hummingbeing.com/event-feminine-masculine-energetics'
     }
   },
 
@@ -622,7 +626,7 @@ window.TRE_EVENTS = [
         { label: 'Join the waitlist — postponed', url: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
-      source: 'https://www.hummingbeing.com/event-tre-module1-bucharest.html'
+      source: 'https://hummingbeing.com/event-tre-module1-bucharest'
     }
   },
 
@@ -644,7 +648,7 @@ window.TRE_EVENTS = [
     description: 'Module 3 of the Global TRE™ Provider Certification. The role of fascia, advanced interventions and modifications, transference and counter-transference, and experience leading groups of 3+ people. Completes your certification.',
     facilitator: 'Isabelle Claus Teixeira',
     priceText: 'Part of the certification bundle (from S$3,699)',
-    link: 'https://www.hummingbeing.com/event-certification.html',
+    link: 'https://hummingbeing.com/event-certification',
     linkText: 'Enquire',
     theme: 'theme-deep',
     details: {
@@ -673,10 +677,10 @@ window.TRE_EVENTS = [
       facilitators: [ISABELLE],
       online: false,
       register: [
-        { label: 'Enquire about Module 3', url: 'https://www.hummingbeing.com/event-certification.html', primary: true },
+        { label: 'Enquire about Module 3', url: 'https://hummingbeing.com/event-certification', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
-      source: 'https://www.hummingbeing.com/event-certification.html'
+      source: 'https://hummingbeing.com/event-certification'
     }
   },
 
@@ -684,6 +688,7 @@ window.TRE_EVENTS = [
   {
     slug: 'nervous-system-regulation-coaches-singapore',
     title: 'Nervous System Regulation & Self-Induced Neurogenic Tremoring — For Coaches',
+    seoTitle: 'Nervous System Regulation & Neurogenic Tremoring for Coaches',
     category: 'Workshop',
     region: 'singapore',
     location: 'Singapore',
@@ -700,8 +705,8 @@ window.TRE_EVENTS = [
     price: 'S$1,290',
     priceNote: 'ICF special price (early bird S$1,500 · normal S$1,800)',
     soldOut: true,
-    waitlistLink: 'https://www.hummingbeing.com/event-selfcare-coaches-singapore.html',
-    link: 'https://www.hummingbeing.com/event-selfcare-coaches-singapore.html',
+    waitlistLink: 'https://hummingbeing.com/event-selfcare-coaches-singapore',
+    link: 'https://hummingbeing.com/event-selfcare-coaches-singapore',
     theme: 'theme-bronze',
     details: {
       summary: 'A 2-day in-person TRE™ workshop for coaches — develop embodied self-care, prevent burnout and deepen your somatic presence with clients. Valid as Module 1 of the Global TRE™ Provider Certification Program.',
@@ -733,10 +738,10 @@ window.TRE_EVENTS = [
       facilitators: [ISABELLE],
       online: false,
       register: [
-        { label: 'Join the waitlist', url: 'https://www.hummingbeing.com/event-selfcare-coaches-singapore.html', primary: true },
+        { label: 'Join the waitlist', url: 'https://hummingbeing.com/event-selfcare-coaches-singapore', primary: true },
         { label: 'See the next Module 1 (Bucharest)', url: 'event?id=tre-module-1-bucharest' }
       ],
-      source: 'https://www.hummingbeing.com/event-selfcare-coaches-singapore.html'
+      source: 'https://hummingbeing.com/event-selfcare-coaches-singapore'
     }
   },
   {
@@ -755,7 +760,7 @@ window.TRE_EVENTS = [
     facilitator: 'Simba Stenqvist',
     price: 'S$79',
     priceNote: '2-hour introductory workshop',
-    link: 'https://www.hummingbeing.com/event-internal-alchemy.html',
+    link: 'https://hummingbeing.com/event-internal-alchemy',
     theme: 'theme-orange',
     details: {
       summary: 'An integrated system combining breathwork, fascial release, grounding and tremor work — restoring the nervous system at the level where tension actually lives. Led by Simba Stenqvist, first time in Singapore.',
@@ -780,8 +785,8 @@ window.TRE_EVENTS = [
         link: 'https://livingwiththespirit.com/', linkText: 'livingwiththespirit.com'
       }],
       online: false,
-      register: [{ label: 'Event page on HummingBeing', url: 'https://www.hummingbeing.com/event-internal-alchemy.html', primary: true }],
-      source: 'https://www.hummingbeing.com/event-internal-alchemy.html'
+      register: [{ label: 'Event page on HummingBeing', url: 'https://hummingbeing.com/event-internal-alchemy', primary: true }],
+      source: 'https://hummingbeing.com/event-internal-alchemy'
     }
   }
 ];

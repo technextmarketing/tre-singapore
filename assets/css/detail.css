@@ -159,17 +159,17 @@
 /* ---------- online preparation: a navy panel with a tickable checklist ---------- */
 .dt-prep{
   position:relative;isolation:isolate;overflow:hidden;border-radius:var(--radius);padding:clamp(24px,4.4vw,44px);
-  background:radial-gradient(90% 70% at 100% 0%,rgba(42,99,168,.36),transparent 62%),var(--navy-ink);color:#dbe3f1;box-shadow:var(--shadow-2);
+  background:radial-gradient(90% 70% at 100% 0%,rgba(42,99,168,.36),transparent 62%),var(--navy-ink);color:var(--on-navy);box-shadow:var(--shadow-2);
 }
 .dt-prep h2{color:#fff;margin:0 0 var(--s3);max-width:24ch}
-.dt-prep p{color:#cdd8ea}
+.dt-prep p{color:var(--on-navy-2)}
 .dt-prep strong{color:#fff}
 .dt-prep-head p{margin:0;max-width:62ch}
 .dt-prep-bar{position:relative;height:2px;margin:var(--s5) 0 var(--s1);border-radius:2px;overflow:hidden;background:rgba(255,255,255,.12)}
 .dt-prep-bar i{position:absolute;inset:0;background:var(--gold);transform-origin:0 50%;transform:scaleX(var(--done,0));transition:transform .6s var(--ease-out)}
 .dt-prep-list{list-style:none;margin:var(--s5) 0 0;padding:0;display:grid}
 .dt-prep-bar + .dt-prep-list{margin-top:0}
-.dt-prep-list li{padding:.85rem 0;border-top:1px solid rgba(255,255,255,.09);color:#dbe3f1;line-height:1.6}
+.dt-prep-list li{padding:.85rem 0;border-top:1px solid rgba(255,255,255,.09);color:var(--on-navy);line-height:1.6}
 .dt-prep-list li:first-child{border-top:0}
 .dt-prep-list.is-live li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:.95rem;align-items:start;cursor:pointer}
 .dt-prep-t{min-width:0;transition:color var(--d2) var(--ease)}
@@ -251,7 +251,7 @@ input.dt-dot:disabled{cursor:not-allowed}
 .dt-ticker::after{right:0;background:linear-gradient(270deg,var(--navy-ink),rgba(15,31,61,0))}
 .dt-ticker .marquee-track{gap:0;animation-duration:var(--dt-dur,56s)}
 .dt-ticker .marquee-track > span{gap:2.2rem;padding-right:2.2rem}
-.dt-ticker .marquee-track > span > span{gap:2.2rem;color:#dbe3f1;font-size:.84rem;font-weight:600;letter-spacing:.01em}
+.dt-ticker .marquee-track > span > span{gap:2.2rem;color:var(--on-navy);font-size:.84rem;font-weight:600;letter-spacing:.01em}
 .dt-ticker i{width:24px;height:8px;border-radius:0;background:var(--gold);-webkit-mask:var(--dt-wave) center/100% 100% no-repeat;mask:var(--dt-wave) center/100% 100% no-repeat}
 
 .dt-offers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--s6)}

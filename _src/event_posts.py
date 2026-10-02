@@ -21,6 +21,8 @@ Every sentence the generator writes comes from the event's own data; nothing is 
 """
 import datetime, html as H, json, os, re
 
+import images  # noqa: E402  (smaller copies of the event posters; _src/images.py)
+
 SYSTEM_START = "2026-09-29"  # recaps are drafted for events that end on or after this day (the user asked for no back-catalogue)
 POSTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "posts")
 HEROES = {"Certification": ("hero-education", "Isabelle & Simba with the Module 2 cohort · September 2026"),
@@ -132,7 +134,7 @@ def generated_body(p, e, upcoming, root):
         if covered:
             b.append(_h2("What the programme covered") + f"<ul>{_lis(covered)}</ul>")
         for ph in p.get("photos") or []:
-            b.append(f'<figure class="ar-figure"><img src="{root}{esc(ph["src"])}" alt="{esc(ph.get("alt"))}" loading="lazy" decoding="async">'
+            b.append(f'<figure class="ar-figure"><img src="{root}{esc(ph["src"])}"{images.srcset_attrs(root, ph["src"], "gallery", "(max-width: 760px) 92vw, 720px")} alt="{esc(ph.get("alt"))}" loading="lazy" decoding="async">'
                      + (f"<figcaption>{esc(ph['caption'])}</figcaption>" if ph.get("caption") else "") + "</figure>")
         nxt = [x for x in upcoming if x["slug"] != e["slug"]][:3]
         if nxt:
@@ -143,7 +145,8 @@ def generated_body(p, e, upcoming, root):
     # preview
     b.append(f'<p class="lead">{esc(d.get("summary") or e.get("description"))}</p>')
     if e.get("image"):
-        b.append(f'<figure class="ar-figure"><img src="{root}{esc(e["image"])}" alt="{esc(e["title"])} — event poster" width="1920" height="1080" loading="lazy" decoding="async"></figure>')
+        srcset = images.srcset_attrs(root, e["image"], "poster", "(max-width: 760px) 92vw, 720px")
+        b.append(f'<figure class="ar-figure"><img src="{root}{esc(e["image"])}"{srcset} alt="{esc(e["title"])} — event poster" width="1920" height="1080" loading="lazy" decoding="async"></figure>')
     facts = [("Date", e.get("dateText")), ("Time", e.get("timeText")), ("Where", e.get("venue") or e.get("location")),
              ("Format", e.get("format")), ("With", e.get("facilitator")), ("Credits", e.get("credits"))]
     b.append(_h2("When and where") + "<ul>" + "".join(f"<li><strong>{k}:</strong> {esc(v)}</li>" for k, v in facts if v) + "</ul>")
@@ -206,7 +209,7 @@ def blog_cards(posts, events_by_slug, trim, pretty_date, text):
         body = p["body"] or generated_body(p, e, [], "")
         cards.append(
             '<article class="bl-card bl-row">'
-            f'<div class="bl-media"><img src="{esc(img)}" width="1920" height="1080" alt="" loading="lazy" decoding="async"></div>'
+            f'<div class="bl-media"><img src="{esc(img)}"{images.srcset_attrs("", img, "poster", "(max-width: 640px) 104px, (max-width: 980px) 40vw, 20vw")} width="1920" height="1080" alt="" loading="lazy" decoding="async"></div>'
             f'<div class="bl-tag"><span class="badge badge-gold">{KIND_LABEL[p["kind"]]}</span></div>'
             f'<div class="bl-body"><h3><a class="bl-t" href="blog/{esc(p["slug"])}">{esc(post_title(p, e))}</a></h3>'
             f'<div class="post-meta"><span>{pretty_date(p.get("date"))}</span><span>·</span><span>{minutes(body, text)} min</span></div>'
