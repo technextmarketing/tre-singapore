@@ -45,15 +45,28 @@
     top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' }); });
 
     var ticking = false;
+    /* see-through header (layer.css): it stays clear while the page's opening hero is still under it */
+    var heroHead = document.body.classList.contains('hero-head') ? $('.under-head') : null;
     function update() {
       var y = window.scrollY || document.documentElement.scrollTop;
       var max = document.documentElement.scrollHeight - window.innerHeight;
       if (header) header.classList.toggle('scrolled', y > 8);
+      if (heroHead && header) {
+        /* clear while nothing of the hero's copy (or its photo credit) has reached the bar - so the links never sit on top
+           of the headline - and solid again once that happens or the hero has gone */
+        var hero = heroHead.matches('.hx, .hero-full') ? heroHead : ($('.hx, .hero-full', heroHead) || heroHead);
+        var hh = header.offsetHeight + 6, inner = $('.hx-inner, .hero-full-content', hero);
+        var copy = inner && (inner.querySelector('.hero-copy > *, .crumbs, .breadcrumb, h1') || inner.firstElementChild || inner);
+        var credit = $('.hx-credit', hero);
+        var reached = function (el) { if (!el) return false; var r = el.getBoundingClientRect(); return r.height > 0 && r.top < hh && r.bottom > 0; };
+        document.body.classList.toggle('past-hero', hero.getBoundingClientRect().bottom <= hh || reached(copy) || (copy && copy.getBoundingClientRect().bottom <= 0) || reached(credit));
+      }
       bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ')';   /* transform, not width: no layout per scroll frame */
       top.classList.toggle('show', y > 640);
       ticking = false;
     }
     window.addEventListener('scroll', function () { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+    window.addEventListener('resize', function () { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
     update();
   }
 

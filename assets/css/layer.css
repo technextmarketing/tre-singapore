@@ -66,8 +66,8 @@ table,time,.countdown,.event-price,.date-chip{font-variant-numeric:tabular-nums}
 .hx{
   position:relative;isolation:isolate;overflow:hidden;color:#fff;
   background:var(--navy-ink);
-  min-height:clamp(500px,68vh,720px);display:flex;align-items:center;
-  padding:calc(var(--s8) + 8px) 0 calc(var(--s8) + 24px);
+  min-height:calc(clamp(500px,68vh,720px) + var(--head-room,0px));display:flex;align-items:center;
+  padding:calc(var(--s8) + 8px + var(--head-room,0px)) 0 calc(var(--s8) + 24px);   /* --head-room: the see-through header's height when this hero sits under it */
 }
 .hx::before,.hx::after{content:none!important}               /* retire the old drifting blobs */
 .hx-media{position:absolute;inset:-3%;left:calc(-3% + var(--shift,0%));z-index:-3;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--feather,0%));mask-image:linear-gradient(90deg,transparent 0,#000 var(--feather,0%))}
@@ -98,7 +98,7 @@ table,time,.countdown,.event-price,.date-chip{font-variant-numeric:tabular-nums}
 .hx .crumbs a,.hx .breadcrumb a{color:#fff}
 .hx .btn-row{margin-top:1.9rem}
 .hx .hx-credit{
-  position:absolute;right:max(var(--s5),calc((100vw - var(--max)) / 2 + var(--s5)));top:var(--s5);z-index:1;margin:0;
+  position:absolute;right:max(var(--s5),calc((100vw - var(--max)) / 2 + var(--s5)));top:calc(var(--s5) + var(--head-room,0px));z-index:1;margin:0;
   display:flex;align-items:center;gap:.6rem;max-width:min(360px,44vw);
   font-size:.74rem!important;line-height:1.35;color:rgba(255,255,255,.78)!important;text-align:right;
 }
@@ -151,7 +151,7 @@ table,time,.countdown,.event-price,.date-chip{font-variant-numeric:tabular-nums}
 
 /* phones: compact hero sized to its content; the photo stays visible */
 @media (max-width:760px){
-  .hx{min-height:0;display:block;padding:calc(var(--s7) + 4px) 0 calc(var(--s7) + 40px)}
+  .hx{min-height:0;display:block;padding:calc(var(--s7) + 4px + var(--head-room,0px)) 0 calc(var(--s7) + 40px)}
   .hx-wash{background:
     linear-gradient(180deg,rgba(var(--ink-wash),.55) 0%,rgba(var(--ink-wash),.78) 45%,rgba(var(--ink-wash),.9) 100%)}
   .hx-photo{object-position:var(--fx-m,var(--fx,60%)) var(--fy-m,30%)}
@@ -305,8 +305,8 @@ table.price .note{color:var(--ink-2)}                                   /* note 
 .js .rec-static{display:none}
 /* until main.js has drawn the event or profile (.is-drawn), hold a hero's height and a screen below it, so the footer is
    not painted near the top and then pushed away (a layout shift of the whole viewport) */
-.js #event-page:not(.is-drawn),.js #facilitator-page:not(.is-drawn){min-height:calc(100vh + 240px);background:linear-gradient(var(--navy-ink),var(--navy-ink)) top/100% clamp(520px,68vh,720px) no-repeat}
-@media (max-width:760px){.js #event-page:not(.is-drawn),.js #facilitator-page:not(.is-drawn){background-size:100% 600px}}
+.js #event-page:not(.is-drawn),.js #facilitator-page:not(.is-drawn){min-height:calc(100vh + 240px);background:linear-gradient(var(--navy-ink),var(--navy-ink)) top/100% calc(clamp(520px,68vh,720px) + var(--head-room,0px)) no-repeat}
+@media (max-width:760px){.js #event-page:not(.is-drawn),.js #facilitator-page:not(.is-drawn){background-size:100% calc(600px + var(--head-room,0px))}}
 .rec-static{padding-block:var(--s6)}
 .rec-static h2{margin:var(--s6) 0 var(--s3)}
 .rec-static ul{padding-left:1.2rem;margin:0 0 var(--s4)}
@@ -353,6 +353,37 @@ html:not(.js) .hx-photo,html:not(.js) .marquee-track{animation:none}
 .footer-contact li:has(> a) svg{margin-top:0}
 .fac-card .fac-body > .link-arrow{min-height:44px;margin:calc(-.15rem - 10.5px) 0 calc(.1rem - 10.5px)}   /* 23px label, 44px target */
 .hx-article .ar-crumb{display:inline-flex;align-items:center;min-height:44px;margin:-13px 0}
+
+/* ---------- See-through header over the hero (2026-10-02) ----------
+   build.py marks every page whose content opens with a hero: <body class="hero-head">, and .under-head on that hero
+   (or on the event / profile container main.js draws it into). The hero slides up under the header - --head-room adds
+   the header's height to its top padding and height, so photo, copy and buttons keep their places - and the header
+   stays see-through with white type until the hero has scrolled out from under it (main.js sets body.past-hero), then
+   it turns back into the white bar. A soft navy scrim behind the bar keeps the links legible over bright photos.
+   Without JavaScript nothing changes. */
+:root{--head-h:79px}                                      /* header bar 78px + 1px border */
+@media (max-width:480px){:root{--head-h:69px}}
+.js .under-head{--head-room:var(--head-h);margin-top:calc(-1 * var(--head-h))}
+.js .hero-full.under-head{min-height:100vh;min-height:100svh;padding-top:var(--head-h)}
+.site-header::before{
+  content:"";position:absolute;inset:0 0 -36px;z-index:-1;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,rgba(var(--ink-wash),.74) 0%,rgba(var(--ink-wash),.5) 60%,rgba(var(--ink-wash),0) 100%);
+  transition:opacity var(--d2) var(--ease)
+}
+.brand-logo{transition:transform var(--d2) var(--ease),filter var(--d2) var(--ease)}
+.js body.hero-head:not(.past-hero) .site-header{background:transparent;border-color:transparent;box-shadow:none}
+.js body.hero-head:not(.past-hero) .site-header::before{opacity:1}
+.js body.hero-head:not(.past-hero) .brand-logo{filter:brightness(0) invert(1)}
+.js body.hero-head:not(.past-hero) .nav-toggle span{background:#fff}
+.js body.hero-head:not(.past-hero) .nav-toggle:hover{background:rgba(255,255,255,.14)}
+@media (min-width:981px){
+  .js body.hero-head:not(.past-hero) .nav a:not(.btn){color:#fff}
+  .js body.hero-head:not(.past-hero) .nav a:not(.btn):hover{color:var(--gold)}
+  /* the hero's own orange action is on screen, so the header CTA steps back - here as a light outline, not navy on navy */
+  .js body.hero-head:not(.past-hero) .site-header .nav .btn-primary.is-quiet{background:rgba(var(--ink-wash),.3);border-color:rgba(255,255,255,.62);color:#fff}
+  .js body.hero-head:not(.past-hero) .site-header .nav .btn-primary.is-quiet:hover{background:rgba(var(--ink-wash),.55);border-color:#fff;color:#fff}
+}
+@media print{.site-header::before{display:none}}
 
 /* form delivery failed (main.js): the problem and the way to still send the message */
 .form-fail{margin-top:1rem;padding:1rem 1.2rem;border-radius:var(--radius-sm);background:#fbefe9;border:1px solid #f0cdbf;color:#7d2a17;line-height:1.55}

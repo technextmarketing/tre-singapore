@@ -10,7 +10,7 @@
    ========================================================= */
 
 /* ---------- hero: the article photo is the background ---------- */
-.hx-article{min-height:clamp(460px,62vh,640px)}
+.hx-article{min-height:calc(clamp(460px,62vh,640px) + var(--head-room,0px))}
 .hx-article h1{font-size:clamp(2.05rem,3.7vw,3.1rem);line-height:1.08;max-width:14.868em;margin-bottom:0}   /* 21ch of Plus Jakarta Sans Bold, in em (see layer.css .hx h1) */
 .hx-article .breadcrumb{font-size:.88rem;margin:0 0 1.3rem;color:var(--on-navy-2)}
 .hx-article .ar-crumb{color:#fff;text-decoration:underline;text-decoration-color:rgba(201,164,92,.7);text-underline-offset:.28em;text-decoration-thickness:1px;transition:color var(--d1) var(--ease),text-decoration-color var(--d1) var(--ease)}

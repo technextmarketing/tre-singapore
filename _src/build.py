@@ -67,8 +67,27 @@ def write(out_rel, text):
     print("built", out_rel)
 
 
+HERO_FIRST = re.compile(r"^((?:\s|<!--.*?-->|<style\b.*?</style>|<link\b[^>]*>|<script\b.*?</script>)*)(<(?:section|div)\b[^>]*>)", re.S)
+
+
+def mark_hero(body):
+    """A page whose content opens with a hero (or with the event / profile container main.js draws one into) gets the
+    see-through header: .under-head on that element, body.hero-head (layer.css). Returns (body, marked)."""
+    m = HERO_FIRST.match(body)
+    if not m:
+        return body, False
+    tag = m.group(2)
+    if not (re.search(r'\bclass="[^"]*\b(hx|hero-full)\b', tag) or re.match(r'<div id="(event|facilitator)-page"', tag)):
+        return body, False
+    new = tag.replace('class="', 'class="under-head ', 1) if 'class="' in tag else tag[:-1] + ' class="under-head">'
+    return body[:m.start(2)] + new + body[m.end(2):], True
+
+
 def assemble(body, out_rel, title, desc, meta, active, root, manifest, head_first=""):
+    body, hero = mark_hero(body)
     html = read("head.html") + body + read("footer.html")
+    if hero:
+        html = html.replace("<body>", '<body class="hero-head">', 1)
     if head_first:
         html = html.replace('<meta charset="utf-8">\n', '<meta charset="utf-8">\n' + head_first + "\n", 1)
     html = (html.replace("{{META}}", meta).replace("{{TITLE}}", H.escape(title, quote=False))
