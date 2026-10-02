@@ -321,3 +321,5 @@ input.dt-dot:disabled{cursor:not-allowed}
   .dt-ticker .marquee-track > span[aria-hidden="true"]{display:none}
   .dt-ticker .marquee-track > span{flex-wrap:wrap;justify-content:center;row-gap:.5rem;white-space:normal;padding-right:0}
 }
+/* portrait event poster (2026-10-02) */
+.dt-poster-fig{margin:0;max-width:440px}.dt-poster-fig a{display:block;border-radius:16px;overflow:hidden;box-shadow:0 18px 50px -24px rgba(15,31,61,.45)}.dt-poster-fig img{display:block;width:100%;height:auto}.dt-poster-fig figcaption{font-size:.85rem;color:var(--ink-2);margin-top:.6rem}

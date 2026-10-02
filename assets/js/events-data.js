@@ -31,6 +31,7 @@
      isNew        : true to show a "New" badge
      theme        : "theme-deep" | "theme-bronze" | "theme-orange" | "theme-green" (fallback colour when no image)
      details      : { summary, about[], forWho[], schedule[], includes[], pricing[], pricingNote,
+                      posterTall {src, alt} (optional portrait poster, shown as an 'Event poster' section),
                       facilitators[], partners, online (true = show the online preparation guide),
                       register[{label,url,primary}], source }
    Events whose end date (or start date) has passed move automatically to "Past events".
@@ -84,7 +85,7 @@ window.TRE_EVENTS = [
     start: '2026-11-25T19:00',
     dateText: 'Wednesday 25 November 2026',
     timeText: '7:00\u20139:00pm Singapore time',
-    image: 'assets/img/events/event-body-in-the-room.webp',
+    image: 'assets/img/events/event-body-in-the-room.webp?v=2',
     description: 'An online workshop with Aun Ali \u2014 Certified TRE\u2122 Trainer and Clinically Certified Trauma Specialist \u2014 for psychologists, counsellors and narrative therapists who sense that talk alone is not always enough, and want a safe, structured way to bring the body into their work. A trauma-informed approach.',
     facilitator: 'Aun Ali',
     price: 'S$88',
@@ -94,6 +95,7 @@ window.TRE_EVENTS = [
     isNew: true,
     theme: 'theme-deep',
     details: {
+      posterTall: { src: 'assets/img/events/event-body-in-the-room-portrait.webp', alt: 'The Body in the Room — online workshop with Aun Ali, 25 November 2026, 7–9pm Singapore time' },
       summary: 'Many of us were trained to work with stories, thoughts and meaning. Then we sat with clients who could tell their story perfectly and still feel unsafe in their own skin. This workshop is a space for therapists and TRE\u2122 practitioners to talk honestly about what changes when the body becomes part of the therapeutic process.',
       about: [
         'We will look at the framework of trauma-informed care, and explore how and when TRE\u2122 and other body-based practices can be woven into each stage of therapy \u2014 without overwhelming the client or abandoning your existing model.',
@@ -147,7 +149,7 @@ window.TRE_EVENTS = [
     end: '2027-10-31',
     dateText: 'Feb–Oct 2027 · Module 1: 27–28 Feb · Module 2: 3–4 Jul · Module 3: 30–31 Oct 2027',
     chip: { top: '2027', bottom: 'Cohort' },
-    image: 'assets/img/events/event-certification-2027.webp',
+    image: 'assets/img/events/event-certification-2027.webp?v=2',
     description: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — boosted by Internal Alchemy and co-taught by two TRE™ Trainers, Isabelle Claus Teixeira & Simba Stenqvist. Three modules plus online supervisions and three self-paced bonus programs. Bundle from S$5,888 early bird.',
     facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
     credits: 'ICF CCE with Module 1',
@@ -158,6 +160,7 @@ window.TRE_EVENTS = [
     isNew: true,
     theme: 'theme-deep',
     details: {
+      posterTall: { src: 'assets/img/events/event-certification-2027-portrait.webp', alt: 'Become a Certified TRE™ Provider — 2027 Singapore cohort with Isabelle Claus Teixeira and Simba Stenqvist: Module 1 27–28 Feb, Module 2 3–4 Jul, Module 3 30–31 Oct 2027' },
       summary: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — co-taught by Isabelle Claus Teixeira and Simba Stenqvist, and boosted by Internal Alchemy. Three modules take you from your own TRE™ practice to confidently teaching individuals and groups. One cohort per year.',
       about: [
         'The Global TRE™ Provider Certification qualifies you to offer TRE™ to the general public, in individual and group settings.',
@@ -508,7 +511,7 @@ window.TRE_EVENTS = [
     start: '2026-10-28T19:00',
     dateText: 'Wednesday 28 October 2026',
     timeText: '7:00 \u2013 9:30pm Singapore time (6pm Bangkok)',
-    image: 'assets/img/events/event-feminine-masculine.webp?v=2',
+    image: 'assets/img/events/event-feminine-masculine.webp?v=3',
     description: 'A live online workshop with Sara Marie \u2014 The Alchemist \u2014 bringing energetic awareness together with somatic embodiment, so navigating masculine corporate structures becomes a place of liberation, ease and personal power.',
     facilitator: 'Sara Marie',
     priceText: 'Public 88 SGD (69 USD) \u00b7 TRE\u00ae providers 68 SGD',
@@ -517,6 +520,7 @@ window.TRE_EVENTS = [
     isNew: true,
     theme: 'theme-orange',
     details: {
+      posterTall: { src: 'assets/img/events/event-feminine-masculine-portrait.webp', alt: 'Navigating Feminine & Masculine Energetics Inside Corporate Structures — online workshop with Sara Marie, 28 October 2026, 7–9:30pm Singapore time' },
       summary: 'The corporate structure is one of the clearest expressions of masculine dynamics in the modern world. This live online workshop brings energetic awareness together with somatic embodiment, so navigating those structures becomes a place of liberation, ease and personal power.',
       about: [
         'This workshop is for women working inside corporate environments \u2014 or carrying the effects of having left them \u2014 for entrepreneurs holding the full weight of their business inside masculine business structures, and for practitioners, coaches and somatic therapists working inside these dynamics or supporting clients who are.',
