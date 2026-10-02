@@ -298,6 +298,7 @@
       }).join('') + '</ol></div>';
     }
     if (d.includes && d.includes.length) h += '<div class="dt-sec dt-inc"><h2>What is included</h2><ul class="dt-incl">' + d.includes.map(function (x) { return '<li>' + lead(x) + '</li>'; }).join('') + '</ul></div>';
+    if (d.posterTall && d.posterTall.src) h += '<div class="dt-sec dt-poster"><h2>Event poster</h2><figure class="dt-poster-fig"><a href="' + esc(ROOT + d.posterTall.src) + '" target="_blank" rel="noopener" aria-label="Open the full-size event poster"><img src="' + esc(ROOT + d.posterTall.src) + '" alt="' + esc(d.posterTall.alt || ev.title) + '" width="1080" height="1350" loading="lazy" decoding="async"></a><figcaption>Tap to open the full-size poster to save or share it.</figcaption></figure></div>';
     h += '<div class="dt-slot" data-dt-slot></div>';   /* phones: detail.js moves the register box here, after the value and before the people */
     if (d.facilitators && d.facilitators.length) {
       /* presentation cards: match each event facilitator to the directory by name to pull the portrait, tags and contact buttons */
