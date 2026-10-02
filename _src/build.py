@@ -78,7 +78,7 @@ def assemble(body, out_rel, title, desc, meta, active, root, manifest, head_firs
         html = html.replace("{{A_%s}}" % nid, "active" if nid == active else "")
     html = re.sub(r' class=""', "", html)
     assert "{{" not in html, (out_rel, re.findall(r"\{\{[A-Z_]+\}\}", html))
-    write(out_rel, html)
+    write(out_rel, images.picture_html(html, out_rel))   # AVIF <source> for every <img srcset> that has AVIF twins
 
 
 # (body partial, output file, <title>, meta description, active nav id, schema.org page type, breadcrumb name, share image)
@@ -406,7 +406,9 @@ def main(only, auto_drafts=False):
     images.ensure_static()
     if data:  # smaller copies of the data pictures for main.js (srcset); see _src/images.py
         IMG.update(images.manifest(data["events"], data["facilitators"]))
-        manifest += "<script>window.TRE_IMG=" + seo.json.dumps(IMG, separators=(",", ":")) + ";</script>"
+        manifest += "<script>window.TRE_IMG=" + seo.json.dumps(IMG, separators=(",", ":")) + ";"
+        # hero photos main.js draws on the event / profile pages (the same choice as main.js) that have AVIF twins
+        manifest += "window.TRE_HERO_AVIF=" + seo.json.dumps(images.hero_avif(["hero-education", "hero-events", "hero-facilitators"]), separators=(",", ":")) + ";</script>"
     event_cards = EP.blog_cards(eposts, {e["slug"]: e for e in events}, seo.trim, pretty_date, seo.text)
     home_text = seo.text(read("index.body.html"))
     if seo.TRE_DEFINITION not in home_text:
