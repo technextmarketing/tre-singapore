@@ -53,7 +53,7 @@
 .ev-mo{position:absolute;transform:translateX(-50%);font-size:.75rem;line-height:1.25;color:var(--muted);text-align:center;white-space:nowrap;pointer-events:none}
 .ev-mo small{display:block;font-size:.7rem;color:var(--muted)}
 .ev-today{position:absolute;top:0;transform:translateX(-50%);font-family:var(--font-display);font-size:.72rem;font-weight:700;line-height:1;color:var(--bronze);white-space:nowrap;pointer-events:none;transition:opacity .6s var(--ease)}
-.ev-node{position:absolute;z-index:1;width:calc(var(--w) + 16px);height:calc(var(--r) * 2 + 16px);transform:translate(-50%,-50%);display:grid;place-items:center;margin:0;padding:0;border:0;border-radius:999px;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .5s var(--ease)}
+.ev-node{position:absolute;z-index:1;width:calc(var(--w) + 22px);height:calc(var(--r) * 2 + 22px);transform:translate(-50%,-50%);display:grid;place-items:center;margin:0;padding:0;border:0;border-radius:999px;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .5s var(--ease)}
 .ev-node i{position:relative;display:block;box-sizing:border-box;width:var(--w);height:calc(var(--r) * 2);border-radius:999px;background:var(--paper);box-shadow:inset 0 0 0 2px var(--bronze);transition:transform .4s var(--ease-out),box-shadow .32s var(--ease),background-color .32s var(--ease),border-color .32s var(--ease)}
 .ev-node.is-cert i{background:var(--gold)}
 .ev-node.is-so i{background:var(--paper);box-shadow:none;border:1.75px dashed var(--muted-2)}
@@ -189,7 +189,7 @@
 .ev-close-next{padding-left:var(--s7);border-left:1px solid rgba(255,255,255,.14)}
 .ev-close-lbl{display:inline-flex;align-items:center;gap:.55rem;font-size:.84rem;font-weight:600;color:var(--gold)}
 .ev-close .ev-close-title{margin:.55rem 0 .2rem;max-width:none;font-family:var(--font-display);font-size:1.14rem;font-weight:700;line-height:1.35;color:#fff}
-.ev-close .ev-close-sub{margin:0;max-width:none;font-size:.9rem;line-height:1.5;color:#c5d0e4}
+.ev-close .ev-close-sub{margin:0;max-width:none;font-size:.9rem;line-height:1.5;color:var(--on-navy-2)}
 .ev-close .ev-close-title:empty,.ev-close .ev-close-sub:empty{display:none}
 .ev-close-acts{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.3rem;margin-top:var(--s4)}
 .ev-close .link-arrow{color:#fff}
@@ -211,7 +211,7 @@
 @media (max-width:900px){
   .ev-kinds-in{grid-template-columns:1fr;grid-template-areas:"head" "photo" "list"}
   .ev-kinds-photo{aspect-ratio:4/3;margin-bottom:var(--s4)}
-  .ev-prep-in{grid-template-columns:1fr;grid-template-areas:"head" "flow" "photo" "inperson";gap:var(--s6)}
+  .ev-prep-in{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "flow" "photo" "inperson";gap:var(--s6)}
   .ev-prep-stick{position:static}
   .ev-inp-photo{margin-top:var(--s3)}
 }
@@ -238,6 +238,7 @@
   .ev-dot{left:-50px}
   .ev-flow-line{left:17px}
   .ev-flow-end .btn-row{flex-direction:column;align-items:stretch}
+  .ev-flow-end .btn{white-space:normal;text-align:center;line-height:1.3}   /* 320px phones: "Read the full set-up guide" wraps instead of widening the page */
   .ev-close.cta-band{padding:var(--s6) var(--s5)}
   .ev-closewrap{padding-bottom:var(--s8)}
 }
@@ -264,7 +265,7 @@
 
 <!-- ===== HERO (modelled on hummingbeing.com/events.html) ===== -->
 <section class="page-hero hx hx-events" style="--fx:62%;--fy:60%;--fx-m:70%">
-  <div class="hx-media" aria-hidden="true"><img class="hx-photo" src="assets/img/gallery/hero-events-1600.webp" srcset="assets/img/gallery/hero-events-960.webp 960w, assets/img/gallery/hero-events-1600.webp 1600w" sizes="100vw" width="1600" height="1200" alt="" fetchpriority="high" decoding="async"></div>
+  <div class="hx-media" aria-hidden="true"><img class="hx-photo" src="assets/img/gallery/hero-events-1600.webp" srcset="assets/img/gallery/hero-events-960.webp 960w, assets/img/gallery/hero-events-1600.webp 1600w" sizes="(max-width: 760px) 50vw, 100vw" width="1600" height="1200" alt="" fetchpriority="high" decoding="async"></div>
   <div class="hx-wash" aria-hidden="true"></div>
   <canvas class="hx-tremor" aria-hidden="true"></canvas>
   <div class="container hx-inner">
@@ -323,7 +324,7 @@
       </div>
     </div>
 
-    <p class="note ev-note">All ticket sales are final — tickets are non-refundable and non-cancellable. Venues in Singapore are confirmed on registration. Times are Singapore time (SGT, UTC+8) unless stated otherwise; Bucharest events are in Eastern European Time (EET). Listings mirror <a href="https://hummingbeing.com/events.html" target="_blank" rel="noopener">hummingbeing.com/events</a>.</p>
+    <p class="note ev-note">All ticket sales are final — tickets are non-refundable and non-cancellable. Venues in Singapore are confirmed on registration. Times are Singapore time (SGT, UTC+8) unless stated otherwise; Bucharest events are in Eastern European Time (EET). Listings mirror <a href="https://hummingbeing.com/events" target="_blank" rel="noopener">hummingbeing.com/events</a>.</p>
 
     <div id="past-events" class="ev-past" hidden>
       <h2>Past events</h2>

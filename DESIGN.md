@@ -235,7 +235,7 @@ The site acts out TRE™ instead of describing it. Every page opens on a real se
 
 This is a precisely specified extension of the incumbent TRE Singapore world, not a replacement. The palette comes from the logo (navy wordmark, globe blue, bronze eagle and continents, brown "Singapore") plus the existing orange call-to-action colour. The type is technext.asia's Plus Jakarta Sans over Inter, made binding by the user on 2026-09-29. Density is moderate and editorial: a 1180px column, a 96px section rhythm, photographs in 16px windows, and hairline-ruled lists where other sites would reach for boxed tiles.
 
-Motion is rich but regulated, because the audience is looking for relief from stress. It is breath-paced in the hero, drawn once in sections and eased out everywhere else, with no springs and no bounce. Everything is visible by default and completely still under reduced motion. The world refuses the flat navy banner with decorative blobs, the stock or blurred wellness photograph, one fade-up repeated on every section, eyebrow labels, stat-tile rows and icon-card grids.
+Motion is rich but regulated, because the audience is looking for relief from stress. It is breath-paced in the hero, drawn once in sections and eased out everywhere else, with no springs and no bounce. Everything is visible by default and completely still under reduced motion, and one pause control (in every hero and on every ribbon, remembered per visitor) stops whatever moves on its own (WCAG 2.2.2). The world refuses the flat navy banner with decorative blobs, the stock or blurred wellness photograph, one fade-up repeated on every section, eyebrow labels, stat-tile rows and icon-card grids.
 
 **Key Characteristics:**
 - Real, sharp session photography graded toward navy under a wash that is densest on the copy side, with a provenance credit on every hero.
@@ -297,7 +297,7 @@ A logo-derived palette: deep navy ink for the world's fields, bronze and gold fo
 **Body Font:** Inter (with system-ui, -apple-system, Segoe UI, sans-serif)
 **Label/Mono Font:** no separate face. Labels use Plus Jakarta Sans; numerals are tabular in tables, prices, dates, countdowns and counts.
 
-**Character:** technext.asia's pairing, loaded from Google Fonts with the same stacks. The display face is geometric-humanist, set bold and slightly tight for headings, buttons and navigation; Inter carries the reading text quietly. Italic is the accent voice: the wordmark, one accent phrase in a heading, and the pull quotes on closes.
+**Character:** technext.asia's pairing with the same stacks, self-hosted in `assets/fonts` with metric-matched local fallbacks (no layout shift when the faces arrive). The display face is geometric-humanist, set bold and slightly tight for headings, buttons and navigation; Inter carries the reading text quietly. Italic is the accent voice: the wordmark, one accent phrase in a heading, and the pull quotes on closes.
 
 ### Hierarchy
 - **Display** (700, clamp(2.2rem, 4.6vw, 3.5rem), 1.12, -0.025em): the page H1 in every hero, white over the wash with a soft navy text shadow and a 17ch measure. The home hero steps up to clamp(2.4rem, 5.6vw, 4.4rem) at 1.04 (14ch); article heroes use clamp(2.05rem, 3.7vw, 3.1rem) at 1.08; phones (640px and below) use clamp(1.9rem, 8vw, 2.3rem).
