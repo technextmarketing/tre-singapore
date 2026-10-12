@@ -299,6 +299,8 @@ def countdown_static(body, events, now_utc):
     link = e.get("link") or ""
     m = re.match(r"^event\?id=([^&#]+)", link)
     href = f"events/{m.group(1)}" if m else (link if link else "events")
+    if not link and (e.get("details") or {}).get("gate") and e.get("slug"):
+        href = f"events/{e['slug']}#register"  # guest events: the countdown leads to the registration form, not to a payment site
     ext = ' target="_blank" rel="noopener"' if re.match(r"^https?:", href) else ""
     old_t = '<span id="countdown-title">Loading…</span><small id="countdown-sub"></small>'
     old_l = '<a class="btn btn-navy btn-sm" id="countdown-link" href="#calendar">Register</a>'

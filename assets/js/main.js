@@ -255,7 +255,7 @@
     var action;
     if (ev._past) action = details || '<span class="btn btn-outline btn-sm disabled">Completed</span>';
     else if (ev._soldOut) action = details + extLink(ev.waitlistLink || ev.link || '#', 'btn btn-navy btn-sm', 'Join waitlist');
-    else action = details + extLink(ev.link || detailUrl(ev), 'btn btn-primary btn-sm', ev.linkText || 'Register');
+    else action = details + extLink(ev.link || (detailUrl(ev) + (ev.details && ev.details.gate ? '#register' : '')), 'btn btn-primary btn-sm', ev.linkText || 'Register');
 
     var title = '<a href="' + esc(detailUrl(ev)) + '">' + esc(ev.title) + '</a>';
     var media = ev.image
@@ -279,6 +279,93 @@
   }
 
   /* ---------- Event detail page (event?id=slug) ---------- */
+  /* ---------- Register-first gate (guest-facilitator events): the form comes first, the payment details after it ----------
+     An event with details.gate shows a short form in its register box. Sending it (FormSubmit, like the contact form) swaps the
+     box for step 2 - prices, payment buttons and the event's note. The unlock is remembered on this device (localStorage
+     reg-<slug>). No payment address is rendered anywhere before that. */
+  function gateFormHtml(ev, g) {
+    var u = ev.slug;
+    return '<div class="dt-gate" id="register" tabindex="-1" data-gate="' + esc(u) + '">' +
+      '<div class="dt-gate-form"><p class="dt-gate-lead"><b>Step 1 of 2.</b> Tell us who you are. The payment details appear as soon as you send the form.</p>' +
+      '<form class="dt-gform" data-gform>' +
+      '<input type="hidden" name="_subject" value="' + esc('Event registration — ' + ev.title) + '"><input type="hidden" name="_template" value="table">' +
+      '<input type="hidden" name="event" value="' + esc(ev.title) + '"><input type="hidden" name="page" value="">' +
+      '<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+      '<div class="field"><label for="rg-name-' + u + '">Full name <span class="req">*</span></label><input id="rg-name-' + u + '" name="name" type="text" required autocomplete="name"></div>' +
+      '<div class="field"><label for="rg-email-' + u + '">Email <span class="req">*</span></label><input id="rg-email-' + u + '" name="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>' +
+      '<div class="field"><label for="rg-phone-' + u + '">Phone / WhatsApp <span class="req">*</span></label><input id="rg-phone-' + u + '" name="phone" type="tel" required autocomplete="tel" placeholder="+65 …"></div>' +
+      '<div class="field"><label for="rg-country-' + u + '">Country</label><input id="rg-country-' + u + '" name="country" type="text" autocomplete="country-name"></div>' +
+      (g.discount ? '<div class="field"><label for="rg-code-' + u + '">Discount code</label><input id="rg-code-' + u + '" name="discount_code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false"></div>' : '') +
+      '<div class="field"><label for="rg-msg-' + u + '">Message</label><textarea id="rg-msg-' + u + '" name="message" rows="3"></textarea></div>' +
+      '<button class="btn btn-primary" type="submit">Continue to registration</button>' +
+      '</form></div>' +
+      '<div class="dt-gate-pay" hidden></div></div>';
+  }
+  function initGate(ev, d) {
+    var g = d && d.gate, box = g && document.getElementById('register'); if (!g || !box) return;
+    var KEY = 'reg-' + ev.slug, wrap = $('.dt-gate-form', box), pay = $('.dt-gate-pay', box), form = $('[data-gform]', box);
+    var btn = $('button[type="submit"]', form), label = btn.textContent;
+    function firstField() { return $('input[name="name"]', form); }
+    function focusEl(el) { if (!el) return; try { el.focus({ preventScroll: true }); } catch (x) { el.focus(); } }
+    function getSaved() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (x) { return null; } }
+    function setSaved(v) { try { if (v) localStorage.setItem(KEY, JSON.stringify(v)); else localStorage.removeItem(KEY); } catch (x) { /* private mode */ } }
+    function showForm(focus) { pay.hidden = true; pay.innerHTML = ''; wrap.hidden = false; if (focus) focusEl(firstField()); }
+    function showPay(saved, focus) {
+      var first = String(saved.name || '').split(/\s+/)[0] || '';
+      var withCode = !!(saved.code && g.discountNote);
+      var h = '<h4 class="dt-gate-h" tabindex="-1">Complete your registration</h4>' +
+        '<p class="dt-gate-thanks">Thank you' + (first ? ', ' + esc(first) : '') + ' — your details are with Isabelle.</p>';
+      var prices = (d.pricing || []).map(function (t) { return '<li><span>' + esc(t.label) + '</span><b>' + esc(t.price) + '</b></li>'; }).join('');
+      if (prices) h += '<ul class="dt-gate-prices">' + prices + '</ul>';
+      if (withCode) h += '<p class="dt-gate-code">' + esc(g.discountNote) + '</p>';
+      h += '<div class="dt-gate-acts">' + (g.pay || []).map(function (p) {
+        var cls = 'btn ' + (p.primary && !withCode ? 'btn-primary' : 'btn-outline');
+        return '<a class="' + cls + '" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(withCode && g.altLabel ? g.altLabel : p.label) + '</a>';
+      }).join('') + '</div>';
+      if (g.copy) h += '<div class="dt-gate-copy"><span class="dt-gate-copy-l">' + esc(g.copy.label) + '</span><span class="dt-gate-copy-r"><code>' + esc(g.copy.value) + '</code><button type="button" class="btn btn-outline btn-sm" data-copy>Copy</button></span><span class="dt-gate-copied" role="status" aria-live="polite"></span></div>';
+      if (g.note) h += '<p class="dt-gate-note">' + esc(g.note) + '</p>';
+      h += '<p class="dt-gate-again"><button type="button" class="dt-linkbtn" data-again>Not you? Register someone else</button></p>';
+      pay.innerHTML = h; wrap.hidden = true; pay.hidden = false;
+      var cp = $('[data-copy]', pay);
+      if (cp) cp.addEventListener('click', function () {
+        var v = g.copy.value, out = $('.dt-gate-copied', pay);
+        function done(ok) { out.textContent = ok ? 'Copied' : 'Press Ctrl+C to copy'; setTimeout(function () { out.textContent = ''; }, 2500); }
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(v).then(function () { done(true); }, function () { done(false); });
+        else { var t = document.createElement('textarea'); t.value = v; t.setAttribute('readonly', ''); t.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(t); t.select(); var ok = false; try { ok = document.execCommand('copy'); } catch (x) { ok = false; } document.body.removeChild(t); done(ok); }
+      });
+      $('[data-again]', pay).addEventListener('click', function () { setSaved(null); showForm(true); });
+      if (focus) focusEl($('.dt-gate-h', pay));
+    }
+    var saved = getSaved();
+    if (saved && saved.name) showPay(saved, false);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      var data = {};
+      $all('input, textarea', form).forEach(function (f) { if (f.name) data[f.name] = f.value.trim(); });
+      data.page = location.origin + location.pathname;
+      var fail = $('.form-fail', form); if (fail) fail.hidden = true;
+      btn.disabled = true; btn.textContent = 'Sending…';
+      post('https://formsubmit.co/ajax/isabelle@bhdasia.com', data)
+        .then(function () {
+          var s = { name: data.name, code: !!data.discount_code }; setSaved(s); form.reset(); showPay(s, true);
+        })
+        .catch(function () {
+          var body = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + data.phone, 'Country: ' + (data.country || '-')].concat(g.discount ? ['Discount code: ' + (data.discount_code || '-')] : [], ['Message: ' + (data.message || '-')]).join('\n');
+          note(form, 'form-fail', 'Sorry — the form could not send just now. <a href="mailto:isabelle@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">Send it by email instead</a> (your details are already written out) and Isabelle will reply with the registration details.', btn);
+        })
+        .then(function () { btn.disabled = false; btn.textContent = label; });
+    });
+    /* every "Register" button on the page leads here: scroll to the box and put the cursor in the first field */
+    function go(e) {
+      if (e) e.preventDefault();
+      box.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
+      setTimeout(function () { focusEl(wrap.hidden ? $('.dt-gate-h', pay) : firstField()); }, REDUCED ? 0 : 450);
+    }
+    document.addEventListener('click', function (e) { var a = e.target.closest ? e.target.closest('a[href="#register"]') : null; if (a) go(e); });
+    if (location.hash === '#register') setTimeout(function () { go(null); }, 350);
+  }
+
   function initEventPage() {
     var root = $('#event-page'); if (!root || !window.TRE_EVENTS) return;
     var id = root.getAttribute('data-id') || new URLSearchParams(location.search).get('id') || '';
@@ -391,10 +478,15 @@
     if (d.pricing && d.pricing.length) h += '<div class="dt-tiers">' + d.pricing.map(function (t) { return tier(t.label, t.sub, t.price, t.note, t.hl, t.soldOut); }).join('') + '</div>';
     else if (ev.price) h += '<div class="dt-tiers">' + tier(ev.title, '', ev.price, ev.priceNote, true, false) + '</div>';
     else if (ev.priceText) h += '<p class="dt-pricetext">' + esc(ev.priceText) + '</p>';
-    h += '<div class="dt-reg-acts">';
-    if (!ev._past) (d.register || []).forEach(function (r, i) { h += extLink(siteUrl(r.url), 'btn ' + (r.primary || i === 0 ? 'btn-primary' : 'btn-outline'), r.label); });
-    else h += '<a class="btn btn-primary" href="' + ROOT + 'events">Browse upcoming events</a>';
-    h += '</div>' + (d.pricingNote ? '<p class="dt-fine">' + esc(d.pricingNote) + '</p>' : '') + '</div>';
+    var gated = d.gate && !ev._past && !ev.status && !ev._soldOut;
+    if (gated) h += gateFormHtml(ev, d.gate);
+    else {
+      h += '<div class="dt-reg-acts">';
+      if (!ev._past) (d.register || []).forEach(function (r, i) { h += extLink(siteUrl(r.url), 'btn ' + (r.primary || i === 0 ? 'btn-primary' : 'btn-outline'), r.label); });
+      else h += '<a class="btn btn-primary" href="' + ROOT + 'events">Browse upcoming events</a>';
+      h += '</div>';
+    }
+    h +=  (d.pricingNote ? '<p class="dt-fine">' + esc(d.pricingNote) + '</p>' : '') + '</div>';
     h += '</div></div>';
     var posts = ((window.TRE_EVENT_POSTS || {})[ev.slug] || []);
     if (posts.length) h += '<div class="dt-box dt-posts"><h3>From the blog</h3><ul class="dt-links">' + posts.map(function (p) {
@@ -412,6 +504,7 @@
     /* phones: a floating register action (shown by detail.js while the hero button and the register box are off screen) */
     if (!ev._past && primary) h += '<div class="dt-dock" hidden>' + extLink(siteUrl(primary.url), 'btn btn-primary btn-sm', primary.label) + '</div>';
     root.innerHTML = h; root.classList.add('is-drawn');
+    if (gated) initGate(ev, d);
   }
 
   function initEvents() {
@@ -478,7 +571,7 @@
         $('#countdown-title').textContent = ev.title;
         $('#countdown-sub').textContent = ev.dateText + ' · ' + (ev.venue || ev.location);
         if (link) {
-          link.href = ev.link ? siteUrl(ev.link) : ROOT + 'events';
+          link.href = ev.link ? siteUrl(ev.link) : (ev.slug && ev.details && ev.details.gate ? detailUrl(ev) + '#register' : ROOT + 'events');
           if (isExternal(ev.link)) { link.target = '_blank'; link.rel = 'noopener'; } else { link.removeAttribute('target'); link.removeAttribute('rel'); }
         }
       }
