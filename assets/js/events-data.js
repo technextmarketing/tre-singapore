@@ -165,6 +165,7 @@ window.TRE_EVENTS = [
     dateText: 'Tuesday 15 December 2026',
     timeText: '7:00\u20139:00pm Singapore time (SGT)',
     image: 'assets/img/events/event-breath-as-medicine.webp',
+    card     : 'assets/img/events/card-event-breath-as-medicine.webp?v=1',
     description: 'An online introduction to pranayama with Ania Zieli\u0144ska: how conscious breathing supports your physical, mental and emotional wellbeing, with simple techniques to calm, reset, energise and focus. For beginners \u2014 no previous Yoga or Breathwork experience needed.',
     facilitator: 'Ania Zieli\u0144ska',
     price: 'S$88',
