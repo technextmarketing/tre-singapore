@@ -513,11 +513,12 @@
   function initEvents() {
     if (!window.TRE_EVENTS) return;
     var events = normaliseEvents(window.TRE_EVENTS);
-    var upcoming = events.filter(function (e) { return !e._past; }).sort(function (a, b) {
-      if (!!a._soldOut !== !!b._soldOut) return a._soldOut ? 1 : -1; // available upcoming first (priority), sold-out to the back
-      return a._start - b._start;
+    // sold-out events live with the past ones ("Past and sold out events"), not in the upcoming list
+    var upcoming = events.filter(function (e) { return !e._past && !e._soldOut; }).sort(function (a, b) { return a._start - b._start; });
+    var past = events.filter(function (e) { return e._past || e._soldOut; }).sort(function (a, b) {
+      if (!a._past !== !b._past) return a._past ? 1 : -1;            // sold out (not yet held) first, soonest first
+      return a._past ? b._start - a._start : a._start - b._start;    // then past, most recent first
     });
-    var past = events.filter(function (e) { return e._past; }).sort(function (a, b) { return b._start - a._start; });
 
     $all('[data-events-preview]').forEach(function (grid) {
       var n = parseInt(grid.getAttribute('data-events-preview'), 10) || 3;
@@ -532,7 +533,6 @@
       function render() {
         var list;
         if (current === 'past') list = past;
-        else if (current === 'soldout') list = events.filter(function (e) { return e._soldOut; }).sort(function (a, b) { return a._start - b._start; });
         else list = upcoming.filter(function (e) {
           if (current === 'all') return true;
           if (current === 'certification') return e.category === 'Certification';
@@ -551,7 +551,7 @@
         });
       });
       var pastGrid = $('#past-grid'); if (pastGrid) pastGrid.innerHTML = past.map(renderCard).join('');
-      var counts = $('#event-count'); if (counts) counts.textContent = upcoming.length + ' upcoming · ' + past.length + ' past';
+      var counts = $('#event-count'); if (counts) counts.textContent = upcoming.length + ' upcoming · ' + past.length + ' past and sold out';
       render();
     }
 

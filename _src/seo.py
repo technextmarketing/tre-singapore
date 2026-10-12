@@ -423,10 +423,10 @@ def events_static_list(events, root):
         bits = " · ".join(x for x in [e.get("dateText"), e.get("location"), e.get("price"),
                                             (e.get("status") or "").capitalize() or None] if x)
         return f'<li><a href="{root}events/{esc(e["slug"])}">{esc(e["title"])}</a> — {esc(bits)}</li>'
-    up = [row(e) for e in events if not e["_past"]]
-    past = [row(e) for e in events if e["_past"]]
+    up = [row(e) for e in events if not e["_past"] and not e.get("soldOut")]
+    past = [row(e) for e in events if e["_past"] or e.get("soldOut")]
     return ('<div class="container rec-static"><h2>All TRE™ events</h2>' +
-            (f"<h3>Upcoming</h3><ul>{''.join(up)}</ul>" if up else "") + (f"<h3>Past events</h3><ul>{''.join(past)}</ul>" if past else "") + "</div>")
+            (f"<h3>Upcoming</h3><ul>{''.join(up)}</ul>" if up else "") + (f"<h3>Past and sold out events</h3><ul>{''.join(past)}</ul>" if past else "") + "</div>")
 
 
 def facilitators_static_list(facs, root):
