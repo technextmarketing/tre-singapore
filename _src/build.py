@@ -119,16 +119,16 @@ PAGES = [
     ("education.body.html", "education.html", "TRE™ Certification Singapore — Become a Certified Provider",
      "What TRE™ is, how neurogenic tremors work, and how to become a Global TRE™ Certified Provider in Singapore: Modules 1–3, fees, ICF CCEUs and FAQ.",
      "education", "WebPage", "Education", "assets/img/og/education.jpg"),
-    ("facilitators.body.html", "facilitators.html", "Certified TRE™ Providers & Facilitators in Singapore",
+    ("facilitators.body.html", "facilitators.html", "Certified TRE™ Providers in Singapore",
      "Find a certified TRE™ provider in Singapore for one-to-one, group, online or corporate sessions. Meet the Certifying Trainer and join the directory.",
-     "facilitators", "CollectionPage", "Facilitators", "assets/img/og/facilitators.jpg"),
+     "facilitators", "CollectionPage", "Providers", "assets/img/og/facilitators.jpg"),
     ("events.body.html", "events.html", "TRE™ Workshops & Events — Singapore and Online",
      "Upcoming TRE™ workshops, certification modules and online sessions in Singapore, Bucharest and on Zoom: dates, prices and how to register.",
      "events", "CollectionPage", "Events", "assets/img/og/events.jpg"),
     ("event.body.html", "event.html", "Event — TRE™ in Singapore",
      "Details, programme, pricing and registration for TRE™ events in Singapore, Bucharest and online.", "events", None, None, None),
-    ("facilitator.body.html", "facilitator.html", "Facilitator profile — TRE™ in Singapore",
-     "Profile of a TRE™ facilitator in Singapore: background, credentials, sessions offered and how to book.", "facilitators", None, None, None),
+    ("facilitator.body.html", "facilitator.html", "Provider profile — TRE™ in Singapore",
+     "Profile of a TRE™ provider in Singapore: background, credentials, sessions offered and how to book.", "facilitators", None, None, None),
     ("online-session-guide.body.html", "online-session-guide.html", "Online TRE™ Session Guide — Zoom, Camera & Space Setup",
      "How to prepare for an online TRE™ session: head-to-toe camera framing, your space and kit, a support person, Zoom settings and the 15-minutes-before checklist.",
      "events", "WebPage", "Online session guide", "assets/img/og/guide.jpg"),
@@ -205,7 +205,7 @@ def page_meta(out, title, desc, kind, crumb, image, body, events, facs, posts):
     if out == "events.html":
         nodes.append(seo.item_list(url, "Upcoming TRE™ events", [(e["title"], seo.rec_url("events", e["slug"])) for e in events if not e["_past"] and e.get("status") not in ("postponed", "cancelled")]))
     if out == "facilitators.html":
-        nodes.append(seo.item_list(url, "TRE™ facilitators in Singapore", [(f["name"], seo.rec_url("facilitators", f["id"])) for f in facs]))
+        nodes.append(seo.item_list(url, "TRE™ providers in Singapore", [(f["name"], seo.rec_url("facilitators", f["id"])) for f in facs]))
     if out == "blog.html":
         nodes.append(seo.item_list(url, "TRE™ articles", [(t, canonical_for(o)) for _, o, t, _d in posts]))
     return seo.head_meta(title, desc, url, img, "website", graph=nodes, image_size=size)
@@ -264,14 +264,14 @@ def event_page(e, template, facs, manifest):
 def facilitator_page(f, template, events, facs, manifest):
     out = f"facilitators/{f['id']}.html"
     url = canonical_for(out)
-    title = f"{f['name']} — {f.get('tag') or 'TRE™ facilitator'} | TRE™ in Singapore"
+    title = f"{f['name']} — {f.get('tag') or 'TRE™ provider'} | TRE™ in Singapore"
     title = title if len(title) <= 70 else f"{f['name']} | TRE™ in Singapore"
     desc = seo.trim(f.get("summary") or f.get("bio") or "", 158)
     img, size = og(f"assets/img/og/fac-{f['id']}.jpg")
     who = seo.person(f, full=True)
     nodes = base_graph(facs, skip_isabelle=f["id"] == seo.ISABELLE) + [
         seo.webpage(url, title, desc, kind="ProfilePage", image=img, mainEntity={"@id": who["@id"]}),
-        seo.breadcrumb(url, [("Facilitators", BASE + "facilitators"), (f["name"], url)]), who]
+        seo.breadcrumb(url, [("Providers", BASE + "facilitators"), (f["name"], url)]), who]
     meta = seo.head_meta(title, desc, url, img, "profile", graph=nodes, image_size=size)
     body = record_body(template, "facilitator-page", f["id"], seo.facilitator_static(f, events, "../"))
     assemble(body, out, title, desc, meta, "facilitators", "../", manifest)

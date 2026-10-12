@@ -671,7 +671,7 @@
       document.title = 'Profile not found — TRE™ in Singapore'; return;
     }
     if (!root.getAttribute('data-id')) {  /* the ?id= template has a generic head; a built page's own head is already right */
-      document.title = f.name + ' — TRE™ facilitator in Singapore';
+      document.title = f.name + ' — TRE™ provider in Singapore';
       var md = $('meta[name="description"]'); if (md) md.setAttribute('content', f.summary || f.bio || '');
       var ogT = $('meta[property="og:title"]'); if (ogT) ogT.setAttribute('content', f.name + ' — ' + f.role);
       var ogD = $('meta[property="og:description"]'); if (ogD) ogD.setAttribute('content', f.summary || f.bio || '');
@@ -690,7 +690,7 @@
       '<div class="hx-media" aria-hidden="true">' + heroPhoto(hb, 'hero-facilitators') + '</div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner hx-split"><div>' +
-      '<p class="crumbs"><a href="' + ROOT + 'facilitators">Facilitators</a> › ' + esc(f.tag || 'Profile') + '</p>' +
+      '<p class="crumbs"><a href="' + ROOT + 'facilitators">Providers</a> › ' + esc(f.tag || 'Profile') + '</p>' +
       '<h1>' + esc(f.name) + '</h1><p class="role">' + esc(f.role) + '</p>' +
       (f.sample ? '<div class="badges"><span class="badge">Sample profile</span></div>' : '') +
       '<p class="lead">' + esc(f.summary || f.bio) + '</p>' +
@@ -743,8 +743,8 @@
         (f.socials || []).map(function (s) { return '<li><a class="dt-li" href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + '<span>' + esc(s.label || s.type) + '<small>' + esc(s.type.charAt(0).toUpperCase() + s.type.slice(1)) + '</small></span></a></li>'; }).join('') + '</ul></div>';
     }
     h += '</div></div>';
-    h += '<div class="dt-box dt-more"><h3>More facilitators</h3><ul class="dt-links dt-faces">' + shuffleArr(window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id; })).slice(0, 4).map(function (x) { return '<li><a class="dt-li" href="' + recUrl('facilitators', x.id) + '">' + (x.photo ? pic(x.photo, '', '42px', ' loading="lazy" decoding="async"') : FAC_ICONS.group) + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + (x.sample ? ' · sample' : '') + '</small></span></a></li>'; }).join('') +
-      '<li><a class="dt-li" href="' + ROOT + 'facilitators#directory">' + ICONS.pin + '<span>All facilitators<small>Trainers and providers in Singapore</small></span></a></li></ul></div>';
+    h += '<div class="dt-box dt-more"><h3>More providers</h3><ul class="dt-links dt-faces">' + shuffleArr(window.TRE_FACILITATORS.filter(function (x) { return x.id !== f.id; })).slice(0, 4).map(function (x) { return '<li><a class="dt-li" href="' + recUrl('facilitators', x.id) + '">' + (x.photo ? pic(x.photo, '', '42px', ' loading="lazy" decoding="async"') : FAC_ICONS.group) + '<span>' + esc(x.name) + '<small>' + esc(x.tag || '') + (x.sample ? ' · sample' : '') + '</small></span></a></li>'; }).join('') +
+      '<li><a class="dt-li" href="' + ROOT + 'facilitators#directory">' + ICONS.pin + '<span>All providers<small>Trainers and certified providers in Singapore</small></span></a></li></ul></div>';
     h += '</aside></div></section>';
     h += '<section class="dt-end"><div class="container">' + CLOSE + '</div></section>';
     root.innerHTML = h; root.classList.add('is-drawn');
@@ -758,8 +758,8 @@
     function hay(f) { return [f.name, f.role, f.bio, f.tag, (f.services || []).join(' '), (f.meta || []).map(function (m) { return m.text; }).join(' '), f.facts && f.facts.location, f.facts && f.facts.languages].join(' ').toLowerCase(); }
     function render() {
       var list = order.filter(function (f) { return (kind === 'all' || f.kind === kind) && (mode === 'all' || (f.modes || []).indexOf(mode) >= 0) && (!q || hay(f).indexOf(q) >= 0); });
-      grid.innerHTML = list.length ? list.map(function (f, i) { return renderFacilitator(f, i); }).join('') : '<div class="event-empty" style="grid-column:1/-1">No facilitators match those filters. <button type="button" class="link-arrow" data-fac-reset>Show everyone</button></div>';
-      if (count) count.textContent = list.length + ' of ' + order.length + ' facilitators · order shuffles on every visit';
+      grid.innerHTML = list.length ? list.map(function (f, i) { return renderFacilitator(f, i); }).join('') : '<div class="event-empty" style="grid-column:1/-1">No providers match those filters. <button type="button" class="link-arrow" data-fac-reset>Show everyone</button></div>';
+      if (count) count.textContent = list.length + ' of ' + order.length + ' providers · order shuffles on every visit';
     }
     $all('[data-fac-filter="kind"] .filter-btn').forEach(function (b) { b.addEventListener('click', function () { $all('[data-fac-filter="kind"] .filter-btn').forEach(function (x) { x.classList.remove('active'); }); b.classList.add('active'); kind = b.getAttribute('data-value'); render(); }); });
     $all('[data-fac-filter="mode"] .chip').forEach(function (b) { b.addEventListener('click', function () { $all('[data-fac-filter="mode"] .chip').forEach(function (x) { x.classList.remove('active'); }); b.classList.add('active'); mode = b.getAttribute('data-value'); render(); }); });

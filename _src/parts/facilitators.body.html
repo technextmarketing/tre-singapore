@@ -276,8 +276,8 @@
   <div class="hx-wash" aria-hidden="true"></div>
   <canvas class="hx-tremor" aria-hidden="true"></canvas>
   <div class="container hx-inner">
-      <h1>TRE™ Facilitators in Singapore</h1>
-      <p>Every facilitator listed here holds — or is completing — certification under the global TRE™ programme created by Dr. David Berceli. Book an individual session, join a group, or bring TRE™ to your organisation.</p>
+      <h1>TRE™ Providers in Singapore</h1>
+      <p>Every provider listed here holds — or is completing — certification under the global TRE™ programme created by Dr. David Berceli. Book an individual session, join a group, or bring TRE™ to your organisation.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="#directory">Browse the directory</a>
         <a class="btn btn-ghost-light" href="#get-listed">List your practice</a>
@@ -291,7 +291,7 @@
   <div class="container">
     <div class="fc-dir-head">
       <h2>Global TRE™ trainers and certified providers who teach in Singapore</h2>
-      <p>The order shuffles on every visit so each facilitator gets the same time at the top. Filter by role or format, or search by name, area or language.</p>
+      <p>The order shuffles on every visit so each provider gets the same time at the top. Filter by role or format, or search by name, area or language.</p>
     </div>
     <div class="fc-browse">
       <div class="fac-tools fc-tools">
@@ -314,14 +314,14 @@
             <button type="button" class="chip" data-value="Workshops" aria-pressed="false">Workshops</button>
             <button type="button" class="chip" data-value="Certification" aria-pressed="false">Certification</button>
           </div>
-          <label class="fac-search fc-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Search name, area, language…" data-fac-search aria-label="Search facilitators"></label>
+          <label class="fac-search fc-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Search name, area, language…" data-fac-search aria-label="Search providers"></label>
           <button type="button" class="btn btn-ghost btn-sm fc-shuffle" data-fac-shuffle title="Shuffle the order"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px" aria-hidden="true"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>Shuffle</button>
         </div>
         <p class="small muted fc-count" data-fac-count aria-live="polite"></p>
       </div>
       <div class="fc-stage">
         <div class="grid grid-3 fac-grid" data-facilitators-grid>
-          <noscript><p class="muted">Enable JavaScript to see the facilitators, or email <a href="mailto:isabelle@bhdasia.com">isabelle@bhdasia.com</a>.</p></noscript>
+          <noscript><p class="muted">Enable JavaScript to see the providers, or email <a href="mailto:isabelle@bhdasia.com">isabelle@bhdasia.com</a>.</p></noscript>
         </div>
       </div>
     </div>
@@ -509,7 +509,7 @@
   }
   function faces(list, cls) {
     return list.filter(function (f) { return f && f.photo; }).map(function (f) {
-      var href = window.TRE_recUrl ? window.TRE_recUrl('facilitators', f.id) : 'facilitator?id=' + encodeURIComponent(f.id);
+      var href = window.TRE_recUrl ? window.TRE_recUrl('providers', f.id) : 'provider?id=' + encodeURIComponent(f.id);
       var img = window.TRE_pic ? window.TRE_pic(f.photo, '', '64px', ' width="64" height="64" loading="lazy" decoding="async"') : '<img src="' + esc(f.photo) + '" alt="" width="64" height="64" loading="lazy" decoding="async">';
       return '<a class="' + cls + '" href="' + esc(href) + '" aria-label="View profile: ' + esc(f.name) + '" data-name="' + esc(f.name) + '">' + img + '</a>';
     }).join('');
@@ -520,7 +520,7 @@
     var dir = $('.fc-dir'); if (!dir) return;
     var browse = $('.fc-browse', dir), tools = $('.fc-tools', dir), segWrap = $('.fc-seg-wrap', dir);
     var seg = $('[data-fac-filter="kind"]', dir), chips = $('[data-fac-filter="mode"]', dir), search = $('[data-fac-search]', dir);
-    var countEl = $('[data-fac-count]', dir), stage = $('.fc-stage', dir), grid = $('[data-facilitators-grid]', dir), header = $('.site-header');
+    var countEl = $('[data-fac-count]', dir), stage = $('.fc-stage', dir), grid = $('[data-providers-grid]', dir), header = $('.site-header');
     if (!browse || !seg || !chips || !grid || !stage) return;
     var DATA = people();
 
