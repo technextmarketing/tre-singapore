@@ -352,7 +352,10 @@
         })
         .catch(function () {
           var body = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + data.phone, 'Country: ' + (data.country || '-')].concat(g.discount ? ['Discount code: ' + (data.discount_code || '-')] : [], ['Message: ' + (data.message || '-')]).join('\n');
-          note(form, 'form-fail', 'Sorry — the form could not send just now. <a href="mailto:isabelle@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">Send it by email instead</a> (your details are already written out) and Isabelle will reply with the registration details.', btn);
+          /* the send failed: still show the payment step (as hummingbeing.com / bhdasia.com do) and ask for the details by email */
+          var s = { name: data.name, code: !!data.discount_code }; setSaved(s); form.reset(); showPay(s, true);
+          var th = $('.dt-gate-thanks', pay), first = String(data.name || '').split(/\s+/)[0];
+          if (th) th.innerHTML = 'Thank you' + (first ? ', ' + esc(first) : '') + '. Our form could not send your details just now &mdash; please <a href="mailto:isabelle@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">email them to Isabelle</a> (already written out).';
         })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
