@@ -258,8 +258,8 @@
     else action = details + extLink(ev.link || (detailUrl(ev) + (ev.details && ev.details.gate ? '#register' : '')), 'btn btn-primary btn-sm', ev.linkText || 'Register');
 
     var title = '<a href="' + esc(detailUrl(ev)) + '">' + esc(ev.title) + '</a>';
-    var media = ev.image
-      ? '<div class="event-media has-img">' + pic(ev.image, '', '(max-width: 640px) 92vw, (max-width: 980px) 46vw, 362px', ' loading="lazy" decoding="async" onerror="var m=this.closest(\'.event-media\');if(m)m.classList.remove(\'has-img\');(this.closest(\'picture\')||this).remove()"')
+    var cardImg = ev.card || ev.image, media = cardImg
+      ? '<div class="event-media has-img">' + pic(cardImg, '', '(max-width: 640px) 92vw, (max-width: 980px) 46vw, 362px', ' loading="lazy" decoding="async" onerror="var m=this.closest(\'.event-media\');if(m)m.classList.remove(\'has-img\');(this.closest(\'picture\')||this).remove()"')
       : '<div class="event-media ' + themeFor(ev) + '">';
 
     return '' +

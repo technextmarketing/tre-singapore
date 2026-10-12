@@ -16,7 +16,8 @@
      dateText     : human-readable date line (required)
      timeText     : human-readable time (optional)
      chip         : {top:"29–30", bottom:"Aug 2026"} to override the date chip (optional)
-     image        : thumbnail path (16:9) — shown on the card and the detail page
+     image        : thumbnail path (16:9) — shown on the detail page (hero) and used for og:image / posters
+     card         : card-only picture (16:9) — shown on event cards in listings; falls back to image (optional)
      description  : short paragraph for the card
      facilitator  : name(s) (optional)
      credits      : e.g. "21 ICF CCEUs" (optional)
@@ -95,6 +96,7 @@ window.TRE_EVENTS = [
     dateText: 'Wednesday 25 November 2026',
     timeText: '7:00\u20139:00pm Singapore time',
     image: 'assets/img/events/event-body-in-the-room.webp?v=2',
+    card     : 'assets/img/events/card-event-body-in-the-room.webp?v=1',
     description: 'An online workshop with Aun Ali \u2014 Certified TRE\u2122 Trainer and Clinically Certified Trauma Specialist \u2014 for psychologists, counsellors and narrative therapists who sense that talk alone is not always enough, and want a safe, structured way to bring the body into their work. A trauma-informed approach.',
     facilitator: 'Aun Ali',
     price: 'S$88',
@@ -226,6 +228,7 @@ window.TRE_EVENTS = [
     dateText: 'Feb–Oct 2027 · Module 1: 27–28 Feb · Module 2: 3–4 Jul · Module 3: 30–31 Oct 2027',
     chip: { top: '2027', bottom: 'Cohort' },
     image: 'assets/img/events/event-certification-2027.webp?v=2',
+    card     : 'assets/img/events/card-event-certification-2027.webp?v=1',
     description: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — boosted by Internal Alchemy and co-taught by two TRE™ Trainers, Isabelle Claus Teixeira & Simba Stenqvist. Three modules plus online supervisions and three self-paced bonus programs. Bundle from S$5,888 early bird.',
     facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
     credits: 'ICF CCE with Module 1',
@@ -292,6 +295,7 @@ window.TRE_EVENTS = [
     dateText: 'Aug 2026 – Feb 2027 · Module 1: 29–30 Aug · Module 2: 26–27 Sep · Module 3: 20–21 Feb 2027',
     chip: { top: '3', bottom: 'Modules' },
     image: 'assets/img/events/event-transform-practice.webp',
+    card     : 'assets/img/events/card-event-transform-practice.webp?v=1',
     description: 'The full Global TRE™ Provider Certification — three 2-day workshops plus 12 online sessions. Qualify to offer TRE™ to the public in individual and group settings. Bundle from S$3,699.',
     facilitator: 'Isabelle Claus Teixeira, Global TRE™ Certifying Trainer',
     credits: '21 ICF CCEUs on Module 1',
@@ -416,6 +420,7 @@ window.TRE_EVENTS = [
     timeText: '20 Oct: 19:00–22:00 EET · 24 Oct: 14:30–17:30 EET',
     chip: { top: '20 · 24', bottom: 'Oct 2026' },
     image: 'assets/img/events/event-shaking-to-shaping.webp',
+    card     : 'assets/img/events/card-event-shaking-to-shaping.webp?v=1',
     description: 'A half-day intensive on integrating TRE™ into your coaching practice — neurogenic tremoring as a somatic tool for nervous system regulation and embodied presence. Two in-person sessions in Bucharest, România. Now ICF-accredited: 3 ICF CCEs (1.5 Resource Development + 1.5 Core Competencies).',
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     price: '€97',
@@ -477,6 +482,7 @@ window.TRE_EVENTS = [
     timeText: '10:00–13:00 EET (Eastern European Time)',
     chip: { top: '3', bottom: 'Sep 2026' },
     image: 'assets/img/events/event-shaking-to-shaping.webp',
+    card     : 'assets/img/events/card-event-shaking-to-shaping-sep3.webp?v=1',
     description: 'The 3 September 2026 online session of From Shaking to Shaping — use of TRE™ in a coaching context, co-facilitated by Isabelle Claus Teixeira & Saymara Ryon. Fully booked; this session has now taken place.',
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     price: '€89',
@@ -535,6 +541,7 @@ window.TRE_EVENTS = [
     dateText: 'Thursday 8 October 2026',
     timeText: '7:00 – 9:00pm (confirm your time zone on registration)',
     image: 'assets/img/events/event-shaking-online.webp',
+    card     : 'assets/img/events/card-event-shaking-online.webp?v=1',
     description: 'A live online workshop on using TRE™ in a coaching context — nervous system regulation, embodied presence and resilience. Co-led by Isabelle Claus Teixeira & Saymara Ryon, in partnership with Neurogenic Integration. Now ICF-accredited: 3 ICF CCEs (1.5 Resource Development + 1.5 Core Competencies).',
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     priceText: 'Registration via Neurogenic Integration',
@@ -589,6 +596,7 @@ window.TRE_EVENTS = [
     dateText: 'Wednesday 28 October 2026',
     timeText: '7:00 \u2013 9:30pm Singapore time (6pm Bangkok)',
     image: 'assets/img/events/event-feminine-masculine.webp?v=3',
+    card     : 'assets/img/events/card-event-feminine-masculine.webp?v=1',
     description: 'A live online workshop with Sara Marie \u2014 The Alchemist \u2014 bringing energetic awareness together with somatic embodiment, so navigating masculine corporate structures becomes a place of liberation, ease and personal power.',
     facilitator: 'Sara Marie',
     priceText: 'Public 88 SGD (69 USD) \u00b7 TRE\u00ae providers 68 SGD',
@@ -656,6 +664,7 @@ window.TRE_EVENTS = [
     timeText: '15 Oct 17:00–19:00 · 16 & 17 Oct 09:00–18:00 (EET)',
     chip: { top: '15–17', bottom: 'Oct 2026' },
     image: 'assets/img/events/event-bucharest-module1.webp',
+    card     : 'assets/img/events/card-event-bucharest-module1.webp?v=1',
     description: 'A 3-day immersive certification — the first TRE™ Module 1 in Europe in English and the only TRE™ training in the world with ICF accreditation. Valid as Module 1 of the Global TRE™ Provider Certification. Only 20 places.',
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     credits: '21 ICF CCEUs',
@@ -776,6 +785,7 @@ window.TRE_EVENTS = [
     dateText: '29 & 30 August 2026',
     chip: { top: '29–30', bottom: 'Aug 2026' },
     image: 'assets/img/events/event-nervous-system.webp',
+    card     : 'assets/img/events/card-event-nervous-system.webp?v=1',
     description: 'Self-care and presence for coaches — a 2-day ICF-accredited TRE™ workshop (21 CCEUs), valid as Module 1 of the Global TRE™ Provider Certification. Sold out.',
     facilitator: 'Isabelle Claus Teixeira',
     credits: '21 ICF CCEUs · 16 Resource Development + 5 Core Competencies',
@@ -833,6 +843,7 @@ window.TRE_EVENTS = [
     dateText: 'Tuesday 1 September 2026',
     timeText: '7:00 – 9:00pm SGT',
     image: 'assets/img/events/event-internal-alchemy.webp',
+    card     : 'assets/img/events/card-event-internal-alchemy.webp?v=1',
     description: 'First time in Singapore. Breathwork, fascial release, grounding and tremor work with Simba Stenqvist, Global TRE™ Certifying Trainer and creator of Internal Alchemy.',
     facilitator: 'Simba Stenqvist',
     price: 'S$79',
