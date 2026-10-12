@@ -135,8 +135,8 @@ window.TRE_FACILITATORS = [
     socials: [],
     facts: { location: 'Singapore · In-person & online', languages: 'English', formats: '1:1 · Groups', certified: 'Certified TRE™ Provider · MEd Special Education (University of Birmingham)' },
     about: [
-      'For almost three decades Nikki Tay has worked in early childhood education and special education, supporting children, families and neurodivergent individuals. Over the years she has seen how stress shows up in the body, in behaviour, in learning and in everyday life.',
-      'That is what drew her to TRE™. She wanted to offer a gentle, body-based practice that helps people release tension, feel more settled and reconnect with themselves.'
+      'For almost three decades Nikki Tay has worked in early childhood education and special education, supporting children, families and neurodivergent individuals. Over the years he has seen how stress shows up in the body, in behaviour, in learning and in everyday life.',
+      'That is what drew him to TRE™. He wanted to offer a gentle, body-based practice that helps people release tension, feel more settled and reconnect with themselves.'
     ],
     highlights: [
       'Certified TRE™ Provider',
