@@ -257,6 +257,8 @@ def manifest(events, facs):
     for ev in events:
         if ev.get("image"):
             want.append((ev["image"], "poster"))
+        if ev.get("card"):
+            want.append((ev["card"], "poster"))
         pt = (ev.get("details") or {}).get("posterTall") or {}
         if pt.get("src"):
             want.append((pt["src"], "poster_tall"))
