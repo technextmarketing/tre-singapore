@@ -313,8 +313,7 @@
       <button class="filter-btn" data-filter="international" role="tab" aria-selected="false" aria-controls="events-grid">International</button>
       <button class="filter-btn" data-filter="certification" role="tab" aria-selected="false" aria-controls="events-grid">Certification</button>
       <button class="filter-btn" data-filter="workshop" role="tab" aria-selected="false" aria-controls="events-grid">Workshops</button>
-      <button class="filter-btn" data-filter="soldout" role="tab" aria-selected="false" aria-controls="events-grid">Sold out</button>
-      <button class="filter-btn" data-filter="past" role="tab" aria-selected="false" aria-controls="events-grid">Past events</button>
+      <button class="filter-btn" data-filter="past" role="tab" aria-selected="false" aria-controls="events-grid">Past and sold out</button>
     </div>
 
     <div class="ev-listwrap">
@@ -327,7 +326,7 @@
     <p class="note ev-note">All ticket sales are final — tickets are non-refundable and non-cancellable. Venues in Singapore are confirmed on registration. Times are Singapore time (SGT, UTC+8) unless stated otherwise; Bucharest events are in Eastern European Time (EET). Listings mirror <a href="https://hummingbeing.com/events" target="_blank" rel="noopener">hummingbeing.com/events</a>.</p>
 
     <div id="past-events" class="ev-past" hidden>
-      <h2>Past events</h2>
+      <h2>Past and sold out events</h2>
       <div class="ev-list" id="past-grid"></div>
 {{STATIC_EVENTS}}
     </div>
@@ -453,10 +452,9 @@
     return ['live', 'Registration open'];
   }
   function matches(x, f) {               /* mirrors the main.js filter tabs */
-    if (f === 'past') return x.past;
-    if (f === 'soldout') return x.soldOut;
-    if (f === 'all') return true;        /* upcoming in the list, completed in the archive below it */
-    if (x.past) return false;
+    if (f === 'past') return x.past || x.soldOut;
+    if (f === 'all') return true;        /* upcoming in the list, past and sold out in the archive below it */
+    if (x.past || x.soldOut) return false;
     if (f === 'certification') return x.cat === 'Certification';
     if (f === 'community') return x.cat === 'Community';
     if (f === 'workshop') return x.cat === 'Workshop';
