@@ -392,7 +392,7 @@ def event_static(e, root):
 def facilitator_static(f, events, root):
     facts = f.get("facts") or {}
     h = [f'<section class="section rec-static"><div class="container">',
-         f'<p class="crumbs"><a href="{root}">Home</a> › <a href="{root}facilitators">Facilitators</a> › {esc(f.get("tag") or "")}</p>',
+         f'<p class="crumbs"><a href="{root}">Home</a> › <a href="{root}facilitators">Providers</a> › {esc(f.get("tag") or "")}</p>',
          f'<h1>{esc(f["name"])}</h1>', f'<p><strong>{esc(f.get("role") or "")}</strong></p>',
          f'<p>{esc(f.get("summary") or f.get("bio") or "")}</p>']
     rows = [f"{k}: {facts[key]}" for k, key in (("Where", "location"), ("Languages", "languages"), ("Formats", "formats"), ("Certification", "certified")) if facts.get(key)]
@@ -412,7 +412,7 @@ def facilitator_static(f, events, root):
     mine = [e for e in events if e["slug"] in (f.get("events") or []) and not e["_past"]]
     if mine:
         h.append("<h2>Upcoming events</h2><ul>" + "".join(f'<li><a href="{root}events/{esc(e["slug"])}">{esc(e["title"])}</a> — {esc(e.get("dateText") or "")}</li>' for e in mine) + "</ul>")
-    h.append(f'<p><a href="{root}facilitators">All TRE™ facilitators in Singapore</a></p></div></section>')
+    h.append(f'<p><a href="{root}facilitators">All TRE™ providers in Singapore</a></p></div></section>')
     return "\n".join(h)
 
 
@@ -433,7 +433,7 @@ def facilitators_static_list(facs, root):
     if not facs:
         return ""
     rows = "".join(f'<li><a href="{root}facilitators/{esc(f["id"])}">{esc(f["name"])}</a> — {esc(f.get("role") or "")}. {esc(f.get("bio") or "")}</li>' for f in facs)
-    return f'<div class="container rec-static"><h2>All TRE™ facilitators and certified providers in Singapore</h2><ul>{rows}</ul></div>'
+    return f'<div class="container rec-static"><h2>All certified TRE™ providers in Singapore</h2><ul>{rows}</ul></div>'
 
 
 def manifest_script(events, facs):
@@ -456,7 +456,7 @@ def llms_txt(pages, posts, events, facs):
         L += ["", "## Upcoming events"]
         L += [f"- [{e['title']}]({rec_url('events', e['slug'])}): " + " · ".join(x for x in [e.get("dateText"), e.get("location"), e.get("price")] if x) for e in up]
     if facs:
-        L += ["", "## Facilitators and certified providers"]
+        L += ["", "## Certified TRE™ providers"]
         L += [f"- [{f['name']}]({rec_url('facilitators', f['id'])}): {f.get('role') or ''}" for f in facs]
     L += ["", "## Contact",
           f"- Email: {EMAIL}", f"- WhatsApp: {PHONE}",

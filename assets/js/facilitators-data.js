@@ -158,21 +158,21 @@ window.TRE_FACILITATORS = [
   {
     id: 'rina-ho',
     name: 'Rina Ho',
-    role: 'TRE™ Practitioner · Executive Coach · Former APAC Business Leader',
-    tag: 'TRE™ Practitioner', tagClass: 'badge-gold', kind: 'provider',
+    role: 'Certified TRE™ Provider · Executive Coach · Former APAC Business Leader',
+    tag: 'Certified Provider', tagClass: 'badge-navy', kind: 'provider',
     modes: ['1:1', 'Groups', 'Corporate', 'In-person', 'Online'],
     services: ['TRE™ sessions', 'Executive coaching', 'Team coaching', 'Leadership resilience', 'Self-regulation', 'Sustainable performance', 'Singapore · Online'],
     initials: 'RH', photoClass: 'deep', photo: FAC_IMG + 'rina-ho.webp',
-    bio: 'Executive coach and TRE™ practitioner helping leaders and teams build resilience, self-regulation and sustainable performance, after 25+ years in senior corporate leadership.',
-    summary: 'Rina helps leaders and teams build greater resilience, self-regulation and sustainable performance — bringing together her experience as a senior corporate leader, executive coach and TRE™ practitioner.',
+    bio: 'Executive coach and certified TRE™ provider helping leaders and teams build resilience, self-regulation and sustainable performance, after 25+ years in senior corporate leadership.',
+    summary: 'Rina helps leaders and teams build greater resilience, self-regulation and sustainable performance — bringing together her experience as a senior corporate leader, executive coach and certified TRE™ provider.',
     contact: { email: 'mailto:rinahwl@gmail.com?subject=TRE%E2%84%A2%20session%20enquiry', whatsapp: 'https://wa.me/6580380589?text=Hi%20Rina%2C%20I%27d%20like%20to%20ask%20about%20a%20TRE%E2%84%A2%20session', book: 'https://wa.me/6580380589?text=Hi%20Rina%2C%20I%27d%20like%20to%20book%20a%20TRE%E2%84%A2%20session' },
     socials: [],
-    facts: { location: 'Singapore · In-person & online', languages: 'English', formats: '1:1 · Teams · Corporate', certified: 'TRE™ Practitioner · Executive & Team Coach' },
+    facts: { location: 'Singapore · In-person & online', languages: 'English', formats: '1:1 · Teams · Corporate', certified: 'Certified TRE™ Provider · Executive & Team Coach' },
     about: [
       'After more than 25 years in senior leadership roles across Sony, Reebok and adidas, Rina knows first-hand what it is like to operate in fast-paced, high-performance environments — navigating complexity, constant change, competing demands and the pressure to keep delivering.',
       'As an executive and team coach, she uses an ontological approach to look beneath the presenting challenge and explore the patterns in how we think, feel, speak and act. She helps leaders step back, see what may be getting in the way, and discover new possibilities for how they lead and respond. Her style is warm, grounded and appropriately challenging.',
       'Her own experience taught her that stress is not only something we experience in our minds — we carry it in our bodies too. This led her to TRE™, which has become a meaningful part of her own practice and now complements her coaching work.',
-      'As a TRE™ practitioner, she helps clients become more aware of how stress and tension show up in the body, and explore a practical way of releasing physical tension and building greater capacity to pause, regulate and respond with choice. For Rina, this work is about the whole person — not simply performing better, but creating the awareness, capacity and resilience to lead in a way that is sustainable and true to who we are.'
+      'As a certified TRE™ provider, she helps clients become more aware of how stress and tension show up in the body, and explore a practical way of releasing physical tension and building greater capacity to pause, regulate and respond with choice. For Rina, this work is about the whole person — not simply performing better, but creating the awareness, capacity and resilience to lead in a way that is sustainable and true to who we are.'
     ],
     highlights: [
       'TRE™ (Tension & Trauma Releasing Exercises) — a practical, body-based way to release tension and build self-regulation',

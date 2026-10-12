@@ -29,7 +29,7 @@
   }
   function facilitatorList() {
     var fs = (window.TRE_FACILITATORS || []).filter(function (f) { return !f.sample; });
-    return '<ul class="cb-list">' + fs.map(function (f) { return '<li>' + link(window.TRE_recUrl ? window.TRE_recUrl('facilitators', f.id) : ROOT + 'facilitator?id=' + encodeURIComponent(f.id), f.name) + '<small>' + esc(f.role) + '</small></li>'; }).join('') + '</ul><p>' + link(ROOT + 'facilitators', 'Browse every facilitator and provider') + '</p>';
+    return '<ul class="cb-list">' + fs.map(function (f) { return '<li>' + link(window.TRE_recUrl ? window.TRE_recUrl('facilitators', f.id) : ROOT + 'facilitator?id=' + encodeURIComponent(f.id), f.name) + '<small>' + esc(f.role) + '</small></li>'; }).join('') + '</ul><p>' + link(ROOT + 'facilitators', 'Browse every provider') + '</p>';
   }
 
   var FAQ = [
@@ -41,7 +41,7 @@
     { k: /online|remote|from home|virtual/i, a: function () { var o = upcoming(function (e) { return e.region === 'online'; }); return '<p>Online options:</p>' + eventList(o, 3) + '<p>Individual sessions are also available online worldwide — ' + link(CAL, 'book a call') + '.</p>'; } },
     { k: /bucharest|romania|europe|saymara/i, a: function () { var r = upcoming(function (e) { return e.region === 'international'; }); return '<p>Events in Bucharest with Isabelle and Saymara Ryon:</p>' + eventList(r, 3); } },
     { k: /book|session|appointment|1:1|one.to.one|individual|private|try tre|first session/i, a: function () { return '<p>The quickest way is a free discovery call with Isabelle, or a message on WhatsApp. Certified providers in Singapore also take individual and group bookings.</p><p>' + link(CAL, 'Book a free call') + ' · ' + link(WA, 'WhatsApp us') + ' · ' + link(ROOT + 'facilitators', 'Find a provider') + '</p>'; } },
-    { k: /facilitator|provider|trainer|isabelle|simba|who teach|directory|coach/i, a: function () { return '<p>Our facilitators:</p>' + facilitatorList(); } },
+    { k: /facilitator|provider|trainer|isabelle|simba|who teach|directory|coach/i, a: function () { return '<p>Our providers:</p>' + facilitatorList(); } },
     { k: /corporate|team|company|workplace|hr\b|offsite|lunch/i, a: function () { return '<p>We run private group sessions, lunch-and-learns, offsites and multi-week resilience programmes for organisations in Singapore.</p><p>' + link(ROOT + 'contact?interest=corporate', 'Enquire about a corporate programme') + '</p>'; } },
     { k: /safe|risk|contraindic|pregnan|injur|medical|condition|epilep|surgery/i, a: function () { return '<p>TRE™ is gentle and self-regulated, but some conditions need care (recent surgery, pregnancy, epilepsy, acute mental-health episodes). Please tell your provider before a session — they will adapt or advise.</p><p>' + link(ROOT + 'education', 'Safety and who TRE™ is for') + '</p>'; } },
     { k: /contact|email|whatsapp|phone|reach|address|where are you|office/i, a: function () { return '<p>Email ' + link('mailto:isabelle@bhdasia.com', 'isabelle@bhdasia.com') + ' or WhatsApp ' + link(WA, '+81 80 6515 1778') + '. Office: Business &amp; Human Development Consulting Pte Ltd, 50 Raffles Place, Singapore Land Tower #30-00, Singapore 048623.</p>'; } },
@@ -51,9 +51,9 @@
   ];
   function answer(q) {
     for (var i = 0; i < FAQ.length; i++) if (FAQ[i].k.test(q)) return FAQ[i].a();
-    return '<p>I am not sure about that one. A real person can help quickly:</p><p>' + link(WA, 'WhatsApp us') + ' · ' + link('mailto:isabelle@bhdasia.com?subject=' + encodeURIComponent('Question from the website: ' + q.slice(0, 80)), 'Email Isabelle') + '</p><p>You can also try: <em>events</em>, <em>certification</em>, <em>prepare online</em>, <em>book a session</em>, <em>facilitators</em>.</p>';
+    return '<p>I am not sure about that one. A real person can help quickly:</p><p>' + link(WA, 'WhatsApp us') + ' · ' + link('mailto:isabelle@bhdasia.com?subject=' + encodeURIComponent('Question from the website: ' + q.slice(0, 80)), 'Email Isabelle') + '</p><p>You can also try: <em>events</em>, <em>certification</em>, <em>prepare online</em>, <em>book a session</em>, <em>providers</em>.</p>';
   }
-  var CHIPS = ['Upcoming events', 'How much is certification?', 'Prepare for an online session', 'Book a session', 'Who are the facilitators?', 'What is TRE™?'];
+  var CHIPS = ['Upcoming events', 'How much is certification?', 'Prepare for an online session', 'Book a session', 'Who are the providers?', 'What is TRE™?'];
 
   function init() {
     var btn = document.createElement('button');
