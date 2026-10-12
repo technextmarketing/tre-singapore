@@ -198,6 +198,33 @@
 .dt-pricetext{margin:0 0 1rem;color:var(--ink-2);font-weight:600;line-height:1.5}
 .dt-fine{margin:.95rem 0 0;font-size:.8rem;line-height:1.5;color:var(--muted)}
 .dt-muted{margin:0 0 .5rem;color:var(--muted);font-size:.93rem}
+/* ---------- register-first gate (guest-facilitator events): form, then payment details ---------- */
+.dt-gate{scroll-margin-top:110px}
+.dt-gate:focus{outline:none}
+.dt-gate-lead{margin:0 0 .9rem;font-size:.9rem;line-height:1.5;color:var(--ink-2)}
+.dt-gform .field{margin-bottom:.8rem}
+.dt-gform .field textarea{min-height:84px}
+.dt-gform .btn{width:100%;min-height:48px;white-space:normal;text-align:center;line-height:1.25}
+.dt-gform .form-fail{font-size:.88rem;padding:.8rem 1rem}
+.dt-gate-h{margin:0 0 .35rem;font-size:1.05rem;color:var(--navy)}
+.dt-gate-h:focus{outline:none}
+.dt-gate-thanks{margin:0 0 .9rem;color:var(--ink-2);line-height:1.5}
+.dt-gate-prices{list-style:none;margin:0 0 1rem;padding:0;display:grid;gap:.35rem}
+.dt-gate-prices li{display:flex;justify-content:space-between;gap:.8rem;padding:.55rem .8rem;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--cream);font-size:.9rem}
+.dt-gate-prices b{color:var(--navy);white-space:nowrap}
+.dt-gate-code{margin:0 0 .9rem;padding:.75rem .9rem;border-radius:var(--radius-sm);background:#e2f2e9;border:1px solid #bfe0cd;color:#1d5a38;font-size:.9rem;line-height:1.5}
+.dt-gate-acts{display:grid;gap:.5rem}
+.dt-gate-acts .btn{width:100%;min-height:48px;white-space:normal;text-align:center;line-height:1.25}
+.dt-gate-copy{margin:.9rem 0 0;padding:.8rem .9rem;border:1px dashed var(--line);border-radius:var(--radius-sm);display:grid;gap:.45rem;font-size:.9rem}
+.dt-gate-copy-l{color:var(--ink-2);font-weight:600}
+.dt-gate-copy-r{display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap}
+.dt-gate-copy code{font-size:.9rem;overflow-wrap:anywhere;color:var(--navy);font-weight:700}
+.dt-gate-copy .btn{min-height:44px}
+.dt-gate-copied{min-height:1.1em;font-size:.82rem;color:#1d5a38}
+.dt-gate-note{margin:.95rem 0 0;font-size:.86rem;line-height:1.55;color:var(--muted)}
+.dt-gate-again{margin:.8rem 0 0}
+.dt-linkbtn{background:none;border:0;padding:.5rem 0;min-height:44px;font:inherit;font-size:.86rem;color:var(--navy);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.dt-linkbtn:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
 .dt-contact{margin:0;display:grid}
 .dt-cl{display:flex;align-items:center;gap:.6rem;min-height:44px;font-weight:600;font-size:.93rem;color:var(--navy);overflow-wrap:anywhere}
 .dt-cl:hover{color:var(--blue)}

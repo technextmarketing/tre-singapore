@@ -72,6 +72,12 @@ var AUN = {
   bio: 'Aun Ali is a Certified TRE\u2122 Trainer and Clinically Certified Trauma Specialist (CCTS-I, F, A), and the founder of the Trauma Release and Wellness Centre. His work sits at the meeting point of psychotherapy and the body: helping psychologists, counsellors and narrative therapists bring TRE\u2122 and somatic practice into trauma-informed care safely, in the right phase, without abandoning the model they already trust.',
   photo: 'assets/img/facilitators/aun-ali.webp'
 };
+var ANIA = {
+  name: 'Ania Zieli\u0144ska',
+  role: 'Yoga Teacher \u00b7 Holistic Health Coach \u00b7 Life Realignment Mentor',
+  bio: 'Ania Zieli\u0144ska (Sunrise) is a Yoga Teacher, Holistic Health Coach and Life Realignment Mentor with over a decade of experience in Yoga, meditation and holistic wellbeing. She has completed over 700 hours of yoga teacher training and teaches Hatha, Vinyasa and Yin Yoga, alongside pranayama and meditation. Her work goes beyond the physical practice of Yoga: as a Life Realignment Mentor, Ania supports people in creating meaningful changes across different areas of life \u2014 from wellbeing and weight loss, habits and mindset to self-awareness, relationships and personal growth. Her approach combines traditional Yogic practices with practical tools that can be integrated into everyday life, helping people cultivate greater awareness, calm, focus, energy and connection with themselves. Ania\u2019s own journey with Yoga began as a profound personal transformation and has grown into a passion for guiding others Back to Themselves through movement, breath and mindfulness. She has taught Yoga internationally both in-person and online, and she works with people from different backgrounds and levels of experience. She believes that breath is one of the simplest and most powerful tools we have available to influence how we feel, respond and move through our day.',
+  photo: 'assets/img/facilitators/ania-zielinska.webp'
+};
 var CALENDLY = 'https://calendly.com/bhdasia/tre-certification-intake-call';
 
 window.TRE_EVENTS = [
@@ -93,7 +99,6 @@ window.TRE_EVENTS = [
     facilitator: 'Aun Ali',
     price: 'S$88',
     priceText: 'S$88 \u00b7 discounted S$68 with a code',
-    link: 'https://buy.stripe.com/5kQcMX8kX3BD62Y1WFaR200',
     linkText: 'Register \u2014 S$88',
     isNew: true,
     theme: 'theme-deep',
@@ -124,18 +129,86 @@ window.TRE_EVENTS = [
       ],
       pricing: [
         { label: 'Public price', sub: 'live online workshop \u00b7 Zoom', price: 'S$88', hl: true },
-        { label: 'Discounted price', sub: 'with a discount code', price: 'S$68', note: 'email Isabelle for the discounted registration link' }
+        { label: 'Discounted price', sub: 'with a discount code', price: 'S$68', note: 'enter your code when you register' }
       ],
-      pricingNote: 'All prices in Singapore Dollars. Have a discount code? Email isabelle@bhdasia.com for the discounted registration link. The Zoom link is shared with registered participants.',
+      pricingNote: 'All prices in Singapore Dollars. Have a discount code? Enter it in the registration form. The Zoom link is shared with registered participants.',
       facilitators: [AUN],
       partners: 'In partnership with the Trauma Release and Wellness Centre, Karachi, Pakistan',
       online: true,
       register: [
-        { label: 'Register \u2014 S$88', url: 'https://buy.stripe.com/5kQcMX8kX3BD62Y1WFaR200', primary: true },
-        { label: 'Discount code? Email Isabelle', url: 'mailto:isabelle@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%20discounted%20registration' },
+        { label: 'Register \u2014 S$88', url: '#register', primary: true },
         { label: 'Ask a question (email)', url: 'mailto:isabelle@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%2025%20Nov' }
       ],
+      gate: {
+        discount: true,
+        pay: [{ label: 'Register \u2014 S$88', url: 'https://buy.stripe.com/5kQcMX8kX3BD62Y1WFaR200', primary: true }],
+        altLabel: 'Or register now at S$88',
+        discountNote: 'Isabelle will email you the discounted (S$68) registration link.',
+        note: 'The Zoom link is shared with registered participants.'
+      },
       source: 'https://bhdasia.com/event-body-in-the-room.html'
+    }
+  },
+
+  /* ---------- Breath as a medicine \u2014 Ania Zieli\u0144ska (online, 15 Dec 2026) ---------- */
+  {
+    slug: 'breath-as-medicine',
+    title: 'Breath as a medicine \u2014 Introduction to pranayama',
+    category: 'Workshop',
+    region: 'online',
+    location: 'Online',
+    venue: 'Zoom (link shared with registered participants)',
+    format: 'Live online',
+    start: '2026-12-15T19:00',
+    dateText: 'Tuesday 15 December 2026',
+    timeText: '7:00\u20139:00pm Singapore time (SGT)',
+    image: 'assets/img/events/event-breath-as-medicine.webp',
+    description: 'An online introduction to pranayama with Ania Zieli\u0144ska: how conscious breathing supports your physical, mental and emotional wellbeing, with simple techniques to calm, reset, energise and focus. For beginners \u2014 no previous Yoga or Breathwork experience needed.',
+    facilitator: 'Ania Zieli\u0144ska',
+    price: 'S$88',
+    priceText: 'S$88 \u00b7 discounted S$68 with a code',
+    linkText: 'Register \u2014 S$88',
+    isNew: true,
+    theme: 'theme-bronze',
+    details: {
+      summary: 'In this introductory workshop, you\u2019ll learn what pranayama is and how conscious breathing can support your physical, mental and emotional wellbeing.',
+      about: [
+        'We\u2019ll explore the connection between the breath, nervous system and state of mind, and you\u2019ll be introduced to a selection of simple pranayama techniques that can be used in everyday life \u2014 whether you need to calm down, reset, energise and invigorate your body, improve focus or create a greater sense of presence.',
+        'The workshop is suitable for beginners and no previous Yoga or Breathwork experience is required.',
+        'Live on Zoom, Tuesday 15 December 2026, 7:00\u20139:00pm Singapore time. The Zoom link is shared with registered participants before the session.',
+        'Come as you are, with no expectations or previous experience \u2014 just bring your curiosity and your breath.'
+      ],
+      forWho: [
+        'Anybody interested to know more about pranayama',
+        'Beginners \u2014 no previous Yoga or Breathwork experience is required'
+      ],
+      schedule: [
+        { when: 'Tue 15 Dec', time: '7:00\u20139:00pm SGT \u00b7 Zoom', title: 'Breath as a medicine \u2014 live online workshop', text: 'What pranayama is, how breathing patterns shape your state of mind and body, simple techniques to practise, and a guided breathing practice.' }
+      ],
+      includes: [
+        'Learn what pranayama means and why breath awareness is an incredible tool to be used in everyday life',
+        'Breathwork as a powerful medicine',
+        'Explore how different breathing patterns can influence your state of mind and body',
+        'Practice simple and accessible pranayama techniques',
+        'Experience a guided breathing practice',
+        'Learn practical techniques you can incorporate into your daily routine or working day'
+      ],
+      pricing: [
+        { label: 'Public price', sub: 'live online workshop \u00b7 Zoom', price: 'S$88', hl: true },
+        { label: 'Discounted price', sub: 'with a discount code', price: 'S$68', note: 'enter your code when you register' }
+      ],
+      pricingNote: 'All prices in Singapore Dollars. Have a discount code? Enter it in the registration form. The Zoom link is shared with registered participants before the session.',
+      facilitators: [ANIA],
+      online: false,
+      register: [
+        { label: 'Register \u2014 S$88', url: '#register', primary: true }
+      ],
+      gate: {
+        discount: true,
+        pay: [{ label: 'Pay with Wise', url: 'https://wise.com/pay/me/annaz337', primary: true }],
+        copy: { label: 'Or pay with PayPal \u2014 send to', value: 'azielinska@hotmail.com' },
+        note: 'Pay S$88 (or S$68 with a valid discount code) by Wise or PayPal. Please use your full name as the payment reference. The Zoom link is shared with registered participants before the session.'
+      }
     }
   },
 
@@ -519,8 +592,7 @@ window.TRE_EVENTS = [
     description: 'A live online workshop with Sara Marie \u2014 The Alchemist \u2014 bringing energetic awareness together with somatic embodiment, so navigating masculine corporate structures becomes a place of liberation, ease and personal power.',
     facilitator: 'Sara Marie',
     priceText: 'Public 88 SGD (69 USD) \u00b7 TRE\u00ae providers 68 SGD',
-    link: 'https://calendly.com/sara-spirit/feminine-masculine-energetics-in-the-corporate-world',
-    linkText: 'Register & pay',
+    linkText: 'Register',
     isNew: true,
     theme: 'theme-orange',
     details: {
@@ -554,9 +626,14 @@ window.TRE_EVENTS = [
       partners: 'Presented with Living with the Spirit',
       online: true,
       register: [
-        { label: 'Register & pay on Calendly', url: 'https://calendly.com/sara-spirit/feminine-masculine-energetics-in-the-corporate-world', primary: true },
+        { label: 'Register now', url: '#register', primary: true },
         { label: 'Event page on HummingBeing', url: 'https://hummingbeing.com/event-feminine-masculine-energetics' }
       ],
+      gate: {
+        discount: false,
+        pay: [{ label: 'Register & pay on Calendly', url: 'https://calendly.com/sara-spirit/feminine-masculine-energetics-in-the-corporate-world', primary: true }],
+        note: 'Registration and payment are handled by Sara Marie via Calendly, and all proceeds go directly to her. A replay is available to all registrants. Guest and concessionary places are arranged directly with Isabelle.'
+      },
       source: 'https://hummingbeing.com/event-feminine-masculine-energetics'
     }
   },

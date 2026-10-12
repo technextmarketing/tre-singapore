@@ -277,6 +277,8 @@ def event_start(e):
 
 def _register_url(e):
     d = e.get("details") or {}
+    if d.get("gate"):  # registration is behind a form: the offer points at the event page's own form, never at a payment site
+        return rec_url("events", e["slug"]) + "#register"
     reg = [r for r in d.get("register") or [] if (r.get("url") or "").startswith("http")]
     primary = next((r for r in reg if r.get("primary")), reg[0] if reg else None)
     if primary:
@@ -377,7 +379,9 @@ def event_static(e, root):
         h.append(f"<h2>Facilitators</h2><ul>{_li(rows)}</ul>")
     if d.get("partners"):
         h.append(f"<p>{esc(d['partners'])}</p>")
-    links = [r for r in d.get("register") or [] if r.get("url")]
+    links = [r for r in d.get("register") or [] if r.get("url") and not (d.get("gate") and r["url"].startswith("#"))]
+    if d.get("gate") and not e.get("_past"):
+        h.append('<p>To register, fill in the registration form on this page, or email <a href="mailto:isabelle@bhdasia.com">isabelle@bhdasia.com</a>.</p>')
     if not e.get("_past") and links:
         h.append("<p>" + " · ".join(f'<a href="{esc(href(r["url"], root))}">{esc(r.get("label") or "Register")}</a>' for r in links) + "</p>")
     h.append(f'<p><a href="{root}events">All TRE™ events</a>' + (f' · <a href="{root}online-session-guide">Online session guide</a>' if d.get("online") else "") + "</p>")
