@@ -27,7 +27,7 @@
 <link rel="stylesheet" href="assets/css/layer.css?v=20261012d">
 <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('tre-motion')==='paused')document.documentElement.classList.add('motion-paused')}catch(e){}(function(){try{var p=location.pathname,c=p.replace(/\/index\.html$/,'/').replace(/\.html$/,'');if(c!==p)history.replaceState(history.state,'',c+location.search+location.hash)}catch(e){}})();</script>
 </head>
-<body class="hero-head">
+<body>
 <a class="sr-only" href="#main">Skip to content</a>
 
 <header class="site-header">
@@ -56,7 +56,7 @@
 <!-- ===== HERO (full screen). The still photo paints first; layer.js starts the looping video once the page has loaded:
      assets/video/hero-loop.webm/.mp4 (1080p) or hero-loop-960.* on phones — replace both cuts to change it. No video with
      reduced motion or a data saver; the pause control pauses it with the rest of the site's motion. ===== -->
-<section class="under-head hero-full" id="top">
+<section class="hero-full" id="top">
   <div class="hero-full-media" aria-hidden="true">
     <picture><source type="image/avif" srcset="assets/img/hero-poster-960.avif 960w, assets/img/hero-poster-1600.avif 1600w, assets/img/hero-poster.avif 1920w" sizes="(max-width: 760px) 50vw, 100vw"><img src="assets/img/hero-poster.jpg" srcset="assets/img/hero-poster-960.webp 960w, assets/img/hero-poster-1600.webp 1600w, assets/img/hero-poster.jpg 1920w" sizes="(max-width: 760px) 50vw, 100vw" width="1920" height="1080" alt="" fetchpriority="high" decoding="async"></picture>
     <video class="hero-video" muted loop playsinline preload="none" data-src-wide="assets/video/hero-loop" data-src-narrow="assets/video/hero-loop-960"></video>

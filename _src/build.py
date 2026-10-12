@@ -70,9 +70,15 @@ def write(out_rel, text):
 HERO_FIRST = re.compile(r"^((?:\s|<!--.*?-->|<style\b.*?</style>|<link\b[^>]*>|<script\b.*?</script>)*)(<(?:section|div)\b[^>]*>)", re.S)
 
 
+SEE_THROUGH_HEADER = False   # 2026-10-12 user: "make the header not transparent"; True brings the clear header back
+
+
 def mark_hero(body):
     """A page whose content opens with a hero (or with the event / profile container main.js draws one into) gets the
-    see-through header: .under-head on that element, body.hero-head (layer.css). Returns (body, marked)."""
+    see-through header: .under-head on that element, body.hero-head (layer.css). Returns (body, marked).
+    Off while SEE_THROUGH_HEADER is False: every page keeps the solid header."""
+    if not SEE_THROUGH_HEADER:
+        return body, False
     m = HERO_FIRST.match(body)
     if not m:
         return body, False
