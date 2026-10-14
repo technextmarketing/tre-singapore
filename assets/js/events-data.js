@@ -139,7 +139,7 @@ window.TRE_EVENTS = [
       online: true,
       register: [
         { label: 'Register \u2014 S$88', url: '#register', primary: true },
-        { label: 'Ask a question (email)', url: 'mailto:isabelle@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%2025%20Nov' }
+        { label: 'Ask a question (email)', url: 'mailto:bonjour@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%2025%20Nov' }
       ],
       gate: {
         discount: true,
@@ -232,7 +232,7 @@ window.TRE_EVENTS = [
     card     : 'assets/img/events/card-event-certification-2027.webp?v=1',
     description: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — boosted by Internal Alchemy and co-taught by two TRE™ Trainers, Isabelle Claus Teixeira & Simba Stenqvist. Three modules plus online supervisions and three self-paced bonus programs. Bundle from S$5,888 early bird.',
     facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
-    credits: 'ICF CCE with Module 1',
+    credits: '21 ICF CCEs for Module 1',
     price: 'S$5,888',
     priceNote: 'full certification + bonuses · early bird to 31 Dec 2026 (then S$6,688)',
     link: 'https://hummingbeing.com/event-certification-2027',
@@ -264,12 +264,12 @@ window.TRE_EVENTS = [
         'Taught by 2 TRE™ Trainers — varied perspectives and richer learning',
         'Online TRE™ sessions & supervisions — individual and group, across all three modules',
         'Three self-paced bonus programs — Grounding, Verbal Interventions and an Internal Alchemy introduction',
-        'ICF CCE for coaches — included with Module 1',
-        'Global TRE™ Provider certificate — qualify to offer TRE™ to individuals and groups'
+        '21 ICF CCEs for Module 1 — CCEs pending confirmation for Module 2',
+        'Global TRE™ Certification upon completion of all requirements — qualify to offer TRE™ to individuals and groups'
       ],
       pricing: [
         { label: 'Full Certification + Bonus Programs', sub: 'Modules 1–3 + 3 bonuses', price: 'S$5,888', note: 'early bird to 31 Dec 2026 · then S$6,688', hl: true },
-        { label: 'Module 1 only · Personal Practice', sub: 'can be taken alone · ICF CCE for coaches', price: 'S$1,888', note: 'early bird to 31 Dec 2026 · then S$1,988' }
+        { label: 'Module 1 only · Personal Practice', sub: 'can be taken alone · 21 ICF CCEs for coaches', price: 'S$1,888', note: 'early bird to 31 Dec 2026 · then S$1,988' }
       ],
       pricingNote: 'All prices in Singapore Dollars. Early-bird pricing applies until 31 December 2026. All tickets are non-refundable and non-cancellable.',
       facilitators: [ISABELLE, SIMBA],
@@ -408,7 +408,7 @@ window.TRE_EVENTS = [
   {
     slug: 'from-shaking-to-shaping-bucharest',
     soldOut: true,
-    waitlistLink: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest',
+    waitlistLink: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest',
     title: 'From Shaking to Shaping — Use of TRE™ in a Coaching Context',
     category: 'Workshop',
     region: 'international',
@@ -426,7 +426,7 @@ window.TRE_EVENTS = [
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     price: '€97',
     priceNote: 'per participant · free with TRE™ Module 1 registration',
-    link: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest',
+    link: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest',
     linkText: 'Join the waitlist',
     theme: 'theme-bronze',
     details: {
@@ -461,7 +461,7 @@ window.TRE_EVENTS = [
       partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE™ România · HummingBeing',
       online: false,
       register: [
-        { label: 'Join the waitlist', url: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest', primary: true },
+        { label: 'Join the waitlist', url: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest', primary: true },
         { label: 'Event page on HummingBeing', url: 'https://hummingbeing.com/event-shaking-to-shaping' }
       ],
       source: 'https://hummingbeing.com/event-shaking-to-shaping'
@@ -652,7 +652,7 @@ window.TRE_EVENTS = [
     slug: 'tre-module-1-bucharest',
     status: 'postponed',
     soldOut: true,
-    waitlistLink: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
+    waitlistLink: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
     title: 'TRE™ Module 1 — Bucharest, Romania (in English)',
     category: 'Certification',
     region: 'international',
@@ -671,7 +671,7 @@ window.TRE_EVENTS = [
     credits: '21 ICF CCEUs',
     price: 'From €739',
     priceNote: 'per person · tiers rise as tickets sell (€739 · €769 · €799)',
-    link: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
+    link: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
     linkText: 'Join the waitlist',
     theme: 'theme-deep',
     details: {
@@ -710,7 +710,7 @@ window.TRE_EVENTS = [
       partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE™ România · HummingBeing',
       online: false,
       register: [
-        { label: 'Join the waitlist — postponed', url: 'mailto:isabelle@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)', primary: true },
+        { label: 'Join the waitlist — postponed', url: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
       source: 'https://hummingbeing.com/event-tre-module1-bucharest'
