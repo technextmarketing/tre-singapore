@@ -346,7 +346,7 @@
       data.page = location.origin + location.pathname;
       var fail = $('.form-fail', form); if (fail) fail.hidden = true;
       btn.disabled = true; btn.textContent = 'Sending…';
-      post('https://formsubmit.co/ajax/isabelle@bhdasia.com', data)
+      post('https://formsubmit.co/ajax/bonjour@bhdasia.com', data)
         .then(function () {
           var s = { name: data.name, code: !!data.discount_code }; setSaved(s); form.reset(); showPay(s, true);
         })
@@ -355,7 +355,7 @@
           /* the send failed: still show the payment step (as hummingbeing.com / bhdasia.com do) and ask for the details by email */
           var s = { name: data.name, code: !!data.discount_code }; setSaved(s); form.reset(); showPay(s, true);
           var th = $('.dt-gate-thanks', pay), first = String(data.name || '').split(/\s+/)[0];
-          if (th) th.innerHTML = 'Thank you' + (first ? ', ' + esc(first) : '') + '. Our form could not send your details just now &mdash; please <a href="mailto:isabelle@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">email them to Isabelle</a> (already written out).';
+          if (th) th.innerHTML = 'Thank you' + (first ? ', ' + esc(first) : '') + '. Our form could not send your details just now &mdash; please <a href="mailto:bonjour@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">email them to Isabelle</a> (already written out).';
         })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
@@ -496,7 +496,7 @@
       return '<li><a class="dt-li" href="' + ROOT + p.url + '">' + ICONS.calendar + '<span>' + esc(p.title) + '<small>' + (p.kind === 'recap' ? 'Event recap' : 'Event preview') + '</small></span></a></li>';
     }).join('') + '</ul></div>';
     h += '<div class="dt-box dt-ask"><h3>Questions?</h3><p class="dt-muted">Ask before the event rather than on the day — we are glad to help.</p>' +
-      '<p class="dt-contact"><a class="dt-cl" href="mailto:isabelle@bhdasia.com">' + CTA_ICONS.email + '<span>isabelle@bhdasia.com</span></a><a class="dt-cl" href="https://wa.me/818065151778" target="_blank" rel="noopener">' + CTA_ICONS.whatsapp + '<span>WhatsApp +81 80 6515 1778</span></a></p>' +
+      '<p class="dt-contact"><a class="dt-cl" href="mailto:bonjour@bhdasia.com">' + CTA_ICONS.email + '<span>bonjour@bhdasia.com</span></a><a class="dt-cl" href="https://wa.me/818065151778" target="_blank" rel="noopener">' + CTA_ICONS.whatsapp + '<span>WhatsApp +81 80 6515 1778</span></a></p>' +
       (d.source ? '<p class="dt-fine">Details as published on <a href="' + esc(d.source) + '" target="_blank" rel="noopener">hummingbeing.com</a>.</p>' : '') + '</div>';
     h += '</aside></div></section>';
 
@@ -888,7 +888,7 @@
   }
   function initForm(form) {
     var success = $('.form-success', form), btn = $('button[type="submit"]', form), label = btn.textContent;
-    var to = form.getAttribute('data-mailto') || 'isabelle@bhdasia.com';
+    var to = form.getAttribute('data-mailto') || 'bonjour@bhdasia.com';
     function mailto(data) {
       var subject = '[TRE Singapore website] ' + (data.interest || 'Enquiry') + ' — ' + (data.name || '');
       var lines = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + (data.phone || '-'), 'I am: ' + (data.who || '-'),
@@ -933,7 +933,7 @@
       var fail = $('.form-fail', form.parentNode); if (fail) fail.hidden = true;
       post(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), data)
         .then(function () { form.reset(); note(form.parentNode, 'form-success', 'Thank you — you are on the list for the monthly email with new articles and event dates.', form).classList.add('show'); })
-        .catch(function () { note(form.parentNode, 'form-fail', 'Sorry — the sign-up did not go through just now. <a href="mailto:isabelle@bhdasia.com?subject=' + encodeURIComponent('Newsletter sign-up') + '&body=' + encodeURIComponent('Please add ' + (data.email || 'me') + ' to the monthly TRE in Singapore email.') + '">Email Isabelle to be added</a> instead.', form); })
+        .catch(function () { note(form.parentNode, 'form-fail', 'Sorry — the sign-up did not go through just now. <a href="mailto:bonjour@bhdasia.com?subject=' + encodeURIComponent('Newsletter sign-up') + '&body=' + encodeURIComponent('Please add ' + (data.email || 'me') + ' to the monthly TRE in Singapore email.') + '">Email Isabelle to be added</a> instead.', form); })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
   }

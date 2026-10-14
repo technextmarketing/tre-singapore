@@ -20,7 +20,7 @@ ORG_ID, WEBSITE_ID, ISABELLE_ID = BASE + "#org", BASE + "#website", BASE + "#isa
 ISABELLE = "isabelle-claus-teixeira"
 LOGO = BASE + "assets/img/logo-tre-singapore.png"
 DEFAULT_IMAGE = BASE + "assets/img/og-cover.jpg"
-EMAIL, PHONE = "isabelle@bhdasia.com", "+81 80 6515 1778"
+EMAIL, PHONE = "bonjour@bhdasia.com", "+81 80 6515 1778"
 ADDRESS = {"@type": "PostalAddress", "streetAddress": "50 Raffles Place, #30-00 Singapore Land Tower",
            "addressLocality": "Singapore", "postalCode": "048623", "addressCountry": "SG"}
 ROBOTS_INDEX = "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
@@ -381,7 +381,7 @@ def event_static(e, root):
         h.append(f"<p>{esc(d['partners'])}</p>")
     links = [r for r in d.get("register") or [] if r.get("url") and not (d.get("gate") and r["url"].startswith("#"))]
     if d.get("gate") and not e.get("_past"):
-        h.append('<p>To register, fill in the registration form on this page, or email <a href="mailto:isabelle@bhdasia.com">isabelle@bhdasia.com</a>.</p>')
+        h.append('<p>To register, fill in the registration form on this page, or email <a href="mailto:bonjour@bhdasia.com">bonjour@bhdasia.com</a>.</p>')
     if not e.get("_past") and links:
         h.append("<p>" + " · ".join(f'<a href="{esc(href(r["url"], root))}">{esc(r.get("label") or "Register")}</a>' for r in links) + "</p>")
     h.append(f'<p><a href="{root}events">All TRE™ events</a>' + (f' · <a href="{root}online-session-guide">Online session guide</a>' if d.get("online") else "") + "</p>")
