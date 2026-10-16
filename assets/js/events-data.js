@@ -139,8 +139,7 @@ window.TRE_EVENTS = [
       partners: 'In partnership with the Trauma Release and Wellness Centre, Karachi, Pakistan',
       online: true,
       register: [
-        { label: 'Register \u2014 S$88', url: 'https://hummingbeing.com/event-body-in-the-room', primary: true },
-        { label: 'Ask a question (email)', url: 'mailto:bonjour@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%2025%20Nov' }
+        { label: 'Register \u2014 S$88', url: 'https://hummingbeing.com/event-body-in-the-room', primary: true }
       ],
       source: 'https://bhdasia.com/event-body-in-the-room.html'
     }
