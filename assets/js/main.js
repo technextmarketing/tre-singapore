@@ -471,7 +471,7 @@
     }
     h += '</div>';
 
-    /* sidebar: the register box stays in view on desktop; "Questions?" sits at the foot of the column */
+    /* sidebar: the register box stays in view on desktop */
     h += '<aside class="dt-side"><div class="dt-stick"><div class="dt-stick-in">';
     h += '<div class="dt-box dt-reg" id="dt-register"><h3>' + (ev._past ? 'This event has ended' : ev.status === 'cancelled' ? 'This event is cancelled' : ev.status === 'postponed' ? 'Postponed — waitlist' : ev._soldOut ? 'Sold out — waitlist' : 'Register') + '</h3>';
     var tier = function (label, sub, price, note, hl, out) {
@@ -495,9 +495,8 @@
     if (posts.length) h += '<div class="dt-box dt-posts"><h3>From the blog</h3><ul class="dt-links">' + posts.map(function (p) {
       return '<li><a class="dt-li" href="' + ROOT + p.url + '">' + ICONS.calendar + '<span>' + esc(p.title) + '<small>' + (p.kind === 'recap' ? 'Event recap' : 'Event preview') + '</small></span></a></li>';
     }).join('') + '</ul></div>';
-    h += '<div class="dt-box dt-ask"><h3>Questions?</h3><p class="dt-muted">Ask before the event rather than on the day — we are glad to help.</p>' +
-      '<p class="dt-contact"><a class="dt-cl" href="mailto:bonjour@bhdasia.com">' + CTA_ICONS.email + '<span>bonjour@bhdasia.com</span></a><a class="dt-cl" href="https://wa.me/818065151778" target="_blank" rel="noopener">' + CTA_ICONS.whatsapp + '<span>WhatsApp +81 80 6515 1778</span></a></p>' +
-      (d.source ? '<p class="dt-fine">Details as published on <a href="' + esc(d.source) + '" target="_blank" rel="noopener">hummingbeing.com</a>.</p>' : '') + '</div>';
+    /* no separate 'Questions?' box: the page goes straight to registration; keep where the details come from */
+    if (d.source) h += '<div class="dt-box dt-src"><p class="dt-fine">Details as published on <a href="' + esc(d.source) + '" target="_blank" rel="noopener">hummingbeing.com</a>.</p></div>';
     h += '</aside></div></section>';
 
     /* related events, then the close (both paths) */
