@@ -101,6 +101,7 @@ window.TRE_EVENTS = [
     facilitator: 'Aun Ali',
     price: 'S$88',
     priceText: 'S$88 \u00b7 discounted S$68 with a code',
+    link: 'https://hummingbeing.com/event-body-in-the-room',
     linkText: 'Register \u2014 S$88',
     isNew: true,
     theme: 'theme-deep',
@@ -138,16 +139,9 @@ window.TRE_EVENTS = [
       partners: 'In partnership with the Trauma Release and Wellness Centre, Karachi, Pakistan',
       online: true,
       register: [
-        { label: 'Register \u2014 S$88', url: '#register', primary: true },
+        { label: 'Register \u2014 S$88', url: 'https://hummingbeing.com/event-body-in-the-room', primary: true },
         { label: 'Ask a question (email)', url: 'mailto:bonjour@bhdasia.com?subject=The%20Body%20in%20the%20Room%20%E2%80%94%2025%20Nov' }
       ],
-      gate: {
-        discount: true,
-        pay: [{ label: 'Register \u2014 S$88', url: 'https://buy.stripe.com/5kQcMX8kX3BD62Y1WFaR200', primary: true }],
-        altLabel: 'Or register now at S$88',
-        discountNote: 'Isabelle will email you the discounted (S$68) registration link.',
-        note: 'The Zoom link is shared with registered participants.'
-      },
       source: 'https://bhdasia.com/event-body-in-the-room.html'
     }
   },
@@ -170,6 +164,7 @@ window.TRE_EVENTS = [
     facilitator: 'Ania Zieli\u0144ska',
     price: 'S$88',
     priceText: 'S$88 \u00b7 discounted S$68 with a code',
+    link: 'https://hummingbeing.com/event-breath-as-medicine',
     linkText: 'Register \u2014 S$88',
     isNew: true,
     theme: 'theme-bronze',
@@ -204,14 +199,8 @@ window.TRE_EVENTS = [
       facilitators: [ANIA],
       online: false,
       register: [
-        { label: 'Register \u2014 S$88', url: '#register', primary: true }
-      ],
-      gate: {
-        discount: true,
-        pay: [{ label: 'Pay with Wise', url: 'https://wise.com/pay/me/annaz337', primary: true }],
-        copy: { label: 'Or pay with PayPal \u2014 send to', value: 'azielinska@hotmail.com' },
-        note: 'Pay S$88 (or S$68 with a valid discount code) by Wise or PayPal. Please use your full name as the payment reference. The Zoom link is shared with registered participants before the session.'
-      }
+        { label: 'Register \u2014 S$88', url: 'https://hummingbeing.com/event-breath-as-medicine', primary: true }
+      ]
     }
   },
 
@@ -600,7 +589,8 @@ window.TRE_EVENTS = [
     card     : 'assets/img/events/card-event-feminine-masculine.webp?v=1',
     description: 'A live online workshop with Sara Marie \u2014 The Alchemist \u2014 bringing energetic awareness together with somatic embodiment, so navigating masculine corporate structures becomes a place of liberation, ease and personal power.',
     facilitator: 'Sara Marie',
-    priceText: 'Public 88 SGD (69 USD) \u00b7 TRE\u00ae providers 68 SGD',
+    priceText: 'Public 88 SGD (69 USD) \u00b7 TRE\u2122 providers 68 SGD',
+    link: 'https://hummingbeing.com/event-feminine-masculine-energetics',
     linkText: 'Register',
     isNew: true,
     theme: 'theme-orange',
@@ -628,21 +618,15 @@ window.TRE_EVENTS = [
       ],
       pricing: [
         { label: 'Public', sub: 'open to all', price: '88 SGD', note: '69 USD' },
-        { label: 'TRE\u00ae providers trained by Isabelle & Simba', sub: 'concession', price: '68 SGD', note: '' }
+        { label: 'TRE\u2122 providers trained by Isabelle & Simba', sub: 'concession', price: '68 SGD', note: '' }
       ],
       pricingNote: 'Registration and payment via Sara Marie on Calendly, and all proceeds go to her. Guest and concessionary places are arranged directly with Isabelle. All tickets are non-refundable and non-cancellable.',
       facilitators: [SARA],
       partners: 'Presented with Living with the Spirit',
       online: true,
       register: [
-        { label: 'Register now', url: '#register', primary: true },
-        { label: 'Event page on HummingBeing', url: 'https://hummingbeing.com/event-feminine-masculine-energetics' }
+        { label: 'Register now', url: 'https://hummingbeing.com/event-feminine-masculine-energetics', primary: true }
       ],
-      gate: {
-        discount: false,
-        pay: [{ label: 'Register & pay on Calendly', url: 'https://calendly.com/sara-spirit/feminine-masculine-energetics-in-the-corporate-world', primary: true }],
-        note: 'Registration and payment are handled by Sara Marie via Calendly, and all proceeds go directly to her. A replay is available to all registrants. Guest and concessionary places are arranged directly with Isabelle.'
-      },
       source: 'https://hummingbeing.com/event-feminine-masculine-energetics'
     }
   },
@@ -650,9 +634,8 @@ window.TRE_EVENTS = [
   /* ---------- TRE Module 1 — Bucharest ---------- */
   {
     slug: 'tre-module-1-bucharest',
-    status: 'postponed',
     soldOut: true,
-    waitlistLink: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
+    waitlistLink: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest',
     title: 'TRE™ Module 1 — Bucharest, Romania (in English)',
     category: 'Certification',
     region: 'international',
@@ -671,7 +654,7 @@ window.TRE_EVENTS = [
     credits: '21 ICF CCEUs',
     price: 'From €739',
     priceNote: 'per person · tiers rise as tickets sell (€739 · €769 · €799)',
-    link: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)',
+    link: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest',
     linkText: 'Join the waitlist',
     theme: 'theme-deep',
     details: {
@@ -701,16 +684,16 @@ window.TRE_EVENTS = [
         'Global certification recognition under the Global TRE™ Certification Program'
       ],
       pricing: [
-        { label: 'Super Early Bird', sub: 'First 5 tickets · limited, sells first', price: '€739', note: 'sold out — postponed', soldOut: true },
-        { label: 'Early Bird', sub: 'Next 5 tickets', price: '€769', note: 'sold out — postponed', soldOut: true },
-        { label: 'Full Price', sub: 'Final 10 tickets', price: '€799', note: 'sold out — postponed', soldOut: true }
+        { label: 'Super Early Bird', sub: 'First 5 tickets · limited, sells first', price: '€739', note: 'sold out', soldOut: true },
+        { label: 'Early Bird', sub: 'Next 5 tickets', price: '€769', note: 'sold out', soldOut: true },
+        { label: 'Full Price', sub: 'Final 10 tickets', price: '€799', note: 'sold out', soldOut: true }
       ],
       pricingNote: 'Only 20 places. Prices step up automatically as each block of tickets sells — register early to secure the lowest tier. A single registration form and QR code are provided on confirmation. All tickets are non-refundable and non-cancellable.',
       facilitators: [ISABELLE, SAYMARA],
       partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE™ România · HummingBeing',
       online: false,
       register: [
-        { label: 'Join the waitlist — postponed', url: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest%20(postponed)', primary: true },
+        { label: 'Join the waitlist', url: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
       source: 'https://hummingbeing.com/event-tre-module1-bucharest'
@@ -735,8 +718,9 @@ window.TRE_EVENTS = [
     description: 'Module 3 of the Global TRE™ Provider Certification. The role of fascia, advanced interventions and modifications, transference and counter-transference, and experience leading groups of 3+ people. Completes your certification.',
     facilitator: 'Isabelle Claus Teixeira',
     priceText: 'Part of the certification bundle (from S$3,699)',
+    soldOut: true,
     link: 'https://hummingbeing.com/event-certification',
-    linkText: 'Enquire',
+    linkText: 'Join waitlist',
     theme: 'theme-deep',
     details: {
       summary: 'The final module of the Global TRE™ Provider Certification: leading TRE™ for groups with confidence, and completing your qualification as a Certified Provider.',
@@ -764,7 +748,7 @@ window.TRE_EVENTS = [
       facilitators: [ISABELLE],
       online: false,
       register: [
-        { label: 'Enquire about Module 3', url: 'https://hummingbeing.com/event-certification', primary: true },
+        { label: 'Join the waitlist (2026 cohort full)', url: 'https://hummingbeing.com/event-certification', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
       source: 'https://hummingbeing.com/event-certification'
