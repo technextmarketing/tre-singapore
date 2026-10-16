@@ -395,3 +395,6 @@ html:not(.js) .hx-photo,html:not(.js) .marquee-track{animation:none}
 .draft-note{background:var(--cream);border:1px dashed var(--bronze);border-radius:var(--radius-sm,10px);padding:var(--s3) var(--s4);margin:0 0 var(--s5);color:var(--ink)}
 .bl-events{margin-top:var(--s8)}
 .bl-events-h{margin:0 0 var(--s5)}
+
+/* 2026-10-16: yellow buttons carry white text (client request) */
+.btn-primary, .btn-primary:hover, .btn-primary:focus-visible, .site-header .nav .btn-primary:not(.is-quiet) { color: #fff !important; }
