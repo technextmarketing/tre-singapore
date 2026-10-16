@@ -106,7 +106,7 @@ window.TRE_EVENTS = [
     isNew: true,
     theme: 'theme-deep',
     details: {
-      posterTall: { src: 'assets/img/events/event-body-in-the-room-portrait.webp', alt: 'The Body in the Room — online workshop with Aun Ali, 25 November 2026, 7–9pm Singapore time' },
+      posterTall: { src: 'assets/img/events/event-body-in-the-room-portrait.webp?v=2', alt: 'The Body in the Room — online workshop with Aun Ali, 25 November 2026, 7–9pm Singapore time' },
       summary: 'Many of us were trained to work with stories, thoughts and meaning. Then we sat with clients who could tell their story perfectly and still feel unsafe in their own skin. This workshop is a space for therapists and TRE\u2122 practitioners to talk honestly about what changes when the body becomes part of the therapeutic process.',
       about: [
         'We will look at the framework of trauma-informed care, and explore how and when TRE\u2122 and other body-based practices can be woven into each stage of therapy \u2014 without overwhelming the client or abandoning your existing model.',
@@ -195,6 +195,7 @@ window.TRE_EVENTS = [
         { label: 'Discounted price', sub: 'with a discount code', price: 'S$68', note: 'enter your code when you register' }
       ],
       pricingNote: 'All prices in Singapore Dollars. Have a discount code? Enter it in the registration form. The Zoom link is shared with registered participants before the session.',
+      posterTall: { src: 'assets/img/events/event-breath-as-medicine-portrait.webp?v=2', alt: 'Breath as a medicine \u2014 online pranayama workshop with Ania Zieli\u0144ska, 15 December 2026, 7\u20139pm Singapore time' },
       facilitators: [ANIA],
       online: false,
       register: [
@@ -228,7 +229,7 @@ window.TRE_EVENTS = [
     isNew: true,
     theme: 'theme-deep',
     details: {
-      posterTall: { src: 'assets/img/events/event-certification-2027-portrait.webp', alt: 'Become a Certified TRE™ Provider — 2027 Singapore cohort with Isabelle Claus Teixeira and Simba Stenqvist: Module 1 27–28 Feb, Module 2 3–4 Jul, Module 3 30–31 Oct 2027' },
+      posterTall: { src: 'assets/img/events/event-certification-2027-portrait.webp?v=2', alt: 'Become a Certified TRE™ Provider — 2027 Singapore cohort with Isabelle Claus Teixeira and Simba Stenqvist: Module 1 27–28 Feb, Module 2 3–4 Jul, Module 3 30–31 Oct 2027' },
       summary: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — co-taught by Isabelle Claus Teixeira and Simba Stenqvist, and boosted by Internal Alchemy. Three modules take you from your own TRE™ practice to confidently teaching individuals and groups. One cohort per year.',
       about: [
         'The Global TRE™ Provider Certification qualifies you to offer TRE™ to the general public, in individual and group settings.',
@@ -594,7 +595,7 @@ window.TRE_EVENTS = [
     isNew: true,
     theme: 'theme-orange',
     details: {
-      posterTall: { src: 'assets/img/events/event-feminine-masculine-portrait.webp', alt: 'Navigating Feminine & Masculine Energetics Inside Corporate Structures — online workshop with Sara Marie, 28 October 2026, 7–9:30pm Singapore time' },
+      posterTall: { src: 'assets/img/events/event-feminine-masculine-portrait.webp?v=2', alt: 'Navigating Feminine & Masculine Energetics Inside Corporate Structures — online workshop with Sara Marie, 28 October 2026, 7–9:30pm Singapore time' },
       summary: 'The corporate structure is one of the clearest expressions of masculine dynamics in the modern world. This live online workshop brings energetic awareness together with somatic embodiment, so navigating those structures becomes a place of liberation, ease and personal power.',
       about: [
         'This workshop is for women working inside corporate environments \u2014 or carrying the effects of having left them \u2014 for entrepreneurs holding the full weight of their business inside masculine business structures, and for practitioners, coaches and somatic therapists working inside these dynamics or supporting clients who are.',
