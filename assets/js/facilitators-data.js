@@ -87,37 +87,37 @@ window.TRE_FACILITATORS = [
     role: 'Holistic Healing & Wellness Facilitator · Certified TRE™ Provider',
     tag: 'Certified Provider', tagClass: 'badge-navy', kind: 'provider',
     modes: ['1:1', 'Groups', 'Workshops', 'In-person', 'Online'],
-    services: ['TRE™', 'Family Constellations', 'Brainspotting & Expressive Art', 'PSYCH-K® & NLP', 'Themed workshops', '1:1 integrated sessions', 'Subconscious healing', 'West Singapore · Online'],
+    services: ['TRE™', 'Family Constellations', 'Expressive Art × Brainspotting', 'PSYCH-K® & NLP', 'Themed workshops', '1:1 integrated sessions', 'Subconscious healing', 'Singapore · Online'],
     initials: 'Y', photoClass: '', photo: FAC_IMG + 'yan.webp',
-    bio: 'Holistic facilitator blending Family Constellations, Brainspotting, TRE™ and PSYCH-K® to clear subconscious blocks and heal generational patterns.',
+    bio: 'Holistic facilitator blending Family Constellations, Expressive Art × Brainspotting, TRE™ and PSYCH-K® to clear subconscious blocks and heal generational patterns.',
     summary: 'Helping you clear subconscious blocks, heal generational patterns, and step into authentic happiness and love. Through an integrative, mind-body approach, Yan holds a safe, transformative space to process trauma, release tension and create lasting emotional balance.',
     contact: { email: 'mailto:blooms.n.beyond.love@gmail.com?subject=Session%20enquiry%20%E2%80%94%20Blooms%20n%20Beyond', whatsapp: 'https://wa.me/6588560573?text=Hi%20Yan%2C%20I%27d%20like%20to%20ask%20about%20a%20session', book: 'https://wa.me/6588560573?text=Hi%20Yan%2C%20I%27d%20like%20to%20book%20a%20session' },
     website: { url: 'https://www.instagram.com/blooms.n.beyond/', label: '@blooms.n.beyond' },
     socials: [ { type: 'instagram', url: 'https://www.instagram.com/blooms.n.beyond/', label: '@blooms.n.beyond' } ],
-    facts: { location: 'West Singapore · In-person & online', languages: 'English', formats: '1:1 integrated sessions · Themed workshops', certified: 'Certified in TRE™, PSYCH-K® & NLP' },
+    facts: { location: 'Singapore · In-person & online', languages: 'English', formats: '1:1 integrated sessions · Themed workshops', certified: 'Certified in TRE™, PSYCH-K® & NLP' },
     about: [
       'Yan is a holistic healing and wellness facilitator helping people clear subconscious blocks, heal generational patterns and step into authentic happiness and love. Her work combines a mind-body approach with a safe, transformative space to process trauma, release tension and create lasting emotional balance.',
-      'In her 1:1 integrated private sessions she tailors one or two modalities to your unique needs — from Family Constellations and Brainspotting to TRE™, PSYCH-K® and NLP — and she runs themed group workshops on relationship healing, subconscious alignment, emotional regulation and self-discovery. She practises as Blooms n Beyond.'
+      'In her 1:1 integrated private sessions she tailors one or two modalities to your unique needs — from Family Constellations and Expressive Art × Brainspotting to TRE™, PSYCH-K® and NLP — and she runs themed group workshops on relationship healing, subconscious alignment, emotional regulation and self-discovery. She practises as Blooms n Beyond.'
     ],
     highlights: [
       'Family Constellations — heals systemic family dynamics and generational patterns',
-      'Brainspotting & Expressive Art — processes deep-seated trauma via somatic and creative pathways',
+      'Expressive Art × Brainspotting — processes deep-seated trauma via somatic and creative pathways',
       'TRE™ (Tension & Trauma Releasing Exercises) — somatic tremoring to release nervous-system stress',
       'PSYCH-K® & NLP — rewires limiting subconscious beliefs and communication patterns'
     ],
     offers: [
       { title: '1:1 Integrated Private Sessions', text: 'Deeply customised sessions combining one or two tailored modalities based on your unique needs.' },
       { title: 'Family Constellations', text: 'Uncover and heal systemic family dynamics and generational patterns affecting your relationships and wellbeing.' },
-      { title: 'Brainspotting & Expressive Art', text: 'Process deep-seated trauma and access implicit memory through visual, somatic and creative pathways.' },
+      { title: 'Expressive Art × Brainspotting', text: 'Process deep-seated trauma and access implicit memory through visual, somatic and creative pathways.' },
       { title: 'TRE™ sessions', text: 'Somatic tremoring techniques to safely release physical tension and nervous-system stress.' },
       { title: 'PSYCH-K® & NLP', text: 'Rewire limiting subconscious beliefs and communication patterns to align with self-love, joy and fulfilment.' },
       { title: 'Themed Workshops', text: 'Group experiences focused on relationship healing, subconscious alignment, emotional regulation and self-discovery.' }
     ],
     gallery: [],
     meta: [
-      { icon: 'pin', text: 'West Singapore · In-person & online' },
+      { icon: 'pin', text: 'Singapore · In-person & online' },
       { icon: 'group', text: '1:1 integrated sessions · Themed workshops' },
-      { icon: 'award', text: 'TRE™ · Family Constellations · Brainspotting · PSYCH-K® · NLP' }
+      { icon: 'award', text: 'TRE™ · Family Constellations · Expressive Art × Brainspotting · PSYCH-K® · NLP' }
     ]
   },
   {
