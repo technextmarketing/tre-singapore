@@ -297,6 +297,9 @@
       '<div class="field"><label for="rg-country-' + u + '">Country</label><input id="rg-country-' + u + '" name="country" type="text" autocomplete="country-name"></div>' +
       (g.discount ? '<div class="field"><label for="rg-code-' + u + '">Discount code</label><input id="rg-code-' + u + '" name="discount_code" type="text" autocomplete="off" autocapitalize="characters" spellcheck="false"></div>' : '') +
       '<div class="field"><label for="rg-msg-' + u + '">Message</label><textarea id="rg-msg-' + u + '" name="message" rows="3"></textarea></div>' +
+      /* consent (general PDPA/GDPR standard): required, unchecked; the site has no privacy-policy page, so no link */
+      '<label class="check dt-gate-check"><input type="checkbox" name="consent" required><span>I agree that my details will be collected and used to process my registration and to contact me about this event. <span class="req">*</span></span></label>' +
+      '<label class="check dt-gate-check"><input type="checkbox" name="updates"><span>Keep me informed about future events and workshops.</span></label>' +
       '<button class="btn btn-primary" type="submit">Continue to registration</button>' +
       '</form></div>' +
       '<div class="dt-gate-pay" hidden></div></div>';
@@ -310,17 +313,30 @@
     function getSaved() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (x) { return null; } }
     function setSaved(v) { try { if (v) localStorage.setItem(KEY, JSON.stringify(v)); else localStorage.removeItem(KEY); } catch (x) { /* private mode */ } }
     function showForm(focus) { pay.hidden = true; pay.innerHTML = ''; wrap.hidden = false; if (focus) focusEl(firstField()); }
-    function showPay(saved, focus) {
+    /* one payment link (no copy-to-pay details) = step 2 sends the visitor on to that page by itself after sending the form */
+    var AUTO = (g.pay || []).length === 1 && !g.copy;
+    function payFor(saved) { return saved.disc && g.payDiscount ? [g.payDiscount] : (g.pay || []); }
+    /* discount code -> SHA-256 of the trimmed upper-case code, compared with g.codeHash (the code itself is not in the page) */
+    function codeMatches(code) {
+      code = String(code || '').trim().toUpperCase();
+      if (!code || !g.codeHash || !g.payDiscount || !(window.crypto && crypto.subtle && window.TextEncoder)) return Promise.resolve(false);
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(code)).then(function (buf) {
+        return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('') === g.codeHash;
+      }, function () { return false; });
+    }
+    function showPay(saved, focus, leaving) {
       var first = String(saved.name || '').split(/\s+/)[0] || '';
       var withCode = !!(saved.code && g.discountNote);
       var h = '<h4 class="dt-gate-h" tabindex="-1">Complete your registration</h4>' +
-        '<p class="dt-gate-thanks">Thank you' + (first ? ', ' + esc(first) : '') + ' — your details are with Isabelle.</p>';
+        '<p class="dt-gate-thanks" role="status">Thank you' + (first ? ', ' + esc(first) : '') + (leaving ? ' — taking you to the secure payment page…' : ' — your details are with Isabelle.') + '</p>';
       var prices = (d.pricing || []).map(function (t) { return '<li><span>' + esc(t.label) + '</span><b>' + esc(t.price) + '</b></li>'; }).join('');
       if (prices) h += '<ul class="dt-gate-prices">' + prices + '</ul>';
       if (withCode) h += '<p class="dt-gate-code">' + esc(g.discountNote) + '</p>';
-      h += '<div class="dt-gate-acts">' + (g.pay || []).map(function (p) {
-        var cls = 'btn ' + (p.primary && !withCode ? 'btn-primary' : 'btn-outline');
-        return '<a class="' + cls + '" href="' + esc(p.url) + '" target="_blank" rel="noopener">' + esc(withCode && g.altLabel ? g.altLabel : p.label) + '</a>';
+      if (saved.code && g.payDiscount && !saved.disc) h += '<p class="dt-gate-note">The discount code you entered was not recognised, so this is the public-price payment page. Questions? Email <a href="mailto:bonjour@bhdasia.com">bonjour@bhdasia.com</a>.</p>';
+      h += '<div class="dt-gate-acts">' + payFor(saved).map(function (p) {
+        var cls = 'btn ' + ((p.primary || saved.disc) && !withCode ? 'btn-primary' : 'btn-outline');
+        /* auto-redirect events open the payment page in this tab (as the redirect does); others in a new tab as before */
+        return '<a class="' + cls + '" href="' + esc(p.url) + '"' + (AUTO ? '' : ' target="_blank" rel="noopener"') + '>' + esc(withCode && g.altLabel ? g.altLabel : p.label) + '</a>';
       }).join('') + '</div>';
       if (g.copy) h += '<div class="dt-gate-copy"><span class="dt-gate-copy-l">' + esc(g.copy.label) + '</span><span class="dt-gate-copy-r"><code>' + esc(g.copy.value) + '</code><button type="button" class="btn btn-outline btn-sm" data-copy>Copy</button></span><span class="dt-gate-copied" role="status" aria-live="polite"></span></div>';
       if (g.note) h += '<p class="dt-gate-note">' + esc(g.note) + '</p>';
@@ -342,22 +358,34 @@
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
       var data = {};
-      $all('input, textarea', form).forEach(function (f) { if (f.name) data[f.name] = f.value.trim(); });
+      $all('input, textarea', form).forEach(function (f) { if (f.name && f.type !== 'checkbox') data[f.name] = f.value.trim(); });
+      var upd = !!(form.elements.updates && form.elements.updates.checked);
+      var ts = new Date().toISOString();
+      data.consent = 'yes (' + ts + ')';
+      data.updates = upd ? 'yes' : 'no';
+      data.message = (data.message ? data.message + '\n\n' : '') + 'Consent: yes (' + ts + ') | Updates: ' + data.updates;
       data.page = location.origin + location.pathname;
       var fail = $('.form-fail', form); if (fail) fail.hidden = true;
       btn.disabled = true; btn.textContent = 'Sending…';
-      post('https://formsubmit.co/ajax/bonjour@bhdasia.com', data)
-        .then(function () {
-          var s = { name: data.name, code: !!data.discount_code }; setSaved(s); form.reset(); showPay(s, true);
-        })
-        .catch(function () {
-          var body = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + data.phone, 'Country: ' + (data.country || '-')].concat(g.discount ? ['Discount code: ' + (data.discount_code || '-')] : [], ['Message: ' + (data.message || '-')]).join('\n');
-          /* the send failed: still show the payment step (as hummingbeing.com / bhdasia.com do) and ask for the details by email */
-          var s = { name: data.name, code: !!data.discount_code }; setSaved(s); form.reset(); showPay(s, true);
-          var th = $('.dt-gate-thanks', pay), first = String(data.name || '').split(/\s+/)[0];
-          if (th) th.innerHTML = 'Thank you' + (first ? ', ' + esc(first) : '') + '. Our form could not send your details just now &mdash; please <a href="mailto:bonjour@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">email them to Isabelle</a> (already written out).';
-        })
-        .then(function () { btn.disabled = false; btn.textContent = label; });
+      function failed(s) {
+        var body = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + data.phone, 'Country: ' + (data.country || '-')].concat(g.discount ? ['Discount code: ' + (data.discount_code || '-')] : [], ['Message: ' + (data.message || '-')]).join('\n');
+        /* the send failed: still show the payment step (as hummingbeing.com / bhdasia.com do) and ask for the details by email; no automatic redirect */
+        setSaved(s); form.reset(); showPay(s, true);
+        var th = $('.dt-gate-thanks', pay), first = String(data.name || '').split(/\s+/)[0];
+        if (th) th.innerHTML = 'Thank you' + (first ? ', ' + esc(first) : '') + '. Our form could not send your details just now &mdash; please <a href="mailto:bonjour@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">email them to Isabelle</a> (already written out).';
+      }
+      /* keepalive: the lead still arrives if the browser moves on to the payment page while it is being sent */
+      var sent = post('https://formsubmit.co/ajax/bonjour@bhdasia.com', data, true).then(function () { return 'ok'; }, function () { return 'fail'; });
+      codeMatches(data.discount_code).then(function (disc) {
+        var s = { name: data.name, code: !!data.discount_code, disc: disc };
+        /* wait for the send, at most ~1.5 s on auto-redirect events (keepalive carries a slower send) */
+        var wait = AUTO ? Promise.race([sent, new Promise(function (r) { setTimeout(function () { r('slow'); }, 1500); })]) : sent;
+        return wait.then(function (res) {
+          if (res === 'fail') { failed(s); return; }
+          setSaved(s); form.reset(); showPay(s, true, AUTO);
+          if (AUTO) { var url = payFor(s)[0].url; setTimeout(function () { location.href = url; }, 1500); }
+        });
+      }).then(function () { btn.disabled = false; btn.textContent = label; });
     });
     /* every "Register" button on the page leads here: scroll to the box and put the cursor in the first field */
     function go(e) {
@@ -874,8 +902,8 @@
      not (for example while the form still awaits its one-time activation for this domain). Only a real "true" counts as
      sent; anything else shows what happened and a way to still reach Isabelle, with the message already written out. */
   var WA = '<a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a>';
-  function post(endpoint, data) {
-    return fetch(endpoint, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+  function post(endpoint, data, keepalive) {
+    return fetch(endpoint, { method: 'POST', keepalive: !!keepalive, headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || 'Not sent'); }); });
   }
   function note(scope, cls, html, after) {   /* a message box after `after` (created once; filled a beat later so screen readers announce it) */
