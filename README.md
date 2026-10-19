@@ -59,7 +59,7 @@ Every event gets a **preview** post, and a **recap** post after it ends. Posts a
 
 ## Forms
 
-The contact form and the newsletter sign-up send through FormSubmit (`formsubmit.co/ajax/rico@bhdasia.com`) inside the page. FormSubmit asks the inbox owner to activate a form once per website address: until the activation email is confirmed, a message is **not** delivered — the page then says so and offers the visitor the same message as a ready-written email or WhatsApp, instead of a false "sent". After any domain change, send one test message and confirm the activation email in bonjour@bhdasia.com.
+The contact form and the newsletter sign-up send through FormSubmit (`formsubmit.co/ajax/bonjour@bhdasia.com`) inside the page. FormSubmit asks the inbox owner to activate a form once per website address: until the activation email is confirmed, a message is **not** delivered — the page then says so and offers the visitor the same message as a ready-written email or WhatsApp, instead of a false "sent". After any domain change, send one test message and confirm the activation email in bonjour@bhdasia.com.
 
 ## Content that is written by hand
 
