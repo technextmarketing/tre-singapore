@@ -375,7 +375,7 @@
         if (th) th.innerHTML = 'Thank you' + (first ? ', ' + esc(first) : '') + '. Our form could not send your details just now &mdash; please <a href="mailto:bonjour@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">email them to Isabelle</a> (already written out).';
       }
       /* keepalive: the lead still arrives if the browser moves on to the payment page while it is being sent */
-      var sent = post('https://formsubmit.co/ajax/bonjour@bhdasia.com', data, true).then(function () { return 'ok'; }, function () { return 'fail'; });
+      var sent = post('https://formsubmit.co/ajax/rico@bhdasia.com', data, true).then(function () { return 'ok'; }, function () { return 'fail'; });
       codeMatches(data.discount_code).then(function (disc) {
         var s = { name: data.name, code: !!data.discount_code, disc: disc };
         /* wait for the send, at most ~1.5 s on auto-redirect events (keepalive carries a slower send) */
