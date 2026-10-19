@@ -79,6 +79,12 @@ var ANIA = {
   bio: 'Ania Zieli\u0144ska (Sunrise) is a Yoga Teacher, Holistic Health Coach and Life Realignment Mentor with over a decade of experience in Yoga, meditation and holistic wellbeing. She has completed over 700 hours of yoga teacher training and teaches Hatha, Vinyasa and Yin Yoga, alongside pranayama and meditation. Her work goes beyond the physical practice of Yoga: as a Life Realignment Mentor, Ania supports people in creating meaningful changes across different areas of life \u2014 from wellbeing and weight loss, habits and mindset to self-awareness, relationships and personal growth. Her approach combines traditional Yogic practices with practical tools that can be integrated into everyday life, helping people cultivate greater awareness, calm, focus, energy and connection with themselves. Ania\u2019s own journey with Yoga began as a profound personal transformation and has grown into a passion for guiding others Back to Themselves through movement, breath and mindfulness. She has taught Yoga internationally both in-person and online, and she works with people from different backgrounds and levels of experience. She believes that breath is one of the simplest and most powerful tools we have available to influence how we feel, respond and move through our day.',
   photo: 'assets/img/facilitators/ania-zielinska.webp'
 };
+var OLGA = {
+  name: 'Olga Titkova',
+  role: 'Yoga & Mindfulness Teacher · E-RYT 200, RYT 500, YACEP',
+  bio: 'Olga has practiced yoga since 1997 and has been teaching since 2006. Her studies span traditional Hatha, Tantra, and Kundalini yoga, pranayama, meditation, and Yoga Nidra. She has also completed mindfulness teacher training in Oxford, UK. Alongside her yoga journey, Olga spent 27 years in the high-tech industry, leading global teams and technology operations across multiple countries. Her experience in demanding corporate environments has shaped her understanding of the importance of awareness, balance, and recovery in everyday life. Today, she brings together her yoga and mindfulness studies with her professional experience, integrating physical practice with awareness of bodily sensations, thoughts, and emotions to support personal wellbeing, inner balance, and a more conscious approach to everyday life.',
+  photo: 'assets/img/facilitators/olga-titkova.webp'
+};
 var CALENDLY = 'https://calendly.com/bhdasia/tre-certification-intake-call';
 
 window.TRE_EVENTS = [
@@ -201,6 +207,76 @@ window.TRE_EVENTS = [
       register: [
         { label: 'Register \u2014 S$88', url: 'https://hummingbeing.com/event-breath-as-medicine', primary: true }
       ]
+    }
+  },
+
+  /* ---------- The Art of Conscious Rest \u2014 Olga Titkova (online, 24 Jan 2027) ---------- */
+  {
+    slug: 'art-of-conscious-rest',
+    title: 'The Art of Conscious Rest \u2014 Experiencing deep relaxation through Yoga Nidra',
+    seoTitle: 'The Art of Conscious Rest \u2014 Yoga Nidra with Olga Titkova',
+    category: 'Workshop',
+    region: 'online',
+    location: 'Online',
+    venue: 'Zoom (link shared with registered participants)',
+    format: 'Live online',
+    start: '2027-01-24T20:00',
+    dateText: 'Sunday 24 January 2027',
+    timeText: '8:00\u201310:00pm Singapore time (SGT)',
+    image: 'assets/img/events/event-art-of-conscious-rest.webp?v=1',
+    card     : 'assets/img/events/card-event-art-of-conscious-rest.webp?v=1',
+    description: 'An experiential online workshop with Olga Titkova introducing Yoga Nidra, a practice rooted in the Tantric yoga tradition that invites deep relaxation while cultivating awareness. For anybody interested to know more about Yoga Nidra \u2014 no previous Yoga Nidra experience is required.',
+    facilitator: 'Olga Titkova',
+    price: 'S$88',
+    priceText: 'S$88 \u00b7 discounted S$68 with a code',
+    linkText: 'Register \u2014 S$88',
+    isNew: true,
+    theme: 'theme-deep',
+    details: {
+      summary: 'Our increasingly busy and digitally connected lives expose us to constant stimulation and persistent demands on our attention. These conditions can contribute to accumulated physical and mental tension, making it difficult to experience genuine rest.',
+      about: [
+        'This experiential workshop introduces Yoga Nidra, a practice rooted in the Tantric yoga tradition that invites deep relaxation while cultivating awareness.',
+        'Beginning with gentle movement to prepare the body, participants will be guided through conscious breathing and systematic relaxation toward a state of deep rest, where the body relaxes, the mind becomes quiet, and awareness may remain present.',
+        'The practice will be followed by personal reflection and group discussion, allowing participants to share their experiences and insights.',
+        'Live on Zoom, Sunday 24 January 2027, 8:00\u201310:00pm Singapore time. The Zoom link is shared with registered participants before the session.'
+      ],
+      forWho: [
+        'TRE\u2122 practitioners (Tension & Trauma Releasing Exercises) interested in exploring Yoga Nidra as a complementary approach to deep relaxation, body awareness, and conscious rest',
+        'Yoga & Mindfulness Practitioners \u2014 individuals seeking to deepen their experience of relaxation, cultivate awareness, and explore the traditional practice of Yoga Nidra',
+        'Corporate & Wellness Professionals \u2014 individuals navigating demanding work environments, sustained mental fatigue, or disrupted sleep who are interested in exploring conscious rest as a way to support relaxation and mental wellbeing',
+        'Anyone Seeking Deep Rest \u2014 individuals curious about experiencing profound relaxation and discovering a different approach to rest in everyday life',
+        'No previous Yoga Nidra experience is required'
+      ],
+      schedule: [
+        { when: 'Sun 24 Jan', time: '8:00\u201310:00pm SGT \u00b7 Zoom', title: 'The Art of Conscious Rest \u2014 live online workshop', text: 'Gentle movement to prepare the body, conscious breathing, an extended guided Yoga Nidra practice, then personal reflection and group discussion.' }
+      ],
+      includes: [
+        'Explore Awareness \u2014 discover the difference between thinking about the body and directly experiencing sensations through a simple guided exercise',
+        'Prepare for Deep Rest \u2014 explore conscious breathing and gentle physical preparation to support relaxation and stillness',
+        'Discover Yoga Nidra\u2019s Roots \u2014 learn about the traditional foundations of Yoga Nidra and its effects in modern life',
+        'Experience Yoga Nidra \u2014 participate in an extended guided practice, moving through bodily sensations and breath toward deep relaxation and inner stillness',
+        'Reflect and Integrate \u2014 share observations and explore how conscious rest may support wellbeing in everyday life'
+      ],
+      pricing: [
+        { label: 'Public price', sub: 'live online workshop \u00b7 Zoom', price: 'S$88', hl: true },
+        { label: 'Discounted price', sub: 'with a discount code', price: 'S$68', note: 'enter your code when you register' }
+      ],
+      pricingNote: 'All prices in Singapore Dollars. Have a discount code? Enter it in the registration form. Payment is handled securely by Illuminate Paths. The Zoom link is shared with registered participants before the session.',
+      posterTall: { src: 'assets/img/events/event-art-of-conscious-rest-portrait.webp?v=1', alt: 'The Art of Conscious Rest \u2014 online Yoga Nidra workshop with Olga Titkova, 24 January 2027, 8\u201310pm Singapore time' },
+      facilitators: [OLGA],
+      online: false,
+      register: [
+        { label: 'Register \u2014 S$88', url: '#register', primary: true }
+      ],
+      /* register-first gate: the form comes first, then the payment page (one payment link -> automatic redirect).
+         codeHash = SHA-256 of the upper-case discount code; a matching code leads to payDiscount instead. */
+      gate: {
+        discount: true,
+        pay: [{ label: 'Continue to payment \u2014 S$88', url: 'https://pay.illuminatepaths.org/cf90e08e-8777-4842-8223-857', primary: true }],
+        payDiscount: { label: 'Continue to payment \u2014 S$68', url: 'https://pay.illuminatepaths.org/25aadd6f-8043-46c8-a7d1-9a9' },
+        codeHash: '9d1b4292bdcc47f1f4fecf1e2fabc58fe1a3a64d495a957d51d1617aeaf17281',
+        note: 'Payment is handled securely by Illuminate Paths. The Zoom link is shared with registered participants before the session.'
+      }
     }
   },
 

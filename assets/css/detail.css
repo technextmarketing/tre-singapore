@@ -206,6 +206,11 @@
 .dt-gform .field textarea{min-height:84px}
 .dt-gform .btn{width:100%;min-height:48px;white-space:normal;text-align:center;line-height:1.25}
 .dt-gform .form-fail{font-size:.88rem;padding:.8rem 1rem}
+.dt-gform .dt-gate-check{margin:2px 0 .8rem;font-size:.86rem;line-height:1.5;color:var(--ink-2)}
+.dt-gform .dt-gate-check input{flex:none;margin-top:2px;width:18px;height:18px}
+.dt-gform .dt-gate-check input:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.dt-gform .dt-gate-check span{min-width:0;overflow-wrap:anywhere}
+.dt-gform .dt-gate-check + .btn{margin-top:.2rem}
 .dt-gate-h{margin:0 0 .35rem;font-size:1.05rem;color:var(--navy)}
 .dt-gate-h:focus{outline:none}
 .dt-gate-thanks{margin:0 0 .9rem;color:var(--ink-2);line-height:1.5}
