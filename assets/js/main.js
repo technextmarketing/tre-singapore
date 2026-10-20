@@ -299,7 +299,6 @@
       '<div class="field"><label for="rg-msg-' + u + '">Message</label><textarea id="rg-msg-' + u + '" name="message" rows="3"></textarea></div>' +
       /* consent (general PDPA/GDPR standard): required, unchecked; the site has no privacy-policy page, so no link */
       '<label class="check dt-gate-check"><input type="checkbox" name="consent" required><span>I agree that my details will be collected and used to process my registration and to contact me about this event. <span class="req">*</span></span></label>' +
-      '<label class="check dt-gate-check"><input type="checkbox" name="updates"><span>Keep me informed about future events and workshops.</span></label>' +
       '<button class="btn btn-primary" type="submit">Continue to registration</button>' +
       '</form></div>' +
       '<div class="dt-gate-pay" hidden></div></div>';
@@ -359,11 +358,11 @@
       if (!form.checkValidity()) { form.reportValidity(); return; }
       var data = {};
       $all('input, textarea', form).forEach(function (f) { if (f.name && f.type !== 'checkbox') data[f.name] = f.value.trim(); });
-      var upd = !!(form.elements.updates && form.elements.updates.checked);
+      var upd = (window.gdprConsentSummary && window.gdprConsentSummary(form)) || 'not recorded';
       var ts = new Date().toISOString();
       data.consent = 'yes (' + ts + ')';
-      data.updates = upd ? 'yes' : 'no';
-      data.message = (data.message ? data.message + '\n\n' : '') + 'Consent: yes (' + ts + ') | Updates: ' + data.updates;
+      data.gdpr_consent = upd;
+      data.message = (data.message ? data.message + '\n\n' : '') + 'Registration consent: yes (' + ts + ') | GDPR: ' + upd;
       data.page = location.origin + location.pathname;
       var fail = $('.form-fail', form); if (fail) fail.hidden = true;
       btn.disabled = true; btn.textContent = 'Sending…';
@@ -919,7 +918,7 @@
     function mailto(data) {
       var subject = '[TRE Singapore website] ' + (data.interest || 'Enquiry') + ' — ' + (data.name || '');
       var lines = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + (data.phone || '-'), 'I am: ' + (data.who || '-'),
-        'Interested in: ' + (data.interest || '-'), '', 'Message:', data.message || '-', '', 'Newsletter: ' + (data.newsletter || 'No')];
+        'Interested in: ' + (data.interest || '-'), '', 'Message:', data.message || '-', '', 'Consent: ' + (data.gdpr_consent || '-')];
       return 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
     }
     form.addEventListener('submit', function (e) {
