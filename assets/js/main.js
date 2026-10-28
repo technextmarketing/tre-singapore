@@ -912,6 +912,15 @@
     if (fresh) setTimeout(function () { box.innerHTML = html; }, 60); else box.innerHTML = html;
     return box;
   }
+  /* The FormSubmit address lives only here, never in a form's action=, so form-crawling spam bots (they POST straight to
+     the action URL) can't reach the inbox. isBot(): honeypot filled, sent within 3 s of page load, or links in the
+     name/phone = a bot; it gets the normal thank-you but nothing is sent. */
+  var FS = 'https://formsubmit.co/ajax/' + 'bonjour' + '@' + 'bhdasia.com', LOADED = Date.now();
+  function isBot(form) {
+    var hp = form.querySelector('[name="_honey"]'), nm = form.querySelector('[name="name"]'), ph = form.querySelector('[name="phone"]');
+    var name = nm ? nm.value : '', phone = ph ? ph.value : '';
+    return !!(hp && hp.value) || Date.now() - LOADED < 3000 || /https?:|www\.|\.com\b/i.test(name + ' ' + phone) || /[^0-9+()\-.\s]/.test(phone);
+  }
   function initForm(form) {
     var success = $('.form-success', form), btn = $('button[type="submit"]', form), label = btn.textContent;
     var to = form.getAttribute('data-mailto') || 'bonjour@bhdasia.com';
@@ -926,8 +935,9 @@
       if (!form.checkValidity()) { form.reportValidity(); return; }
       var data = {};
       $all('input, select, textarea', form).forEach(function (f) { if (!f.name) return; data[f.name] = f.type === 'checkbox' ? (f.checked ? 'Yes' : 'No') : f.value.trim(); });
-      var endpoint = form.getAttribute('data-endpoint'), fail = $('.form-fail', form);
+      var endpoint = form.getAttribute('data-endpoint') === 'formsubmit' ? FS : form.getAttribute('data-endpoint'), fail = $('.form-fail', form);
       if (fail) fail.hidden = true;
+      if (isBot(form)) { form.reset(); success.innerHTML = 'Thank you — your message is on its way to Isabelle.'; success.classList.add('show'); return; }
       if (endpoint && isExternal(endpoint)) {
         btn.disabled = true; btn.textContent = 'Sending…';
         post(endpoint, data)
@@ -946,18 +956,19 @@
       success.classList.add('show');
     });
   }
-  /* other FormSubmit forms (the newsletter): sent in the page, answered in the page; without JavaScript they post as before */
+  /* other FormSubmit forms (the newsletter, marked data-formsubmit): sent in the page, answered in the page */
   function initSignup(form) {
     var btn = $('button[type="submit"]', form), label = btn ? btn.textContent : '';
     form.addEventListener('submit', function (e) {
-      if (!window.fetch || !btn) return;
       e.preventDefault();
+      if (!window.fetch || !btn) return;
       if (!form.checkValidity()) { form.reportValidity(); return; }
       var data = {};
       $all('input', form).forEach(function (f) { if (f.name && f.name !== '_next') data[f.name] = f.value.trim(); });
+      if (isBot(form)) { form.reset(); note(form.parentNode, 'form-success', 'Thank you — you are on the list for the monthly email with new articles and event dates.', form).classList.add('show'); return; }
       btn.disabled = true; btn.textContent = 'Subscribing…';
       var fail = $('.form-fail', form.parentNode); if (fail) fail.hidden = true;
-      post(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), data)
+      post(FS, data)
         .then(function () { form.reset(); note(form.parentNode, 'form-success', 'Thank you — you are on the list for the monthly email with new articles and event dates.', form).classList.add('show'); })
         .catch(function () { note(form.parentNode, 'form-fail', 'Sorry — the sign-up did not go through just now. <a href="mailto:bonjour@bhdasia.com?subject=' + encodeURIComponent('Newsletter sign-up') + '&body=' + encodeURIComponent('Please add ' + (data.email || 'me') + ' to the monthly TRE in Singapore email.') + '">Email Isabelle to be added</a> instead.', form); })
         .then(function () { btn.disabled = false; btn.textContent = label; });
@@ -967,6 +978,6 @@
   document.addEventListener('DOMContentLoaded', function () {
     initChrome(); initNav(); initYear(); initReveal(); initInteractions(); initEvents(); initEventPage(); initFeatured(); initFacilitatorPage(); initFacilitatorsGrid(); initTreTerm(); initAmbient();
     var form = document.getElementById('contact-form'); if (form) initForm(form);
-    $all('form[action^="https://formsubmit.co/"]').forEach(initSignup);
+    $all('form[data-formsubmit]').forEach(initSignup);
   });
 })();
