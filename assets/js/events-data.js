@@ -305,7 +305,6 @@ window.TRE_EVENTS = [
     isNew: true,
     theme: 'theme-deep',
     details: {
-      posterTall: { src: 'assets/img/events/event-certification-2027-portrait.webp?v=2', alt: 'Become a Certified TRE™ Provider — 2027 Singapore cohort with Isabelle Claus Teixeira and Simba Stenqvist: Module 1 27–28 Feb, Module 2 3–4 Jul, Module 3 30–31 Oct 2027' },
       summary: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — co-taught by Isabelle Claus Teixeira and Simba Stenqvist, and boosted by Internal Alchemy. Choose from three package families: Growth, Foundational or Refresher. One cohort per year.',
       about: [
         'The Global TRE™ Provider Certification qualifies you to offer TRE™ to the general public, in individual and group settings.',
