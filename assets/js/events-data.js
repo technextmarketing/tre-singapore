@@ -419,7 +419,7 @@ window.TRE_EVENTS = [
         { label: 'Personal TRE™ session', sub: 'optional add-on · not included', price: '£85', note: 'per session' }
       ],
       pricingNote: 'All prices in British pounds (GBP). Limited to 15 participants. Individual TRE™ sessions are not included and can be added at £85 each.',
-      facilitators: [ISABELLE, { name: 'Vicki Cook', role: 'TRE Scotland', bio: 'Co-leads this online Module 1 with Isabelle Claus Teixeira, in collaboration with TRE Scotland.' }],
+      facilitators: [ISABELLE, { name: 'Vicki Cook', role: 'TRE Scotland', bio: 'In collaboration with TRE Scotland.' }],
       partners: 'In collaboration with TRE Scotland',
       online: true,
       register: [
