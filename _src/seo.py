@@ -235,6 +235,8 @@ def utc_offset_hours(e, d):
     where = " ".join(str(e.get(k) or "") for k in ("location", "venue", "tz")).lower()
     if "bucharest" in where or "romania" in where:
         return 3 if _last_sunday(d.year, 3) <= d < _last_sunday(d.year, 10) else 2
+    if "europe/london" in where:  # UK time: GMT, BST (+1) from the last Sunday of March to the last Sunday of October
+        return 1 if _last_sunday(d.year, 3) <= d < _last_sunday(d.year, 10) else 0
     return 8
 
 
@@ -266,7 +268,9 @@ def event_start(e):
     where = " ".join(str(e.get(k) or "") for k in ("location", "venue")).lower()
     tt = (e.get("timeText") or "").lower()
     d = datetime.date.fromisoformat(s[:10])
-    if "bucharest" in where:
+    if e.get("tz") == "Europe/London":
+        off = "+%02d:00" % utc_offset_hours(e, d)
+    elif "bucharest" in where:
         off = "+03:00" if _last_sunday(d.year, 3) <= d < _last_sunday(d.year, 10) else "+02:00"
     elif e.get("region") == "singapore" or "singapore time" in tt or "sgt" in tt:
         off = "+08:00"
@@ -324,7 +328,12 @@ def event_node(e, image):
             "eventStatus": {"postponed": "https://schema.org/EventPostponed", "cancelled": "https://schema.org/EventCancelled"}.get(
                 e.get("status"), "https://schema.org/EventScheduled"), "image": [image], "inLanguage": "en"}
     if e.get("end"):
-        node["endDate"] = e["end"][:10] if "T" not in e["end"] else e["end"]
+        if "T" not in e["end"]:
+            node["endDate"] = e["end"]
+        elif e.get("tz") == "Europe/London":
+            node["endDate"] = e["end"] + ":00+%02d:00" % utc_offset_hours(e, datetime.date.fromisoformat(e["end"][:10]))
+        else:
+            node["endDate"] = e["end"]
     if locs:
         node["location"] = locs if len(locs) > 1 else locs[0]
     people = [p.get("name") for p in d.get("facilitators") or [] if p.get("name")] or \
