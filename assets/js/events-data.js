@@ -359,6 +359,84 @@ window.TRE_EVENTS = [
     }
   },
 
+  /* ---------- 2027 package card (Growth Package): a listing card only; its page is /certification-2027-growth ---------- */
+  {
+    slug: 'certification-2027-growth',
+    page: 'certification-2027-growth',
+    cardOnly: true,
+    title: 'TRE™ Certification 2027: Growth Package',
+    category: 'Certification',
+    region: 'singapore',
+    location: 'Singapore',
+    venue: 'Singapore (venue confirmed on registration)',
+    format: 'In-Person + online sessions',
+    start: '2027-02-27',
+    end: '2027-10-31',
+    dateText: 'Feb–Oct 2027 · Module 1: 27–28 Feb · Module 2: 3–4 Jul · Module 3: 30–31 Oct 2027',
+    chip: { top: '2027', bottom: 'Growth' },
+    image: 'assets/img/events/event-certification-2027.webp?v=2',
+    card     : 'assets/img/events/card-event-certification-2027.webp?v=1',
+    description: 'Growth Package for new students: Modules 1–3, all online personal sessions and supervisions, ICF credits and three self-paced bonus programmes. Early bird S$5,888 until 31 January 2027, then S$6,888.',
+    facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
+    price: 'S$5,888',
+    priceNote: 'early bird to 31 Jan 2027 · then S$6,888 · new students',
+    link: 'certification-2027-growth',
+    linkText: 'See the package',
+    theme: 'theme-deep'
+  },
+
+  /* ---------- 2027 package card (Foundational Package): a listing card only; its page is /certification-2027-foundational ---------- */
+  {
+    slug: 'certification-2027-foundational',
+    page: 'certification-2027-foundational',
+    cardOnly: true,
+    title: 'TRE™ Certification 2027: Foundational Package',
+    category: 'Certification',
+    region: 'singapore',
+    location: 'Singapore',
+    venue: 'Singapore (venue confirmed on registration)',
+    format: 'In-Person + online sessions',
+    start: '2027-02-27',
+    end: '2027-10-31',
+    dateText: 'Feb–Oct 2027 · Module 1: 27–28 Feb · Module 2: 3–4 Jul · Module 3: 30–31 Oct 2027',
+    chip: { top: '2027', bottom: 'Foundational' },
+    image: 'assets/img/events/event-certification-2027.webp?v=2',
+    card     : 'assets/img/events/card-event-certification-2027.webp?v=1',
+    description: 'Foundational Package for new students: the complete certification pathway without ICF credits and without the bonus programmes. Early bird S$4,888 until 31 January 2027, then S$5,888.',
+    facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
+    price: 'S$4,888',
+    priceNote: 'early bird to 31 Jan 2027 · then S$5,888 · new students',
+    link: 'certification-2027-foundational',
+    linkText: 'See the package',
+    theme: 'theme-deep'
+  },
+
+  /* ---------- 2027 package card (Refresher Packages): a listing card only; its page is /certification-2027-refresher ---------- */
+  {
+    slug: 'certification-2027-refresher',
+    page: 'certification-2027-refresher',
+    cardOnly: true,
+    title: 'TRE™ Certification 2027: Refresher Packages',
+    category: 'Certification',
+    region: 'singapore',
+    location: 'Singapore',
+    venue: 'Singapore (venue confirmed on registration)',
+    format: 'In-Person + online sessions',
+    start: '2027-02-27',
+    end: '2027-10-31',
+    dateText: 'Feb–Oct 2027 · Module 1: 27–28 Feb · Module 2: 3–4 Jul · Module 3: 30–31 Oct 2027',
+    chip: { top: '2027', bottom: 'Refresher' },
+    image: 'assets/img/events/event-certification-2027.webp?v=2',
+    card     : 'assets/img/events/card-event-certification-2027.webp?v=1',
+    description: 'Four Refresher options for accredited TRE™ Providers and TRE™ Provider trainees who want to complete their training. Early bird from S$2,200 until 31 January 2027, then from S$2,900.',
+    facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
+    price: 'From S$2,200',
+    priceNote: 'early bird to 31 Jan 2027 · then from S$2,900 · accredited Providers and trainees',
+    link: 'certification-2027-refresher',
+    linkText: 'See the package',
+    theme: 'theme-deep'
+  },
+
   /* ---------- Singapore certification (Modules 1–3) ---------- */
   {
     slug: 'tre-provider-certification-singapore',

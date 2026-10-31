@@ -422,7 +422,8 @@ def write_sitemap_robots_llms(events, facs, eposts):
 def main(only, auto_drafts=False):
     data = site_data.load()
     now_utc, today = sg_now()
-    events = seo.normalise_events(data["events"], now_utc) if data else []
+    # card-only records (the 2027 package cards, `cardOnly` in events-data.js) have their own regular page: no record page, sitemap entry, draft or llms line
+    events = seo.normalise_events([e for e in data["events"] if not e.get("cardOnly")], now_utc) if data else []
     facs = [f for f in (data or {}).get("facilitators", []) if not f.get("sample")]
     eposts = EP.load_posts()
     seo.EXTRA_OFFERS["tre-provider-certification-2027-singapore"] = PK.overview_offers()
