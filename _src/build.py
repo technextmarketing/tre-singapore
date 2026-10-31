@@ -427,6 +427,8 @@ def main(only, auto_drafts=False):
     facs = [f for f in (data or {}).get("facilitators", []) if not f.get("sample")]
     eposts = EP.load_posts()
     seo.EXTRA_OFFERS["tre-provider-certification-2027-singapore"] = PK.overview_offers()
+    _sc = lambda name, price, until: dict({"@type": "Offer", "name": name, "price": price, "priceCurrency": "GBP", "availability": "https://schema.org/InStock", "url": "https://hummingbeing.com/event-tre-module1-online-scotland#register"}, **({"priceValidUntil": until} if until else {}))
+    seo.EXTRA_OFFERS["tre-module-1-online-tre-scotland-2027"] = [_sc("Early bird (until 31 May 2027)", "488", "2027-05-31"), _sc("Normal price", "589", None)]
     if data and auto_drafts:  # the daily job: a preview for each new event, a recap for each event that just ended
         new = []
         for kind, e in EP.missing_drafts(events, eposts, today):

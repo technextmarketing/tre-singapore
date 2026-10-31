@@ -359,6 +359,77 @@ window.TRE_EVENTS = [
     }
   },
 
+  /* ---------- TRE Module 1 ONLINE with TRE Scotland (UK time) ---------- */
+  {
+    slug: 'tre-module-1-online-tre-scotland-2027',
+    title: 'TRE™ Module 1 ONLINE — with TRE Scotland (18–20 June 2027)',
+    seoTitle: 'TRE™ Module 1 Online with TRE Scotland, June 2027',
+    category: 'Certification',
+    region: 'online',
+    location: 'Online (Zoom)',
+    venue: 'Online · Zoom (the link is sent to registered participants)',
+    format: 'Online · 2.5 days',
+    tz: 'Europe/London',
+    start: '2027-06-18T14:00',
+    end: '2027-06-20T18:00',
+    dateText: 'Friday 18 – Sunday 20 June 2027',
+    timeText: '18 Jun 14:00–17:00 · 19 & 20 Jun 09:30–18:00 (UK time)',
+    chip: { top: '18–20', bottom: 'Jun 2027' },
+    image: 'assets/img/events/event-tre-module1-online-scotland.webp',
+    description: 'ICF-accredited TRE™ Module 1, online in collaboration with TRE Scotland — 2.5 days with 21 ICF CCEUs, valid as Module 1 of the Global TRE™ Provider Certification Program. Small group of up to 15.',
+    facilitator: 'Isabelle Claus Teixeira & Vicki Cook (TRE Scotland)',
+    credits: '21 ICF CCEUs',
+    price: 'From £488',
+    priceNote: 'early bird until 31 May 2027 · then £589',
+    link: 'https://hummingbeing.com/event-tre-module1-online-scotland#register',
+    linkText: 'Register',
+    isNew: true,
+    theme: 'theme-deep',
+    details: {
+      posterTall: { src: 'assets/img/events/event-tre-module1-online-scotland-portrait.webp', alt: 'TRE™ Training in the World with ICF CCEUs, online with TRE Scotland — led by Isabelle Claus Teixeira and Vicki Cook, 18–20 June 2027, UK time. Early bird 488 GBP until 31 May 2027, then 589 GBP' },
+      summary: 'ICF-accredited TRE™ Module 1, online in collaboration with TRE Scotland. 2.5 training days in UK time, led by Global TRE™ Certifying Trainer Isabelle Claus Teixeira with Vicki Cook of TRE Scotland, in a small group of up to 15 participants, in English.',
+      about: [
+        'This is ICF-accredited TRE™ Module 1 — the only TRE™ training anywhere in the world that carries ICF CCEUs (21 CCEUs: 16 Resource Development + 5 Core Competencies), issued on attendance and completion of the full 2.5 days.',
+        'TRE™ (Tension & Trauma Releasing Exercises) was developed by Dr. David Berceli and activates the body\'s natural neurogenic tremoring mechanism — a reflex that releases stored stress and trauma, builds resilience and promotes deep regulation.',
+        'Module 1 qualifies you to use TRE™ for personal practice. With Modules 2 and 3 you become a Certified Global TRE™ Provider. The group is limited to 15 participants and led by a Global TRE™ Certifying Trainer with an assisting provider.'
+      ],
+      forWho: [
+        'A coach (in training or at ACC, PCC, MCC level) looking for an ICF-accredited somatic tool',
+        'A therapist, psychologist or healthcare professional expanding a trauma-informed practice',
+        'A yoga or Pilates teacher, bodyworker or somatic practitioner',
+        'Anyone with chronic stress or burnout who is ready for a body-led approach',
+        'Those considering the full Global TRE™ Provider Certification'
+      ],
+      schedule: [
+        { when: 'Day 1 · Fri 18 Jun', time: '2:00–5:00 PM UK time · online', title: 'Self-Care & Presence for Coaches', text: 'An introductory afternoon on nervous system regulation and self-induced therapeutic tremoring, with TRE™ as a personal resilience and self-care practice.' },
+        { when: 'Day 2 · Sat 19 Jun', time: '9:30 AM–6:00 PM UK time · online', title: 'TRE™ Module 1 — Part 1', text: 'The neuroscience of neurogenic tremoring, the TRE™ exercise sequence, somatic awareness, containment and grounding. Guided full TRE™ sessions with direct feedback from the trainers.' },
+        { when: 'Day 3 · Sun 20 Jun', time: '9:30 AM–6:00 PM UK time · online', title: 'TRE™ Module 1 — Part 2 & Completion', text: 'Deepen the practice, integrate the learning and complete Module 1, with Q&A, personal practice time and guidance toward Modules 2 and 3.' }
+      ],
+      includes: [
+        'Module 1 Certification — valid as Module 1 of the Global TRE™ Provider Certification Program',
+        '21 ICF CCEUs — 16 Resource Development + 5 Core Competencies',
+        '2.5 training days — including the Day 1 afternoon workshop for coaches',
+        'Worldwide recognition under the Global TRE™ Certification Program',
+        'A small group of up to 15 participants',
+        'Not included: individual TRE™ sessions — add them at £85 per session'
+      ],
+      pricing: [
+        { label: 'Early bird', sub: 'until 31 May 2027', price: '£488', note: 'then £589', hl: true },
+        { label: 'Normal price', sub: 'after the early bird', price: '£589' },
+        { label: 'Personal TRE™ session', sub: 'optional add-on · not included', price: '£85', note: 'per session' }
+      ],
+      pricingNote: 'All prices in British pounds (GBP). Limited to 15 participants. Individual TRE™ sessions are not included and can be added at £85 each.',
+      facilitators: [ISABELLE, { name: 'Vicki Cook', role: 'TRE Scotland', bio: 'Co-leads this online Module 1 with Isabelle Claus Teixeira, in collaboration with TRE Scotland.' }],
+      partners: 'In collaboration with TRE Scotland',
+      online: true,
+      register: [
+        { label: 'Register', url: 'https://hummingbeing.com/event-tre-module1-online-scotland#register', primary: true },
+        { label: 'Book a certification intake call', url: CALENDLY }
+      ],
+      source: 'https://hummingbeing.com/event-tre-module1-online-scotland'
+    }
+  },
+
   /* ---------- 2027 package card (Growth Package): a listing card only; its page is /certification-2027-growth ---------- */
   {
     slug: 'certification-2027-growth',
