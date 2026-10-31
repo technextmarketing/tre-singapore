@@ -295,18 +295,18 @@ window.TRE_EVENTS = [
     chip: { top: '2027', bottom: 'Cohort' },
     image: 'assets/img/events/event-certification-2027.webp?v=2',
     card     : 'assets/img/events/card-event-certification-2027.webp?v=1',
-    description: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — boosted by Internal Alchemy and co-taught by two TRE™ Trainers, Isabelle Claus Teixeira & Simba Stenqvist. Three modules plus online supervisions and three self-paced bonus programs. Bundle from S$5,888 early bird.',
+    description: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — boosted by Internal Alchemy and co-taught by two TRE™ Trainers, Isabelle Claus Teixeira & Simba Stenqvist. Three packages: Growth S$5,888, Foundational S$4,888 and Refresher from S$2,200 (early bird until 31 January 2027).',
     facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
-    credits: '21 ICF CCEs for Module 1',
-    price: 'S$5,888',
-    priceNote: 'full certification + bonuses · early bird to 31 Dec 2026 (then S$6,688)',
-    link: 'https://hummingbeing.com/event-certification-2027',
-    linkText: 'Register',
+    credits: 'ICF credits in the Growth Package',
+    price: 'From S$2,200',
+    priceNote: 'Growth S$5,888 · Foundational S$4,888 · Refresher from S$2,200 · early bird until 31 Jan 2027',
+    link: 'events/tre-provider-certification-2027-singapore#packages',
+    linkText: 'Choose a package',
     isNew: true,
     theme: 'theme-deep',
     details: {
       posterTall: { src: 'assets/img/events/event-certification-2027-portrait.webp?v=2', alt: 'Become a Certified TRE™ Provider — 2027 Singapore cohort with Isabelle Claus Teixeira and Simba Stenqvist: Module 1 27–28 Feb, Module 2 3–4 Jul, Module 3 30–31 Oct 2027' },
-      summary: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — co-taught by Isabelle Claus Teixeira and Simba Stenqvist, and boosted by Internal Alchemy. Three modules take you from your own TRE™ practice to confidently teaching individuals and groups. One cohort per year.',
+      summary: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — co-taught by Isabelle Claus Teixeira and Simba Stenqvist, and boosted by Internal Alchemy. Choose from three package families: Growth, Foundational or Refresher. One cohort per year.',
       about: [
         'The Global TRE™ Provider Certification qualifies you to offer TRE™ to the general public, in individual and group settings.',
         'The 2027 Singapore cohort is boosted by Internal Alchemy and co-taught by two TRE™ Trainers — Isabelle Claus Teixeira and Simba Stenqvist — for richer, varied learning. Only one cohort runs in Singapore each year.'
@@ -319,31 +319,44 @@ window.TRE_EVENTS = [
         'Someone who has experienced TRE™ and wants to share it professionally'
       ],
       schedule: [
-        { when: 'Module 1', time: '27–28 Feb 2027 · Singapore · SGT', title: 'Your Personal TRE™ Practice', text: 'For your personal use — can be purchased alone. A 2-day in-person workshop plus 4 online TRE™ sessions (2 personal & individual with a different trainer, and 2 online group sessions on 1 Apr & 1 Jun 2027). 21 ICF CCE for coaches included.' },
-        { when: 'Module 2', time: '3–4 Jul 2027 · Singapore · SGT', title: 'Teaching TRE™ to One Person', text: 'Open after Module 1. A 2-day in-person workshop plus 2 online group supervisions (19 Jul & 16 Aug 2027) and 2 individual supervisions with a different trainer.' },
-        { when: 'Module 3', time: '30–31 Oct 2027 · Singapore · SGT', title: 'Teaching TRE™ to Groups', text: 'Open after Module 2. A 2-day in-person workshop plus 1 online group supervision (13 Nov 2027) and 3 individual supervisions. Completes your Global TRE™ Provider certification.' },
-        { when: 'Bonuses', time: 'Self-paced online', title: 'Three bonus programs', text: 'Grounding (Simba Stenqvist), Verbal Interventions (Isabelle Claus Teixeira) and an Internal Alchemy introduction (Simba Stenqvist) — each with the option to attend a live workshop for a discounted add-on.' }
+        { when: 'Module 1', time: '27–28 Feb 2027 · Singapore · SGT', title: 'Your Personal TRE™ Practice', text: 'A 2-day in-person workshop plus personal sessions: 2 online individual and 2 online group sessions (group sessions on 1 Apr & 1 Jun 2027). ICF CCEs are released on full attendance (Module 1 = 21 CCEs) in the Growth Package.' },
+        { when: 'Module 2', time: '3–4 Jul 2027 · Singapore · SGT', title: 'Teaching TRE™ to One Person', text: 'A 2-day in-person workshop plus 2 online group supervisions (19 Jul & 16 Aug 2027) and 2 online individual supervisions.' },
+        { when: 'Module 3', time: '30–31 Oct 2027 · Singapore · SGT', title: 'Teaching TRE™ to Groups', text: 'A 2-day in-person workshop plus 3 online individual supervisions and 1 online group supervision (13 Nov 2027). Completes your Global TRE™ Provider certification.' },
+        { when: 'Bonuses', time: 'Self-paced online · Growth Package', title: 'Three bonus programmes (value S$1,290)', text: 'Grounding (Simba Stenqvist), Verbal Interventions (Isabelle Claus Teixeira) and Internal Alchemy (Simba Stenqvist). Grounding is released after the Module 2 payment is received; Verbal Interventions and Internal Alchemy after the Module 3 payment is received. Paid in full: all three after Module 2.' }
       ],
       includes: [
         'Three 2-day in-person workshops — Modules 1, 2 & 3 in Singapore',
         'Taught by 2 TRE™ Trainers — varied perspectives and richer learning',
-        'Online TRE™ sessions & supervisions — individual and group, across all three modules',
-        'Three self-paced bonus programs — Grounding, Verbal Interventions and an Internal Alchemy introduction',
-        '21 ICF CCEs for Module 1 — CCEs pending confirmation for Module 2',
-        'Global TRE™ Certification upon completion of all requirements — qualify to offer TRE™ to individuals and groups'
+        'Online personal sessions and supervisions — individual and group, across all three modules',
+        'Growth Package only: ICF credits (value S$2,000) and three self-paced bonus programmes (value S$1,290) — Grounding, Verbal Interventions and Internal Alchemy',
+        'Global TRE™ Certification upon completion of all requirements — qualify to offer TRE™ to individuals and groups',
+        'Extra 60-minute online personal sessions or supervisions: S$190 per session, with any package'
+      ],
+      packages: [
+        { name: 'Growth Package', who: 'New students', price: 'S$5,888', regular: 'S$6,888', url: 'certification-2027-growth',
+          text: 'The full certification: Modules 1–3, all online personal sessions and supervisions, ICF credits (value S$2,000) and the three self-paced bonus programmes (value S$1,290).',
+          inst: 'Instalments S$1,888 + S$2,000 + S$2,000', hl: true },
+        { name: 'Foundational Package', who: 'New students', price: 'S$4,888', regular: 'S$5,888', url: 'certification-2027-foundational',
+          text: 'The complete certification pathway, without ICF credits and without the bonus programmes.',
+          inst: 'Instalments S$1,888 + S$1,500 + S$1,500' },
+        { name: 'Refresher Packages', who: 'Accredited TRE™ Providers and TRE™ Provider trainees', price: 'from S$2,200', regular: 'from S$2,900', url: 'certification-2027-refresher',
+          text: 'Four options to complete your training: Refresher, Supervised Refresher, Boosted Refresher and Boosted Supervised Refresher.',
+          inst: 'Early bird S$2,200 to S$3,990' }
       ],
       pricing: [
-        { label: 'Full Certification + Bonus Programs', sub: 'Modules 1–3 + 3 bonuses', price: 'S$5,888', note: 'early bird to 31 Dec 2026 · then S$6,688', hl: true },
-        { label: 'Module 1 only · Personal Practice', sub: 'can be taken alone · 21 ICF CCEs for coaches', price: 'S$1,888', note: 'early bird to 31 Dec 2026 · then S$1,988' }
+        { label: 'Growth Package', sub: 'new students · Modules 1–3 + ICF credits + 3 bonuses', price: 'S$5,888', note: 'early bird to 31 Jan 2027 · then S$6,888', hl: true },
+        { label: 'Foundational Package', sub: 'new students · Modules 1–3, no ICF credits or bonuses', price: 'S$4,888', note: 'early bird to 31 Jan 2027 · then S$5,888' },
+        { label: 'Refresher Packages', sub: 'accredited Providers and trainees · 4 options', price: 'from S$2,200', note: 'early bird to 31 Jan 2027 · then from S$2,900' }
       ],
-      pricingNote: 'All prices in Singapore Dollars. Early-bird pricing applies until 31 December 2026. All tickets are non-refundable and non-cancellable.',
+      pricingNote: 'All prices in Singapore Dollars. Early-bird pricing applies until 31 January 2027. Payment is by credit card only, through Stripe (Odoo checkout), and card charges are added on top of every instalment. The full package price is owed once the first instalment is paid. Extra 60-minute online personal sessions or supervisions are S$190 each. All ticket sales are final, non-refundable and non-cancellable.',
       facilitators: [ISABELLE, SIMBA],
       online: true,
       register: [
-        { label: 'Register your interest', url: 'https://hummingbeing.com/event-certification-2027#reserve', primary: true },
+        { label: 'Growth Package — register', url: 'certification-2027-growth#register', primary: true },
+        { label: 'Foundational Package — register', url: 'certification-2027-foundational#register' },
+        { label: 'Refresher Packages — register', url: 'certification-2027-refresher#register' },
         { label: 'Book a certification intake call', url: CALENDLY }
-      ],
-      source: 'https://hummingbeing.com/event-certification-2027'
+      ]
     }
   },
 
