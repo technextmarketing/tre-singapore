@@ -299,6 +299,9 @@ def _offer(e):
     return {"@type": "Offer", "price": amount, "priceCurrency": cur, "availability": avail, "url": _register_url(e)}
 
 
+EXTRA_OFFERS = {}  # slug -> list of schema.org Offers that replace the single offer read from the record's price (set by build.py)
+
+
 def event_node(e, image):
     d = e.get("details") or {}
     url = rec_url("events", e["slug"])
@@ -331,7 +334,7 @@ def event_node(e, image):
     src = (d.get("source") or "") + " " + (e.get("link") or "")
     if "hummingbeing.com" in src:
         node["organizer"] = {"@type": "Organization", "name": "HummingBeing", "url": "https://hummingbeing.com/"}
-    off = _offer(e)
+    off = EXTRA_OFFERS.get(e["slug"]) or _offer(e)
     if off:
         node["offers"] = off
     return node
@@ -364,6 +367,9 @@ def event_static(e, root):
     h += [f"<p>{esc(p)}</p>" for p in d.get("about") or []]
     if d.get("forWho"):
         h.append(f"<h2>Who it is for</h2><ul>{_li(d['forWho'])}</ul>")
+    if d.get("packages"):
+        rows = [f'{p["name"]} ({p["who"]}): early bird {p["price"]}, regular {p["regular"]}. {p["text"]} {p["inst"]}.' for p in d["packages"]]
+        h.append(f"<h2>Choose your package</h2><ul>{_li(rows)}</ul><p>" + " · ".join(f'<a href="{root}{esc(p["url"])}">{esc(p["name"])}</a>' for p in d["packages"]) + "</p>")
     if d.get("schedule"):
         rows = [" — ".join(x for x in [" ".join(y for y in [s.get("when"), s.get("time")] if y), s.get("title"), s.get("text")] if x)
                 for s in d["schedule"]]
