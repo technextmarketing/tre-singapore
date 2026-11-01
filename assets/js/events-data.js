@@ -297,7 +297,7 @@ window.TRE_EVENTS = [
     card     : 'assets/img/events/card-event-certification-2027.webp?v=1',
     description: 'The 2027 Singapore cohort of the Global TRE™ Provider Certification — boosted by Internal Alchemy and co-taught by two TRE™ Trainers, Isabelle Claus Teixeira & Simba Stenqvist. Three packages: Growth S$5,888, Foundational S$4,888 and Refresher from S$2,200 (early bird until 31 January 2027).',
     facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
-    credits: 'ICF credits in the Growth Package',
+    credits: '21 ICF CCEs for Module 1 with the Growth Package (Module 2 CCEs pending confirmation) · Global TRE™ Certification upon completion of all requirements',
     price: 'From S$2,200',
     priceNote: 'Growth S$5,888 · Foundational S$4,888 · Refresher from S$2,200 · early bird until 31 Jan 2027',
     link: 'events/tre-provider-certification-2027-singapore#packages',
@@ -321,20 +321,20 @@ window.TRE_EVENTS = [
       schedule: [
         { when: 'Module 1', time: '27–28 Feb 2027 · Singapore · SGT', title: 'Your Personal TRE™ Practice', text: 'A 2-day in-person workshop plus personal sessions: 2 online individual and 2 online group sessions (group sessions on 1 Apr & 1 Jun 2027). ICF CCEs are released on full attendance (Module 1 = 21 CCEs) in the Growth Package.' },
         { when: 'Module 2', time: '3–4 Jul 2027 · Singapore · SGT', title: 'Teaching TRE™ to One Person', text: 'A 2-day in-person workshop plus 2 online group supervisions (19 Jul & 16 Aug 2027) and 2 online individual supervisions.' },
-        { when: 'Module 3', time: '30–31 Oct 2027 · Singapore · SGT', title: 'Teaching TRE™ to Groups', text: 'A 2-day in-person workshop plus 3 online individual supervisions and 1 online group supervision (13 Nov 2027). Completes your Global TRE™ Provider certification.' },
-        { when: 'Bonuses', time: 'Self-paced online · Growth Package', title: 'Three bonus programmes (value S$1,290)', text: 'Grounding (Simba Stenqvist), Verbal Interventions (Isabelle Claus Teixeira) and Internal Alchemy (Simba Stenqvist). Grounding is released after the Module 2 payment is received; Verbal Interventions and Internal Alchemy after the Module 3 payment is received. Paid in full: all three after Module 2.' }
+        { when: 'Module 3', time: '30–31 Oct 2027 · Singapore · SGT', title: 'Teaching TRE™ to Groups', text: 'A 2-day in-person workshop plus 3 online individual supervisions and 1 online group supervision (13 Nov 2027). The final module: complete it, its supervisions and the remaining certification requirements to become a Global TRE™ Provider.' },
+        { when: 'Bonuses', time: 'Self-paced online · Growth Package', title: 'Three bonus programmes (value S$1,290)', text: 'Three self-paced online programmes, together valued at S$1,290, come with this package. Grounding unlocks once Instalment 2 is received (due by 3 June 2027). Verbal Interventions and Internal Alchemy unlock once Instalment 3 is received (due by 30 September 2027). If you pay the full package price at registration, all three unlock after Module 2 (3–4 July 2027).' }
       ],
       includes: [
         'Three 2-day in-person workshops — Modules 1, 2 & 3 in Singapore',
         'Taught by 2 TRE™ Trainers — varied perspectives and richer learning',
         'Online personal sessions and supervisions — individual and group, across all three modules',
-        'Growth Package only: ICF credits (value S$2,000) and three self-paced bonus programmes (value S$1,290) — Grounding, Verbal Interventions and Internal Alchemy',
+        'Growth Package only: ICF credits (21 CCEs for Module 1; Module 2 pending confirmation) and three self-paced bonus programmes (together valued at S$1,290) — Grounding, Verbal Interventions and Internal Alchemy',
         'Global TRE™ Certification upon completion of all requirements — qualify to offer TRE™ to individuals and groups',
         'Extra 60-minute online personal sessions or supervisions: S$190 per session, with any package'
       ],
       packages: [
         { name: 'Growth Package', who: 'New students', price: 'S$5,888', regular: 'S$6,888', url: 'certification-2027-growth',
-          text: 'The full certification: Modules 1–3, all online personal sessions and supervisions, ICF credits (value S$2,000) and the three self-paced bonus programmes (value S$1,290).',
+          text: 'The full certification: Modules 1–3, all online personal sessions and supervisions, ICF credits and the three self-paced bonus programmes (together valued at S$1,290).',
           inst: 'Instalments S$1,888 + S$2,000 + S$2,000', hl: true },
         { name: 'Foundational Package', who: 'New students', price: 'S$4,888', regular: 'S$5,888', url: 'certification-2027-foundational',
           text: 'The complete certification pathway, without ICF credits and without the bonus programmes.',
@@ -348,13 +348,13 @@ window.TRE_EVENTS = [
         { label: 'Foundational Package', sub: 'new students · Modules 1–3, no ICF credits or bonuses', price: 'S$4,888', note: 'early bird to 31 Jan 2027 · then S$5,888' },
         { label: 'Refresher Packages', sub: 'accredited Providers and trainees · 4 options', price: 'from S$2,200', note: 'early bird to 31 Jan 2027 · then from S$2,900' }
       ],
-      pricingNote: 'All prices in Singapore Dollars. Early-bird pricing applies until 31 January 2027. Payment is by credit card only, through Stripe (Odoo checkout), and card charges are added on top of every instalment. The full package price is owed once the first instalment is paid. Extra 60-minute online personal sessions or supervisions are S$190 each. All ticket sales are final, non-refundable and non-cancellable.',
+      pricingNote: 'All prices in Singapore Dollars. Early-bird pricing applies until 31 January 2027. Payment is by credit card only, through Stripe (Odoo checkout), and card charges are added on top of every instalment. The full package price is owed once the first instalment is paid; you can also pay the full package price at registration instead of three instalments. Extra 60-minute online personal sessions or supervisions are S$190 each. All ticket sales are final, non-refundable and non-cancellable.',
       facilitators: [ISABELLE, SIMBA],
       online: true,
       register: [
-        { label: 'Growth Package — register', url: 'certification-2027-growth#register', primary: true },
-        { label: 'Foundational Package — register', url: 'certification-2027-foundational#register' },
-        { label: 'Refresher Packages — register', url: 'certification-2027-refresher#register' },
+        { label: 'Reserve your place — Growth Package', url: 'certification-2027-growth#register', primary: true },
+        { label: 'Reserve your place — Foundational Package', url: 'certification-2027-foundational#register' },
+        { label: 'Reserve your place — Refresher Packages', url: 'certification-2027-refresher#register' },
         { label: 'Book a certification intake call', url: CALENDLY }
       ]
     }

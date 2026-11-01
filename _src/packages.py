@@ -12,6 +12,9 @@ OVERVIEW = "events/tre-provider-certification-2027-singapore"
 EB_UNTIL = "31 January 2027"
 D1_EB, D1_REG, D2, D3 = "31 Jan 2027", "25 Feb 2027", "3 Jun 2027", "30 Sep 2027"
 SESSION = "S$190"
+BONUS_TXT = "Three self-paced online programmes, together valued at S$1,290, come with %s. Grounding unlocks once Instalment 2 is received (due by 3 June 2027). Verbal Interventions and Internal Alchemy unlock once Instalment 3 is received (due by 30 September 2027). If you pay the full package price at registration, all three unlock after Module 2 (3–4 July 2027)."
+PAY_FULL = "Prefer to pay in full? You can pay the full package price at registration instead of three instalments. Card charges still apply."
+M3_TXT = "The final module: complete it, its supervisions and the remaining certification requirements to become a Global TRE™ Provider."
 
 # (name, early bird total, early instalments, regular total, regular instalments)
 GROWTH = ("Growth Package", 5888, (1888, 2000, 2000), 6888, (1888, 2500, 2500))
@@ -45,7 +48,7 @@ MODULES = [("Module 1", "27–28 Feb 2027", "Singapore, in person"), ("Module 2"
 MODULE_INCL = [  # same for Growth and Foundational
     ("Module 1", "A 2-day workshop plus personal sessions: 2 online individual and 2 online group."),
     ("Module 2", "A 2-day workshop plus 2 online group supervisions and 2 online individual supervisions."),
-    ("Module 3", "A 2-day workshop plus 3 online individual supervisions and 1 online group supervision."),
+    ("Module 3", "A 2-day workshop plus 3 online individual supervisions and 1 online group supervision. " + M3_TXT),
 ]
 BONUSES = "Grounding, Verbal Interventions and Internal Alchemy"
 
@@ -145,7 +148,7 @@ def hero(key):
       <h1>{h1}</h1>
       <p>{esc(lead)}</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="#register">Register</a>
+        <a class="btn btn-primary" href="#register">Reserve your place</a>
         <a class="btn btn-ghost-light" href="{OVERVIEW}">Compare all packages</a>
       </div>
   </div>
@@ -180,12 +183,13 @@ def inst_table(label_rows, caption):
                     f'<td data-label="Due (regular)">by {due_reg[i]}</td><td data-label="Regular">{s(ri[i])}</td></tr>')
     rows.append(f'<tr class="hl"><td><b>Total</b></td><td data-label="Due (early bird)">all instalments</td><td data-label="Early bird"><b>{s(et)}</b></td>'
                 f'<td data-label="Due (regular)">all instalments</td><td data-label="Regular"><b>{s(rt)}</b></td></tr>')
-    return (f'<div class="table-wrap"><table class="price" aria-label="{esc(caption)}">{head}<tbody>{"".join(rows)}</tbody></table></div>')
+    return (f'<div class="table-wrap"><table class="price" aria-label="{esc(caption)}">{head}<tbody>{"".join(rows)}</tbody></table></div>'
+            f'<p class="pk-note"><b>Or pay in full at registration:</b> {s(et)} (early bird) or {s(rt)} (regular), instead of three instalments. Card charges still apply.</p>')
 
 
 def terms():
     return (f'<div class="pk-terms"><p><b>Card only.</b> {CARD_NOTE}</p><p><b>Instalments.</b> {FULL_OWED}</p>'
-            f'<p><b>Final sale.</b> {FINAL}</p></div>')
+            f'<p><b>Pay in full.</b> {PAY_FULL}</p><p><b>Final sale.</b> {FINAL}</p></div>')
 
 
 def section(h2, inner, cls="", sid="", intro=""):
@@ -229,8 +233,8 @@ def form(key):
       <input type="hidden" name="_subject" value="New TRE Certification 2027 registration: {esc(what)}">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-      <h2>Register for the {esc(what)}</h2>
-      <p class="pk-lead">Send your details and we will confirm your place and the payment steps. Payment is by credit card only, and card charges are added on top of every instalment. Early-bird prices apply until {EB_UNTIL}.</p>
+      <h2>Reserve your place</h2>
+      <p class="pk-lead">One cohort per year. Choose your package and share your details — Isabelle will confirm your place and send your first instalment link.</p>
       <div class="form-row">
         <div class="field"><label for="f-name">Name <span class="req">*</span></label><input id="f-name" name="name" type="text" required autocomplete="name" placeholder="Your full name"></div>
         <div class="field"><label for="f-email">Email <span class="req">*</span></label><input id="f-email" name="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
@@ -247,13 +251,14 @@ def form(key):
           </select>
         </div>
       </div>
+      <div class="field"><label for="f-interest">Package <span class="req">*</span></label><select id="f-interest" name="interest" required>{opts}</select></div>
       <div class="form-row">
-        <div class="field"><label for="f-interest">Package <span class="req">*</span></label><select id="f-interest" name="interest" required>{opts}</select></div>
         <div class="field"><label for="f-plan">Price <span class="req">*</span></label><select id="f-plan" name="price_plan" required><option value="Early bird (until 31 Jan 2027)">Early bird (until 31 Jan 2027)</option><option value="Regular price">Regular price</option></select></div>
+        <div class="field"><label for="f-pay">Payment plan <span class="req">*</span></label><select id="f-pay" name="payment_plan" required><option value="3 instalments">3 instalments</option><option value="Pay in full at registration">Pay in full at registration</option></select></div>
       </div>
       <div class="field"><label for="f-message">Message</label><textarea id="f-message" name="message" placeholder="Anything we should know, or a question about the package."></textarea></div>
       <label class="check"><input type="checkbox" name="consent" required> I agree that my details will be used to process my registration. We never share your data without your consent. <span class="req">*</span></label>
-      <button class="btn btn-primary" type="submit">Send my registration</button>
+      <button class="btn btn-primary" type="submit">Reserve my place</button>
       <div class="form-success" role="status">Thank you — your registration is on its way to Isabelle.</div>
       <p class="form-note">{esc(CARD_NOTE)} {esc(FINAL)}</p>
     </form>
@@ -277,13 +282,14 @@ def form(key):
 def growth_body():
     n, et, ei, rt, ri = GROWTH
     who = ('<ul class="pk-list"><li><b>New students</b> who want the complete TRE™ Provider Certification.</li>'
-           "<li>You want ICF credits (value S$2,000) included in your package.</li>"
+           "<li>You want ICF credits included in your package.</li>"
            f"<li>You want the three self-paced bonus programmes (value S$1,290): {BONUSES}.</li></ul>")
     mods = "".join(f'<div class="pk-mod"><h3>{m}</h3><p class="pk-when">{d} · {w}</p><p>{t}</p></div>'
                    for (m, d, w), (_m, t) in zip(MODULES, MODULE_INCL))
-    extra = ('<div class="pk-extra"><h3>Also included in the Growth Package</h3>'
-             "<p><b>ICF credits (value S$2,000).</b> ICF CCEs are released on full attendance of the relevant module (Module 1 = 21 CCEs).</p>"
-             f"<p><b>Three self-paced bonus programmes (value S$1,290):</b> {BONUSES}. Grounding is released after the Module 2 payment is received; Verbal Interventions and Internal Alchemy after the Module 3 payment is received. If you pay in full, all three bonuses are released after Module 2.</p></div>")
+    extra = ('<div class="pk-extra"><h3>Credits</h3>'
+             "<p>ICF CCEs are released on full attendance of the relevant module (Module 1 = 21 CCEs). CCEs pending confirmation for Module 2.</p></div>"
+             '<div class="pk-extra"><h3>Bonus programmes</h3>'
+             f"<p>{BONUS_TXT % 'this package'}</p><p><b>The programmes:</b> {BONUSES}.</p></div>")
     price = (f'<div class="pk-price"><div class="pk-pc is-hl"><h3>Early bird · until {EB_UNTIL}</h3><p class="pk-amt">{s(et)}</p><p>Three instalments: {s(ei[0])} + {s(ei[1])} + {s(ei[2])}.</p></div>'
              f'<div class="pk-pc"><h3>Regular price</h3><p class="pk-amt">{s(rt)}</p><p>Three instalments: {s(ri[0])} + {s(ri[1])} + {s(ri[2])}.</p></div></div>'
              f'<p class="pk-note"><b>Card charges are added on top of every instalment.</b> Payment is by credit card only, through Stripe (Odoo checkout).</p>')
@@ -312,7 +318,7 @@ def found_body():
     cmp_rows = [
         ("Modules 1–3 (2-day workshops, Singapore)", yes, yes),
         ("Online personal sessions and supervisions", yes, yes),
-        ("ICF credits (value S$2,000)", no, yes),
+        ("ICF CCEs — 21 for Module 1 confirmed; Module 2 pending", no, yes),
         ("3 bonus programmes (value S$1,290)", no, yes),
         ("Early bird (to 31 Jan 2027)", f"<b>{s(et)}</b>", f"<b>{s(get_)}</b>"),
         ("Regular price", s(rt), s(grt)),
@@ -345,6 +351,7 @@ def refresher_body():
         tabs.append(f'<h3 class="pk-sched-h">Option {n}: {esc(name)}</h3>' + inst_table([(name, et, ei, rt, ri)], f"Refresher option {n} instalments"))
     sup = ('<div class="pk-extra"><h3>What “50% supervisions” means</h3>'
            "<p>Module 2: 1 online group and 1 online individual supervision. Module 3: 1 online individual and 1 online group supervision. The supervised options include no personal sessions.</p></div>")
+    sup += f'<div class="pk-extra"><h3>Bonus programmes (Options 3 and 4)</h3><p>{BONUS_TXT % "Options 3 and 4"}</p></div>'
     mods = "".join(f'<div class="pk-mod"><h3>{m}</h3><p class="pk-when">{d} · {w}</p><p>Participation in the in-person 2-day workshop.</p></div>' for m, d, w in MODULES)
     return "\n".join([
         facts(f"from {s(REFRESH[0][3])}", f"Regular price from {s(REFRESH[0][5])}. In three instalments."),
