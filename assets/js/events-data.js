@@ -31,6 +31,7 @@
                     Bucharest venues are detected automatically)
      seoTitle     : shorter title for search results when the title is over 65 characters (optional; the event page's
                     <title> is "<title> | TRE™ in Singapore" when that fits, else the title, else the part before " — ")
+     speakers     : true for a guest-speaker event (listed under the 'Speakers events' filter tab on /events)
      isNew        : true to show a "New" badge
      theme        : "theme-deep" | "theme-bronze" | "theme-orange" | "theme-green" (fallback colour when no image)
      details      : { summary, about[], forWho[], schedule[], includes[], pricing[], pricingNote,
@@ -91,6 +92,7 @@ window.TRE_EVENTS = [
   /* ---------- The Body in the Room \u2014 Aun Ali (online, 25 Nov 2026) ---------- */
   {
     slug: 'the-body-in-the-room',
+    speakers: true,
     title: 'The Body in the Room \u2014 Integrating TRE\u2122 and Somatic Practice into Psychotherapy',
     seoTitle: 'The Body in the Room \u2014 TRE\u2122 & Somatic Practice in Psychotherapy',
     category: 'Workshop',
@@ -154,6 +156,7 @@ window.TRE_EVENTS = [
   /* ---------- Breath as a medicine \u2014 Ania Zieli\u0144ska (online, 15 Dec 2026) ---------- */
   {
     slug: 'breath-as-medicine',
+    speakers: true,
     title: 'Breath as a medicine \u2014 Introduction to pranayama',
     category: 'Workshop',
     region: 'online',
@@ -213,6 +216,7 @@ window.TRE_EVENTS = [
   /* ---------- The Art of Conscious Rest \u2014 Olga Titkova (online, 24 Jan 2027) ---------- */
   {
     slug: 'art-of-conscious-rest',
+    speakers: true,
     title: 'The Art of Conscious Rest \u2014 Experiencing deep relaxation through Yoga Nidra',
     seoTitle: 'The Art of Conscious Rest \u2014 Yoga Nidra with Olga Titkova',
     category: 'Workshop',
@@ -810,6 +814,7 @@ window.TRE_EVENTS = [
 
   {
     slug: 'feminine-masculine-energetics-corporate',
+    speakers: true,
     title: 'Navigating Feminine & Masculine Energetics Inside Corporate Structures',
     seoTitle: 'Feminine & Masculine Energetics in Corporate Structures',
     category: 'Workshop',
