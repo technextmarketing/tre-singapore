@@ -365,9 +365,38 @@ def refresher_body():
 
 BODIES = {"growth": growth_body, "foundational": found_body, "refresher": refresher_body}
 
+# Event poster per package (owner, 1 Nov 2026): poster beside its highlights, so the section has no empty side
+POSTER_POINTS = {
+    "growth": ["Modules 1–3 in person in Singapore", "All online personal sessions and supervisions",
+               "ICF credits (21 CCEs for Module 1)", f"Three bonus programmes: {BONUSES}"],
+    "foundational": ["Modules 1–3 in person in Singapore", "Online personal sessions (Module 1)",
+                     "Online supervisions (Modules 2 and 3)", "The complete Global TRE™ Provider Certification pathway"],
+    "refresher": ["For accredited TRE™ Providers and TRE™ Provider trainees", "Four options, from the three modules to a boosted supervised package",
+                  "Participation in Modules 1–3 in Singapore", f"Early bird from {s(REFRESH[0][3])} until {EB_UNTIL}"],
+}
+POSTER_CSS = ("<style>.pk-poster{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:var(--s7,48px);align-items:center}"
+              ".pk-poster-fig{margin:0}.pk-poster-fig a{display:block;border-radius:16px;overflow:hidden;box-shadow:0 18px 50px -24px rgba(17,24,39,.45)}"
+              ".pk-poster-fig img{display:block;width:100%;height:auto}.pk-poster-fig figcaption{font-size:13px;color:var(--muted,#667);margin-top:10px}"
+              ".pk-poster-side .pk-list{margin:0 0 24px}.pk-poster-btns{display:flex;flex-wrap:wrap;gap:12px}"
+              "@media(max-width:820px){.pk-poster{grid-template-columns:1fr}.pk-poster-fig{max-width:460px;margin:0 auto}}</style>")
+
+
+def poster(key):
+    name = {"growth": "Growth Package", "foundational": "Foundational Package", "refresher": "Refresher Packages"}[key]
+    src = f"assets/img/events/event-certification-2027-{key}-poster.webp?v=1"
+    pts = "".join(f"<li>{p}</li>" for p in POSTER_POINTS[key])
+    inner = (f'<div class="pk-poster"><figure class="pk-poster-fig"><a href="{src}" target="_blank" rel="noopener" aria-label="Open the full-size event poster">'
+             f'<img src="{src}" alt="TRE™ Provider Certification 2027 Singapore, {esc(name)}, led by Isabelle Claus Teixeira and Simba Stenqvist" width="1080" height="1350" loading="lazy" decoding="async"></a>'
+             f'<figcaption>Tap to open the full-size poster to save or share it.</figcaption></figure>'
+             f'<div class="pk-poster-side"><ul class="pk-list">{pts}</ul><div class="pk-poster-btns">'
+             f'<a class="btn btn-navy" href="#register">Reserve your place</a><a class="btn btn-outline" href="{src}" download>Save the poster</a></div></div></div>')
+    return POSTER_CSS + section("Event poster", inner, "", "poster")
+
 
 def body(key):
-    return CSS + "\n" + hero(key) + "\n" + BODIES[key]() + "\n"
+    b = BODIES[key]()
+    i = b.index("</section>") + len("</section>")   # facts first, then the poster, then the rest
+    return CSS + "\n" + hero(key) + "\n" + b[:i] + "\n" + poster(key) + b[i:] + "\n"
 
 
 def offers(key):
