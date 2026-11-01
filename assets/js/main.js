@@ -531,7 +531,7 @@
     h += '</aside></div></section>';
 
     /* related events, then the close (both paths) */
-    var others = events.filter(function (e) { return !e._past && !e.cardOnly && e.slug !== ev.slug; }).sort(function (a, b) { return a._start - b._start; }).slice(0, 3);
+    var others = events.filter(function (e) { return !e._past && !e._soldOut && !e.status && !e.cardOnly && e.slug !== ev.slug; }).sort(function (a, b) { return a._start - b._start; }).slice(0, 3);
     if (others.length) h += '<section class="dt-related"><div class="container"><div class="dt-related-head"><h2>Other upcoming events</h2><a class="link-arrow" href="' + ROOT + 'events">All events</a></div><div class="event-grid dt-cards" data-scroll-x>' + others.map(renderCard).join('') + '</div>' + CLOSE + '</div></section>';
     else h += '<section class="dt-end"><div class="container"><div class="dt-related-head"><h2>More events coming in 2027</h2><a class="link-arrow" href="' + ROOT + 'events">See all events</a></div><p class="dt-fine" style="margin:0 0 var(--s5);font-size:1rem">New workshops and retreats with Isabelle and Simba are being scheduled across Asia and Europe.</p>' + CLOSE + '</div></section>';
     /* phones: a floating register action (shown by detail.js while the hero button and the register box are off screen) */
