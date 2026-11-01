@@ -309,6 +309,7 @@
     <div class="filters" role="tablist" aria-label="Filter events" data-scroll-x>
       <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" aria-controls="events-grid">All events</button>
       <button class="filter-btn" data-filter="certification" role="tab" aria-selected="false" aria-controls="events-grid">Certification</button>
+      <button class="filter-btn" data-filter="speakers" role="tab" aria-selected="false" aria-controls="events-grid">Speakers events</button>
     </div>
 
     <div class="ev-listwrap">
@@ -451,6 +452,7 @@
     if (f === 'all') return true;        /* upcoming in the list, past and sold out in the archive below it */
     if (x.past || x.soldOut) return false;
     if (f === 'certification') return x.cat === 'Certification';
+    if (f === 'speakers') return !!x.ev.speakers;
     if (f === 'community') return x.cat === 'Community';
     if (f === 'workshop') return x.cat === 'Workshop';
     return x.region === f;

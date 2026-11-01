@@ -563,6 +563,7 @@
       function render() {
         var list;
         if (current === 'past') list = past;
+        else if (current === 'speakers') list = upcoming.concat(past).filter(function (e) { return e.speakers; });   /* guest-speaker events (speakers: true), open ones first, then the ones that have ended */
         else list = upcoming.filter(function (e) {
           if (current === 'all') return true;
           if (current === 'certification') return e.category === 'Certification';
