@@ -906,7 +906,21 @@
      not (for example while the form still awaits its one-time activation for this domain). Only a real "true" counts as
      sent; anything else shows what happened and a way to still reach Isabelle, with the message already written out. */
   var WA = '<a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a>';
+  /* ON HOLD (2026-11-02, client request): FormSubmit emails to bonjour@ are paused. While LEAD_EMAIL_ON is false, every
+     form logs to the BHD / HummingBeing Lead Capture sheet instead (same Apps Script). Set it to true to resume. */
+  var LEAD_EMAIL_ON = false;
+  var LEAD_SHEET = 'https://script.google.com/macros/s/AKfycbxkv934L8ffTxU1TPUiw3jn9Hu6KmdE0Ol1CcJRB_vWstls2xiZHHb-LErG5qHXdTuX/exec';
+  var SHEET_KEYS = ['name', 'email', 'phone', 'event', 'inquiry', 'source', 'message', 'gdpr_consent'];
   function post(endpoint, data, keepalive) {
+    if (!LEAD_EMAIL_ON && /formsubmit\.co/.test(endpoint)) {
+      var sd = { source: 'TRE Singapore website — ' + location.pathname, inquiry: data.interest || '' }, extra = [];
+      Object.keys(data).forEach(function (k) {
+        if (k.charAt(0) === '_' || !data[k]) return;
+        if (SHEET_KEYS.indexOf(k) > -1) sd[k] = data[k]; else extra.push(k + ': ' + data[k]);
+      });
+      if (extra.length) sd.message = (sd.message ? sd.message + '\n\n' : '') + extra.join('\n');
+      return fetch(LEAD_SHEET, { method: 'POST', mode: 'no-cors', keepalive: !!keepalive, body: new URLSearchParams(sd) }).then(function () {});
+    }
     return fetch(endpoint, { method: 'POST', keepalive: !!keepalive, headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || 'Not sent'); }); });
   }
