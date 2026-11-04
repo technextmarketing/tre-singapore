@@ -959,9 +959,16 @@
       var logged = fetch(LEAD_SHEET, { method: 'POST', mode: 'no-cors', keepalive: !!keepalive, body: new URLSearchParams(sd) }).then(function () {});
       /* emails paused or a bot: the sheet row is all (a bot still sees the normal thank-you) */
       if (!LEAD_EMAIL_ON || bot) return logged;
-      logged.catch(function () {});
+      /* The email is best-effort: FormSubmit has outages (all requests 522 on 4 Nov 2026). The sheet row is the record,
+         so the visitor's thank-you depends on the sheet; only if the sheet send fails does the email result decide. */
+      var mailed = send(endpoint, data, keepalive);
+      mailed.catch(function () {});
+      return logged.then(null, function () { return mailed; });
     }
-    return fetch(endpoint,{ method: 'POST', keepalive: !!keepalive, headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+    return send(endpoint, data, keepalive);
+  }
+  function send(endpoint, data, keepalive) {
+    return fetch(endpoint, { method: 'POST', keepalive: !!keepalive, headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || 'Not sent'); }); });
   }
   function note(scope, cls, html, after) {   /* a message box after `after` (created once; filled a beat later so screen readers announce it) */
