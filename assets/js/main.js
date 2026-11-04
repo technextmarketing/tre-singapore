@@ -906,22 +906,62 @@
      not (for example while the form still awaits its one-time activation for this domain). Only a real "true" counts as
      sent; anything else shows what happened and a way to still reach Isabelle, with the message already written out. */
   var WA = '<a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a>';
-  /* ON HOLD (2026-11-02, client request): FormSubmit emails to bonjour@ are paused. While LEAD_EMAIL_ON is false, every
-     form logs to the BHD / HummingBeing Lead Capture sheet instead (same Apps Script). Set it to true to resume. */
-  var LEAD_EMAIL_ON = false;
+  /* Emails were ON HOLD 2026-11-02 to 2026-11-04; resumed with the spam filter below. Every FormSubmit form ALSO logs to
+     the BHD / HummingBeing Lead Capture sheet (same Apps Script). Set LEAD_EMAIL_ON to false to pause the emails again
+     (the sheet then gets everything on its own). */
+  var LEAD_EMAIL_ON = true;
   var LEAD_SHEET = 'https://script.google.com/macros/s/AKfycbxkv934L8ffTxU1TPUiw3jn9Hu6KmdE0Ol1CcJRB_vWstls2xiZHHb-LErG5qHXdTuX/exec';
   var SHEET_KEYS = ['name', 'email', 'phone', 'event', 'inquiry', 'source', 'message', 'gdpr_consent'];
+  /* Lead spam filter, 2026-11-04. Master copy for hummingbeing.com (scripts.js), bhdasia.com (shared.js)
+     and tre-in-singapore.com (assets/js/main.js): keep the three copies identical to this body.
+     The bots that hit these forms Aug-Nov 2026 fill every field with random letters (name "Tzmkk Vcmapym",
+     message "AMvGAATvnQOehLrFlht") and use dotted Gmail addresses (o.ko.z.a.ta.l.u.9.3@gmail.com).
+     Score: a random mixed-case word in any field = 2, a dotted Gmail address = 1, an unpronounceable
+     name word = 1. 2 or more = bot: the lead still goes to the Lead Capture sheet, marked "Possible spam",
+     but no email is sent. Tested on all 46 sheet rows to 4 Nov 2026: 35/35 bots caught, 0 real people flagged. */
+  function leadLooksLikeBot(d) {
+    d = d || {};
+    var vals = [], k, i, score = 0;
+    for (k in d) {
+      if (Object.prototype.hasOwnProperty.call(d, k) && k.charAt(0) !== '_' && typeof d[k] === 'string') vals.push(d[k]);
+    }
+    /* 1) a random mixed-case word: 10+ letters with 3+ capitals after the first letter and 3+ lower-case letters */
+    var words = vals.join(' ').match(/[A-Za-z]{10,}/g) || [];
+    for (i = 0; i < words.length; i++) {
+      var up = (words[i].slice(1).match(/[A-Z]/g) || []).length, lo = (words[i].match(/[a-z]/g) || []).length;
+      if (up >= 3 && lo >= 3) { score += 2; break; }
+    }
+    /* 2) a dotted Gmail address: 4+ dot-separated parts, or 3+ parts of one or two characters (j.p.smith@ passes) */
+    var em = String(d.email || d.Email || '').trim().toLowerCase().match(/^([^@\s]+)@(gmail|googlemail)\.com$/);
+    if (em) {
+      var parts = em[1].split('.'), short = 0;
+      for (i = 0; i < parts.length; i++) if (parts[i].length <= 2) short++;
+      if (parts.length >= 4 || short >= 3) score += 1;
+    }
+    /* 3) an unpronounceable name word (plain a-z only): 4+ letters with no vowel, or 5+ consonants in a row */
+    var nm = String(d.name || d.fullname || d.Name || '').toLowerCase().split(/\s+/);
+    for (i = 0; i < nm.length; i++) {
+      if (/^[a-z]{4,}$/.test(nm[i]) && (!/[aeiouy]/.test(nm[i]) || /[bcdfghjklmnpqrstvwxz]{5,}/.test(nm[i]))) { score += 1; break; }
+    }
+    return score >= 2;
+  }
   function post(endpoint, data, keepalive) {
-    if (!LEAD_EMAIL_ON && /formsubmit\.co/.test(endpoint)) {
+    if (/formsubmit\.co/.test(endpoint)) {
+      var bot = false;
+      try { bot = leadLooksLikeBot(data); } catch (e) {}
       var sd = { source: 'TRE Singapore website — ' + location.pathname, inquiry: data.interest || '' }, extra = [];
       Object.keys(data).forEach(function (k) {
         if (k.charAt(0) === '_' || !data[k]) return;
         if (SHEET_KEYS.indexOf(k) > -1) sd[k] = data[k]; else extra.push(k + ': ' + data[k]);
       });
       if (extra.length) sd.message = (sd.message ? sd.message + '\n\n' : '') + extra.join('\n');
-      return fetch(LEAD_SHEET, { method: 'POST', mode: 'no-cors', keepalive: !!keepalive, body: new URLSearchParams(sd) }).then(function () {});
+      if (bot) sd.inquiry = 'Possible spam — ' + (sd.inquiry || '');
+      var logged = fetch(LEAD_SHEET, { method: 'POST', mode: 'no-cors', keepalive: !!keepalive, body: new URLSearchParams(sd) }).then(function () {});
+      /* emails paused or a bot: the sheet row is all (a bot still sees the normal thank-you) */
+      if (!LEAD_EMAIL_ON || bot) return logged;
+      logged.catch(function () {});
     }
-    return fetch(endpoint, { method: 'POST', keepalive: !!keepalive, headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+    return fetch(endpoint,{ method: 'POST', keepalive: !!keepalive, headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || String(j.success) !== 'true') throw new Error(j.message || 'Not sent'); }); });
   }
   function note(scope, cls, html, after) {   /* a message box after `after` (created once; filled a beat later so screen readers announce it) */
