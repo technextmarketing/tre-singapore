@@ -348,6 +348,73 @@ window.TRE_EVENTS = [
     }
   },
 
+  /* ---------- Shaking to Shaping — TRE™ for Coaches, in person in Singapore, 3 sessions in 2027 (ICF CCEs, with Simba Stenqvist) ---------- */
+  {
+    slug: 'shaking-to-shaping-singapore-2027',
+    title: 'Shaking to Shaping — TRE™ for Coaches, in person in Singapore',
+    seoTitle: 'Shaking to Shaping: TRE™ for Coaches, Singapore 2027',
+    category: 'Workshop',
+    region: 'singapore',
+    location: 'Singapore',
+    venue: 'Singapore (venue details shared with registered participants)',
+    format: 'In-Person',
+    start: '2027-02-24T19:00',
+    end: '2027-11-02',
+    dateText: 'Wed 24 Feb · Wed 30 Jun · Tue 2 Nov 2027',
+    timeText: '7:00–10:00pm Singapore time',
+    chip: { top: '2027', bottom: '3 dates' },
+    image: 'assets/img/events/event-shaking-to-shaping-singapore.webp?v=1',
+    description: 'An ICF-accredited Introduction to TRE™ for Coaches — a 3-hour in-person workshop in Singapore with 3 ICF CCEs, led by Global TRE™ Certifying Trainers Isabelle Claus Teixeira and Simba Stenqvist. Three dates in 2027: 24 February, 30 June and 2 November. Personal sessions are not included.',
+    facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
+    credits: '3 ICF CCEs',
+    price: 'S$149',
+    priceText: 'S$149 per session · S$129 with a discount code',
+    link: 'https://hummingbeing.com/event-shaking-to-shaping-singapore#register',
+    linkText: 'Register — S$149',
+    isNew: true,
+    theme: 'theme-deep',
+    details: {
+      posterTall: { src: 'assets/img/events/event-shaking-to-shaping-singapore-poster.webp?v=1', alt: 'Shaking to Shaping — TRE™ for Coaches, ICF-accredited in-person workshop in Singapore with Isabelle Claus Teixeira and Simba Stenqvist: 24 February, 30 June and 2 November 2027, 7–10pm Singapore time, 3 ICF CCEs' },
+      summary: 'An ICF-accredited Introduction to TRE™ for Coaches — a 3-hour in-person workshop in Singapore, in collaboration with Simba Stenqvist, led by two Global TRE™ Certifying Trainers. 3 ICF CCEs per workshop. Three dates in 2027, each the same workshop.',
+      about: [
+        'This is an ICF-accredited Introduction to TRE™ for Coaches — a 3-hour workshop. Each workshop carries 3 ICF CCEs (1.5 Resource Development + 1.5 Core Competencies). Please note this in-person workshop does not include TRE™ personal sessions.',
+        'TRE™ (Tension, Stress & Trauma Releasing Exercises), developed by Dr. David Berceli, activates the body’s natural neurogenic tremoring mechanism — a reflex that releases stored stress and trauma, builds resilience and promotes deep regulation.',
+        'In this workshop you will explore how to use TRE™ within your coaching practice — as a self-care, so you embody presence and body-led listening skills as a coach.',
+        'You can then continue your training with TRE™ Module 1 (21 ICF CCEs) and Modules 2 and 3 (see the 2027 certification) to become a Certified Global TRE™ Provider — accredited to offer TRE™ to individuals and groups.'
+      ],
+      forWho: [
+        'Coaches (in training or ACC, PCC, MCC level) looking for an ICF-accredited somatic tool',
+        'Therapists, psychologists or healthcare professionals expanding a trauma-informed practice'
+      ],
+      schedule: [
+        { when: 'Wed 24 Feb', time: '7:00–10:00pm SGT · Singapore', title: 'Shaking to Shaping — in person', text: 'Date 1 of 3. A full TRE™ session experience guided by Global TRE™ Certifying Trainers, and how to integrate TRE™ into your coaching.' },
+        { when: 'Wed 30 Jun', time: '7:00–10:00pm SGT · Singapore', title: 'Shaking to Shaping — in person', text: 'Date 2 of 3. The same workshop, a separate session.' },
+        { when: 'Tue 2 Nov', time: '7:00–10:00pm SGT · Singapore', title: 'Shaking to Shaping — in person', text: 'Date 3 of 3. The same workshop, a separate session.' }
+      ],
+      includes: [
+        'A full TRE™ session experience guided by Global TRE™ Certifying Trainers',
+        'The neuroscience behind neurogenic tremoring and nervous system regulation',
+        'How to integrate TRE™ into 1-on-1 and group coaching contexts',
+        'Embodied presence and body-led listening skills as a coach',
+        '3 ICF CCEs per workshop — 1.5 Resource Development + 1.5 Core Competencies',
+        'TRE™ personal sessions are not included; they can be purchased in addition for S$180 per session'
+      ],
+      pricing: [
+        { label: 'Public price', sub: 'per session · in person', price: 'S$149', hl: true },
+        { label: 'Discounted price', sub: 'with a discount code · limited places', price: 'S$129', note: 'enter your code when you register' }
+      ],
+      pricingNote: 'All prices in Singapore Dollars, per session. Choose your date when you register. TRE™ personal sessions can be added for S$180 per session. Venue details are shared with registered participants.',
+      facilitators: [ISABELLE, SIMBA],
+      partners: 'In collaboration with Simba Stenqvist',
+      online: false,
+      register: [
+        { label: 'Register — S$149', url: 'https://hummingbeing.com/event-shaking-to-shaping-singapore#register', primary: true },
+        { label: 'Go deeper: TRE™ Modules 1–3 (2027 certification)', url: 'events/tre-provider-certification-2027-singapore' }
+      ],
+      source: 'https://hummingbeing.com/event-shaking-to-shaping-singapore'
+    }
+  },
+
   /* ---------- Singapore certification 2027 cohort (Modules 1–3 + bonuses) ---------- */
   {
     slug: 'tre-provider-certification-2027-singapore',
@@ -496,6 +563,148 @@ window.TRE_EVENTS = [
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
       source: 'https://hummingbeing.com/event-tre-module1-online-scotland'
+    }
+  },
+
+  /* ---------- TRE™ Module 1 — Lisbon, Portugal (28–30 May 2027), ICF-accredited + extra 4 h coaches session for the CCEs ---------- */
+  {
+    slug: 'tre-module-1-lisbon-2027',
+    title: 'TRE™ Module 1 — Lisbon, Portugal (28–30 May 2027)',
+    seoTitle: 'TRE™ Module 1 in Lisbon, Portugal, May 2027',
+    category: 'Certification',
+    region: 'international',
+    location: 'Lisboa, Portugal',
+    venue: 'Lisboa, Portugal (venue details shared with registered participants)',
+    format: 'In-Person · 3 days',
+    tz: 'Europe/Lisbon',
+    start: '2027-05-28T10:00',
+    end: '2027-05-30T18:00',
+    dateText: 'Friday 28 – Sunday 30 May 2027',
+    timeText: '28 & 29 May 10:00–18:00 · 30 May 10:00–13:00 (+ 14:00–18:00 for the ICF CCEs) · Lisbon time',
+    chip: { top: '28–30', bottom: 'May 2027' },
+    image: 'assets/img/events/event-lisbon-module1.webp?v=2',
+    card: 'assets/img/events/card-event-lisbon-module1.webp?v=2',
+    description: 'ICF-accredited TRE™ Module 1 in Lisboa, Portugal, led by Isabelle Claus Teixeira and assisted by Saymara Ryon. The 21 ICF CCEUs require the additional 4-hour Self-Care & Presence for Coaches session (30 May, 14:00–18:00). Only 25 places.',
+    facilitator: 'Isabelle Claus Teixeira, assisted by Saymara Ryon',
+    credits: '21 ICF CCEUs',
+    price: 'From €739',
+    priceNote: 'early bird (first 10 tickets) until 31 Mar 2027 · then €799',
+    link: 'https://hummingbeing.com/event-tre-module1-lisbon#register',
+    linkText: 'Register',
+    isNew: true,
+    theme: 'theme-deep',
+    details: {
+      posterTall: { src: 'assets/img/events/event-lisbon-module1-poster.webp?v=3', alt: 'ICF-accredited TRE™ Module 1 in Lisboa, Portugal, 28–30 May 2027, led by Isabelle Claus Teixeira, assisted by Saymara Ryon. Early bird €739 until 31 March 2027, then €799' },
+      summary: 'ICF-accredited TRE™ Module 1 in Lisboa, Portugal, counting as Module 1 of the Global TRE™ Provider Certification. Led by Global TRE™ Certifying Trainer Isabelle Claus Teixeira, assisted by Saymara Ryon, in English, limited to 25 places.',
+      about: [
+        'This ICF-accredited TRE™ Module 1 belongs to the only TRE™ training in the world that carries ICF CCEUs (21 CCEUs: 16 Resource Development + 5 Core Competencies).',
+        'The ICF-accredited Module 1 includes an additional 4 hours, “Self-Care & Presence for Coaches” (Day 3, 30 May, 14:00–18:00), that is mandatory to attend if you want to get the 21 CCEs. Not interested in the ICF CCEs? Attend 28 May (all day), 29 May (all day) and 30 May (morning).',
+        'TRE™ was developed by Dr. David Berceli and activates the body’s natural neurogenic tremoring mechanism — a reflex that releases stored stress and trauma, builds resilience and promotes deep regulation.',
+        'Module 1 qualifies you to use TRE™ in your own personal practice. Add Modules 2 and 3 and you become a Certified Global TRE™ Provider. Module 1 can be booked on its own, and Modules 1, 2 and 3 also run in Lisboa from May to October 2027 (see the TRE™ Certification — Lisboa 2027).'
+      ],
+      forWho: [
+        'A coach (in training or ACC, PCC, MCC level) looking for an ICF-accredited somatic tool',
+        'A therapist, psychologist or healthcare professional growing a trauma-informed practice',
+        'A yoga teacher, bodyworker or somatic practitioner who wants to add neuroscience-informed tools',
+        'Anyone experiencing chronic stress or burnout and ready for a body-led approach',
+        'Those considering the full Global TRE™ Provider Certification in Lisboa (Modules 1, 2 & 3)'
+      ],
+      schedule: [
+        { when: 'Day 1 · Fri 28 May', time: '10:00–18:00 Lisbon time', title: 'TRE™ Module 1 — Full Certification', text: 'The neuroscience of neurogenic tremoring, the TRE™ exercise sequence, somatic awareness, containment and grounding.' },
+        { when: 'Day 2 · Sat 29 May', time: '10:00–18:00 Lisbon time', title: 'TRE™ Module 1 — continued', text: '4 guided full TRE™ sessions across the module, with Q&A and personal practice time.' },
+        { when: 'Day 3 · Sun 30 May', time: '10:00–13:00 Lisbon time', title: 'TRE™ Module 1 — completion', text: 'Deepen your practice, integrate the learning and complete Module 1, with guidance toward Modules 2 and 3. Module 1 ends at 13:00 on 30 May.' },
+        { when: 'Day 3 · afternoon', time: '14:00–18:00 Lisbon time', title: 'Introductory Afternoon: Self-Care & Presence for Coaches', text: 'For coaches who want the ICF CCEs: TRE™ as a personal resilience and self-care practice. Additional 4 hours, mandatory to attend for the 21 ICF CCEs; the ICF CCEs certificate is issued on completion.' }
+      ],
+      includes: [
+        'Module 1 Certification — valid as Module 1 of the Global TRE™ Provider Certification Program',
+        '21 ICF CCEUs — 16 Resource Development + 5 Core Competencies; the additional 4-hour Self-Care & Presence for Coaches session (Day 3, 14:00–18:00) is mandatory for the CCEs',
+        '3 training days — Day 1 and Day 2 10:00–18:00, Day 3 10:00–13:00; plus Day 3 14:00–18:00 for coaches who want the ICF CCEs',
+        '4 online personal TRE™ sessions — included with your training',
+        'Small group — limited to 25 participants, led by a Global TRE™ Certifying Trainer with an assisting provider, in English',
+        'Not included: travel costs, accommodation and meals'
+      ],
+      pricing: [
+        { label: 'Early Bird', sub: 'first 10 tickets · until 31 March 2027', price: '€739', note: 'then €799', hl: true },
+        { label: 'Full Price', sub: 'until sold out', price: '€799' }
+      ],
+      pricingNote: 'All prices in euros (EUR). Only 25 places. Payment by credit card only (Stripe); card charges are added on top. All ticket sales are final — tickets are non-refundable and non-cancellable. Times are local Lisbon time; venue details are shared with registered participants.',
+      facilitators: [ISABELLE, SAYMARA],
+      online: false,
+      register: [
+        { label: 'Register', url: 'https://hummingbeing.com/event-tre-module1-lisbon#register', primary: true },
+        { label: 'Full certification in Lisboa (Modules 1–3)', url: 'events/tre-certification-lisbon-2027' }
+      ],
+      source: 'https://hummingbeing.com/event-tre-module1-lisbon'
+    }
+  },
+
+  /* ---------- TRE™ Certification — Lisboa 2027 (Portugal cohort, Modules 1–3, May–Oct 2027) ---------- */
+  {
+    slug: 'tre-certification-lisbon-2027',
+    title: 'TRE™ Certification — Lisboa 2027 (Portugal cohort, Modules 1–3)',
+    seoTitle: 'TRE™ Certification in Lisbon, Portugal 2027',
+    category: 'Certification',
+    region: 'international',
+    location: 'Lisboa, Portugal',
+    venue: 'Lisboa, Portugal (in person, plus online sessions and supervisions; venue details shared with registered participants)',
+    format: 'In-Person · 3 modules',
+    tz: 'Europe/Lisbon',
+    start: '2027-05-28T10:00',
+    end: '2027-10-24T18:00',
+    dateText: 'Module 1 28–30 May · Module 2 1–4 Jun · Module 3 22–24 Oct 2027',
+    timeText: 'Lisbon time',
+    chip: { top: 'May–Oct', bottom: '2027' },
+    image: 'assets/img/events/event-lisbon-certification.webp?v=2',
+    description: 'The complete Global TRE™ Provider Certification in Lisboa, Portugal: three in-person modules from May to October 2027, each with online personal sessions or supervisions, and 21 ICF CCEs for Module 1. Led by Isabelle Claus Teixeira. Only 25 places.',
+    facilitator: 'Isabelle Claus Teixeira, with an assisting provider',
+    credits: '21 ICF CCEs (Module 1)',
+    price: 'From €2,949',
+    priceNote: 'early bird paid in full until 31 Mar 2027 · regular €3,499',
+    link: 'https://hummingbeing.com/event-tre-certification-lisbon#reserve',
+    linkText: 'Reserve your place',
+    isNew: true,
+    theme: 'theme-deep',
+    details: {
+      posterTall: { src: 'assets/img/events/event-lisbon-certification-poster.webp?v=2', alt: 'TRE™ Certification, Portugal 2027 cohort in Lisboa: Module 1 28–30 May, Module 2 1–4 June, Module 3 22–24 October 2027, with Isabelle Claus Teixeira. Early bird €2,949 until 31 March 2027' },
+      summary: 'The complete Global TRE™ Provider Certification in Lisboa, Portugal: three in-person modules from May to October 2027, each with online TRE™ personal sessions or supervisions, and 21 ICF CCEs for Module 1. Led by Global TRE™ Certifying Trainer Isabelle Claus Teixeira with an assisting provider, in English, limited to 25 places.',
+      about: [
+        'Three in-person modules in Lisboa, Portugal, each including online TRE™ personal sessions or supervisions. Times are local Lisbon time.',
+        'The ICF-accredited Module 1 includes an additional 4 hours, Self-Care & Presence for Coaches (30 May, 14:00–18:00), mandatory to attend for the 21 ICF CCEs (16 Resource Development + 5 Core Competencies). Module 2: ICF accreditation pending.',
+        'Module 3 completes your Global TRE™ Provider certification, accredited to offer TRE™ to individuals and groups. Module 1 can also be purchased alone (see TRE™ Module 1 — Lisbon, from €739).'
+      ],
+      forWho: [
+        'Coaches (in training or ACC, PCC, MCC level) looking for an ICF-accredited somatic tool',
+        'Therapists, psychologists or healthcare professionals expanding a trauma-informed practice',
+        'Yoga teachers, Pilates teachers, bodyworkers or somatic practitioners',
+        'Anyone experiencing chronic stress or burnout and ready for a body-led approach'
+      ],
+      schedule: [
+        { when: 'Module 1', time: '28–30 May 2027 · Lisboa', title: 'Your Personal TRE™ Practice', text: 'A 3-day in-person workshop plus 4 online personal sessions. Day 1 and Day 2 10:00–18:00, Day 3 10:00–13:00. The ICF-accredited Module 1 includes an additional 4 hours, Self-Care & Presence for Coaches (30 May, 14:00–18:00), mandatory to attend for the 21 ICF CCEs.' },
+        { when: 'Module 2', time: '1–4 June 2027 · Lisboa · ICF accreditation pending', title: 'Teaching TRE™ to One Person', text: 'A 2.5-day in-person workshop plus 4 online individual supervisions. 1 June 10:00–18:00; 2, 3 and 4 June 9:30–13:30.' },
+        { when: 'Module 3', time: '22–24 Oct 2027 · Lisboa', title: 'Teaching TRE™ to Groups', text: 'A 3-day in-person workshop (9:00–18:00 each day) plus 4 online individual supervisions. Completes your Global TRE™ Provider certification.' }
+      ],
+      includes: [
+        'Full certification — Modules 1, 2 and 3, with 4 online personal sessions (Module 1) and 4 online individual supervisions each for Modules 2 and 3',
+        '21 ICF CCEs — 16 Resource Development + 5 Core Competencies (ICF-accredited), for Module 1',
+        '8.5 training days — including the Day 3 afternoon workshop for coaches in Module 1',
+        'Global recognition — the Global TRE™ Certification Program is recognised worldwide',
+        'Small group — limited to 25 participants, led by a Global TRE™ Certifying Trainer with an assisting provider, in English',
+        'Not included: travel costs, accommodation and meals'
+      ],
+      pricing: [
+        { label: 'Early bird · pay in full', sub: 'until 31 March 2027', price: '€2,949', hl: true },
+        { label: 'Early bird · 3 instalments', sub: '€739 + €1,400 + €860', price: '€2,999' },
+        { label: 'Regular · pay in full', sub: 'after the early bird', price: '€3,499' },
+        { label: 'Regular · 3 instalments', sub: '€799 + €1,700 + €1,050', price: '€3,549' }
+      ],
+      pricingNote: 'All prices in euros (EUR); early-bird pricing applies until 31 March 2027. Instalment 1 on registration (early bird: no later than 1 Apr 2027); instalment 2 before Module 2 (by 15 May 2027 early bird, 30 May 2027 regular); instalment 3 before Module 3 (by 1 Oct 2027 early bird, 15 Oct 2027 regular). Credit card only, through Stripe; card charges are added on top of every payment. Only 25 places. All ticket sales are final — tickets are non-refundable and non-cancellable.',
+      facilitators: [ISABELLE, SAYMARA],
+      online: false,
+      register: [
+        { label: 'Reserve your place', url: 'https://hummingbeing.com/event-tre-certification-lisbon#reserve', primary: true },
+        { label: 'Only Module 1? TRE™ Module 1 — Lisbon', url: 'events/tre-module-1-lisbon-2027' }
+      ],
+      source: 'https://hummingbeing.com/event-tre-certification-lisbon'
     }
   },
 
