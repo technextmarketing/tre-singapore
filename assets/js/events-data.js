@@ -284,6 +284,70 @@ window.TRE_EVENTS = [
     }
   },
 
+  /* ---------- Introduction to TRE\u2122 \u2014 in person in Singapore, 3 sessions in 2027 (with TRE Thailand and Simba Stenqvist) ---------- */
+  {
+    slug: 'intro-tre-singapore-2027',
+    title: 'Introduction to TRE\u2122 \u2014 In person in Singapore',
+    seoTitle: 'Introduction to TRE\u2122 \u2014 In person in Singapore (2027)',
+    category: 'Workshop',
+    region: 'singapore',
+    location: 'Singapore',
+    venue: 'Singapore (venue details shared with registered participants)',
+    format: 'In-Person',
+    start: '2027-02-23T19:00',
+    end: '2027-11-03',
+    dateText: 'Tue 23 Feb \u00b7 Tue 29 Jun \u00b7 Wed 3 Nov 2027',
+    timeText: '7:00\u20139:00pm Singapore time',
+    chip: { top: '2027', bottom: '3 dates' },
+    image: 'assets/img/events/event-intro-tre-singapore-2027.webp?v=1',
+    description: 'An in-person Introduction to TRE\u2122 for the general public \u2014 a 2-hour workshop in Singapore with Global TRE\u2122 Certifying Trainers Isabelle Claus Teixeira and Simba Stenqvist, in collaboration with TRE Thailand. Three dates in 2027: 23 February, 29 June and 3 November. Personal sessions are not included.',
+    facilitator: 'Isabelle Claus Teixeira & Simba Stenqvist',
+    price: 'S$88',
+    priceText: 'S$88 per session \u00b7 S$66 with a discount code',
+    link: 'https://hummingbeing.com/event-intro-tre-singapore-2027',
+    linkText: 'Register \u2014 S$88',
+    isNew: true,
+    theme: 'theme-deep',
+    details: {
+      posterTall: { src: 'assets/img/events/event-intro-tre-singapore-2027-poster.webp?v=1', alt: 'Introduction to TRE\u2122 \u2014 in-person workshop in Singapore with Isabelle Claus Teixeira and Simba Stenqvist, in collaboration with TRE Thailand: 23 February, 29 June and 3 November 2027, 7\u20139pm Singapore time' },
+      summary: 'An Introduction to TRE\u2122 for the general public \u2014 a 2-hour in-person workshop in Singapore, led by two Global TRE\u2122 Certifying Trainers, in collaboration with TRE Thailand. Three dates in 2027, each a separate session with the same content.',
+      about: [
+        'This is an Introduction to TRE\u2122 for the general public \u2014 a 2-hour workshop. Please note this in-person workshop does not include TRE\u2122 personal sessions.',
+        'TRE\u2122 (Tension, Stress & Trauma Releasing Exercises), developed by Dr. David Berceli, activates the body\u2019s natural neurogenic tremoring mechanism \u2014 a reflex that releases stored stress and trauma, builds resilience and promotes deep regulation.',
+        'In this workshop you will discover what TRE\u2122 is and how it can be beneficial for you as a body-based practice.',
+        'Should you want to go deeper, you can then continue your training with TRE\u2122 Module 1, Module 2 and Module 3 (see the 2027 certification) to become a Certified Global TRE\u2122 Provider \u2014 accredited to offer TRE\u2122 to individuals and groups.',
+        'Please read before registering: this workshop is not suitable if you are pregnant, had surgery or a severe injury less than 8 weeks ago, or have a diagnosed psychiatric condition. For PTSD and C-PTSD we recommend private sessions instead.'
+      ],
+      forWho: [
+        'The general public',
+        'Anybody interested to discover TRE\u2122'
+      ],
+      schedule: [
+        { when: 'Tue 23 Feb', time: '7:00\u20139:00pm SGT \u00b7 Singapore', title: 'Introduction to TRE\u2122 \u2014 in person', text: 'Date 1 of 3. A full TRE\u2122 session experience guided by Global TRE\u2122 Certifying Trainers.' },
+        { when: 'Tue 29 Jun', time: '7:00\u20139:00pm SGT \u00b7 Singapore', title: 'Introduction to TRE\u2122 \u2014 in person', text: 'Date 2 of 3. The same workshop, a separate session.' },
+        { when: 'Wed 3 Nov', time: '7:00\u20139:00pm SGT \u00b7 Singapore', title: 'Introduction to TRE\u2122 \u2014 in person', text: 'Date 3 of 3. The same workshop, a separate session.' }
+      ],
+      includes: [
+        'A full TRE\u2122 session experience guided by Global TRE\u2122 Certifying Trainers',
+        'Discover what TRE\u2122 is and how it can be beneficial for you as a body-based practice',
+        'TRE\u2122 personal sessions are not included; they can be purchased in addition for S$180 per session'
+      ],
+      pricing: [
+        { label: 'Public price', sub: 'per session \u00b7 in person', price: 'S$88', hl: true },
+        { label: 'Discounted price', sub: 'with a discount code', price: 'S$66', note: 'enter your code when you register' }
+      ],
+      pricingNote: 'All prices in Singapore Dollars, per session. Choose your date when you register. Not suitable if you are pregnant, had surgery or a severe injury less than 8 weeks ago, or have a diagnosed psychiatric condition; for PTSD and C-PTSD we recommend private sessions. TRE\u2122 personal sessions can be added for S$180 per session. Venue details are shared with registered participants.',
+      facilitators: [ISABELLE, SIMBA],
+      partners: 'In collaboration with TRE Thailand and Simba Stenqvist',
+      online: false,
+      register: [
+        { label: 'Register \u2014 S$88', url: 'https://hummingbeing.com/event-intro-tre-singapore-2027', primary: true },
+        { label: 'Go deeper: TRE\u2122 Modules 1\u20133 (2027 certification)', url: 'events/tre-provider-certification-2027-singapore' }
+      ],
+      source: 'https://hummingbeing.com/event-intro-tre-singapore-2027'
+    }
+  },
+
   /* ---------- Singapore certification 2027 cohort (Modules 1–3 + bonuses) ---------- */
   {
     slug: 'tre-provider-certification-2027-singapore',
