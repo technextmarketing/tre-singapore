@@ -332,7 +332,7 @@
       var prices = (d.pricing || []).map(function (t) { return '<li><span>' + esc(t.label) + '</span><b>' + esc(t.price) + '</b></li>'; }).join('');
       if (prices) h += '<ul class="dt-gate-prices">' + prices + '</ul>';
       if (withCode) h += '<p class="dt-gate-code">' + esc(g.discountNote) + '</p>';
-      if (saved.code && g.payDiscount && !saved.disc) h += '<p class="dt-gate-note">The discount code you entered was not recognised, so this is the public-price payment page. Questions? Email <a href="mailto:bonjour@bhdasia.com">bonjour@bhdasia.com</a>.</p>';
+      if (saved.code && g.payDiscount && !saved.disc) h += '<p class="dt-gate-note">The discount code you entered was not recognised, so this is the public-price payment page. Questions? Email <span>bonjour&#64;bhd<span style="display:none">-no-spam</span>asia&#46;com</span>.</p>';
       h += '<div class="dt-gate-acts">' + payFor(saved).map(function (p) {
         var cls = 'btn ' + ((p.primary || saved.disc) && !withCode ? 'btn-primary' : 'btn-outline');
         /* auto-redirect events open the payment page in this tab (as the redirect does); others in a new tab as before */
@@ -372,10 +372,10 @@
         /* the send failed: still show the payment step (as hummingbeing.com / bhdasia.com do) and ask for the details by email; no automatic redirect */
         setSaved(s); form.reset(); showPay(s, true);
         var th = $('.dt-gate-thanks', pay), first = String(data.name || '').split(/\s+/)[0];
-        if (th) th.innerHTML = 'Thank you' + (first ? ', ' + esc(first) : '') + '. Our form could not send your details just now &mdash; please <a href="mailto:bonjour@bhdasia.com?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">email them to Isabelle</a> (already written out).';
+        if (th) th.innerHTML = 'Thank you' + (first ? ', ' + esc(first) : '') + '. Our form could not send your details just now &mdash; please <a href="mailto:' + 'bonjour' + '@' + 'bhdasia.com' + '?subject=' + encodeURIComponent('Event registration — ' + ev.title) + '&body=' + encodeURIComponent(body) + '">email them to Isabelle</a> (already written out).';
       }
       /* keepalive: the lead still arrives if the browser moves on to the payment page while it is being sent */
-      var sent = post('https://formsubmit.co/ajax/bonjour@bhdasia.com', data, true).then(function () { return 'ok'; }, function () { return 'fail'; });
+      var sent = post('https://formsubmit.co/ajax/' + 'bonjour' + '@' + 'bhdasia.com', data, true).then(function () { return 'ok'; }, function () { return 'fail'; });
       codeMatches(data.discount_code).then(function (disc) {
         var s = { name: data.name, code: !!data.discount_code, disc: disc };
         /* wait for the send, at most ~1.5 s on auto-redirect events (keepalive carries a slower send) */
@@ -481,7 +481,7 @@
         var meta = m ? (m.meta || []).slice(0, 2).map(function (x) { return '<li>' + (FI[x.icon] || ICONS.pin) + '<span>' + esc(x.text) + '</span></li>'; }).join('') : '';
         var c = (m && m.contact) || {}, acts = '';
         if (profile) acts += '<a class="btn btn-navy btn-sm" href="' + esc(profile) + '"' + ext + '>' + (m ? 'View profile' : esc(f.linkText || 'Learn more')) + '</a>';
-        if (c.email) acts += ctaLink(c.email, 'btn btn-outline btn-sm', 'email', 'Email');
+        if (c.email) acts += ctaLink(c.email, 'btn btn-outline btn-sm', 'email', /^mailto:/.test(c.email) ? 'Email' : 'Message');
         if (c.whatsapp) acts += ctaLink(c.whatsapp, 'btn btn-outline btn-sm', 'whatsapp', 'WhatsApp');
         if (c.book) acts += ctaLink(c.book, 'btn btn-outline btn-sm', 'book', 'Book now');
         return '<article class="dt-person">' + portrait +
@@ -669,7 +669,7 @@
     var meta = (f.meta || []).map(function (m) { return '<li>' + (FAC_ICONS[m.icon] || FAC_ICONS.pin) + '<span>' + esc(m.text) + '</span></li>'; }).join('');
     var c = f.contact, acts = '';
     if (c) {
-      if (c.email) acts += ctaLink(c.email, 'btn btn-outline btn-sm', 'email', 'Email');
+      if (c.email) acts += ctaLink(c.email, 'btn btn-outline btn-sm', 'email', /^mailto:/.test(c.email) ? 'Email' : 'Message');
       if (c.whatsapp) acts += ctaLink(c.whatsapp, 'btn btn-outline btn-sm', 'whatsapp', 'WhatsApp');
       if (c.book) acts += ctaLink(c.book, 'btn btn-primary btn-sm', 'book', 'Book now');
     } else acts = (f.actions || []).map(function (a, k) { return extLink(a.url, 'btn ' + (k === 0 ? 'btn-primary' : 'btn-outline') + ' btn-sm', a.label); }).join('');
@@ -710,7 +710,7 @@
     }
 
     var c = f.contact || {};
-    var ctas = (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-ghost-light', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-ghost-light', 'whatsapp', 'WhatsApp') : '');
+    var ctas = (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-ghost-light', 'email', /^mailto:/.test(c.email) ? 'Email' : 'Message') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-ghost-light', 'whatsapp', 'WhatsApp') : '');
     var socials = (f.website ? '<a href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + esc(f.website.label || 'Website') + '</a>' : '') +
       (f.socials || []).map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + (SOCIAL_ICONS[s.type] || SOCIAL_ICONS.website) + esc(s.label || s.type) + '</a>'; }).join('');
     var fx = f.facts || {};
@@ -767,7 +767,7 @@
 
     /* contact column: "Get in touch" + website & socials stay in view on desktop; "More facilitators" sits at the foot */
     h += '<aside class="dt-side"><div class="dt-stick"><div class="dt-stick-in">';
-    h += '<div class="dt-box dt-reg"><h3>Get in touch</h3><div class="dt-reg-acts">' + (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-outline', 'email', 'Email') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-outline', 'whatsapp', 'WhatsApp') : '') + '</div>' +
+    h += '<div class="dt-box dt-reg"><h3>Get in touch</h3><div class="dt-reg-acts">' + (c.book ? ctaLink(c.book, 'btn btn-primary', 'book', 'Book now') : '') + (c.email ? ctaLink(c.email, 'btn btn-outline', 'email', /^mailto:/.test(c.email) ? 'Email' : 'Message') : '') + (c.whatsapp ? ctaLink(c.whatsapp, 'btn btn-outline', 'whatsapp', 'WhatsApp') : '') + '</div>' +
       (f.sample ? '<p class="dt-fine">Sample profile — enquiries go to TRE™ in Singapore, who will connect you with a certified provider.</p>' : '<p class="dt-fine">Questions before booking? Ask before the session rather than on the day — we are glad to help.</p>') + '</div>';
     if (f.website || (f.socials && f.socials.length)) {
       h += '<div class="dt-box"><h3>Website & socials</h3><ul class="dt-links">' + (f.website ? '<li><a class="dt-li" href="' + esc(f.website.url) + '"' + (isExternal(f.website.url) ? ' target="_blank" rel="noopener"' : '') + '>' + SOCIAL_ICONS.website + '<span>' + esc(f.website.label || 'Website') + '<small>Website</small></span></a></li>' : '') +
@@ -907,7 +907,7 @@
      sent; anything else shows what happened and a way to still reach Isabelle, with the message already written out. */
   var WA = '<a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a>';
   /* Every form posts to the BHD / HummingBeing Lead Capture sheet (same Apps Script).
-     4 Nov 2026: the emails to bonjour@bhdasia.com now come from the Lead Capture Apps Script itself (one email per real lead, rows marked "Possible spam" are not emailed), not FormSubmit (it was down). So this stays false: the sheet send IS the email. true would ALSO email through FormSubmit = duplicates. */
+     4 Nov 2026: the emails to Isabelle's inbox now come from the Lead Capture Apps Script itself (one email per real lead, rows marked "Possible spam" are not emailed), not FormSubmit (it was down). So this stays false: the sheet send IS the email. true would ALSO email through FormSubmit = duplicates. */
   var LEAD_EMAIL_ON = false;
   var LEAD_SHEET = 'https://script.google.com/macros/s/AKfycbxkv934L8ffTxU1TPUiw3jn9Hu6KmdE0Ol1CcJRB_vWstls2xiZHHb-LErG5qHXdTuX/exec';
   var SHEET_KEYS = ['name', 'email', 'phone', 'event', 'inquiry', 'source', 'message', 'gdpr_consent'];
@@ -988,7 +988,7 @@
   }
   function initForm(form) {
     var success = $('.form-success', form), btn = $('button[type="submit"]', form), label = btn.textContent;
-    var to = form.getAttribute('data-mailto') || 'bonjour@bhdasia.com';
+    var to = form.getAttribute('data-mailto') || ('bonjour' + '@' + 'bhdasia.com');
     function mailto(data) {
       var subject = '[TRE Singapore website] ' + (data.interest || 'Enquiry') + ' — ' + (data.name || '');
       var lines = ['Name: ' + data.name, 'Email: ' + data.email, 'Phone / WhatsApp: ' + (data.phone || '-'), 'I am: ' + (data.who || '-'),
@@ -1035,7 +1035,7 @@
       var fail = $('.form-fail', form.parentNode); if (fail) fail.hidden = true;
       post(FS, data)
         .then(function () { form.reset(); note(form.parentNode, 'form-success', 'Thank you — you are on the list for the monthly email with new articles and event dates.', form).classList.add('show'); })
-        .catch(function () { note(form.parentNode, 'form-fail', 'Sorry — the sign-up did not go through just now. <a href="mailto:bonjour@bhdasia.com?subject=' + encodeURIComponent('Newsletter sign-up') + '&body=' + encodeURIComponent('Please add ' + (data.email || 'me') + ' to the monthly TRE in Singapore email.') + '">Email Isabelle to be added</a> instead.', form); })
+        .catch(function () { note(form.parentNode, 'form-fail', 'Sorry — the sign-up did not go through just now. <a href="mailto:' + 'bonjour' + '@' + 'bhdasia.com' + '?subject=' + encodeURIComponent('Newsletter sign-up') + '&body=' + encodeURIComponent('Please add ' + (data.email || 'me') + ' to the monthly TRE in Singapore email.') + '">Email Isabelle to be added</a> instead.', form); })
         .then(function () { btn.disabled = false; btn.textContent = label; });
     });
   }

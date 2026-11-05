@@ -20,7 +20,9 @@ ORG_ID, WEBSITE_ID, ISABELLE_ID = BASE + "#org", BASE + "#website", BASE + "#isa
 ISABELLE = "isabelle-claus-teixeira"
 LOGO = BASE + "assets/img/logo-tre-singapore.png"
 DEFAULT_IMAGE = BASE + "assets/img/og-cover.jpg"
-EMAIL, PHONE = "bonjour@bhdasia.com", "+81 80 6515 1778"
+PHONE = "+81 80 6515 1778"
+# the address is never written out literally (anti-spam): plain text, entity-encoded, CSS-hidden decoy
+EMAIL_HTML = '<span>bonjour&#64;bhd<span style="display:none">-no-spam</span>asia&#46;com</span>'
 ADDRESS = {"@type": "PostalAddress", "streetAddress": "50 Raffles Place, #30-00 Singapore Land Tower",
            "addressLocality": "Singapore", "postalCode": "048623", "addressCountry": "SG"}
 ROBOTS_INDEX = "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
@@ -105,7 +107,7 @@ def organization():
         "url": BASE, "logo": {"@type": "ImageObject", "url": LOGO}, "image": DEFAULT_IMAGE,
         "description": ("The home of TRE™ (Tension and Trauma Releasing Exercises) in Singapore: certified providers, "
                         "Global TRE™ Provider Certification, workshops, practice circles and resources."),
-        "email": EMAIL, "telephone": PHONE, "address": ADDRESS,
+        "telephone": PHONE, "address": ADDRESS,
         "areaServed": {"@type": "Country", "name": "Singapore"},
         "founder": {"@id": ISABELLE_ID},
         "parentOrganization": {"@type": "Organization", "name": "Business & Human Development Consulting Pte Ltd",
@@ -396,7 +398,7 @@ def event_static(e, root):
         h.append(f"<p>{esc(d['partners'])}</p>")
     links = [r for r in d.get("register") or [] if r.get("url") and not (d.get("gate") and r["url"].startswith("#"))]
     if d.get("gate") and not e.get("_past"):
-        h.append('<p>To register, fill in the registration form on this page, or email <a href="mailto:bonjour@bhdasia.com">bonjour@bhdasia.com</a>.</p>')
+        h.append('<p>To register, fill in the registration form on this page, or email ' + EMAIL_HTML + '.</p>')
     if not e.get("_past") and links:
         h.append("<p>" + " · ".join(f'<a href="{esc(href(r["url"], root))}">{esc(r.get("label") or "Register")}</a>' for r in links) + "</p>")
     h.append(f'<p><a href="{root}events">All TRE™ events</a>' + (f' · <a href="{root}online-session-guide">Online session guide</a>' if d.get("online") else "") + "</p>")
@@ -419,7 +421,7 @@ def facilitator_static(f, events, root):
     if f.get("offers"):
         h.append(f"<h2>Sessions and services</h2><ul>{_li(o.get('title', '') + ': ' + o.get('text', '') for o in f['offers'])}</ul>")
     c = f.get("contact") or {}
-    links = [(u, l) for u, l in ((c.get("email"), "Email"), (c.get("whatsapp"), "WhatsApp"), (c.get("book"), "Book a session")) if u]
+    links = [(u, l) for u, l in ((c.get("email"), "Email" if (c.get("email") or "").startswith("mailto:") else "Message"), (c.get("whatsapp"), "WhatsApp"), (c.get("book"), "Book a session")) if u]
     links += [(u, (f.get("website") or {}).get("label") or u) for u in [(f.get("website") or {}).get("url")] if u]
     links += [(s["url"], s.get("label") or s.get("type")) for s in f.get("socials") or [] if s.get("url") and s["url"] != (f.get("website") or {}).get("url")]
     if links:
@@ -474,7 +476,7 @@ def llms_txt(pages, posts, events, facs):
         L += ["", "## Certified TRE™ providers"]
         L += [f"- [{f['name']}]({rec_url('facilitators', f['id'])}): {f.get('role') or ''}" for f in facs]
     L += ["", "## Contact",
-          f"- Email: {EMAIL}", f"- WhatsApp: {PHONE}",
+          f"- Contact form: {BASE}contact", f"- WhatsApp: {PHONE}",
           "- Address: Business & Human Development Consulting Pte Ltd, 50 Raffles Place, Singapore Land Tower #30-00, Singapore 048623",
           "- Book a certification intake call: https://calendly.com/bhdasia/tre-certification-intake-call", ""]
     return "\n".join(L)
