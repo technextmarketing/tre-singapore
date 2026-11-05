@@ -237,7 +237,7 @@ def utc_offset_hours(e, d):
     where = " ".join(str(e.get(k) or "") for k in ("location", "venue", "tz")).lower()
     if "bucharest" in where or "romania" in where:
         return 3 if _last_sunday(d.year, 3) <= d < _last_sunday(d.year, 10) else 2
-    if "europe/london" in where:  # UK time: GMT, BST (+1) from the last Sunday of March to the last Sunday of October
+    if "europe/london" in where or "europe/lisbon" in where:  # UK / Portugal time: GMT/WET, +1 from the last Sunday of March to the last Sunday of October
         return 1 if _last_sunday(d.year, 3) <= d < _last_sunday(d.year, 10) else 0
     return 8
 
@@ -270,7 +270,7 @@ def event_start(e):
     where = " ".join(str(e.get(k) or "") for k in ("location", "venue")).lower()
     tt = (e.get("timeText") or "").lower()
     d = datetime.date.fromisoformat(s[:10])
-    if e.get("tz") == "Europe/London":
+    if e.get("tz") in ("Europe/London", "Europe/Lisbon"):
         off = "+%02d:00" % utc_offset_hours(e, d)
     elif "bucharest" in where:
         off = "+03:00" if _last_sunday(d.year, 3) <= d < _last_sunday(d.year, 10) else "+02:00"
@@ -316,7 +316,7 @@ def event_node(e, image):
     inperson = "in-person" in fmt or "in person" in fmt or (not online)
     mode = "Mixed" if online and inperson else ("Online" if online else "Offline")
     where = " ".join(str(e.get(k) or "") for k in ("location", "venue")).lower()
-    city, country = ("Bucharest", "RO") if "bucharest" in where else (("Singapore", "SG") if e.get("region") == "singapore" or "singapore" in where else (None, None))
+    city, country = ("Bucharest", "RO") if "bucharest" in where else ("Lisbon", "PT") if "lisbo" in where else (("Singapore", "SG") if e.get("region") == "singapore" or "singapore" in where else (None, None))
     locs = []
     if inperson and city:
         locs.append({"@type": "Place", "name": e.get("venue") or e.get("location") or city,
@@ -332,7 +332,7 @@ def event_node(e, image):
     if e.get("end"):
         if "T" not in e["end"]:
             node["endDate"] = e["end"]
-        elif e.get("tz") == "Europe/London":
+        elif e.get("tz") in ("Europe/London", "Europe/Lisbon"):
             node["endDate"] = e["end"] + ":00+%02d:00" % utc_offset_hours(e, datetime.date.fromisoformat(e["end"][:10]))
         else:
             node["endDate"] = e["end"]
