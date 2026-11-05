@@ -1,7 +1,7 @@
 /* =========================================================
    EVENTS DATA — edit this file to add, change or remove events.
    Source of truth: hummingbeing.com/events.html and its event pages.
-   Last aligned: 7 September 2026.
+   Last aligned: 5 November 2026.
 
    Each event object supports:
      slug         : string (required) — used by event?id=<slug>
@@ -29,6 +29,8 @@
                     marked for Google, and never given a preview or recap blog post
      tz           : time zone of the event's own clock, e.g. 'Europe/Bucharest' (optional; default Singapore;
                     Bucharest venues are detected automatically)
+     metaDesc     : meta description for the event page when the summary is too long to read well in 158 characters (optional)
+     sessions     : [{start, end, label}] for one event offered on several separate dates (optional): one schema.org Event per date
      seoTitle     : shorter title for search results when the title is over 65 characters (optional; the event page's
                     <title> is "<title> | TRE™ in Singapore" when that fits, else the title, else the part before " — ")
      speakers     : true for a guest-speaker event (listed under the 'Speakers events' filter tab on /events)
@@ -36,6 +38,7 @@
      theme        : "theme-deep" | "theme-bronze" | "theme-orange" | "theme-green" (fallback colour when no image)
      details      : { summary, about[], forWho[], schedule[], includes[], pricing[], pricingNote,
                       posterTall {src, alt} (optional portrait poster, shown as an 'Event poster' section),
+                      bring[] (optional 'What to bring' list), questions (true = a 'Questions?' box with email + WhatsApp),
                       facilitators[], partners, online (true = show the online preparation guide),
                       register[{label,url,primary}], source }
    Events whose end date (or start date) has passed move automatically to "Past events".
@@ -101,6 +104,7 @@ window.TRE_EVENTS = [
     venue: 'Zoom (link sent after registration)',
     format: 'Live online',
     start: '2026-11-25T19:00',
+    end: '2026-11-25T21:00',
     dateText: 'Wednesday 25 November 2026',
     timeText: '7:00\u20139:00pm Singapore time',
     image: 'assets/img/events/event-body-in-the-room.webp?v=2',
@@ -164,6 +168,7 @@ window.TRE_EVENTS = [
     venue: 'Zoom (link shared with registered participants)',
     format: 'Live online',
     start: '2026-12-15T19:00',
+    end: '2026-12-15T21:00',
     dateText: 'Tuesday 15 December 2026',
     timeText: '7:00\u20139:00pm Singapore time (SGT)',
     image: 'assets/img/events/event-breath-as-medicine.webp',
@@ -225,6 +230,7 @@ window.TRE_EVENTS = [
     venue: 'Zoom (link shared with registered participants)',
     format: 'Live online',
     start: '2027-01-24T20:00',
+    end: '2027-01-24T22:00',
     dateText: 'Sunday 24 January 2027',
     timeText: '8:00\u201310:00pm Singapore time (SGT)',
     image: 'assets/img/events/event-art-of-conscious-rest.webp?v=1',
@@ -289,6 +295,12 @@ window.TRE_EVENTS = [
     slug: 'intro-tre-singapore-2027',
     title: 'Introduction to TRE\u2122 \u2014 In person in Singapore',
     seoTitle: 'Introduction to TRE\u2122 \u2014 In person in Singapore (2027)',
+    metaDesc: 'A 2-hour in-person Introduction to TRE\u2122 in Singapore on 23 Feb, 29 Jun or 3 Nov 2027, 7\u20139pm. S$88.',
+    sessions: [
+      { start: '2027-02-23T19:00', end: '2027-02-23T21:00', label: '23 Feb 2027' },
+      { start: '2027-06-29T19:00', end: '2027-06-29T21:00', label: '29 Jun 2027' },
+      { start: '2027-11-03T19:00', end: '2027-11-03T21:00', label: '3 Nov 2027' }
+    ],
     category: 'Workshop',
     region: 'singapore',
     location: 'Singapore',
@@ -353,6 +365,12 @@ window.TRE_EVENTS = [
     slug: 'shaking-to-shaping-singapore-2027',
     title: 'Shaking to Shaping — TRE™ for Coaches, in person in Singapore',
     seoTitle: 'Shaking to Shaping: TRE™ for Coaches, Singapore 2027',
+    metaDesc: 'An ICF-accredited 3-hour TRE™ workshop for coaches in Singapore on 24 Feb, 30 Jun or 2 Nov 2027, 7–10pm. 3 ICF CCEs. S$149.',
+    sessions: [
+      { start: '2027-02-24T19:00', end: '2027-02-24T22:00', label: '24 Feb 2027' },
+      { start: '2027-06-30T19:00', end: '2027-06-30T22:00', label: '30 Jun 2027' },
+      { start: '2027-11-02T19:00', end: '2027-11-02T22:00', label: '2 Nov 2027' }
+    ],
     category: 'Workshop',
     region: 'singapore',
     location: 'Singapore',
@@ -554,7 +572,7 @@ window.TRE_EVENTS = [
         { label: 'Normal price', sub: 'after the early bird', price: '£589' },
         { label: 'Personal TRE™ session', sub: 'optional add-on · not included', price: '£85', note: 'per session' }
       ],
-      pricingNote: 'All prices in British pounds (GBP). Limited to 15 participants. Individual TRE™ sessions are not included and can be added at £85 each.',
+      pricingNote: 'All prices in British pounds (GBP). Limited to 15 participants. Individual TRE™ sessions are not included and can be added at £85 each. All ticket sales are final — tickets are non-refundable and non-cancellable.',
       facilitators: [ISABELLE, { name: 'Vicki Cook', role: 'TRE Scotland', bio: 'In collaboration with TRE Scotland.' }],
       partners: 'In collaboration with TRE Scotland',
       online: true,
@@ -610,10 +628,10 @@ window.TRE_EVENTS = [
         'Those considering the full Global TRE™ Provider Certification in Lisboa (Modules 1, 2 & 3)'
       ],
       schedule: [
-        { when: 'Day 1 · Fri 28 May', time: '10:00–18:00 Lisbon time', title: 'TRE™ Module 1 — Full Certification', text: 'The neuroscience of neurogenic tremoring, the TRE™ exercise sequence, somatic awareness, containment and grounding.' },
-        { when: 'Day 2 · Sat 29 May', time: '10:00–18:00 Lisbon time', title: 'TRE™ Module 1 — continued', text: '4 guided full TRE™ sessions across the module, with Q&A and personal practice time.' },
-        { when: 'Day 3 · Sun 30 May', time: '10:00–13:00 Lisbon time', title: 'TRE™ Module 1 — completion', text: 'Deepen your practice, integrate the learning and complete Module 1, with guidance toward Modules 2 and 3. Module 1 ends at 13:00 on 30 May.' },
-        { when: 'Day 3 · afternoon', time: '14:00–18:00 Lisbon time', title: 'Introductory Afternoon: Self-Care & Presence for Coaches', text: 'For coaches who want the ICF CCEs: TRE™ as a personal resilience and self-care practice. Additional 4 hours, mandatory to attend for the 21 ICF CCEs; the ICF CCEs certificate is issued on completion.' }
+        { when: 'Day 1 · Fri 28 May', time: '10:00–18:00 Lisbon time', title: 'TRE™ Module 1 — Day 1', text: 'The neuroscience of neurogenic tremoring, the TRE™ exercise sequence, somatic awareness, containment and grounding.' },
+        { when: 'Day 2 · Sat 29 May', time: '10:00–18:00 Lisbon time', title: 'TRE™ Module 1 — Day 2', text: '4 guided full TRE™ sessions across the module, with Q&A and personal practice time.' },
+        { when: 'Day 3 · Sun 30 May', time: '10:00–13:00 Lisbon time', title: 'TRE™ Module 1 — Day 3', text: 'Deepen your practice, integrate the learning and complete Module 1, with guidance toward Modules 2 and 3. Module 1 ends at 13:00 on 30 May.' },
+        { when: 'Day 3 · afternoon', time: '14:00–18:00 Lisbon time', title: 'Self-Care & Presence for Coaches (additional 4 hours)', text: 'For coaches who want the ICF CCEs: TRE™ as a personal resilience and self-care practice. Additional 4 hours, mandatory to attend for the 21 ICF CCEs; the ICF CCEs certificate is issued on completion.' }
       ],
       includes: [
         'Module 1 Certification — valid as Module 1 of the Global TRE™ Provider Certification Program',
@@ -623,6 +641,8 @@ window.TRE_EVENTS = [
         'Small group — limited to 25 participants, led by a Global TRE™ Certifying Trainer with an assisting provider, in English',
         'Not included: travel costs, accommodation and meals'
       ],
+      bring: ['A yoga mat', 'A pillow or cushion', 'Blankets and socks', 'A couple of towels'],
+      questions: true,
       pricing: [
         { label: 'Early Bird', sub: 'first 10 tickets · until 31 March 2027', price: '€739', note: 'then €799', hl: true },
         { label: 'Full Price', sub: 'until sold out', price: '€799' }
@@ -691,6 +711,8 @@ window.TRE_EVENTS = [
         'Small group — limited to 25 participants, led by a Global TRE™ Certifying Trainer with an assisting provider, in English',
         'Not included: travel costs, accommodation and meals'
       ],
+      bring: ['A yoga mat', 'A pillow or cushion', 'Blankets and socks', 'A couple of towels'],
+      questions: true,
       pricing: [
         { label: 'Early bird · pay in full', sub: 'until 31 March 2027', price: '€2,949', hl: true },
         { label: 'Early bird · 3 instalments', sub: '€739 + €1,400 + €860', price: '€2,999' },
