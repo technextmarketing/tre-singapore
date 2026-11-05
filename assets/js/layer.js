@@ -276,7 +276,7 @@
     var nav = $('.nav'), toggle = $('.nav-toggle'); if (!nav || !toggle) return;
     if (!$('.nav-extra', nav)) {
       var ex = document.createElement('div'); ex.className = 'nav-extra';
-      ex.innerHTML = '<span>Questions? Isabelle replies personally.</span><a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a><a href="mailto:bonjour@bhdasia.com">bonjour@bhdasia.com</a>';
+      ex.innerHTML = '<span>Questions? Isabelle replies personally.</span><a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a><span>bonjour&#64;bhd<span style="display:none">-no-spam</span>asia&#46;com</span>';
       nav.appendChild(ex);
     }
     var sync = function () {

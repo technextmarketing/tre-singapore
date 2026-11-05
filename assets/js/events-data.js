@@ -700,7 +700,7 @@ window.TRE_EVENTS = [
   {
     slug: 'from-shaking-to-shaping-bucharest',
     soldOut: true,
-    waitlistLink: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest',
+    waitlistLink: 'https://tre-in-singapore.com/contact#contact-form',
     title: 'From Shaking to Shaping — Use of TRE™ in a Coaching Context',
     category: 'Workshop',
     region: 'international',
@@ -718,7 +718,7 @@ window.TRE_EVENTS = [
     facilitator: 'Isabelle Claus Teixeira & Saymara Ryon',
     price: '€97',
     priceNote: 'per participant · free with TRE™ Module 1 registration',
-    link: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest',
+    link: 'https://tre-in-singapore.com/contact#contact-form',
     linkText: 'Join the waitlist',
     theme: 'theme-bronze',
     details: {
@@ -753,7 +753,7 @@ window.TRE_EVENTS = [
       partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE™ România · HummingBeing',
       online: false,
       register: [
-        { label: 'Join the waitlist', url: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20From%20Shaking%20to%20Shaping%20Bucharest', primary: true },
+        { label: 'Join the waitlist', url: 'https://tre-in-singapore.com/contact#contact-form', primary: true },
         { label: 'Event page on HummingBeing', url: 'https://hummingbeing.com/event-shaking-to-shaping' }
       ],
       source: 'https://hummingbeing.com/event-shaking-to-shaping'
@@ -939,7 +939,7 @@ window.TRE_EVENTS = [
   {
     slug: 'tre-module-1-bucharest',
     soldOut: true,
-    waitlistLink: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest',
+    waitlistLink: 'https://tre-in-singapore.com/contact#contact-form',
     title: 'TRE™ Module 1 — Bucharest, Romania (in English)',
     category: 'Certification',
     region: 'international',
@@ -958,7 +958,7 @@ window.TRE_EVENTS = [
     credits: '21 ICF CCEUs',
     price: 'From €739',
     priceNote: 'per person · tiers rise as tickets sell (€739 · €769 · €799)',
-    link: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest',
+    link: 'https://tre-in-singapore.com/contact#contact-form',
     linkText: 'Join the waitlist',
     theme: 'theme-deep',
     details: {
@@ -997,7 +997,7 @@ window.TRE_EVENTS = [
       partners: 'In collaboration with Învață să Zbori SRL (Learn to Fly) · TRE™ România · HummingBeing',
       online: false,
       register: [
-        { label: 'Join the waitlist', url: 'mailto:bonjour@bhdasia.com?subject=Waitlist%3A%20TRE%20Module%201%20Bucharest', primary: true },
+        { label: 'Join the waitlist', url: 'https://tre-in-singapore.com/contact#contact-form', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
       source: 'https://hummingbeing.com/event-tre-module1-bucharest'

@@ -229,7 +229,7 @@ def form(key):
     what = NAMES[key]
     return f"""<section class="section bg-cream" id="register">
   <div class="container pk-reg">
-    <form class="form" id="contact-form" novalidate data-mailto="bonjour@bhdasia.com" data-endpoint="formsubmit">
+    <form class="form" id="contact-form" novalidate data-endpoint="formsubmit">
       <input type="hidden" name="_subject" value="New TRE Certification 2027 registration: {esc(what)}">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
