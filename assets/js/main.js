@@ -463,6 +463,7 @@
       }).join('') + '</ol></div>';
     }
     if (d.includes && d.includes.length) h += '<div class="dt-sec dt-inc"><h2>What is included</h2><ul class="dt-incl">' + d.includes.map(function (x) { return '<li>' + lead(x) + '</li>'; }).join('') + '</ul></div>';
+    if (d.bring && d.bring.length) h += '<div class="dt-sec dt-inc dt-bring"><h2>What to bring</h2><ul class="dt-incl">' + d.bring.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
     if (d.posterTall && d.posterTall.src) h += '<div class="dt-sec dt-poster"><h2>Event poster</h2><figure class="dt-poster-fig"><a href="' + esc(ROOT + d.posterTall.src) + '" target="_blank" rel="noopener" aria-label="Open the full-size event poster">' + pic(d.posterTall.src, d.posterTall.alt || ev.title, '(max-width: 520px) 92vw, 440px', ' width="1080" height="1350" loading="lazy" decoding="async"') + '</a><figcaption>Tap to open the full-size poster to save or share it.</figcaption></figure></div>';
     h += '<div class="dt-slot" data-dt-slot></div>';   /* phones: detail.js moves the register box here, after the value and before the people */
     if (d.facilitators && d.facilitators.length) {
@@ -526,7 +527,10 @@
     if (posts.length) h += '<div class="dt-box dt-posts"><h3>From the blog</h3><ul class="dt-links">' + posts.map(function (p) {
       return '<li><a class="dt-li" href="' + ROOT + p.url + '">' + ICONS.calendar + '<span>' + esc(p.title) + '<small>' + (p.kind === 'recap' ? 'Event recap' : 'Event preview') + '</small></span></a></li>';
     }).join('') + '</ul></div>';
-    /* no separate 'Questions?' box: the page goes straight to registration; keep where the details come from */
+    /* no 'Questions?' box by default (the page goes straight to registration); a record can ask for one (d.questions).
+       The address is only ever shown obfuscated, never linked. */
+    if (d.questions) h += '<div class="dt-box dt-qa"><h3>Questions?</h3><p class="dt-fine">Ask before you register — we’re glad to help.</p>' +
+      '<p class="dt-fine"><span>bonjour&#64;bhd<span style="display:none">-no-spam</span>asia&#46;com</span><br><a href="https://wa.me/818065151778" target="_blank" rel="noopener">WhatsApp +81 80 6515 1778</a></p></div>';
     if (d.source) h += '<div class="dt-box dt-src"><p class="dt-fine">Details as published on <a href="' + esc(d.source) + '" target="_blank" rel="noopener">hummingbeing.com</a>.</p></div>';
     h += '</aside></div></section>';
 

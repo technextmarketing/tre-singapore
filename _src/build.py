@@ -264,10 +264,18 @@ def event_page(e, template, facs, manifest):
     url = canonical_for(out)
     title = record_title(e["title"], e.get("seoTitle"))
     d = e.get("details") or {}
-    desc = seo.trim(d.get("summary") or e.get("description") or "", 158)
+    desc = seo.trim(e.get("metaDesc") or d.get("summary") or e.get("description") or "", 158)
     img, size = og(f"assets/img/og/event-{e['slug']}.jpg")
+    if e.get("sessions"):  # one event on several separate dates: one schema.org Event per date
+        evs = []
+        for i, ss in enumerate(e["sessions"], 1):
+            n = seo.event_node(dict(e, start=ss["start"], end=ss["end"], title=f'{e["title"]} ({ss["label"]})'), img)
+            n["@id"] = url + "#event-%d" % i
+            evs.append(n)
+    else:
+        evs = [seo.event_node(e, img)]
     nodes = base_graph(facs) + [seo.webpage(url, title, desc, image=img),
-                                seo.breadcrumb(url, [("Events", BASE + "events"), (e["title"], url)]), seo.event_node(e, img)]
+                                seo.breadcrumb(url, [("Events", BASE + "events"), (e["title"], url)])] + evs
     meta = seo.head_meta(title, desc, url, img, "website", graph=nodes, image_size=size)
     body = record_body(template, "event-page", e["slug"], seo.event_static(e, "../"))
     assemble(body, out, title, desc, meta, "events", "../", manifest)

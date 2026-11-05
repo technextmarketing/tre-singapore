@@ -262,9 +262,10 @@ def _last_sunday(year, month):
     return d - datetime.timedelta(days=(d.weekday() + 1) % 7)
 
 
-def event_start(e):
-    """ISO start. A clock time gets an offset only when the time zone is stated by the site; otherwise date only."""
-    s = e.get("start") or ""
+def event_start(e, s=None):
+    """ISO start (or any clock time of the event, e.g. its end). A clock time gets an offset only when the time zone is
+    stated by the site; otherwise date only."""
+    s = (e.get("start") or "") if s is None else s
     if "T" not in s:
         return s
     where = " ".join(str(e.get(k) or "") for k in ("location", "venue")).lower()
@@ -301,7 +302,13 @@ def _offer(e):
     amount = m.group(2).replace(",", "")
     avail = "https://schema.org/SoldOut" if e.get("soldOut") else "https://schema.org/InStock"
     if p.strip().lower().startswith("from"):
-        return {"@type": "AggregateOffer", "lowPrice": amount, "priceCurrency": cur, "availability": avail, "url": _register_url(e)}
+        agg = {"@type": "AggregateOffer", "lowPrice": amount, "priceCurrency": cur, "availability": avail, "url": _register_url(e)}
+        sym = m.group(1)  # highest tier price in the same currency, from the record's pricing table
+        tiers = [re.search(re.escape(sym) + r"\s?([\d,]+(?:\.\d+)?)", t.get("price") or "") for t in (e.get("details") or {}).get("pricing") or []]
+        vals = [float(x.group(1).replace(",", "")) for x in tiers if x]
+        if vals and max(vals) > float(amount):
+            agg["highPrice"] = ("%d" % max(vals)) if max(vals).is_integer() else str(max(vals))
+        return agg
     return {"@type": "Offer", "price": amount, "priceCurrency": cur, "availability": avail, "url": _register_url(e)}
 
 
@@ -330,12 +337,7 @@ def event_node(e, image):
             "eventStatus": {"postponed": "https://schema.org/EventPostponed", "cancelled": "https://schema.org/EventCancelled"}.get(
                 e.get("status"), "https://schema.org/EventScheduled"), "image": [image], "inLanguage": "en"}
     if e.get("end"):
-        if "T" not in e["end"]:
-            node["endDate"] = e["end"]
-        elif e.get("tz") in ("Europe/London", "Europe/Lisbon"):
-            node["endDate"] = e["end"] + ":00+%02d:00" % utc_offset_hours(e, datetime.date.fromisoformat(e["end"][:10]))
-        else:
-            node["endDate"] = e["end"]
+        node["endDate"] = event_start(e, e["end"])  # same clock and offset rules as the start
     if locs:
         node["location"] = locs if len(locs) > 1 else locs[0]
     people = [p.get("name") for p in d.get("facilitators") or [] if p.get("name")] or \
@@ -387,6 +389,8 @@ def event_static(e, root):
         h.append(f"<h2>Programme</h2><ul>{_li(rows)}</ul>")
     if d.get("includes"):
         h.append(f"<h2>What is included</h2><ul>{_li(d['includes'])}</ul>")
+    if d.get("bring"):
+        h.append(f"<h2>What to bring</h2><ul>{_li(d['bring'])}</ul>")
     if d.get("pricing") or e.get("price") or e.get("priceText"):
         rows = [" — ".join(x for x in [(p.get("label") or "") + (f" ({p['sub']})" if p.get("sub") else ""), p.get("price"), p.get("note")] if x)
                 for p in d.get("pricing") or []] or [" ".join(x for x in [e.get("price"), e.get("priceNote"), e.get("priceText")] if x)]
