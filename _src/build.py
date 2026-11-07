@@ -207,7 +207,7 @@ def page_meta(out, title, desc, kind, crumb, image, body, events, facs, posts):
         nodes.append({"@type": "Course", "@id": url + "#course", "name": "Global TRE™ Provider Certification 2027 Singapore: " + PK.NAMES[pkg],
                       "description": desc, "url": url, "provider": {"@id": seo.ORG_ID}, "inLanguage": "en",
                       "educationalCredentialAwarded": "Global TRE™ Certified Provider", "offers": PK.offers(pkg),
-                      "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Onsite", "startDate": "2027-02-27", "endDate": "2027-10-31",
+                      "hasCourseInstance": {"@type": "CourseInstance", "courseMode": "Onsite", "startDate": "2027-04-24", "endDate": "2027-10-31",
                                             "location": {"@type": "Place", "name": "Singapore", "address": {"@type": "PostalAddress", "addressLocality": "Singapore", "addressCountry": "SG"}}}})
     if crumb:
         nodes.append(seo.breadcrumb(url, [(crumb, url)]))
