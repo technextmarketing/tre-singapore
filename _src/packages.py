@@ -43,7 +43,7 @@ FULL_OWED = ("The full package price is owed once the first instalment is paid. 
              "(by 31 Jan 2027 at the early-bird price, by 25 Feb 2027 at the regular price); instalment 2 is issued after "
              "Module 1 and due by 3 June 2027; instalment 3 is issued after Module 2 and due by 30 September 2027.")
 FINAL = "All ticket sales are final, non-refundable and non-cancellable. All prices are in Singapore dollars."
-MODULES = [("Module 1", "27–28 Feb 2027", "Singapore, in person"), ("Module 2", "3–4 Jul 2027", "Singapore, in person"),
+MODULES = [("Module 1", "24–25 Apr 2027", "Singapore, in person"), ("Module 2", "3–4 Jul 2027", "Singapore, in person"),
            ("Module 3", "30–31 Oct 2027", "Singapore, in person")]
 MODULE_INCL = [  # same for Growth and Foundational
     ("Module 1", "A 2-day workshop plus personal sessions: 2 online individual and 2 online group."),
@@ -160,7 +160,7 @@ def facts(price_dd, price_small):
     return f"""<section class="section" style="padding-bottom:var(--s7)">
   <div class="container">
     <dl class="pk-facts">
-      <div class="pk-fact"><dt>Modules</dt><dd>27–28 Feb · 3–4 Jul · 30–31 Oct 2027</dd><small>In person, Singapore. Co-taught by Isabelle Claus Teixeira and Simba Stenqvist.</small></div>
+      <div class="pk-fact"><dt>Modules</dt><dd>24–25 Apr · 3–4 Jul · 30–31 Oct 2027</dd><small>In person, Singapore. Co-taught by Isabelle Claus Teixeira and Simba Stenqvist.</small></div>
       <div class="pk-fact"><dt>Early bird</dt><dd>{price_dd}</dd><small>{price_small}</small></div>
       <div class="pk-fact"><dt>Payment</dt><dd>Credit card only</dd><small>Through Stripe (Odoo checkout). Card charges are added on top of every instalment.</small></div>
       <div class="pk-fact"><dt>Extra sessions</dt><dd>{SESSION} per session</dd><small>For an extra 60-minute online personal session or supervision, with any package.</small></div>
