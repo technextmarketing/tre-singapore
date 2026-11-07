@@ -9,8 +9,8 @@ import html as H
 
 BASE = "https://tre-in-singapore.com/"
 OVERVIEW = "events/tre-provider-certification-2027-singapore"
-EB_UNTIL = "31 January 2027"
-D1_EB, D1_REG, D2, D3 = "31 Jan 2027", "25 Feb 2027", "3 Jun 2027", "30 Sep 2027"
+EB_UNTIL = "31 March 2027"
+D1_EB, D1_REG, D2, D3 = "31 Mar 2027", "25 Feb 2027", "3 Jun 2027", "30 Sep 2027"
 SESSION = "S$190"
 BONUS_TXT = "Three self-paced online programmes, together valued at S$1,290, come with %s. Grounding unlocks once Instalment 2 is received (due by 3 June 2027). Verbal Interventions and Internal Alchemy unlock once Instalment 3 is received (due by 30 September 2027). If you pay the full package price at registration, all three unlock after Module 2 (3–4 July 2027)."
 PAY_FULL = "Prefer to pay in full? You can pay the full package price at registration instead of three instalments. Card charges still apply."
@@ -40,7 +40,7 @@ def esc(x):
 
 CARD_NOTE = "Payment is by credit card only, through Stripe (Odoo checkout). Card charges are added on top of every instalment."
 FULL_OWED = ("The full package price is owed once the first instalment is paid. Instalment 1 is due on registration "
-             "(by 31 Jan 2027 at the early-bird price, by 25 Feb 2027 at the regular price); instalment 2 is issued after "
+             "(by 31 Mar 2027 at the early-bird price, by 25 Feb 2027 at the regular price); instalment 2 is issued after "
              "Module 1 and due by 3 June 2027; instalment 3 is issued after Module 2 and due by 30 September 2027.")
 FINAL = "All ticket sales are final, non-refundable and non-cancellable. All prices are in Singapore dollars."
 MODULES = [("Module 1", "24–25 Apr 2027", "Singapore, in person"), ("Module 2", "3–4 Jul 2027", "Singapore, in person"),
@@ -56,17 +56,17 @@ BONUSES = "Grounding, Verbal Interventions and Internal Alchemy"
 PAGES_2027 = {
     "growth": ("certification-2027-growth",
                "TRE™ Certification 2027 Singapore: Growth Package",
-               "Growth Package for the TRE™ Provider Certification 2027 in Singapore: 3 modules, all personal sessions and supervisions, ICF credits and 3 bonus programmes. Early bird S$5,888 to 31 Jan 2027.",
+               "Growth Package for the TRE™ Provider Certification 2027 in Singapore: 3 modules, all personal sessions and supervisions, ICF credits and 3 bonus programmes. Early bird S$5,888 to 31 Mar 2027.",
                "Growth <em>Package</em>",
                "The full TRE™ Provider Certification, 2027 Singapore cohort, with ICF credits and three self-paced bonus programmes. For new students."),
     "foundational": ("certification-2027-foundational",
                      "TRE™ Certification 2027 Singapore: Foundational Package",
-                     "Foundational Package for the TRE™ Provider Certification 2027 in Singapore: the complete pathway of 3 modules, personal sessions and supervisions. Early bird S$4,888 to 31 Jan 2027.",
+                     "Foundational Package for the TRE™ Provider Certification 2027 in Singapore: the complete pathway of 3 modules, personal sessions and supervisions. Early bird S$4,888 to 31 Mar 2027.",
                      "Foundational <em>Package</em>",
                      "The complete TRE™ Provider Certification pathway, 2027 Singapore cohort, without ICF credits and without the bonus programmes. For new students."),
     "refresher": ("certification-2027-refresher",
                   "TRE™ Refresher Packages 2027 Singapore for Providers",
-                  "Four Refresher options for accredited TRE™ Providers and TRE™ Provider trainees to complete their training in Singapore in 2027. Early bird from S$2,200 to 31 Jan 2027.",
+                  "Four Refresher options for accredited TRE™ Providers and TRE™ Provider trainees to complete their training in Singapore in 2027. Early bird from S$2,200 to 31 Mar 2027.",
                   "Refresher <em>Packages</em>",
                   "Four options for accredited TRE™ Providers and TRE™ Provider trainees who want to complete their training in the 2027 Singapore cohort."),
 }
@@ -253,7 +253,7 @@ def form(key):
       </div>
       <div class="field"><label for="f-interest">Package <span class="req">*</span></label><select id="f-interest" name="interest" required>{opts}</select></div>
       <div class="form-row">
-        <div class="field"><label for="f-plan">Price <span class="req">*</span></label><select id="f-plan" name="price_plan" required><option value="Early bird (until 31 Jan 2027)">Early bird (until 31 Jan 2027)</option><option value="Regular price">Regular price</option></select></div>
+        <div class="field"><label for="f-plan">Price <span class="req">*</span></label><select id="f-plan" name="price_plan" required><option value="Early bird (until 31 Mar 2027)">Early bird (until 31 Mar 2027)</option><option value="Regular price">Regular price</option></select></div>
         <div class="field"><label for="f-pay">Payment plan <span class="req">*</span></label><select id="f-pay" name="payment_plan" required><option value="3 instalments">3 instalments</option><option value="Pay in full at registration">Pay in full at registration</option></select></div>
       </div>
       <div class="field"><label for="f-message">Message</label><textarea id="f-message" name="message" placeholder="Anything we should know, or a question about the package."></textarea></div>
@@ -320,7 +320,7 @@ def found_body():
         ("Online personal sessions and supervisions", yes, yes),
         ("ICF CCEs — 21 for Module 1 confirmed; Module 2 pending", no, yes),
         ("3 bonus programmes (value S$1,290)", no, yes),
-        ("Early bird (to 31 Jan 2027)", f"<b>{s(et)}</b>", f"<b>{s(get_)}</b>"),
+        ("Early bird (to 31 Mar 2027)", f"<b>{s(et)}</b>", f"<b>{s(get_)}</b>"),
         ("Regular price", s(rt), s(grt)),
     ]
     body = "".join(f'<tr><td><b>{a}</b></td><td data-label="Foundational">{b}</td><td data-label="Growth">{c}</td></tr>' for a, b, c in cmp_rows)
@@ -409,12 +409,12 @@ def offers(key):
     url = BASE + PAGES_2027[key][0]
     out = []
     if key == "growth":
-        out += [mk("Growth Package, early bird", GROWTH[1], "2027-01-31", url), mk("Growth Package, regular", GROWTH[3], None, url)]
+        out += [mk("Growth Package, early bird", GROWTH[1], "2027-03-31", url), mk("Growth Package, regular", GROWTH[3], None, url)]
     elif key == "foundational":
-        out += [mk("Foundational Package, early bird", FOUND[1], "2027-01-31", url), mk("Foundational Package, regular", FOUND[3], None, url)]
+        out += [mk("Foundational Package, early bird", FOUND[1], "2027-03-31", url), mk("Foundational Package, regular", FOUND[3], None, url)]
     else:
         for n, name, _i, et, _ei, rt, _ri in REFRESH:
-            out += [mk(f"Refresher option {n}: {name}, early bird", et, "2027-01-31", url), mk(f"Refresher option {n}: {name}, regular", rt, None, url)]
+            out += [mk(f"Refresher option {n}: {name}, early bird", et, "2027-03-31", url), mk(f"Refresher option {n}: {name}, regular", rt, None, url)]
     return out
 
 

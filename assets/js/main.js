@@ -455,7 +455,7 @@
     if (d.forWho && d.forWho.length) h += '<div class="dt-sec dt-for"><h2>Who it is for</h2><ul class="dt-checks">' + d.forWho.map(function (x, i) { return '<li style="--i:' + i + '">' + CHECK + '<span>' + esc(x) + '</span></li>'; }).join('') + '</ul></div>';
     if (d.packages && d.packages.length) h += '<div class="dt-sec dt-pk" id="packages"><h2>Choose your package</h2><div class="dt-pk-grid">' + d.packages.map(function (p) {
       return '<a class="dt-pk-card' + (p.hl ? ' is-hl' : '') + '" href="' + esc(siteUrl(p.url)) + '"><span class="dt-pk-who">' + esc(p.who) + '</span><h3>' + esc(p.name) + '</h3><p class="dt-pk-price"><b>' + esc(p.price) + '</b> early bird<small>regular ' + esc(p.regular) + '</small></p><p>' + esc(p.text) + '</p><p class="dt-pk-inst">' + esc(p.inst) + '</p><span class="dt-pk-go">See the package</span></a>';
-    }).join('') + '</div><p class="dt-fine">Early bird until 31 January 2027. Payment is by credit card only, and card charges are added on top of every instalment.</p></div>';
+    }).join('') + '</div><p class="dt-fine">Early bird until 31 March 2027. Payment is by credit card only, and card charges are added on top of every instalment.</p></div>';
     if (d.schedule && d.schedule.length) {
       /* the programme as a timeline: the rail draws with scroll and each node fills as the line reaches it (detail.js) */
       h += '<div class="dt-sec dt-prog"><h2 id="programme">Programme</h2><ol class="dt-steps" data-dt-rail="scroll">' + d.schedule.map(function (s) {
