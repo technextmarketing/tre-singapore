@@ -464,7 +464,7 @@ def main(only, auto_drafts=False):
         IMG.update(images.manifest(data["events"], data["facilitators"]))
         manifest += "<script>window.TRE_IMG=" + seo.json.dumps(IMG, separators=(",", ":")) + ";"
         # hero photos main.js draws on the event / profile pages (the same choice as main.js) that have AVIF twins
-        manifest += "window.TRE_HERO_AVIF=" + seo.json.dumps(images.hero_avif(["hero-education", "hero-events", "hero-facilitators"]), separators=(",", ":")) + ";</script>"
+        manifest += "window.TRE_HERO_AVIF=" + seo.json.dumps([], separators=(",", ":")) + ";</script>"
     event_cards = EP.blog_cards(eposts, {e["slug"]: e for e in events}, seo.trim, pretty_date, seo.text)
     home_text = seo.text(read("index.body.html"))
     if seo.TRE_DEFINITION not in home_text:

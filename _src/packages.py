@@ -140,7 +140,6 @@ CSS = """<style id="pk-css">
 def hero(key):
     slug, _t, _d, h1, lead = PAGES_2027[key]
     return f"""<section class="page-hero hx hx-events" style="--fx:62%;--fy:60%;--fx-m:70%">
-  <div class="hx-media" aria-hidden="true"><img class="hx-photo" src="assets/img/gallery/hero-events-1600.webp" srcset="assets/img/gallery/hero-events-960.webp 960w, assets/img/gallery/hero-events-1600.webp 1600w" sizes="(max-width: 760px) 50vw, 100vw" width="1600" height="1200" alt="" fetchpriority="high" decoding="async"></div>
   <div class="hx-wash" aria-hidden="true"></div>
   <canvas class="hx-tremor" aria-hidden="true"></canvas>
   <div class="container hx-inner">
@@ -152,7 +151,6 @@ def hero(key):
         <a class="btn btn-ghost-light" href="{OVERVIEW}">Compare all packages</a>
       </div>
   </div>
-  <p class="hx-credit">Co-taught by Isabelle Claus Teixeira &amp; Simba Stenqvist · Singapore 2027</p>
 </section>"""
 
 

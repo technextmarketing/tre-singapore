@@ -455,7 +455,6 @@
       (status ? status.replace('class="badge', 'class="dt-pill is-off') : (daysTo > 0 ? '<span class="dt-pill is-live"><i aria-hidden="true"></i>' + (daysTo === 1 ? 'Starts tomorrow' : 'Starts in ' + daysTo + ' days') + '</span>' : ''));
     var heroLead = (subT ? '<b>' + esc(subT) + '.</b> ' : '') + esc(ev.description || d.summary || '');
     h += '<section class="hx hx-evt hx-evt2" style="--fx:60%;--fy:55%">' +
-      '<div class="hx-media" aria-hidden="true">' + heroPhoto(bg, bgName) + '</div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner"><div class="hero-copy"><p class="crumbs"><a href="' + ROOT + 'events">Events</a> › ' + esc(ev.category) + '</p>' +
       '<div class="dt-pills">' + pills + '</div>' +
@@ -758,7 +757,6 @@
     /* hero background: the Asia TRE™ trainers photo (every listed trainer's community); the portrait stays in the window */
     var hb = ROOT + 'assets/img/gallery/hero-facilitators';   /* ROOT: profile pages live one folder down (/facilitators/<id>) */
     var h = '<section class="hx hx-fp" style="--fx:60%;--fy:44%;--shift:30%;--feather:30%">' +
-      '<div class="hx-media" aria-hidden="true">' + heroPhoto(hb, 'hero-facilitators') + '</div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
       '<div class="container hx-inner hx-split"><div>' +
       '<p class="crumbs"><a href="' + ROOT + 'facilitators">Providers</a> › ' + esc(f.tag || 'Profile') + '</p>' +
