@@ -383,7 +383,7 @@ POSTER_CSS = ("<style>.pk-poster{display:grid;grid-template-columns:minmax(0,440
 
 def poster(key):
     name = {"growth": "Growth Package", "foundational": "Foundational Package", "refresher": "Refresher Packages"}[key]
-    src = f"assets/img/events/event-certification-2027-{key}-poster.webp?v=20261107b"
+    src = f"assets/img/events/event-certification-2027-{key}-poster.webp?v=20261108a"
     pts = "".join(f"<li>{p}</li>" for p in POSTER_POINTS[key])
     inner = (f'<div class="pk-poster"><figure class="pk-poster-fig"><a href="{src}" target="_blank" rel="noopener" aria-label="Open the full-size event poster">'
              f'<img src="{src}" alt="TRE™ Provider Certification 2027 Singapore, {esc(name)}, led by Isabelle Claus Teixeira and Simba Stenqvist" width="1080" height="1350" loading="lazy" decoding="async"></a>'
