@@ -1,0 +1,181 @@
+{
+ "heroes": {
+  "hero-about": {
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-6.jpg",
+   "caption": "TRE™ Module 2 cohort — 26–27 September 2026, Singapore",
+   "w": 1600,
+   "h": 1200,
+   "kb": [
+    180,
+    62
+   ]
+  },
+  "hero-education": {
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-4.jpg",
+   "caption": "Isabelle & Simba with the Module 2 cohort — September 2026",
+   "w": 1600,
+   "h": 1200,
+   "kb": [
+    158,
+    63
+   ]
+  },
+  "hero-facilitators": {
+   "source": "https://hummingbeing.com/images/gallery/gallery-asia-tre-trainers-david.jpg",
+   "caption": "Asia TRE™ Trainers with David Berceli",
+   "w": 1600,
+   "h": 1201,
+   "kb": [
+    216,
+    97
+   ]
+  },
+  "hero-events": {
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-5.jpg",
+   "caption": "Module 2 with Isabelle & Simba — Singapore, September 2026",
+   "w": 1600,
+   "h": 1200,
+   "kb": [
+    193,
+    69
+   ]
+  },
+  "hero-blog": {
+   "source": "https://hummingbeing.com/images/gallery/gallery-tre-module1-2026.jpg",
+   "caption": "TRE™ Module 1 — January 2026",
+   "w": 1600,
+   "h": 1024,
+   "kb": [
+    117,
+    50
+   ]
+  },
+  "hero-contact": {
+   "source": "https://hummingbeing.com/images/gallery/gallery-isabelle-students-module1-may2026.jpg",
+   "caption": "TRE™ Module 1 — May 2026",
+   "w": 1600,
+   "h": 1200,
+   "kb": [
+    109,
+    45
+   ]
+  },
+  "hero-guide": {
+   "source": "https://hummingbeing.com/images/gallery/gallery-ws-1.jpg",
+   "caption": "TRE™ Module 1 Training",
+   "w": 1600,
+   "h": 1200,
+   "kb": [
+    85,
+    34
+   ]
+  }
+ },
+ "gallery": [
+  {
+   "slug": "module2-sep2026-1",
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-1.jpg",
+   "caption": "Isabelle teaching — TRE™ Module 2, September 2026",
+   "w": 1200,
+   "h": 1600
+  },
+  {
+   "slug": "module2-sep2026-2",
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-2.jpg",
+   "caption": "Module 2 in session with Simba Stenqvist — Singapore, September 2026",
+   "w": 1200,
+   "h": 1600
+  },
+  {
+   "slug": "module2-sep2026-3",
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-3.jpg",
+   "caption": "Sharing circle — TRE™ Module 2, September 2026",
+   "w": 1200,
+   "h": 1600
+  },
+  {
+   "slug": "module2-sep2026-4",
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-4.jpg",
+   "caption": "Isabelle & Simba with the Module 2 cohort — September 2026",
+   "w": 1200,
+   "h": 900
+  },
+  {
+   "slug": "module2-sep2026-5",
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-5.jpg",
+   "caption": "Module 2 with Isabelle & Simba — Singapore, September 2026",
+   "w": 1200,
+   "h": 900
+  },
+  {
+   "slug": "module2-sep2026-6",
+   "source": "https://hummingbeing.com/images/gallery/gallery-module2-sep2026-6.jpg",
+   "caption": "TRE™ Module 2 cohort — 26–27 September 2026, Singapore",
+   "w": 1200,
+   "h": 900
+  },
+  {
+   "slug": "isabelle-teaching-tre",
+   "source": "https://hummingbeing.com/images/gallery/gallery-isabelle-teaching-tre.jpg",
+   "caption": "Teaching TRE™ Module 1",
+   "w": 1200,
+   "h": 1600
+  },
+  {
+   "slug": "tre-module1-2026",
+   "source": "https://hummingbeing.com/images/gallery/gallery-tre-module1-2026.jpg",
+   "caption": "TRE™ Module 1 — January 2026",
+   "w": 1200,
+   "h": 2133
+  },
+  {
+   "slug": "isabelle-students-module1-may2026",
+   "source": "https://hummingbeing.com/images/gallery/gallery-isabelle-students-module1-may2026.jpg",
+   "caption": "TRE™ Module 1 — May 2026",
+   "w": 1200,
+   "h": 900
+  },
+  {
+   "slug": "asia-tre-trainers-david",
+   "source": "https://hummingbeing.com/images/gallery/gallery-asia-tre-trainers-david.jpg",
+   "caption": "Asia TRE™ Trainers with David Berceli",
+   "w": 1200,
+   "h": 1035
+  },
+  {
+   "slug": "isabelle-david-simba-nikki",
+   "source": "https://hummingbeing.com/images/gallery/gallery-isabelle-david-simba-nikki.jpg",
+   "caption": "Isabelle with David Berceli, Simba Stenqvist & Nikki Tay",
+   "w": 1200,
+   "h": 1600
+  },
+  {
+   "slug": "danang-tre-conference-nov2025",
+   "source": "https://hummingbeing.com/images/gallery/gallery-danang-tre-conference-nov2025.jpg",
+   "caption": "Da Nang TRE™ Conference — November 2025",
+   "w": 1200,
+   "h": 900
+  },
+  {
+   "slug": "uk-tre-providers-2",
+   "source": "https://hummingbeing.com/images/gallery/gallery-uk-tre-providers-2.jpg",
+   "caption": "With UK TRE™ Provider Students",
+   "w": 1200,
+   "h": 1600
+  },
+  {
+   "slug": "isabelle-vietnam-tre",
+   "source": "https://hummingbeing.com/images/gallery/gallery-isabelle-vietnam-tre.jpg",
+   "caption": "TRE™ Asia Conference, Vietnam",
+   "w": 1200,
+   "h": 1200
+  },
+  {
+   "slug": "screenshot-practice",
+   "source": "https://hummingbeing.com/images/gallery/gallery-screenshot-practice.jpg",
+   "caption": "Somatic Bodywork Session",
+   "w": 1132,
+   "h": 892
+  }
+ ]
+}
