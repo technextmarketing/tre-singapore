@@ -226,8 +226,8 @@ html:not(.js) .ct-ticks{display:none}
 .ct-after.ct-armed .ct-step > :not(.ct-node){opacity:0}
 .ct-after.ct-armed.ct-in .ct-node{opacity:1;scale:1;transition:opacity .5s var(--ease-out),scale .6s var(--ease-out),background-color var(--d3) var(--ease-out),border-color var(--d3) var(--ease-out),box-shadow var(--d3) var(--ease-out);transition-delay:calc(var(--ct-i,0) * 440ms + 120ms)}
 .ct-after.ct-armed.ct-in .ct-step > :not(.ct-node){opacity:1;transition:opacity .7s var(--ease-out);transition-delay:calc(var(--ct-i,0) * 440ms + 240ms)}
-.ct-find.ct-armed .ct-map{opacity:.001;filter:blur(8px);scale:1.02}
-.ct-find.ct-armed.ct-in .ct-map{opacity:1;filter:blur(0);scale:1;transition:opacity .9s var(--ease-out),filter 1.2s var(--ease-out),scale 1.3s var(--ease-out)}
+.ct-find.ct-armed .ct-map{opacity:.001;scale:1.02}
+.ct-find.ct-armed.ct-in .ct-map{opacity:1;scale:1;transition:opacity .9s var(--ease-out),scale 1.3s var(--ease-out)}
 .ct-find.ct-armed .ct-office,.ct-find.ct-armed .ct-transit li{opacity:0}
 .ct-find.ct-armed.ct-in .ct-office,.ct-find.ct-armed.ct-in .ct-transit li{opacity:1;transition:opacity .8s var(--ease-out);transition-delay:calc(var(--ct-i,0) * 90ms + 250ms)}
 .ct-close.ct-armed h2{opacity:0}

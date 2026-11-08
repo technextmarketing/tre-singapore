@@ -328,10 +328,15 @@ def countdown_static(body, events, now_utc):
     if not link and (e.get("details") or {}).get("gate") and e.get("slug"):
         href = f"events/{e['slug']}#register"  # guest events: the countdown leads to the registration form, not to a payment site
     ext = ' target="_blank" rel="noopener"' if re.match(r"^https?:", href) else ""
-    old_t = '<span id="countdown-title">Loading…</span><small id="countdown-sub"></small>'
+    # 8 Nov 2026: the next event is a BHD-style card (title link + date line + View event)
+    old_t = '<a id="countdown-title" href="#calendar">Loading…</a>'
+    old_s = '<span id="countdown-sub"></span>'
+    old_v = '<a class="btn btn-outline btn-sm" data-ev-view href="#calendar">View event</a>'
     old_l = '<a class="btn btn-navy btn-sm" id="countdown-link" href="#calendar">Register</a>'
-    assert body.count(old_t) == 1 and body.count(old_l) == 1, "events.body.html countdown markup changed"
-    body = body.replace(old_t, f'<span id="countdown-title">{title}</span><small id="countdown-sub">{sub}</small>')
+    assert all(body.count(x) == 1 for x in (old_t, old_s, old_v, old_l)), "events.body.html countdown markup changed"
+    view = f"events/{e['slug']}" if e.get("slug") else "#calendar"
+    body = body.replace(old_t, f'<a id="countdown-title" href="{H.escape(view)}">{title}</a>').replace(old_s, f'<span id="countdown-sub">{sub}</span>')
+    body = body.replace(old_v, f'<a class="btn btn-outline btn-sm" data-ev-view href="{H.escape(view)}">View event</a>')
     return body.replace(old_l, f'<a class="btn btn-navy btn-sm" id="countdown-link" href="{H.escape(href)}"{ext}>Register</a>')
 
 

@@ -236,8 +236,8 @@ html.ar-doc .scroll-progress{display:none}
 }
 
 /* ---------- entrance (armed by JS only below the fold) ---------- */
-.ar-arm{opacity:0;translate:0 16px;filter:blur(3px)}
-.ar-arm.ar-in{opacity:1;translate:0 0;filter:none;transition:opacity .8s var(--ease-out),translate .8s var(--ease-out),filter .8s var(--ease-out);transition-delay:calc(var(--ar-i,0) * 90ms)}
+.ar-arm{opacity:0;translate:0 16px}   /* perf 8 Nov: no blur filter */
+.ar-arm.ar-in{opacity:1;translate:0 0;transition:opacity .8s var(--ease-out),translate .8s var(--ease-out);transition-delay:calc(var(--ar-i,0) * 90ms)}
 
 /* ---------- reduced motion: complete and still ---------- */
 @media (prefers-reduced-motion:reduce){

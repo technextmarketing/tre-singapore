@@ -70,6 +70,8 @@
      Where the pointer passes they shiver (a small, fast tremor) and then
      settle over ~1.2 s: charge -> release -> settle.
      ========================================================= */
+  var scrolling = false, scrollT = 0;
+  window.addEventListener('scroll', function () { scrolling = true; clearTimeout(scrollT); scrollT = setTimeout(function () { scrolling = false; }, 140); }, { passive: true });
   function tremor(canvas, opts) {
     if (!canvas || !canvas.getContext) return null;
     var o = {
@@ -84,7 +86,7 @@
       idlePulse: 9                                     // seconds between gentle auto pulses (0 = off)
     };
     for (var k in (opts || {})) o[k] = opts[k];
-    var ctx = canvas.getContext('2d'), dpr = Math.min(2, window.devicePixelRatio || 1);
+    var ctx = canvas.getContext('2d'), dpr = Math.min(1.5, window.devicePixelRatio || 1);   /* perf: thin lines need no 2x/3x backing store */
     var w = 0, h = 0, lines = [], running = false, raf = 0, last = 0, t0 = performance.now(), c0 = clock();
     var px = -1e4, py = -1e4, lastMove = 0, pulse = null, visible = false;
 
@@ -108,6 +110,8 @@
       lines.forEach(function (L) { L.energy = new Float32Array(n); });
     }
     function draw(now) {
+      /* perf 8 Nov: ~30 fps is plenty for a slow breath, and the field rests while the page is scrolling */
+      if (running && ((last && now - last < 31) || scrolling)) { raf = requestAnimationFrame(draw); return; }
       var dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016); last = now;
       /* tw drives the breathing wave and stands still while motion is paused; t keeps time for the pointer's shiver */
       var t = (now - t0) / 1000, tw = (clock() - c0) / 1000, breath = 0.62 + 0.38 * Math.sin(tw * 2 * Math.PI / o.breath), act = 0;
@@ -188,6 +192,7 @@
       tremor(canvas, { source: hero, top: hero.classList.contains('hero-full') ? 0.62 : 0.56, rest: 0.46, settleRight: true,
         fadeEnd: parseFloat(getComputedStyle(hero).getPropertyValue('--lines-end')) || 0.46 });
       if (!REDUCED && !$('.mo-btn', hero)) hero.appendChild(motionButton('mo-hero'));
+      onVisible(hero, function (en, isIn) { hero.classList.toggle('is-off', !isIn); });   /* perf: the photo's slow push stops off screen */
       if (REDUCED || !FINE) return;
       var tx = 0, ty = 0, cx = 0, cy = 0, lens = 0, lensT = 0, lx = 0, ly = 0, raf = 0, active = false;
       function loop() {
@@ -396,7 +401,11 @@
       });
     }
     watch(); tagOrange(head);
-    if ('MutationObserver' in window) new MutationObserver(watch).observe($('main') || document.body, { childList: true, subtree: true });
+    var mq = 0;
+    if ('MutationObserver' in window) new MutationObserver(function (ms) {
+      /* perf 8 Nov: only when elements were added (not the countdown's text), once per frame */
+      for (var i = 0; i < ms.length; i++) { var a = ms[i].addedNodes; for (var j = 0; j < a.length; j++) if (a[j].nodeType === 1) { if (!mq) mq = requestAnimationFrame(function () { mq = 0; watch(); }); return; } }
+    }).observe($('main') || document.body, { childList: true, subtree: true });
     var rt = 0; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(watch, 200); }, { passive: true });
   }
 

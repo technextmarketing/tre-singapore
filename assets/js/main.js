@@ -47,27 +47,45 @@
     var ticking = false;
     /* see-through header (layer.css): it stays clear while the page's opening hero is still under it */
     var heroHead = document.body.classList.contains('hero-head') ? $('.under-head') : null;
+    /* perf 8 Nov: every layout read happens first, then the writes (no forced reflow per scroll frame);
+       sizes are cached and refreshed on resize, and the hero is only measured while it can still be under the bar */
+    var hero = null, inner = null, copy = null, credit = null, hh = 0, maxY = 0, heroEnd = Infinity;
+    function measure() {
+      maxY = document.documentElement.scrollHeight - window.innerHeight;
+      if (heroHead && header) {
+        hero = heroHead.matches('.hx, .hero-full') ? heroHead : ($('.hx, .hero-full', heroHead) || heroHead);
+        inner = $('.hx-inner, .hero-full-content', hero);
+        copy = inner && (inner.querySelector('.hero-copy > *, .crumbs, .breadcrumb, h1') || inner.firstElementChild || inner);
+        credit = $('.hx-credit', hero);
+        hh = header.offsetHeight + 6;
+        var r = hero.getBoundingClientRect(); heroEnd = r.bottom + (window.scrollY || 0);
+      }
+    }
+    var state = {};
     function update() {
       var y = window.scrollY || document.documentElement.scrollTop;
-      var max = document.documentElement.scrollHeight - window.innerHeight;
-      if (header) header.classList.toggle('scrolled', y > 8);
-      if (heroHead && header) {
-        /* clear while nothing of the hero's copy (or its photo credit) has reached the bar - so the links never sit on top
-           of the headline - and solid again once that happens or the hero has gone */
-        var hero = heroHead.matches('.hx, .hero-full') ? heroHead : ($('.hx, .hero-full', heroHead) || heroHead);
-        var hh = header.offsetHeight + 6, inner = $('.hx-inner, .hero-full-content', hero);
-        var copy = inner && (inner.querySelector('.hero-copy > *, .crumbs, .breadcrumb, h1') || inner.firstElementChild || inner);
-        var credit = $('.hx-credit', hero);
-        var reached = function (el) { if (!el) return false; var r = el.getBoundingClientRect(); return r.height > 0 && r.top < hh && r.bottom > 0; };
-        document.body.classList.toggle('past-hero', hero.getBoundingClientRect().bottom <= hh || reached(copy) || (copy && copy.getBoundingClientRect().bottom <= 0) || reached(credit));
+      var past = null;
+      if (hero) {
+        if (y > heroEnd + 40) past = true;
+        else {
+          var reached = function (el) { if (!el) return false; var r = el.getBoundingClientRect(); return r.height > 0 && r.top < hh && r.bottom > 0; };
+          past = hero.getBoundingClientRect().bottom <= hh || reached(copy) || (copy && copy.getBoundingClientRect().bottom <= 0) || reached(credit);
+        }
       }
-      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, y / max) : 0).toFixed(4) + ')';   /* transform, not width: no layout per scroll frame */
-      top.classList.toggle('show', y > 640);
+      /* writes only when something changed */
+      var sc = y > 8, show = y > 640, k = (maxY > 0 ? Math.min(1, y / maxY) : 0).toFixed(3);
+      if (header && state.sc !== sc) { header.classList.toggle('scrolled', sc); state.sc = sc; }
+      if (past !== null && state.past !== past) { document.body.classList.toggle('past-hero', past); state.past = past; }
+      if (state.k !== k) { bar.style.transform = 'scaleX(' + k + ')'; state.k = k; }   /* transform, not width */
+      if (state.show !== show) { top.classList.toggle('show', show); state.show = show; }
       ticking = false;
     }
     window.addEventListener('scroll', function () { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
-    window.addEventListener('resize', function () { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
-    update();
+    var rz = 0;
+    window.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { measure(); update(); }, 120); }, { passive: true });
+    window.addEventListener('load', function () { measure(); update(); });
+    if ('ResizeObserver' in window) { var ro = 0; new ResizeObserver(function () { clearTimeout(ro); ro = setTimeout(function () { measure(); update(); }, 200); }).observe(document.body); }
+    measure(); update();
   }
 
   /* ---------- Navigation ---------- */
@@ -242,11 +260,11 @@
   function extLink(url, cls, label) { return '<a class="' + cls + '" href="' + esc(url) + '"' + (isExternal(url) ? ' target="_blank" rel="noopener"' : '') + '>' + esc(label) + '</a>'; }
   function renderCard(ev, i) {
     var chip = chipFor(ev);
-    var meta = '<li>' + ICONS.calendar + '<span>' + esc(ev.dateText) + '</span></li>';
-    if (ev.timeText) meta += '<li>' + ICONS.clock + '<span>' + esc(ev.timeText) + '</span></li>';
-    meta += '<li>' + ICONS.pin + '<span>' + esc(ev.venue || ev.location) + (ev.format ? ' · ' + esc(ev.format) : '') + '</span></li>';
-    if (ev.facilitator) meta += '<li>' + ICONS.user + '<span>' + esc(ev.facilitator) + '</span></li>';
-    if (ev.credits) meta += '<li>' + ICONS.award + '<span>' + esc(ev.credits) + '</span></li>';
+    var meta = '<li class="m-date">' + ICONS.calendar + '<span>' + esc(ev.dateText) + '</span></li>';
+    if (ev.timeText) meta += '<li class="m-time">' + ICONS.clock + '<span>' + esc(ev.timeText) + '</span></li>';
+    meta += '<li class="m-loc">' + ICONS.pin + '<span>' + esc(ev.venue || ev.location) + (ev.format ? ' · ' + esc(ev.format) : '') + '</span></li>';
+    if (ev.facilitator) meta += '<li class="m-who">' + ICONS.user + '<span>' + esc(ev.facilitator) + '</span></li>';
+    if (ev.credits) meta += '<li class="m-cred">' + ICONS.award + '<span>' + esc(ev.credits) + '</span></li>';
 
     var price = ev.price
       ? '<div class="event-price">' + esc(ev.price) + (ev.priceNote ? '<small>' + esc(ev.priceNote) + '</small>' : '') + '</div>'
@@ -613,7 +631,7 @@
           if (isExternal(ev.link)) { link.target = '_blank'; link.rel = 'noopener'; } else { link.removeAttribute('target'); link.removeAttribute('rel'); }
         }
       }
-      function set(el, v) { if (el.textContent !== v) { el.textContent = v; if (!REDUCED) { el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); } } }
+      function set(el, v) { if (el.textContent !== v) { el.textContent = v; if (!REDUCED && el.animate && !document.hidden) el.animate([{ opacity: .55 }, { opacity: 1 }], { duration: 600, easing: 'ease-out' }); } }   /* perf: no forced reflow each second */
       function tick() {
         if (target - new Date() <= 0) {
           var nx = nextEvent();
