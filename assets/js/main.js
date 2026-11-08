@@ -442,15 +442,26 @@
     /* hero background: a real session photo matched to the event type (the poster stays in the window) */
     var bgName = ({ Certification: 'hero-education', Workshop: 'hero-events' })[ev.category] || 'hero-events';
     var bg = ROOT + 'assets/img/gallery/' + bgName;
-    h += '<section class="hx hx-evt" style="--fx:60%;--fy:55%">' +
+    /* 8 Nov 2026: the hero follows hummingbeing.com / bhdasia.com event pages - tag pills, the short title, a lead
+       with the subtitle, Register + Details. The poster moved into the content column. */
+    var tParts = String(ev.title).split(' — '), shortT = ev.shortTitle || tParts[0], subT = tParts.length > 1 ? tParts.slice(1).join(' — ') : '';
+    var chip = chipFor(ev), daysTo = Math.ceil((ev._start - new Date()) / 864e5);
+    var cred = /^(\d+\s+ICF\s+CC[A-Z]*s?)/i.exec(ev.credits || '');
+    var pills = '<span class="dt-pill is-hl">' + esc(/online/i.test(ev.location || '') ? 'Online' : ev.location) + '</span>' +
+      '<span class="dt-pill">' + esc(ev.category) + '</span>' +
+      (chip.top ? '<span class="dt-pill">' + esc(chip.top + ' ' + chip.bottom) + '</span>' : '') +
+      (ev.price ? '<span class="dt-pill">' + esc(ev.price) + '</span>' : '') +
+      (cred ? '<span class="dt-pill">' + esc(cred[1]) + '</span>' : '') +
+      (status ? status.replace('class="badge', 'class="dt-pill is-off') : (daysTo > 0 ? '<span class="dt-pill is-live"><i aria-hidden="true"></i>' + (daysTo === 1 ? 'Starts tomorrow' : 'Starts in ' + daysTo + ' days') + '</span>' : ''));
+    var heroLead = (subT ? '<b>' + esc(subT) + '.</b> ' : '') + esc(ev.description || d.summary || '');
+    h += '<section class="hx hx-evt hx-evt2" style="--fx:60%;--fy:55%">' +
       '<div class="hx-media" aria-hidden="true">' + heroPhoto(bg, bgName) + '</div>' +
       '<div class="hx-wash" aria-hidden="true"></div><canvas class="hx-tremor" aria-hidden="true"></canvas>' +
-      '<div class="container hx-inner' + (ev.image ? ' hx-split' : '') + '"><div class="hero-copy"><p class="crumbs"><a href="' + ROOT + 'events">Events</a> › ' + esc(ev.category) + '</p>' +
-      '<h1>' + esc(ev.title) + '</h1>' +
-      '<div class="badges"><span class="badge">' + esc(ev.location) + '</span><span class="badge cat">' + esc(ev.category) + '</span>' + (ev.credits ? '<span class="badge">' + esc(ev.credits) + '</span>' : '') + status + '</div>' +
-      '<p class="lead">' + esc(d.summary || ev.description) + '</p>' +
-      '<div class="btn-row">' + (ev._past ? '<a class="btn btn-ghost-light" href="' + ROOT + 'events">See upcoming events</a>' : (primary ? extLink(siteUrl(primary.url), 'btn btn-primary', primary.label) : '') + (d.online ? '<a class="btn btn-ghost-light" href="#prepare">Prepare for the online session</a>' : '<a class="btn btn-ghost-light" href="#programme">See the programme</a>')) + '</div></div>' +
-      (ev.image ? '<figure class="poster hx-window">' + pic(ev.image, ev.title + ' — event poster', '(max-width: 760px) 92vw, (max-width: 900px) 520px, (max-width: 1100px) 380px, 460px', ' decoding="async" fetchpriority="high"') + '</figure>' : '') +
+      '<div class="container hx-inner"><div class="hero-copy"><p class="crumbs"><a href="' + ROOT + 'events">Events</a> › ' + esc(ev.category) + '</p>' +
+      '<div class="dt-pills">' + pills + '</div>' +
+      '<h1>' + esc(shortT) + '</h1>' +
+      '<p class="lead">' + heroLead + '</p>' +
+      '<div class="btn-row">' + (ev._past ? '<a class="btn btn-ghost-light" href="' + ROOT + 'events">See upcoming events</a>' : (primary ? extLink(siteUrl(primary.url), 'btn btn-primary', primary.label) : '') + '<a class="btn btn-ghost-light" href="#about">Details &amp; questions</a>') + '</div></div>' +
       '</div></section>';
     /* ===== after the hero (dt-*): facts band · content column + sticky register box · related events · close.
        Styles: assets/css/detail.css · behaviour (rails, tier choice, prep ticks, sticky, phone register action): assets/js/detail.js ===== */
@@ -464,30 +475,32 @@
     h += '<div class="container dt-facts-wrap"><dl class="dt-facts">' +
       fact(ICONS.calendar, 'Date', ev.dateText) +
       fact(ICONS.clock, 'Time', ev.timeText || (ev.end ? 'Full days — see programme' : 'See programme')) +
-      fact(ICONS.pin, 'Where', (ev.venue || ev.location) + (ev.format ? ' · ' + ev.format : '')) +
+      fact(ICONS.pin, /online/i.test(ev.location || '') ? 'Format' : 'Where', (ev.venue || ev.location) + (ev.format ? ' · ' + ev.format : '')) +
       fact(ICONS.award, ev.credits ? 'Credits' : 'Investment', ev.credits || ev.price || ev.priceText || 'Enquire') +
       '</dl></div>';
 
     h += '<section class="dt-body"><div class="container dt-layout"><div class="dt-main">';
-    if (d.about && d.about.length) h += '<div class="dt-sec dt-about"><h2>About this event</h2>' + d.about.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
-    if (d.forWho && d.forWho.length) h += '<div class="dt-sec dt-for"><h2>Who it is for</h2><ul class="dt-checks">' + d.forWho.map(function (x, i) { return '<li style="--i:' + i + '">' + CHECK + '<span>' + esc(x) + '</span></li>'; }).join('') + '</ul></div>';
+    var posterSrc = (d.posterTall && d.posterTall.src) || ev.image;
+    if (posterSrc) h += '<figure class="dt-poster-fig dt-poster-top"><a href="' + esc(ROOT + posterSrc) + '" target="_blank" rel="noopener" aria-label="Open the full-size event poster">' + pic(posterSrc, (d.posterTall && d.posterTall.alt) || ev.title + ' — event poster', '(max-width: 520px) 92vw, 420px', (d.posterTall && d.posterTall.src ? ' width="1080" height="1350"' : '') + ' decoding="async" fetchpriority="high"') + '</a><figcaption>Tap to open the full-size poster to save or share it.</figcaption></figure>';
+    var aboutP = (d.summary && (d.about || []).indexOf(d.summary) < 0 ? [d.summary] : []).concat(d.about || []);
+    if (aboutP.length) h += '<div class="dt-sec dt-about" id="about"><p class="dt-eyebrow">About the ' + (ev.category === 'Certification' ? 'programme' : 'workshop') + '</p><h2>' + esc(d.aboutTitle || subT || 'About this event') + '</h2>' + aboutP.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') + '</div>';
+    if (d.includes && d.includes.length) h += '<div class="dt-sec dt-explore"><p class="dt-eyebrow">' + (ev.category === 'Certification' ? 'What is included' : 'What we will explore') + '</p><h2>' + (ev.category === 'Certification' ? 'Inside the programme' : 'In the session') + '</h2><ul class="dt-xl">' + d.includes.map(function (x) { var t = String(x), k = t.indexOf(' \u2014 '); return '<li>' + (k > 0 ? '<b>' + esc(t.slice(0, k)) + '.</b> ' + esc(t.charAt(k + 3).toUpperCase() + t.slice(k + 4)) : esc(t)) + '</li>'; }).join('') + '</ul></div>';
+    if (d.forWho && d.forWho.length) h += '<div class="dt-sec dt-for"><p class="dt-eyebrow">Who this is for</p><h2>Who it is for</h2><ul class="dt-checks">' + d.forWho.map(function (x, i) { return '<li style="--i:' + i + '">' + CHECK + '<span>' + esc(x) + '</span></li>'; }).join('') + '</ul></div>';
     if (d.packages && d.packages.length) h += '<div class="dt-sec dt-pk" id="packages"><h2>Choose your package</h2><div class="dt-pk-grid">' + d.packages.map(function (p) {
       return '<a class="dt-pk-card' + (p.hl ? ' is-hl' : '') + '" href="' + esc(siteUrl(p.url)) + '"><span class="dt-pk-who">' + esc(p.who) + '</span><h3>' + esc(p.name) + '</h3><p class="dt-pk-price"><b>' + esc(p.price) + '</b> early bird<small>regular ' + esc(p.regular) + '</small></p><p>' + esc(p.text) + '</p><p class="dt-pk-inst">' + esc(p.inst) + '</p><span class="dt-pk-go">See the package</span></a>';
     }).join('') + '</div><p class="dt-fine">Early bird until 31 March 2027. Payment is by credit card only, and card charges are added on top of every instalment.</p></div>';
-    if (d.schedule && d.schedule.length) {
+    if (d.schedule && d.schedule.length > 1) {
       /* the programme as a timeline: the rail draws with scroll and each node fills as the line reaches it (detail.js) */
       h += '<div class="dt-sec dt-prog"><h2 id="programme">Programme</h2><ol class="dt-steps" data-dt-rail="scroll">' + d.schedule.map(function (s) {
         return '<li class="dt-step"><span class="dt-node" aria-hidden="true"></span><p class="dt-when"><b>' + esc(s.when) + '</b> <span>' + esc(s.time || '') + '</span></p><h3>' + esc(s.title) + '</h3><p>' + esc(s.text) + '</p></li>';
       }).join('') + '</ol></div>';
     }
-    if (d.includes && d.includes.length) h += '<div class="dt-sec dt-inc"><h2>What is included</h2><ul class="dt-incl">' + d.includes.map(function (x) { return '<li>' + lead(x) + '</li>'; }).join('') + '</ul></div>';
     if (d.bring && d.bring.length) h += '<div class="dt-sec dt-inc dt-bring"><h2>What to bring</h2><ul class="dt-incl">' + d.bring.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
-    if (d.posterTall && d.posterTall.src) h += '<div class="dt-sec dt-poster"><h2>Event poster</h2><figure class="dt-poster-fig"><a href="' + esc(ROOT + d.posterTall.src) + '" target="_blank" rel="noopener" aria-label="Open the full-size event poster">' + pic(d.posterTall.src, d.posterTall.alt || ev.title, '(max-width: 520px) 92vw, 440px', ' width="1080" height="1350" loading="lazy" decoding="async"') + '</a><figcaption>Tap to open the full-size poster to save or share it.</figcaption></figure></div>';
     h += '<div class="dt-slot" data-dt-slot></div>';   /* phones: detail.js moves the register box here, after the value and before the people */
     if (d.facilitators && d.facilitators.length) {
       /* presentation cards: match each event facilitator to the directory by name to pull the portrait, tags and contact buttons */
       var pool = window.TRE_FACILITATORS || [], FI = (typeof FAC_ICONS !== 'undefined') ? FAC_ICONS : {};
-      h += '<div class="dt-sec dt-people"><h2>Your facilitator' + (d.facilitators.length > 1 ? 's' : '') + '</h2><div class="dt-people-list">' + d.facilitators.map(function (f) {
+      h += '<div class="dt-sec dt-people"><p class="dt-eyebrow">Your facilitator' + (d.facilitators.length > 1 ? 's' : '') + '</p><h2>Led by ' + esc(d.facilitators.map(function (f) { return f.name; }).join(' & ')) + '</h2><div class="dt-people-list">' + d.facilitators.map(function (f) {
         var m = pool.filter(function (x) { return (x.name || '').toLowerCase() === (f.name || '').toLowerCase(); })[0];
         var profile = m ? recUrl('facilitators', m.id) : (f.link || '');
         var ext = isExternal(profile) ? ' target="_blank" rel="noopener"' : '';
@@ -554,7 +567,12 @@
 
     /* related events, then the close (both paths) */
     var others = events.filter(function (e) { return !e._past && !e._soldOut && !e.status && !e.cardOnly && e.slug !== ev.slug; }).sort(function (a, b) { return a._start - b._start; }).slice(0, 3);
-    if (others.length) h += '<section class="dt-related"><div class="container"><div class="dt-related-head"><h2>Other upcoming events</h2><a class="link-arrow" href="' + ROOT + 'events">All events</a></div><div class="event-grid dt-cards" data-scroll-x>' + others.map(renderCard).join('') + '</div>' + CLOSE + '</div></section>';
+    var mini = function (e) {
+      var dd = Math.ceil((e._start - new Date()) / 864e5), img = e.card || e.image, t = String(e.title).split(' — ')[0];
+      return '<a class="dt-mini" href="' + esc(detailUrl(e)) + '">' + (img ? '<span class="dt-mini-img">' + pic(img, '', '(max-width: 760px) 80vw, 360px', ' loading="lazy" decoding="async"') + '</span>' : '') +
+        '<span class="dt-mini-b"><b>' + esc(t) + '</b><small>' + esc(e.dateText + (e.location ? ' · ' + e.location : '')) + '</small>' + (dd > 0 ? '<em>' + (dd === 1 ? 'Starts tomorrow' : 'Starts in ' + dd + ' days') + '</em>' : '') + '</span></a>';
+    };
+    if (others.length) h += '<section class="dt-related"><div class="container"><div class="dt-related-head"><div><p class="dt-eyebrow">Also available</p><h2>Other upcoming events</h2></div></div><div class="dt-minis" data-scroll-x>' + others.map(mini).join('') + '</div><div class="dt-all"><a class="btn btn-outline" href="' + ROOT + 'events">See all events</a></div>' + CLOSE + '</div></section>';
     else h += '<section class="dt-end"><div class="container"><div class="dt-related-head"><h2>More events coming in 2027</h2><a class="link-arrow" href="' + ROOT + 'events">See all events</a></div><p class="dt-fine" style="margin:0 0 var(--s5);font-size:1rem">New workshops and retreats with Isabelle and Simba are being scheduled across Asia and Europe.</p>' + CLOSE + '</div></section>';
     /* phones: a floating register action (shown by detail.js while the hero button and the register box are off screen) */
     if (!ev._past && primary) h += '<div class="dt-dock" hidden>' + extLink(siteUrl(primary.url), 'btn btn-primary btn-sm', primary.label) + '</div>';
