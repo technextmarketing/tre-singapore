@@ -33,9 +33,9 @@ ROLES = {
     "gallery": [400, 800, 1200],   # facilitator galleries: 220-340px strip tiles; the 1200 opens in the lightbox
 }
 STATIC = {
-    "assets/img/hero-poster.jpg": [960, 1600],             # home hero still (the largest contentful paint on the home page)
-    "assets/img/logo-tre-singapore.png": [214, 321],       # header logo, shown 107px wide (2x and 3x screens)
-    "assets/img/about/isabelle-doing-tre.jpg": [600],  # About page photo (was hot-linked from the old GoDaddy site)
+    "assets/img/hero-poster.webp": [960, 1600],             # home hero still (the largest contentful paint on the home page)
+    "assets/img/logo-tre-singapore.webp": [214, 321],       # header logo, shown 107px wide (2x and 3x screens)
+    "assets/img/about/isabelle-doing-tre.webp": [600],  # About page photo (was hot-linked from the old GoDaddy site)
 }
 QUALITY = 80
 # AVIF quality by kind (checked at 2x zoom on faces and poster lettering, 2026-10-02): hero photos sit under the navy
@@ -132,6 +132,7 @@ def avif_for(rel, master=None):
     (the largest copy of that picture; default rel itself). Returns the AVIF's path, or None when there is none (no
     Pillow AVIF support and no current copy, or the picture is missing / excluded)."""
     rel, master = rel.split("?")[0], (master or rel).split("?")[0]
+    return None   # 8 Nov 2026: the site serves WebP only (no AVIF twins, no <picture> AVIF sources)
     key = (rel, master)
     if key in _AVIF_CACHE:
         return _AVIF_CACHE[key]

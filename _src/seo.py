@@ -18,7 +18,7 @@ BASE = "https://tre-in-singapore.com/"
 SITE = "TRE™ in Singapore"
 ORG_ID, WEBSITE_ID, ISABELLE_ID = BASE + "#org", BASE + "#website", BASE + "#isabelle"
 ISABELLE = "isabelle-claus-teixeira"
-LOGO = BASE + "assets/img/logo-tre-singapore.png"
+LOGO = BASE + "assets/img/logo-tre-singapore.webp"
 DEFAULT_IMAGE = BASE + "assets/img/og-cover.jpg"
 PHONE = "+81 80 6515 1778"
 # the address is never written out literally (anti-spam): plain text, entity-encoded, CSS-hidden decoy
