@@ -10,7 +10,7 @@ import html as H
 BASE = "https://tre-in-singapore.com/"
 OVERVIEW = "events/tre-provider-certification-2027-singapore"
 EB_UNTIL = "31 March 2027"
-D1_EB, D1_REG, D2, D3 = "31 Mar 2027", "25 Feb 2027", "3 Jun 2027", "30 Sep 2027"
+D1_EB, D1_REG, D2, D3 = "31 Mar 2027", "22 Apr 2027", "3 Jun 2027", "30 Sep 2027"
 SESSION = "S$190"
 BONUS_TXT = "Three self-paced online programmes, together valued at S$1,290, come with %s. Grounding unlocks once Instalment 2 is received (due by 3 June 2027). Verbal Interventions and Internal Alchemy unlock once Instalment 3 is received (due by 30 September 2027). If you pay the full package price at registration, all three unlock after Module 2 (3–4 July 2027)."
 PAY_FULL = "Prefer to pay in full? You can pay the full package price at registration instead of three instalments. Card charges still apply."
@@ -40,13 +40,13 @@ def esc(x):
 
 CARD_NOTE = "Payment is by credit card only, through Stripe (Odoo checkout). Card charges are added on top of every instalment."
 FULL_OWED = ("The full package price is owed once the first instalment is paid. Instalment 1 is due on registration "
-             "(by 31 Mar 2027 at the early-bird price, by 25 Feb 2027 at the regular price); instalment 2 is issued after "
+             "(by 31 Mar 2027 at the early-bird price, by 22 Apr 2027 at the regular price); instalment 2 is issued after "
              "Module 1 and due by 3 June 2027; instalment 3 is issued after Module 2 and due by 30 September 2027.")
 FINAL = "All ticket sales are final, non-refundable and non-cancellable. All prices are in Singapore dollars."
 MODULES = [("Module 1", "24–25 Apr 2027", "Singapore, in person"), ("Module 2", "3–4 Jul 2027", "Singapore, in person"),
            ("Module 3", "30–31 Oct 2027", "Singapore, in person")]
 MODULE_INCL = [  # same for Growth and Foundational
-    ("Module 1", "A 2-day workshop plus personal sessions: 2 online individual and 2 online group."),
+    ("Module 1", "A 2-day workshop plus personal sessions: 2 online individual and 2 online group (group sessions on 5 May & 1 Jun 2027)."),
     ("Module 2", "A 2-day workshop plus 2 online group supervisions and 2 online individual supervisions."),
     ("Module 3", "A 2-day workshop plus 3 online individual supervisions and 1 online group supervision. " + M3_TXT),
 ]
@@ -56,17 +56,17 @@ BONUSES = "Grounding, Verbal Interventions and Internal Alchemy"
 PAGES_2027 = {
     "growth": ("certification-2027-growth",
                "TRE™ Certification 2027 Singapore: Growth Package",
-               "Growth Package for the TRE™ Provider Certification 2027 in Singapore: 3 modules, all personal sessions and supervisions, ICF credits and 3 bonus programmes. Early bird S$5,888 to 31 Mar 2027.",
+               "TRE™ Certification 2027 Singapore, Growth Package: 3 modules, all sessions, ICF credits, 3 bonus programmes. Early bird S$5,888 to 31 Mar 2027.",
                "Growth <em>Package</em>",
                "The full TRE™ Provider Certification, 2027 Singapore cohort, with ICF credits and three self-paced bonus programmes. For new students."),
     "foundational": ("certification-2027-foundational",
                      "TRE™ Certification 2027 Singapore: Foundational Package",
-                     "Foundational Package for the TRE™ Provider Certification 2027 in Singapore: the complete pathway of 3 modules, personal sessions and supervisions. Early bird S$4,888 to 31 Mar 2027.",
+                     "TRE™ Certification 2027 Singapore, Foundational Package: 3 modules, personal sessions and supervisions. Early bird S$4,888 to 31 Mar 2027.",
                      "Foundational <em>Package</em>",
                      "The complete TRE™ Provider Certification pathway, 2027 Singapore cohort, without ICF credits and without the bonus programmes. For new students."),
     "refresher": ("certification-2027-refresher",
                   "TRE™ Refresher Packages 2027 Singapore for Providers",
-                  "Four Refresher options for accredited TRE™ Providers and TRE™ Provider trainees to complete their training in Singapore in 2027. Early bird from S$2,200 to 31 Mar 2027.",
+                  "Four TRE™ Refresher options for accredited Providers and trainees, Singapore 2027. Early bird from S$2,200 to 31 Mar 2027.",
                   "Refresher <em>Packages</em>",
                   "Four options for accredited TRE™ Providers and TRE™ Provider trainees who want to complete their training in the 2027 Singapore cohort."),
 }
@@ -383,7 +383,7 @@ POSTER_CSS = ("<style>.pk-poster{display:grid;grid-template-columns:minmax(0,440
 
 def poster(key):
     name = {"growth": "Growth Package", "foundational": "Foundational Package", "refresher": "Refresher Packages"}[key]
-    src = f"assets/img/events/event-certification-2027-{key}-poster.webp?v=1"
+    src = f"assets/img/events/event-certification-2027-{key}-poster.webp?v=20261107b"
     pts = "".join(f"<li>{p}</li>" for p in POSTER_POINTS[key])
     inner = (f'<div class="pk-poster"><figure class="pk-poster-fig"><a href="{src}" target="_blank" rel="noopener" aria-label="Open the full-size event poster">'
              f'<img src="{src}" alt="TRE™ Provider Certification 2027 Singapore, {esc(name)}, led by Isabelle Claus Teixeira and Simba Stenqvist" width="1080" height="1350" loading="lazy" decoding="async"></a>'
@@ -405,6 +405,8 @@ def offers(key):
         o = {"@type": "Offer", "name": name, "price": str(price), "priceCurrency": "SGD", "availability": "https://schema.org/InStock", "url": url}
         if until:
             o["priceValidUntil"] = until
+        else:  # regular price starts when the early bird ends
+            o["validFrom"] = "2027-04-01"
         return o
     url = BASE + PAGES_2027[key][0]
     out = []

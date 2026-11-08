@@ -300,7 +300,7 @@ def _offer(e):
         return None
     cur = {"S$": "SGD", "US$": "USD", "€": "EUR", "£": "GBP"}.get(m.group(1), m.group(1))
     amount = m.group(2).replace(",", "")
-    avail = "https://schema.org/SoldOut" if e.get("soldOut") else "https://schema.org/InStock"
+    avail = "https://schema.org/SoldOut" if e.get("soldOut") or e.get("_past") else "https://schema.org/InStock"
     if p.strip().lower().startswith("from"):
         agg = {"@type": "AggregateOffer", "lowPrice": amount, "priceCurrency": cur, "availability": avail, "url": _register_url(e)}
         sym = m.group(1)  # highest tier price in the same currency, from the record's pricing table
@@ -472,7 +472,7 @@ def llms_txt(pages, posts, events, facs):
          "TRE™ is a registered trademark of TRE For All, Inc. Method created by Dr. David Berceli.", "", "## Pages"]
     L += [f"- [{t}]({u}): {d}" for t, u, d in pages]
     L += ["", "## Guides and articles"] + [f"- [{t}]({u}): {d}" for t, u, d in posts]
-    up = [e for e in events if not e["_past"] and e.get("status") not in ("postponed", "cancelled")]
+    up = [e for e in events if not e["_past"] and not e.get("soldOut") and e.get("status") not in ("postponed", "cancelled")]
     if up:
         L += ["", "## Upcoming events"]
         L += [f"- [{e['title']}]({rec_url('events', e['slug'])}): " + " · ".join(x for x in [e.get("dateText"), e.get("location"), e.get("price")] if x) for e in up]

@@ -717,6 +717,7 @@ a.fac-photo{display:grid;text-decoration:none}
 @keyframes sndPulse{0%{transform:scale(.9);opacity:.6}100%{transform:scale(1.35);opacity:0}}
 .snd-fab .tip{position:absolute;right:52px;top:50%;transform:translateY(-50%);background:var(--navy);color:#fff;font-size:.72rem;padding:.35rem .6rem;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity var(--d2)}
 .snd-fab:hover .tip{opacity:1}
+@media (max-width:480px){.snd-fab{display:none}}
 @media (max-width:640px){.cb-fab .cb-fab-label{display:none}.cb-fab{width:44px;padding:0;justify-content:center;border-radius:50%}}
 
 /* chatbot panel */

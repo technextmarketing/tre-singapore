@@ -1,7 +1,7 @@
 /* =========================================================
    EVENTS DATA — edit this file to add, change or remove events.
    Source of truth: hummingbeing.com/events.html and its event pages.
-   Last aligned: 5 November 2026.
+   Last aligned: 8 November 2026.
 
    Each event object supports:
      slug         : string (required) — used by event?id=<slug>
@@ -56,12 +56,14 @@ var SAYMARA = {
   name: 'Saymara Ryon',
   role: 'Founder & President, Asociația TRE™ România · Certified TRE™ Provider',
   bio: 'Holistic Coach, Trainer & Mentor, Certified TRE™ Provider and Trainer Trainee. Founder of Învață să Zbori SRL (Learn to Fly) and pioneer of TRE™ in Romania, building the TRE™ practitioner community across Eastern Europe.',
+  photo: 'assets/img/facilitators/saymara-ryon.webp',
   link: 'https://treromania.org/', linkText: 'TRE™ Romania'
 };
 var SIMBA = {
   name: 'Simba Stenqvist',
   role: 'Global TRE™ Certifying Trainer · Creator of Internal Alchemy',
   bio: 'Global TRE™ Certifying Trainer and creator of Internal Alchemy — an integrated system of breathwork, fascial release, grounding and tremor work drawn from more than 25 years of hands-on practice in bodywork, nervous-system regulation and energetic healing, developed in close collaboration with Dr. David Berceli.',
+  photo: 'assets/img/facilitators/simba-stenqvist.webp',
   link: 'https://livingwiththespirit.com/', linkText: 'livingwiththespirit.com'
 };
 var SARA = {
@@ -147,6 +149,7 @@ window.TRE_EVENTS = [
         { label: 'Discounted price', sub: 'with a discount code', price: 'S$68', note: 'enter your code when you register' }
       ],
       pricingNote: 'All prices in Singapore Dollars. Have a discount code? Enter it in the registration form. The Zoom link is shared with registered participants.',
+      questions: true,
       facilitators: [AUN],
       partners: 'In partnership with the Trauma Release and Wellness Centre, Karachi, Pakistan',
       online: true,
@@ -210,8 +213,9 @@ window.TRE_EVENTS = [
       ],
       pricingNote: 'All prices in Singapore Dollars. Have a discount code? Enter it in the registration form. The Zoom link is shared with registered participants before the session.',
       posterTall: { src: 'assets/img/events/event-breath-as-medicine-portrait.webp?v=2', alt: 'Breath as a medicine \u2014 online pranayama workshop with Ania Zieli\u0144ska, 15 December 2026, 7\u20139pm Singapore time' },
+      questions: true,
       facilitators: [ANIA],
-      online: false,
+      online: true,
       register: [
         { label: 'Register \u2014 S$88', url: 'https://hummingbeing.com/event-breath-as-medicine', primary: true }
       ]
@@ -273,8 +277,9 @@ window.TRE_EVENTS = [
       ],
       pricingNote: 'All prices in Singapore Dollars. Have a discount code? Enter it in the registration form. Payment is handled securely by Illuminate Paths. The Zoom link is shared with registered participants before the session.',
       posterTall: { src: 'assets/img/events/event-art-of-conscious-rest-portrait.webp?v=1', alt: 'The Art of Conscious Rest \u2014 online Yoga Nidra workshop with Olga Titkova, 24 January 2027, 8\u201310pm Singapore time' },
+      questions: true,
       facilitators: [OLGA],
-      online: false,
+      online: true,
       register: [
         { label: 'Register \u2014 S$88', url: '#register', primary: true }
       ],
@@ -349,6 +354,7 @@ window.TRE_EVENTS = [
         { label: 'Discounted price', sub: 'with a discount code', price: 'S$66', note: 'enter your code when you register' }
       ],
       pricingNote: 'All prices in Singapore Dollars, per session. Choose your date when you register. Not suitable if you are pregnant, had surgery or a severe injury less than 8 weeks ago, or have a diagnosed psychiatric condition; for PTSD and C-PTSD we recommend private sessions. TRE\u2122 personal sessions can be added for S$180 per session. Venue details are shared with registered participants.',
+      questions: true,
       facilitators: [ISABELLE, SIMBA],
       partners: 'In collaboration with TRE Thailand and Simba Stenqvist',
       online: false,
@@ -422,6 +428,7 @@ window.TRE_EVENTS = [
         { label: 'Discounted price', sub: 'with a discount code · limited places', price: 'S$129', note: 'enter your code when you register' }
       ],
       pricingNote: 'All prices in Singapore Dollars, per session. Choose your date when you register. TRE™ personal sessions can be added for S$180 per session. Venue details are shared with registered participants.',
+      questions: true,
       facilitators: [ISABELLE, SIMBA],
       partners: 'In collaboration with Simba Stenqvist',
       online: false,
@@ -436,6 +443,7 @@ window.TRE_EVENTS = [
   /* ---------- Singapore certification 2027 cohort (Modules 1–3 + bonuses) ---------- */
   {
     slug: 'tre-provider-certification-2027-singapore',
+    metaDesc: 'TRE™ Provider Certification Singapore 2027: 24–25 Apr, 3–4 Jul, 30–31 Oct. Growth S$5,888, Foundational S$4,888, Refresher from S$2,200, early bird to 31 Mar 2027.',
     title: 'Become a Certified TRE™ Provider — 2027 Cohort (Singapore)',
     category: 'Certification',
     region: 'singapore',
@@ -502,6 +510,7 @@ window.TRE_EVENTS = [
         { label: 'Refresher Packages', sub: 'accredited Providers and trainees · 4 options', price: 'from S$2,200', note: 'early bird to 31 Mar 2027 · then from S$2,900' }
       ],
       pricingNote: 'All prices in Singapore Dollars. Early-bird pricing applies until 31 March 2027. Payment is by credit card only, through Stripe (Odoo checkout), and card charges are added on top of every instalment. The full package price is owed once the first instalment is paid; you can also pay the full package price at registration instead of three instalments. Extra 60-minute online personal sessions or supervisions are S$190 each. All ticket sales are final, non-refundable and non-cancellable.',
+      questions: true,
       facilitators: [ISABELLE, SIMBA],
       online: true,
       register: [
@@ -573,6 +582,7 @@ window.TRE_EVENTS = [
         { label: 'Personal TRE™ session', sub: 'optional add-on · not included', price: '£85', note: 'per session' }
       ],
       pricingNote: 'All prices in British pounds (GBP). Limited to 15 participants. Individual TRE™ sessions are not included and can be added at £85 each. All ticket sales are final — tickets are non-refundable and non-cancellable.',
+      questions: true,
       facilitators: [ISABELLE, { name: 'Vicki Cook', role: 'TRE Scotland', bio: 'In collaboration with TRE Scotland.' }],
       partners: 'In collaboration with TRE Scotland',
       online: true,
@@ -601,7 +611,7 @@ window.TRE_EVENTS = [
     timeText: '28 & 29 May 10:00–18:00 · 30 May 10:00–13:00 (+ 14:00–18:00 for the ICF CCEs) · Lisbon time',
     chip: { top: '28–30', bottom: 'May 2027' },
     image: 'assets/img/events/event-lisbon-module1.webp?v=2',
-    card: 'assets/img/events/card-event-lisbon-module1.webp?v=2',
+    card: 'assets/img/events/event-lisbon-module1.webp?v=2',
     description: 'ICF-accredited TRE™ Module 1 in Lisboa, Portugal, led by Isabelle Claus Teixeira and assisted by Saymara Ryon. The 21 ICF CCEUs require the additional 4-hour Self-Care & Presence for Coaches session (30 May, 14:00–18:00). Only 25 places.',
     facilitator: 'Isabelle Claus Teixeira, assisted by Saymara Ryon',
     credits: '21 ICF CCEUs',
@@ -825,8 +835,8 @@ window.TRE_EVENTS = [
     credits: '21 ICF CCEUs on Module 1',
     price: 'S$3,699',
     priceNote: 'full bundle · super early bird (early bird S$4,200 · normal S$4,500)',
-    link: 'https://hummingbeing.com/event-certification',
-    linkText: 'Join waitlist',
+    link: 'events/tre-provider-certification-2027-singapore',
+    linkText: 'See the 2027 cohort',
     soldOut: true,
     waitlistLink: CALENDLY,
     theme: 'theme-deep',
@@ -866,7 +876,7 @@ window.TRE_EVENTS = [
       facilitators: [ISABELLE],
       online: true,
       register: [
-        { label: 'Register your interest', url: 'https://hummingbeing.com/event-certification', primary: true },
+        { label: 'See the 2027 cohort', url: 'events/tre-provider-certification-2027-singapore', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
       source: 'https://hummingbeing.com/event-certification'
@@ -1016,11 +1026,11 @@ window.TRE_EVENTS = [
     linkText: 'View event',
     theme: 'theme-bronze',
     details: {
-      summary: 'The 3 September 2026 online session of From Shaking to Shaping — a half-day intensive on using TRE™ in a coaching context. This session was fully booked and has now taken place; the in-person Bucharest sessions (20 & 24 October 2026) are still open.',
+      summary: 'The 3 September 2026 online session of From Shaking to Shaping — a half-day intensive on using TRE™ in a coaching context. This session was fully booked and has now taken place.',
       about: [
         'TRE™ (Tension, Stress & Trauma Releasing Exercises) activates the body\'s natural tremoring response — a neurogenic mechanism that discharges accumulated stress, tension and trauma from the nervous system.',
         'In this workshop you explore how to use TRE™ within your coaching practice — not just as a self-care tool, but as a somatic method that helps clients move from a state of activation to regulated presence.',
-        'This online session took place on 3 September 2026 (10:00–13:00 EET) and was fully booked. For the next opportunity, see the in-person Bucharest sessions or our upcoming events.'
+        'This online session took place on 3 September 2026 (10:00–13:00 EET) and was fully booked. For the next opportunity, see our upcoming events.'
       ],
       forWho: [
         'Coaches who want to integrate TRE™ into 1-on-1 and group coaching contexts',
@@ -1254,8 +1264,8 @@ window.TRE_EVENTS = [
     facilitator: 'Isabelle Claus Teixeira',
     priceText: 'Part of the certification bundle (from S$3,699)',
     soldOut: true,
-    link: 'https://hummingbeing.com/event-certification',
-    linkText: 'Join waitlist',
+    link: 'events/tre-provider-certification-2027-singapore',
+    linkText: 'See the 2027 cohort',
     theme: 'theme-deep',
     details: {
       summary: 'The final module of the Global TRE™ Provider Certification: leading TRE™ for groups with confidence, and completing your qualification as a Certified Provider.',
@@ -1283,7 +1293,7 @@ window.TRE_EVENTS = [
       facilitators: [ISABELLE],
       online: false,
       register: [
-        { label: 'Join the waitlist (2026 cohort full)', url: 'https://hummingbeing.com/event-certification', primary: true },
+        { label: 'See the 2027 cohort', url: 'events/tre-provider-certification-2027-singapore', primary: true },
         { label: 'Book a certification intake call', url: CALENDLY }
       ],
       source: 'https://hummingbeing.com/event-certification'
@@ -1320,7 +1330,7 @@ window.TRE_EVENTS = [
       about: [
         'Designed specifically for coaches — whether in training or at ACC, PCC or MCC level — who want to develop embodied self-care practices, prevent burnout and compassion fatigue, and deepen their somatic presence with clients.',
         'TRE™ activates the body\'s natural neurogenic tremoring response — a reflex that discharges stored stress and tension from the nervous system, builds resilience and promotes deep regulation.',
-        'This workshop counted as Module 1 of the Global TRE™ Provider Certification Program — the first step toward becoming a Certified TRE™ Provider. It sold out; the next Module 1 runs in Bucharest on 15–17 October 2026, and the Singapore certification continues with Module 2 on 26–27 September 2026.'
+        'This workshop counted as Module 1 of the Global TRE™ Provider Certification Program — the first step toward becoming a Certified TRE™ Provider. It sold out. The next Module 1 runs in Lisboa on 28–30 May 2027 and online with TRE Scotland on 18–20 June 2027; the 2027 Singapore cohort starts on 24–25 April 2027.'
       ],
       forWho: [
         'Coaches in training and ACC, PCC & MCC level coaches',

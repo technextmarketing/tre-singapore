@@ -52,7 +52,7 @@ window.TRE_FACILITATORS = [
       'ICF PCC Executive Coach · Mindfulness Teacher · Certified Reiki Level II',
       'Trained with Dr. David Berceli, Michelle Beck, Ching Meoh Cheong and Donna Philips',
       '30 years in senior HR and leadership roles across 9 countries and 40+ nationalities',
-      'Leads TRE™ trainings in Singapore, Bucharest and online; speaker at the TRE™ Asia conferences'
+      'Leads TRE™ trainings in Singapore, Europe (Bucharest, Lisbon) and online; speaker at the TRE™ Asia conferences'
     ],
     offers: [
       { title: 'Individual TRE™ sessions', text: 'One-to-one sessions online or in Singapore — a personalised introduction to TRE™ or deeper ongoing work.' },

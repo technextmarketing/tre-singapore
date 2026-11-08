@@ -123,10 +123,10 @@ PAGES = [
      "Find a certified TRE™ provider in Singapore for one-to-one, group, online or corporate sessions. Meet the Certifying Trainer and join the directory.",
      "facilitators", "CollectionPage", "Providers", "assets/img/og/facilitators.jpg"),
     ("events.body.html", "events.html", "TRE™ Workshops & Events — Singapore and Online",
-     "Upcoming TRE™ workshops, certification modules and online sessions in Singapore, Bucharest and on Zoom: dates, prices and how to register.",
+     "Upcoming TRE™ workshops, certification modules and online sessions in Singapore, Lisbon and online: dates, prices and how to register.",
      "events", "CollectionPage", "Events", "assets/img/og/events.jpg"),
     ("event.body.html", "event.html", "Event — TRE™ in Singapore",
-     "Details, programme, pricing and registration for TRE™ events in Singapore, Bucharest and online.", "events", None, None, None),
+     "Details, programme, pricing and registration for TRE™ events in Singapore, Lisbon and online.", "events", None, None, None),
     ("facilitator.body.html", "facilitator.html", "Provider profile — TRE™ in Singapore",
      "Profile of a TRE™ provider in Singapore: background, credentials, sessions offered and how to book.", "facilitators", None, None, None),
     ("online-session-guide.body.html", "online-session-guide.html", "Online TRE™ Session Guide — Zoom, Camera & Space Setup",
@@ -215,7 +215,7 @@ def page_meta(out, title, desc, kind, crumb, image, body, events, facs, posts):
     if out == "education.html":
         nodes.append(seo.course(url, body))
     if out == "events.html":
-        nodes.append(seo.item_list(url, "Upcoming TRE™ events", [(e["title"], seo.rec_url("events", e["slug"])) for e in events if not e["_past"] and e.get("status") not in ("postponed", "cancelled")]))
+        nodes.append(seo.item_list(url, "Upcoming TRE™ events", [(e["title"], seo.rec_url("events", e["slug"])) for e in events if not e["_past"] and not e.get("soldOut") and e.get("status") not in ("postponed", "cancelled")]))
     if out == "facilitators.html":
         nodes.append(seo.item_list(url, "TRE™ providers in Singapore", [(f["name"], seo.rec_url("facilitators", f["id"])) for f in facs]))
     if out == "blog.html":
