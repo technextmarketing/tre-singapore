@@ -583,7 +583,7 @@ window.TRE_EVENTS = [
       ],
       pricingNote: 'All prices in British pounds (GBP). Limited to 15 participants. Individual TRE™ sessions are not included and can be added at £85 each. All ticket sales are final — tickets are non-refundable and non-cancellable.',
       questions: true,
-      facilitators: [ISABELLE, { name: 'Vicki Cook', role: 'TRE™ Certification Trainer · TRE Scotland', photo: 'assets/img/facilitators/vicki-cook.webp', bio: 'TRE™ Certification Trainer for over 10 years, with 15 years of her own TRE™ practice and amazing results. Health Coach since 2002, focusing on self-care and recovery from burnout, chronic fatigue and stress.', link: 'https://trescotland.com/about-vicki-cook/', linkText: 'Meet Vicki', links: [{ label: 'Certification', url: 'https://trescotland.com/train-to-be-a-provider/' }, { label: 'LinkedIn', url: 'https://www.linkedin.com/in/trescotland/' }] }],
+      facilitators: [ISABELLE, { name: 'Vicki Cook', role: 'TRE™ Certification Trainer · TRE Scotland', photo: 'assets/img/facilitators/vicki-cook.webp?v=2', bio: 'TRE™ Certification Trainer for over 10 years, with 15 years of her own TRE™ practice and amazing results. Health Coach since 2002, focusing on self-care and recovery from burnout, chronic fatigue and stress.', link: 'https://trescotland.com/about-vicki-cook/', linkText: 'Meet Vicki', links: [{ label: 'Certification', url: 'https://trescotland.com/train-to-be-a-provider/' }, { label: 'LinkedIn', url: 'https://www.linkedin.com/in/trescotland/' }] }],
       partners: 'In collaboration with TRE Scotland',
       online: true,
       register: [
