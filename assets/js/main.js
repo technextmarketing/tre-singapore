@@ -512,6 +512,7 @@
         var meta = m ? (m.meta || []).slice(0, 2).map(function (x) { return '<li>' + (FI[x.icon] || ICONS.pin) + '<span>' + esc(x.text) + '</span></li>'; }).join('') : '';
         var c = (m && m.contact) || {}, acts = '';
         if (profile) acts += '<a class="btn btn-navy btn-sm" href="' + esc(profile) + '"' + ext + '>' + (m ? 'View profile' : esc(f.linkText || 'Learn more')) + '</a>';
+        (f.links || []).forEach(function (l) { acts += '<a class="btn btn-outline btn-sm" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>'; });
         if (c.email) acts += ctaLink(c.email, 'btn btn-outline btn-sm', 'email', /^mailto:/.test(c.email) ? 'Email' : 'Message');
         if (c.whatsapp) acts += ctaLink(c.whatsapp, 'btn btn-outline btn-sm', 'whatsapp', 'WhatsApp');
         if (c.book) acts += ctaLink(c.book, 'btn btn-outline btn-sm', 'book', 'Book now');
