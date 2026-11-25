@@ -6,7 +6,7 @@
   var WA = 'https://wa.me/818065151778';
   var CAL = 'https://calendly.com/bhdasia/tre-certification-intake-call';
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function root() { var s = document.querySelector('script[src*="chatbot.js"]'); var m = s && /^(.*?)assets\/js\/chatbot\.js/.exec(s.getAttribute('src')); return m ? m[1] : ''; }
+  function root() { var s = document.querySelector('script[src*="chatbot.js"]'), src = s ? s.getAttribute('src') : ''; var m = /^(.*?)assets\/js\/chatbot\.js/.exec(src); return m ? m[1] : (/\/web\/content\//.test(src) ? '/' : ''); }   /* Odoo long-cache URL = site root */
   var ROOT = root();
   function link(href, label) { var ext = /^https?:/.test(href); return '<a href="' + esc(href) + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + esc(label) + '</a>'; }
   function parseDate(iso) { var m = /^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/.exec(iso || ''); return m ? new Date(+m[1], +m[2] - 1, +m[3], m[4] ? +m[4] : 0, m[5] ? +m[5] : 0) : null; }
